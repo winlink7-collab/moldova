@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html class="dark" dir="rtl" lang="he"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<title>כניסת מנהל - Moldova & Ukraine</title>
+<script>
+tailwind.config = {
+    darkMode: "class",
+    theme: {
+        extend: {
+            colors: {
+                "primary": "#f2d00d",
+                "bg": "#0f0e08",
+                "card": "#1a1810",
+            },
+            fontFamily: { "display": ["Heebo", "sans-serif"] },
+        },
+    },
+}
+</script>
+<style>body { font-family: 'Heebo', sans-serif; }</style>
+</head>
+<body class="bg-bg text-slate-100 min-h-screen flex items-center justify-center px-4">
+
+<div class="w-full max-w-md">
+    <!-- Logo -->
+    <div class="text-center mb-10">
+        <div class="inline-flex items-center justify-center size-16 bg-primary rounded-full mb-4">
+            <span class="material-symbols-outlined text-bg text-4xl">admin_panel_settings</span>
+        </div>
+        <h1 class="text-2xl font-bold text-white">פאנל ניהול</h1>
+        <p class="text-slate-500 text-sm mt-2">Moldova & Ukraine Brides</p>
+    </div>
+
+    <!-- Login Form -->
+    <div class="bg-card rounded-2xl border border-white/10 p-8 shadow-2xl">
+        <h2 class="text-xl font-bold text-white mb-6 text-center">כניסת מנהל</h2>
+        <form id="adminLoginForm" class="space-y-5">
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">אימייל</label>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-500">mail</span>
+                    <input id="adminEmail" type="email" required class="w-full bg-bg border border-white/10 rounded-lg py-3 pr-12 pl-4 text-white focus:border-primary outline-none transition-all" placeholder="email@example.com"/>
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">סיסמה</label>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-500">lock</span>
+                    <input id="adminPassword" type="password" required class="w-full bg-bg border border-white/10 rounded-lg py-3 pr-12 pl-4 text-white focus:border-primary outline-none transition-all" placeholder="••••••••"/>
+                </div>
+            </div>
+            <div id="loginError" class="hidden text-center text-sm font-bold text-red-400"></div>
+            <button type="submit" class="w-full bg-primary text-bg py-3.5 rounded-xl font-bold text-lg hover:bg-primary/90 transition-all">
+                <span class="material-symbols-outlined text-lg align-middle ml-1">login</span> כניסה
+            </button>
+        </form>
+    </div>
+
+    <div class="text-center mt-6">
+        <a href="/" class="text-slate-500 text-sm hover:text-primary transition-colors">חזרה לאתר</a>
+    </div>
+</div>
+
+<script>
+document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const errEl = document.getElementById('loginError');
+    errEl.classList.add('hidden');
+    try {
+        const res = await fetch('/api/admin/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: document.getElementById('adminEmail').value,
+                password: document.getElementById('adminPassword').value
+            })
+        });
+        const data = await res.json();
+        if (data.success) {
+            window.location.href = '/admin';
+        } else {
+            errEl.textContent = data.error || 'שגיאה בהתחברות';
+            errEl.classList.remove('hidden');
+        }
+    } catch {
+        errEl.textContent = 'שגיאת תקשורת';
+        errEl.classList.remove('hidden');
+    }
+});
+</script>
+</body></html>

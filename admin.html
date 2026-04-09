@@ -1,0 +1,2067 @@
+<!DOCTYPE html>
+<html class="dark" dir="rtl" lang="he"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<title>פאנל ניהול - Moldova & Ukraine</title>
+<script>
+tailwind.config = {
+    darkMode: "class",
+    theme: {
+        extend: {
+            colors: {
+                "primary": "#f2d00d",
+                "bg": "#0f0e08",
+                "card": "#1a1810",
+                "card-hover": "#222012",
+                "platinum": "#E5E4E2",
+                "diamond-blue": "#b9f2ff",
+            },
+            fontFamily: { "display": ["Heebo", "sans-serif"] },
+        },
+    },
+}
+</script>
+<style>
+body { font-family: 'Heebo', sans-serif; }
+.tab-active { border-color: #f2d00d; color: #f2d00d; background: rgba(242,208,13,0.05); }
+</style>
+</head>
+<body class="bg-bg text-slate-100 min-h-screen">
+
+<!-- Admin Header -->
+<header class="sticky top-0 z-50 bg-card border-b border-white/10 px-6 py-4">
+<div class="max-w-7xl mx-auto flex items-center justify-between">
+    <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-primary text-3xl">admin_panel_settings</span>
+        <div>
+            <h1 class="text-xl font-bold text-white">פאנל ניהול</h1>
+            <span class="text-[10px] text-slate-500 uppercase tracking-widest">Moldova & Ukraine Admin</span>
+        </div>
+    </div>
+    <div class="flex items-center gap-4">
+        <a href="/" target="_blank" class="flex items-center gap-2 text-sm text-slate-400 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-lg">open_in_new</span> צפה באתר
+        </a>
+        <button onclick="adminLogout()" class="flex items-center gap-2 text-sm text-slate-400 hover:text-red-400 transition-colors">
+            <span class="material-symbols-outlined text-lg">logout</span> יציאה
+        </button>
+    </div>
+</div>
+</header>
+
+<!-- Tabs -->
+<nav class="bg-card/50 border-b border-white/10 px-6">
+<div class="max-w-7xl mx-auto flex gap-1 overflow-x-auto">
+    <button onclick="switchTab('profiles')" data-tab="profiles" class="tab-btn tab-active flex items-center gap-2 px-6 py-4 text-sm font-bold border-b-2 border-transparent text-slate-400 hover:text-primary transition-all whitespace-nowrap">
+        <span class="material-symbols-outlined text-lg">people</span> פרופילים
+    </button>
+    <button onclick="switchTab('users')" data-tab="users" class="tab-btn flex items-center gap-2 px-6 py-4 text-sm font-bold border-b-2 border-transparent text-slate-400 hover:text-primary transition-all whitespace-nowrap">
+        <span class="material-symbols-outlined text-lg">group</span> משתמשים
+    </button>
+    <button onclick="switchTab('messages')" data-tab="messages" class="tab-btn flex items-center gap-2 px-6 py-4 text-sm font-bold border-b-2 border-transparent text-slate-400 hover:text-primary transition-all whitespace-nowrap">
+        <span class="material-symbols-outlined text-lg">chat</span> הודעות
+    </button>
+    <button onclick="switchTab('leads')" data-tab="leads" class="tab-btn flex items-center gap-2 px-6 py-4 text-sm font-bold border-b-2 border-transparent text-slate-400 hover:text-primary transition-all whitespace-nowrap">
+        <span class="material-symbols-outlined text-lg">contact_mail</span> לידים
+    </button>
+    <button onclick="switchTab('pages')" data-tab="pages" class="tab-btn flex items-center gap-2 px-6 py-4 text-sm font-bold border-b-2 border-transparent text-slate-400 hover:text-primary transition-all whitespace-nowrap">
+        <span class="material-symbols-outlined text-lg">description</span> דפים
+    </button>
+    <button onclick="switchTab('stories')" data-tab="stories" class="tab-btn flex items-center gap-2 px-6 py-4 text-sm font-bold border-b-2 border-transparent text-slate-400 hover:text-primary transition-all whitespace-nowrap">
+        <span class="material-symbols-outlined text-lg">favorite</span> סיפורי הצלחה
+    </button>
+    <button onclick="switchTab('faqs')" data-tab="faqs" class="tab-btn flex items-center gap-2 px-6 py-4 text-sm font-bold border-b-2 border-transparent text-slate-400 hover:text-primary transition-all whitespace-nowrap">
+        <span class="material-symbols-outlined text-lg">help</span> שאלות נפוצות
+    </button>
+    <button onclick="switchTab('process')" data-tab="process" class="tab-btn flex items-center gap-2 px-6 py-4 text-sm font-bold border-b-2 border-transparent text-slate-400 hover:text-primary transition-all whitespace-nowrap">
+        <span class="material-symbols-outlined text-lg">route</span> תהליך השידוך
+    </button>
+    <button onclick="switchTab('vip')" data-tab="vip" class="tab-btn flex items-center gap-2 px-6 py-4 text-sm font-bold border-b-2 border-transparent text-slate-400 hover:text-primary transition-all whitespace-nowrap">
+        <span class="material-symbols-outlined text-lg">diamond</span> חבילות VIP
+    </button>
+    <button onclick="switchTab('about')" data-tab="about" class="tab-btn flex items-center gap-2 px-6 py-4 text-sm font-bold border-b-2 border-transparent text-slate-400 hover:text-primary transition-all whitespace-nowrap">
+        <span class="material-symbols-outlined text-lg">info</span> אודות
+    </button>
+    <button onclick="switchTab('contact')" data-tab="contact" class="tab-btn flex items-center gap-2 px-6 py-4 text-sm font-bold border-b-2 border-transparent text-slate-400 hover:text-primary transition-all whitespace-nowrap">
+        <span class="material-symbols-outlined text-lg">call</span> צור קשר
+    </button>
+    <button onclick="switchTab('site')" data-tab="site" class="tab-btn flex items-center gap-2 px-6 py-4 text-sm font-bold border-b-2 border-transparent text-slate-400 hover:text-primary transition-all whitespace-nowrap">
+        <span class="material-symbols-outlined text-lg">tune</span> הגדרות אתר
+    </button>
+</div>
+</nav>
+
+<main class="max-w-7xl mx-auto px-6 py-8">
+
+<!-- ========== PROFILES TAB ========== -->
+<div id="tab-profiles" class="tab-content">
+    <div class="flex items-center justify-between mb-8">
+        <h2 class="text-2xl font-bold">ניהול פרופילים</h2>
+        <button onclick="openProfileForm()" class="flex items-center gap-2 bg-primary text-bg px-5 py-2.5 rounded-lg font-bold text-sm hover:bg-primary/90 transition-all">
+            <span class="material-symbols-outlined text-lg">add</span> הוסף פרופיל
+        </button>
+    </div>
+    <div id="profilesList" class="space-y-3"></div>
+</div>
+
+<!-- ========== USERS TAB ========== -->
+<div id="tab-users" class="tab-content hidden">
+    <h2 class="text-2xl font-bold mb-8">ניהול משתמשים</h2>
+    <div id="usersList" class="space-y-3"></div>
+</div>
+
+<!-- ========== MESSAGES TAB ========== -->
+<div id="tab-messages" class="tab-content hidden">
+    <h2 class="text-2xl font-bold mb-8">הודעות</h2>
+    <div id="messagesList" class="space-y-3"></div>
+</div>
+
+<!-- ========== LEADS TAB ========== -->
+<div id="tab-leads" class="tab-content hidden">
+    <h2 class="text-2xl font-bold mb-8">לידים / פניות</h2>
+    <div id="leadsList" class="space-y-3"></div>
+</div>
+
+<!-- ========== PAGES TAB ========== -->
+<div id="tab-pages" class="tab-content hidden">
+    <div class="flex items-center justify-between mb-8">
+        <h2 class="text-2xl font-bold">ניהול דפים</h2>
+        <button onclick="openPageForm()" class="flex items-center gap-2 bg-primary text-bg px-5 py-2.5 rounded-lg font-bold text-sm hover:bg-primary/90 transition-all">
+            <span class="material-symbols-outlined text-lg">add</span> דף חדש
+        </button>
+    </div>
+    <div id="pagesList" class="space-y-3"></div>
+</div>
+
+<!-- ========== STORIES TAB ========== -->
+<div id="tab-stories" class="tab-content hidden">
+    <div class="flex items-center justify-between mb-8">
+        <h2 class="text-2xl font-bold">סיפורי הצלחה</h2>
+        <button onclick="openStoryForm()" class="flex items-center gap-2 bg-primary text-bg px-5 py-2.5 rounded-lg font-bold text-sm hover:bg-primary/90 transition-all">
+            <span class="material-symbols-outlined text-lg">add</span> הוסף סיפור
+        </button>
+    </div>
+    <div id="storiesList" class="space-y-3"></div>
+</div>
+
+<!-- ========== FAQS TAB ========== -->
+<div id="tab-faqs" class="tab-content hidden">
+    <div class="flex items-center justify-between mb-8">
+        <h2 class="text-2xl font-bold">שאלות נפוצות</h2>
+        <button onclick="openFaqForm()" class="flex items-center gap-2 bg-primary text-bg px-5 py-2.5 rounded-lg font-bold text-sm hover:bg-primary/90 transition-all">
+            <span class="material-symbols-outlined text-lg">add</span> הוסף שאלה
+        </button>
+    </div>
+    <div id="faqsList" class="space-y-3"></div>
+</div>
+
+<!-- ========== PROCESS TAB ========== -->
+<div id="tab-process" class="tab-content hidden">
+    <div class="flex items-center justify-between mb-8">
+        <h2 class="text-2xl font-bold">תהליך השידוך - שלבים</h2>
+        <button onclick="openStepForm()" class="flex items-center gap-2 bg-primary text-bg px-5 py-2.5 rounded-lg font-bold text-sm hover:bg-primary/90 transition-all">
+            <span class="material-symbols-outlined text-lg">add</span> הוסף שלב
+        </button>
+    </div>
+    <div id="stepsList" class="space-y-3 mb-10"></div>
+
+    <!-- Process Page Texts -->
+    <h3 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+        <span class="material-symbols-outlined">edit_note</span> טקסטים בדף
+    </h3>
+    <div class="bg-card rounded-xl border border-white/10 p-6 mb-4">
+        <div class="grid md:grid-cols-2 gap-4">
+            <div><label class="block text-sm text-slate-400 mb-1">כותרת ראשית (Hero)</label>
+            <input id="processHeroTitle" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="הדרך לאהבת אמת מתחילה כאן"/></div>
+            <div><label class="block text-sm text-slate-400 mb-1">כותרת שלבים</label>
+            <input id="processStepsTitle" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="השלבים למציאת האחת שלך"/></div>
+        </div>
+        <div class="mt-4"><label class="block text-sm text-slate-400 mb-1">תת כותרת (Hero)</label>
+        <textarea id="processHeroSubtitle" rows="2" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none text-sm">תהליך השידוך האקסקלוסיבי שלנו מיועד לגברים המחפשים קשר רציני, איכותי וארוך טווח עם הנשים המדהימות ביותר ממזרח אירופה.</textarea></div>
+        <div class="grid md:grid-cols-2 gap-4 mt-4">
+            <div><label class="block text-sm text-slate-400 mb-1">כותרת CTA (למטה)</label>
+            <input id="processCtaTitle" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="האם אתה מוכן למצוא את החצי השני שלך?"/></div>
+            <div><label class="block text-sm text-slate-400 mb-1">תת כותרת CTA</label>
+            <input id="processCtaSubtitle" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="מאות גברים כבר מצאו את אהבתם דרך התהליך הייחודי שלנו. התור שלך הגיע."/></div>
+        </div>
+    </div>
+    <button onclick="saveProcessTexts()" class="bg-primary text-bg px-8 py-3 rounded-lg font-bold text-sm hover:bg-primary/90 transition-all">שמור טקסטים</button>
+    <span id="processMsg" class="mr-4 text-sm text-green-400 hidden">נשמר!</span>
+</div>
+
+<!-- ========== ABOUT TAB ========== -->
+<!-- ========== VIP PACKAGES TAB ========== -->
+<div id="tab-vip" class="tab-content hidden">
+    <h2 class="text-2xl font-bold mb-8">עריכת דף חבילות VIP</h2>
+
+    <!-- Hero -->
+    <div class="bg-card rounded-xl border border-white/10 p-6 mb-6">
+        <h3 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined">image</span> Hero (באנר עליון)
+        </h3>
+        <div class="grid md:grid-cols-2 gap-4">
+            <div><label class="block text-sm text-slate-400 mb-1">כותרת ראשית</label>
+            <input id="vipAdmHeroTitle" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="חבילות VIP אקסקלוסיביות"/></div>
+            <div><label class="block text-sm text-slate-400 mb-1">תת כותרת</label>
+            <input id="vipAdmHeroSubtitle" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="הדרך המהירה והיוקרתית ביותר למציאת אהבת אמת."/></div>
+        </div>
+    </div>
+
+    <!-- Package 1 - Silver -->
+    <div class="bg-card rounded-xl border border-white/10 p-6 mb-6">
+        <h3 class="text-lg font-bold text-platinum mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined">workspace_premium</span> חבילה 1 - Silver
+        </h3>
+        <div class="grid md:grid-cols-4 gap-4 mb-4">
+            <div><label class="block text-sm text-slate-400 mb-1">שם חבילה</label>
+            <input id="vipAdmPkg1Name" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="Silver VIP"/></div>
+            <div><label class="block text-sm text-slate-400 mb-1">מחיר</label>
+            <input id="vipAdmPkg1Price" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="₪2,900"/></div>
+            <div><label class="block text-sm text-slate-400 mb-1">תקופה</label>
+            <input id="vipAdmPkg1Period" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="/ לחודש"/></div>
+            <div><label class="block text-sm text-slate-400 mb-1">טקסט כפתור</label>
+            <input id="vipAdmPkg1Btn" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="בחר במסלול כסף"/></div>
+        </div>
+        <div><label class="block text-sm text-slate-400 mb-1">תכונות (שורה לכל תכונה, פורמט: icon|טקסט)</label>
+        <textarea id="vipAdmPkg1Features" rows="5" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none text-sm" placeholder="verified_user|פרופיל VIP מאומת">verified_user|פרופיל VIP מאומת ומוערך
+database|גישה מלאה למאגר הכלות האקסקלוסיבי
+chat|מערכת הודעות ללא הגבלה
+filter_list|סינון מתקדם לפי העדפות אישיות</textarea></div>
+    </div>
+
+    <!-- Package 2 - Gold -->
+    <div class="bg-card rounded-xl border border-primary/20 p-6 mb-6">
+        <h3 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined">star</span> חבילה 2 - Gold (מומלצת)
+        </h3>
+        <div class="grid md:grid-cols-4 gap-4 mb-4">
+            <div><label class="block text-sm text-slate-400 mb-1">שם חבילה</label>
+            <input id="vipAdmPkg2Name" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="Gold VIP"/></div>
+            <div><label class="block text-sm text-slate-400 mb-1">מחיר</label>
+            <input id="vipAdmPkg2Price" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="₪5,500"/></div>
+            <div><label class="block text-sm text-slate-400 mb-1">תקופה</label>
+            <input id="vipAdmPkg2Period" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="/ לחודש"/></div>
+            <div><label class="block text-sm text-slate-400 mb-1">טקסט כפתור</label>
+            <input id="vipAdmPkg2Btn" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="בחר במסלול זהב"/></div>
+        </div>
+        <div class="mb-4"><label class="block text-sm text-slate-400 mb-1">תג מומלץ (Badge)</label>
+        <input id="vipAdmPkg2Badge" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="הנבחר ביותר"/></div>
+        <div><label class="block text-sm text-slate-400 mb-1">תכונות (שורה לכל תכונה, פורמט: icon|טקסט)</label>
+        <textarea id="vipAdmPkg2Features" rows="6" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none text-sm">video_call|שיחות וידאו Live Hello
+person_pin|שדכן אישי צמוד המלווה את התהליך
+ads_click|מיקום בעדיפות גבוהה בחיפושים
+translate|שירותי תרגום הודעות מקצועיים
+add_circle|כל הטבות מסלול Silver</textarea></div>
+    </div>
+
+    <!-- Package 3 - Diamond -->
+    <div class="bg-card rounded-xl border border-blue-400/20 p-6 mb-6">
+        <h3 class="text-lg font-bold text-diamond-blue mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined">diamond</span> חבילה 3 - Diamond
+        </h3>
+        <div class="grid md:grid-cols-4 gap-4 mb-4">
+            <div><label class="block text-sm text-slate-400 mb-1">שם חבילה</label>
+            <input id="vipAdmPkg3Name" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="Diamond VIP"/></div>
+            <div><label class="block text-sm text-slate-400 mb-1">מחיר</label>
+            <input id="vipAdmPkg3Price" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="₪9,900"/></div>
+            <div><label class="block text-sm text-slate-400 mb-1">תקופה</label>
+            <input id="vipAdmPkg3Period" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="/ לחודש"/></div>
+            <div><label class="block text-sm text-slate-400 mb-1">טקסט כפתור</label>
+            <input id="vipAdmPkg3Btn" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="בחר במסלול יהלום"/></div>
+        </div>
+        <div><label class="block text-sm text-slate-400 mb-1">תכונות (שורה לכל תכונה, פורמט: icon|טקסט)</label>
+        <textarea id="vipAdmPkg3Features" rows="6" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none text-sm">flight_takeoff|סיורי הכרות בהתאמה אישית מלאה
+concierge|שירותי קונסיירז' מלאים בחו"ל
+all_inclusive|היכרויות ללא הגבלה
+airport_shuttle|ליווי VIP משדה התעופה
+lock|פרטיות מוחלטת ודיסקרטיות מלאה</textarea></div>
+    </div>
+
+    <!-- Why Choose Us -->
+    <div class="bg-card rounded-xl border border-white/10 p-6 mb-6">
+        <h3 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined">check_circle</span> למה לבחור בנו (3 יתרונות)
+        </h3>
+        <div class="grid md:grid-cols-2 gap-4 mb-4">
+            <div><label class="block text-sm text-slate-400 mb-1">כותרת הסקציה</label>
+            <input id="vipAdmWhyTitle" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="למה לבחור בשירות ה-VIP שלנו?"/></div>
+            <div><label class="block text-sm text-slate-400 mb-1">תת כותרת</label>
+            <input id="vipAdmWhySubtitle" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="הבטחת הצלחה וביטחון מלא בתהליך מציאת הזוגיות המושלמת עבורך"/></div>
+        </div>
+        <div class="grid md:grid-cols-3 gap-4">
+            <div class="space-y-2">
+                <label class="text-xs text-primary font-bold">יתרון 1</label>
+                <input id="vipAdmFeat1Icon" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" placeholder="שם אייקון" value="shield_person"/>
+                <input id="vipAdmFeat1Title" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="אימות קפדני"/>
+                <textarea id="vipAdmFeat1Text" rows="2" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm">כל פרופיל במאגר שלנו עובר תהליך אימות ידני, פיזי ומעמיק להבטחת אמינות מקסימלית ללא פשרות.</textarea>
+            </div>
+            <div class="space-y-2">
+                <label class="text-xs text-primary font-bold">יתרון 2</label>
+                <input id="vipAdmFeat2Icon" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" placeholder="שם אייקון" value="handshake"/>
+                <input id="vipAdmFeat2Title" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="ליווי אישי מקצועי"/>
+                <textarea id="vipAdmFeat2Text" rows="2" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm">מומחי ההתאמה שלנו זמינים עבורך לכל שאלה, הכוונה וייעוץ אישי צמוד לאורך כל הדרך אל החופה.</textarea>
+            </div>
+            <div class="space-y-2">
+                <label class="text-xs text-primary font-bold">יתרון 3</label>
+                <input id="vipAdmFeat3Icon" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" placeholder="שם אייקון" value="encrypted"/>
+                <input id="vipAdmFeat3Title" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="דיסקרטיות מלאה"/>
+                <textarea id="vipAdmFeat3Text" rows="2" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm">שמירה על הפרטיות והמידע שלך היא הערך העליון שלנו. אנו מתחייבים לסודיות ודיסקרטיות מוחלטת.</textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="bg-card rounded-xl border border-white/10 p-6 mb-6">
+        <h3 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined">campaign</span> קריאה לפעולה (CTA)
+        </h3>
+        <div class="grid md:grid-cols-2 gap-4">
+            <div><label class="block text-sm text-slate-400 mb-1">כותרת CTA</label>
+            <input id="vipAdmCtaTitle" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="מוכן להתחיל את סיפור האהבה שלך?"/></div>
+            <div><label class="block text-sm text-slate-400 mb-1">תת כותרת CTA</label>
+            <input id="vipAdmCtaSubtitle" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="מספר המקומות לחברי VIP מוגבל בכל חודש כדי להבטיח איכות מקסימלית."/></div>
+        </div>
+        <div class="mt-4"><label class="block text-sm text-slate-400 mb-1">טקסט כפתור CTA</label>
+        <input id="vipAdmCtaBtn" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="קבע פגישת ייעוץ אישית עכשיו"/></div>
+    </div>
+
+    <button onclick="saveVipSettings()" class="bg-primary text-bg px-8 py-3 rounded-lg font-bold text-sm hover:bg-primary/90 transition-all">שמור שינויים</button>
+    <span id="vipMsg" class="mr-4 text-sm text-green-400 hidden">נשמר בהצלחה!</span>
+</div>
+
+<div id="tab-about" class="tab-content hidden">
+    <h2 class="text-2xl font-bold mb-8">עריכת דף אודות</h2>
+
+    <!-- Hero -->
+    <div class="bg-card rounded-xl border border-white/10 p-6 mb-6">
+        <h3 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined">image</span> Hero (באנר עליון)
+        </h3>
+        <div class="grid md:grid-cols-2 gap-4">
+            <div><label class="block text-sm text-slate-400 mb-1">כותרת ראשית</label>
+            <input id="aboutHeroTitle" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="אודות הסוכנות שלנו"/></div>
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">תמונת רקע Hero</label>
+                <div class="flex gap-2 items-center">
+                    <label class="flex-1 flex items-center justify-center gap-2 bg-bg border-2 border-dashed border-white/20 hover:border-primary/50 rounded-lg py-3 px-4 cursor-pointer transition-all">
+                        <span class="material-symbols-outlined text-primary">cloud_upload</span>
+                        <span id="aboutHeroImgLabel" class="text-slate-400 text-sm">העלה תמונה</span>
+                        <input type="file" accept="image/*" class="hidden" onchange="uploadAboutImage(this,'about_hero_image','aboutHeroImgLabel','aboutHeroImgPreview')"/>
+                    </label>
+                    <img id="aboutHeroImgPreview" class="size-12 rounded-lg object-cover border border-white/10 hidden"/>
+                </div>
+                <input id="about_hero_image" type="hidden"/>
+            </div>
+        </div>
+        <div class="mt-4"><label class="block text-sm text-slate-400 mb-1">תת כותרת</label>
+        <textarea id="aboutHeroSubtitle" rows="2" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none text-sm">מובילים את עולם השידוכים הבינלאומי עם סטנדרטים של יוקרה, דיסקרטיות והתאמה אישית מדויקת.</textarea></div>
+    </div>
+
+    <!-- Who We Are -->
+    <div class="bg-card rounded-xl border border-white/10 p-6 mb-6">
+        <h3 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined">groups</span> מי אנחנו
+        </h3>
+        <div class="grid md:grid-cols-2 gap-4">
+            <div><label class="block text-sm text-slate-400 mb-1">כותרת</label>
+            <input id="aboutWhoTitle" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="מי אנחנו"/></div>
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">תמונה</label>
+                <div class="flex gap-2 items-center">
+                    <label class="flex-1 flex items-center justify-center gap-2 bg-bg border-2 border-dashed border-white/20 hover:border-primary/50 rounded-lg py-3 px-4 cursor-pointer transition-all">
+                        <span class="material-symbols-outlined text-primary">cloud_upload</span>
+                        <span id="aboutWhoImgLabel" class="text-slate-400 text-sm">העלה תמונה</span>
+                        <input type="file" accept="image/*" class="hidden" onchange="uploadAboutImage(this,'about_who_image','aboutWhoImgLabel','aboutWhoImgPreview')"/>
+                    </label>
+                    <img id="aboutWhoImgPreview" class="size-12 rounded-lg object-cover border border-white/10 hidden"/>
+                </div>
+                <input id="about_who_image" type="hidden"/>
+            </div>
+        </div>
+        <div class="mt-4"><label class="block text-sm text-slate-400 mb-1">טקסט (רווח שורה כפול = פסקה חדשה)</label>
+        <textarea id="aboutWhoText" rows="6" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none text-sm"></textarea></div>
+    </div>
+
+    <!-- Stats -->
+    <div class="bg-card rounded-xl border border-white/10 p-6 mb-6">
+        <h3 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined">bar_chart</span> מספרים / סטטיסטיקות
+        </h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div><label class="block text-sm text-slate-400 mb-1">מספר 1</label>
+            <input id="aboutStat1Num" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="15+"/>
+            <input id="aboutStat1Label" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm mt-2" value="שנות ניסיון"/></div>
+            <div><label class="block text-sm text-slate-400 mb-1">מספר 2</label>
+            <input id="aboutStat2Num" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="500+"/>
+            <input id="aboutStat2Label" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm mt-2" value="זוגות נשואים"/></div>
+            <div><label class="block text-sm text-slate-400 mb-1">מספר 3</label>
+            <input id="aboutStat3Num" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="100%"/>
+            <input id="aboutStat3Label" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm mt-2" value="דיסקרטיות מלאה"/></div>
+            <div><label class="block text-sm text-slate-400 mb-1">מספר 4</label>
+            <input id="aboutStat4Num" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="VIP"/>
+            <input id="aboutStat4Label" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm mt-2" value="שירות יוקרתי"/></div>
+        </div>
+    </div>
+
+    <!-- Vision Cards -->
+    <div class="bg-card rounded-xl border border-white/10 p-6 mb-6">
+        <h3 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined">visibility</span> חזון ושליחות (3 כרטיסים)
+        </h3>
+        <div><label class="block text-sm text-slate-400 mb-1">כותרת הסקציה</label>
+        <input id="aboutVisionTitle" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="החזון והשליחות שלנו"/></div>
+        <div class="grid md:grid-cols-3 gap-4 mt-4">
+            <div class="space-y-2">
+                <label class="text-xs text-primary font-bold">כרטיס 1</label>
+                <input id="aboutCard1Title" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="אמינות ויושרה"/>
+                <textarea id="aboutCard1Text" rows="3" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm">אנו מאמינים בשקיפות מלאה. כל המועמדות עוברות תהליך אימות קפדני ואישי כדי להבטיח כוונות רציניות בלבד.</textarea>
+            </div>
+            <div class="space-y-2">
+                <label class="text-xs text-primary font-bold">כרטיס 2</label>
+                <input id="aboutCard2Title" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="איכות ללא פשרות"/>
+                <textarea id="aboutCard2Text" rows="3" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm">אנחנו מתמקדים באיכות ולא בכמות. כל התאמה מבוצעת לאחר ניתוח מעמיק של ערכים, סגנון חיים ושאיפות עתידיות.</textarea>
+            </div>
+            <div class="space-y-2">
+                <label class="text-xs text-primary font-bold">כרטיס 3</label>
+                <input id="aboutCard3Title" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="ליווי אישי"/>
+                <textarea id="aboutCard3Text" rows="3" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm">התהליך לא מסתיים בהכרות. אנו מלווים אתכם בכל שלבי בניית הקשר, כולל סיוע לוגיסטי ותרבותי במדינות היעד.</textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Why Choose Us -->
+    <div class="bg-card rounded-xl border border-white/10 p-6 mb-6">
+        <h3 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined">check_circle</span> למה לבחור בנו
+        </h3>
+        <div class="grid md:grid-cols-2 gap-4">
+            <div><label class="block text-sm text-slate-400 mb-1">כותרת</label>
+            <input id="aboutWhyTitle" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="למה לבחור בנו?"/></div>
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">תמונה</label>
+                <div class="flex gap-2 items-center">
+                    <label class="flex-1 flex items-center justify-center gap-2 bg-bg border-2 border-dashed border-white/20 hover:border-primary/50 rounded-lg py-3 px-4 cursor-pointer transition-all">
+                        <span class="material-symbols-outlined text-primary">cloud_upload</span>
+                        <span id="aboutWhyImgLabel" class="text-slate-400 text-sm">העלה תמונה</span>
+                        <input type="file" accept="image/*" class="hidden" onchange="uploadAboutImage(this,'about_why_image','aboutWhyImgLabel','aboutWhyImgPreview')"/>
+                    </label>
+                    <img id="aboutWhyImgPreview" class="size-12 rounded-lg object-cover border border-white/10 hidden"/>
+                </div>
+                <input id="about_why_image" type="hidden"/>
+            </div>
+        </div>
+        <div class="grid md:grid-cols-3 gap-4 mt-4">
+            <div class="space-y-2">
+                <label class="text-xs text-primary font-bold">יתרון 1</label>
+                <input id="aboutWhy1Title" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="גישה למאגר בלעדי"/>
+                <textarea id="aboutWhy1Text" rows="2" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm">נשים שאינן מופיעות באפליקציות הסטנדרטיות ומחפשות קשר רציני בלבד.</textarea>
+            </div>
+            <div class="space-y-2">
+                <label class="text-xs text-primary font-bold">יתרון 2</label>
+                <input id="aboutWhy2Title" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="סניפים מקומיים"/>
+                <textarea id="aboutWhy2Text" rows="2" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm">צוותים פיזיים במולדובה ואוקראינה המכירים כל מועמדת באופן אישי.</textarea>
+            </div>
+            <div class="space-y-2">
+                <label class="text-xs text-primary font-bold">יתרון 3</label>
+                <input id="aboutWhy3Title" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm" value="התאמה תרבותית"/>
+                <textarea id="aboutWhy3Text" rows="2" class="w-full bg-bg border border-white/10 rounded-lg py-2 px-3 text-white focus:border-primary outline-none text-sm">גישור על פערים שפתיים ותרבותיים ליצירת חיבור חלק וטבעי.</textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="bg-card rounded-xl border border-white/10 p-6 mb-6">
+        <h3 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined">campaign</span> קריאה לפעולה (CTA)
+        </h3>
+        <div class="grid md:grid-cols-2 gap-4">
+            <div><label class="block text-sm text-slate-400 mb-1">כותרת CTA</label>
+            <input id="aboutCtaTitle" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="מוכנים להתחיל את המסע?"/></div>
+            <div><label class="block text-sm text-slate-400 mb-1">תת כותרת CTA</label>
+            <input id="aboutCtaSubtitle" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="צרו קשר עוד היום וגלו כיצד נוכל לעזור לכם למצוא את האהבה האמיתית."/></div>
+        </div>
+    </div>
+
+    <button onclick="saveAboutSettings()" class="bg-primary text-bg px-8 py-3 rounded-lg font-bold text-sm hover:bg-primary/90 transition-all">שמור שינויים</button>
+    <span id="aboutMsg" class="mr-4 text-sm text-green-400 hidden">נשמר בהצלחה!</span>
+</div>
+
+<!-- ========== CONTACT TAB ========== -->
+<div id="tab-contact" class="tab-content hidden">
+    <div class="flex items-center justify-between mb-8">
+        <h2 class="text-2xl font-bold">ניהול דף צור קשר</h2>
+        <div class="flex items-center gap-3">
+            <a href="/contact" target="_blank" class="flex items-center gap-1 text-sm text-slate-400 hover:text-primary transition-colors">
+                <span class="material-symbols-outlined text-lg">open_in_new</span> צפה בדף
+            </a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="bg-card rounded-xl border border-white/10 p-6 mb-6">
+        <h3 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined">title</span> כותרת ראשית
+        </h3>
+        <div class="grid md:grid-cols-1 gap-4">
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">כותרת</label>
+                <input id="ctAdmHeroTitle" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="צרו איתנו קשר"/>
+            </div>
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">תת כותרת</label>
+                <textarea id="ctAdmHeroSubtitle" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none resize-none" rows="2" placeholder="אנחנו כאן כדי ללוות אותך..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Info Cards -->
+    <div class="bg-card rounded-xl border border-white/10 p-6 mb-6">
+        <h3 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined">contact_phone</span> פרטי יצירת קשר
+        </h3>
+        <div class="grid md:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">תווית אימייל</label>
+                <input id="ctAdmEmailLabel" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="אימייל רשמי"/>
+            </div>
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">כתובת אימייל</label>
+                <input id="ctAdmEmailValue" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="office@moldova-ukraine.co.il"/>
+            </div>
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">תווית טלפון</label>
+                <input id="ctAdmPhoneLabel" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="מוקד טלפוני"/>
+            </div>
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">מספר טלפון</label>
+                <input id="ctAdmPhoneValue" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="03-1234-567"/>
+            </div>
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">תווית כתובת</label>
+                <input id="ctAdmAddressLabel" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="כתובת המשרד"/>
+            </div>
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">כתובת</label>
+                <input id="ctAdmAddressValue" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="תל אביב, ישראל"/>
+            </div>
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">תווית שעות פעילות</label>
+                <input id="ctAdmHoursLabel" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="שעות פעילות"/>
+            </div>
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">שעות פעילות</label>
+                <input id="ctAdmHoursValue" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="א׳-ה׳ 09:00-18:00"/>
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp -->
+    <div class="bg-card rounded-xl border border-white/10 p-6 mb-6">
+        <h3 class="text-lg font-bold text-[#25D366] mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined">chat</span> כפתור WhatsApp
+        </h3>
+        <div class="grid md:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">קישור WhatsApp</label>
+                <input id="ctAdmWhatsappUrl" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none text-left" dir="ltr" placeholder="https://wa.me/972..."/>
+            </div>
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">טקסט כפתור</label>
+                <input id="ctAdmWhatsappText" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="שיחה מהירה ב-WhatsApp"/>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Settings -->
+    <div class="bg-card rounded-xl border border-white/10 p-6 mb-6">
+        <h3 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined">edit_note</span> הגדרות טופס
+        </h3>
+        <div class="grid md:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">כותרת טופס</label>
+                <input id="ctAdmFormTitle" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="שלחו לנו הודעה"/>
+            </div>
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">תת כותרת טופס</label>
+                <input id="ctAdmFormSubtitle" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="מלאו את הפרטים ונחזור אליכם בהקדם"/>
+            </div>
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">טקסט כפתור שליחה</label>
+                <input id="ctAdmSubmitBtn" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="שלח פנייה ליועץ VIP"/>
+            </div>
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">הערת פרטיות</label>
+                <input id="ctAdmDisclaimer" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="* הפרטים שלך נשמרים בסודיות..."/>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex items-center gap-4">
+        <button onclick="saveContactSettings()" class="bg-primary text-bg px-8 py-3 rounded-lg font-bold hover:bg-primary/90 transition-all flex items-center gap-2">
+            <span class="material-symbols-outlined">save</span> שמור שינויים
+        </button>
+        <span id="contactMsg" class="mr-4 text-sm text-green-400 hidden">נשמר בהצלחה!</span>
+    </div>
+</div>
+
+<!-- ========== SITE SETTINGS TAB ========== -->
+<div id="tab-site" class="tab-content hidden">
+    <h2 class="text-2xl font-bold mb-8">הגדרות אתר</h2>
+
+    <!-- Header -->
+    <div class="bg-card rounded-xl border border-white/10 p-6 mb-6">
+        <h3 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined">web</span> הידר (Header)
+        </h3>
+        <div class="grid md:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">שם האתר</label>
+                <input id="siteName" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="Moldova & Ukraine"/>
+            </div>
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">תת כותרת</label>
+                <input id="siteSubtitle" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="Luxury Brides"/>
+            </div>
+        </div>
+        <div class="mt-4">
+            <label class="block text-sm text-slate-400 mb-1">קישורי תפריט (אחד בכל שורה: שם|כתובת)</label>
+            <textarea id="menuLinks" rows="4" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none text-sm">דף הבית|/
+חיפוש פרופילים|/search
+סיפורי הצלחה|#stories
+צרו קשר|#contact</textarea>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="bg-card rounded-xl border border-white/10 p-6 mb-6">
+        <h3 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined">bottom_navigation</span> פוטר (Footer)
+        </h3>
+        <div class="mt-0">
+            <label class="block text-sm text-slate-400 mb-1">תיאור (טקסט מתחת ללוגו)</label>
+            <textarea id="footerDescInput" rows="3" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none text-sm">הסוכנות המובילה בעולם לשידוכי יוקרה הממוקדת במולדובה ואוקראינה. אנו מביאים את השילוב המנצח של יופי מזרח אירופאי וערכים מסורתיים ללקוחותינו ברחבי העולם.</textarea>
+        </div>
+        <div class="mt-4">
+            <label class="block text-sm text-slate-400 mb-1">קישורים מהירים (אחד בכל שורה: שם|כתובת)</label>
+            <textarea id="footerLinksInput" rows="5" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none text-sm">אודותינו|/about
+תהליך השידוך|/process
+חבילות VIP|/vip
+שאלות נפוצות|/faq
+צרו קשר|/contact</textarea>
+        </div>
+        <div class="grid md:grid-cols-2 gap-4 mt-4">
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">טלפון</label>
+                <input id="footerPhoneInput" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="+972 3-123-4567"/>
+            </div>
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">אימייל</label>
+                <input id="footerEmailInput" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="office@moldova-ukraine-brides.com"/>
+            </div>
+        </div>
+        <div class="mt-4">
+            <label class="block text-sm text-slate-400 mb-1">כתובת</label>
+            <input id="footerAddressInput" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="משרד ראשי: תל אביב, ישראל"/>
+        </div>
+        <div class="mt-4">
+            <label class="block text-sm text-slate-400 mb-1">טקסט תחתון (זכויות יוצרים)</label>
+            <input id="footerCopyInput" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="© 2024 Moldova & Ukraine Brides Luxury Matchmaking. כל הזכויות שמורות."/>
+        </div>
+    </div>
+
+    <!-- Social Links -->
+    <div class="bg-card rounded-xl border border-white/10 p-6 mb-6">
+        <h3 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined">share</span> קישורים חברתיים (פוטר דף הבית)
+        </h3>
+        <p class="text-xs text-slate-500 mb-4">אייקונים מ-Material Symbols: public, alternate_email, phone_iphone, chat, language, favorite, facebook, instagram וכו׳</p>
+        <div class="grid md:grid-cols-3 gap-4">
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">אייקון 1</label>
+                <input id="socialIcon1Input" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="public"/>
+            </div>
+            <div class="md:col-span-2">
+                <label class="block text-sm text-slate-400 mb-1">קישור 1</label>
+                <input id="socialUrl1Input" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none text-left" dir="ltr" placeholder="https://..."/>
+            </div>
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">אייקון 2</label>
+                <input id="socialIcon2Input" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="alternate_email"/>
+            </div>
+            <div class="md:col-span-2">
+                <label class="block text-sm text-slate-400 mb-1">קישור 2</label>
+                <input id="socialUrl2Input" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none text-left" dir="ltr" placeholder="https://..."/>
+            </div>
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">אייקון 3</label>
+                <input id="socialIcon3Input" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="phone_iphone"/>
+            </div>
+            <div class="md:col-span-2">
+                <label class="block text-sm text-slate-400 mb-1">קישור 3</label>
+                <input id="socialUrl3Input" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none text-left" dir="ltr" placeholder="https://..."/>
+            </div>
+        </div>
+    </div>
+
+    <!-- SMTP Email -->
+    <div class="bg-card rounded-xl border border-white/10 p-6 mb-6">
+        <h3 class="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined">mail</span> הגדרות אימייל (SMTP)
+        </h3>
+        <p class="text-xs text-slate-500 mb-4">כדי לשלוח מיילים עם פרטי גישה למשתמשים. לדוגמה Gmail: smtp.gmail.com, פורט 587, ודרוש App Password.</p>
+        <div class="grid md:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">שרת SMTP</label>
+                <input id="smtpHost" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="smtp.gmail.com"/>
+            </div>
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">פורט</label>
+                <input id="smtpPort" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="587"/>
+            </div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-4 mt-4">
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">שם משתמש (אימייל שולח)</label>
+                <input id="smtpUser" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="your@gmail.com"/>
+            </div>
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">סיסמת SMTP / App Password</label>
+                <input id="smtpPassword" type="password" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="••••••••"/>
+            </div>
+        </div>
+        <div class="mt-4">
+            <label class="block text-sm text-slate-400 mb-1">שם השולח</label>
+            <input id="smtpFromName" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="Moldova & Ukraine Brides"/>
+        </div>
+    </div>
+
+    <button onclick="saveSiteSettings()" class="bg-primary text-bg px-8 py-3 rounded-lg font-bold text-sm hover:bg-primary/90 transition-all">
+        שמור הגדרות
+    </button>
+    <span id="siteMsg" class="mr-4 text-sm text-green-400 hidden">נשמר בהצלחה!</span>
+</div>
+
+</main>
+
+<!-- ========== PROFILE MODAL ========== -->
+<div id="profileModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/70 backdrop-blur-sm">
+<div class="relative w-full max-w-[750px] mx-4 bg-card p-8 rounded-xl border border-white/10 shadow-2xl max-h-[90vh] overflow-y-auto">
+    <button onclick="closeProfileForm()" class="absolute top-4 left-4 text-slate-400 hover:text-white"><span class="material-symbols-outlined">close</span></button>
+    <h3 id="profileFormTitle" class="text-xl font-bold text-primary mb-6">הוסף פרופיל</h3>
+    <form id="profileForm" class="space-y-4">
+        <input type="hidden" id="pf_id"/>
+        <div class="grid grid-cols-2 gap-4">
+            <div><label class="block text-sm text-slate-400 mb-1">שם פרטי</label>
+            <input id="pf_name" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" required/></div>
+            <div><label class="block text-sm text-slate-400 mb-1">גיל</label>
+            <input id="pf_age" type="number" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" required/></div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+            <div><label class="block text-sm text-slate-400 mb-1">עיר</label>
+            <input id="pf_city" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" required/></div>
+            <div><label class="block text-sm text-slate-400 mb-1">מדינה</label>
+            <select id="pf_country" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none">
+                <option value="moldova">מולדובה</option>
+                <option value="ukraine">אוקראינה</option>
+            </select></div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+            <div><label class="block text-sm text-slate-400 mb-1">מקצוע</label>
+            <input id="pf_occupation" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none"/></div>
+            <div><label class="block text-sm text-slate-400 mb-1">השכלה</label>
+            <input id="pf_education" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none"/></div>
+        </div>
+        <div><label class="block text-sm text-slate-400 mb-1">שפות</label>
+        <input id="pf_languages" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="אנגלית, רוסית, רומנית"/></div>
+        <div><label class="block text-sm text-slate-400 mb-1">תחביבים</label>
+        <input id="pf_hobbies" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none"/></div>
+        <div><label class="block text-sm text-slate-400 mb-1">ביוגרפיה</label>
+        <textarea id="pf_bio" rows="3" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none"></textarea></div>
+        <div><label class="block text-sm text-slate-400 mb-1">ציטוט</label>
+        <input id="pf_quote" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none"/></div>
+        <div>
+            <label class="block text-sm text-slate-400 mb-1">תמונה ראשית</label>
+            <div class="flex gap-3 items-center">
+                <label class="flex-1 flex items-center justify-center gap-2 bg-bg border-2 border-dashed border-white/20 hover:border-primary/50 rounded-lg py-4 px-4 cursor-pointer transition-all">
+                    <span class="material-symbols-outlined text-primary text-2xl">cloud_upload</span>
+                    <span id="pf_image_label" class="text-slate-400 text-sm">לחץ להעלאת תמונה</span>
+                    <input id="pf_image_file" type="file" accept="image/*" class="hidden" onchange="uploadMainImage(this)"/>
+                </label>
+                <img id="pf_image_preview" class="size-16 rounded-lg object-cover border border-white/10 hidden" src=""/>
+            </div>
+            <input id="pf_image" type="hidden"/>
+        </div>
+        <!-- Gallery Photos -->
+        <div>
+            <label class="block text-sm text-slate-400 mb-2">תמונות גלריה</label>
+            <div id="pf_gallery" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 mb-3"></div>
+            <label class="flex items-center justify-center gap-2 bg-bg border-2 border-dashed border-white/20 hover:border-primary/50 rounded-lg py-3 px-4 cursor-pointer transition-all">
+                <span class="material-symbols-outlined text-primary">add_photo_alternate</span>
+                <span class="text-slate-400 text-sm">הוסף תמונות לגלריה</span>
+                <input type="file" accept="image/*" multiple class="hidden" onchange="uploadGalleryPhotos(this)"/>
+            </label>
+        </div>
+        <div class="grid grid-cols-3 gap-4">
+            <div><label class="block text-sm text-slate-400 mb-1">מצב משפחתי</label>
+            <select id="pf_marital" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none">
+                <option value="single">רווקה</option>
+                <option value="divorced">גרושה</option>
+                <option value="widowed">אלמנה</option>
+            </select></div>
+            <div class="flex items-end gap-2 pb-1"><input id="pf_vip" type="checkbox" class="size-5 rounded text-primary bg-bg border-white/10"/>
+            <label class="text-sm text-slate-400">VIP</label></div>
+            <div class="flex items-end gap-2 pb-1"><input id="pf_verified" type="checkbox" class="size-5 rounded text-primary bg-bg border-white/10"/>
+            <label class="text-sm text-slate-400">מאומתת</label></div>
+        </div>
+        <div id="profileFormError" class="hidden text-center text-sm font-bold text-red-400"></div>
+        <button type="submit" class="w-full bg-primary text-bg py-3 rounded-lg font-bold text-sm hover:bg-primary/90 transition-all mt-2">שמור פרופיל</button>
+    </form>
+</div>
+</div>
+
+<!-- ========== PAGE MODAL ========== -->
+<div id="pageModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/70 backdrop-blur-sm">
+<div class="relative w-full max-w-[700px] mx-4 bg-card p-8 rounded-xl border border-white/10 shadow-2xl max-h-[90vh] overflow-y-auto">
+    <button onclick="closePageForm()" class="absolute top-4 left-4 text-slate-400 hover:text-white"><span class="material-symbols-outlined">close</span></button>
+    <h3 id="pageFormTitle" class="text-xl font-bold text-primary mb-6">דף חדש</h3>
+    <form id="pageForm" class="space-y-4">
+        <input type="hidden" id="pg_id"/>
+        <div class="grid grid-cols-2 gap-4">
+            <div><label class="block text-sm text-slate-400 mb-1">שם הדף</label>
+            <input id="pg_title" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" required placeholder="אודותינו"/></div>
+            <div><label class="block text-sm text-slate-400 mb-1">נתיב (slug)</label>
+            <input id="pg_slug" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" required placeholder="about"/></div>
+        </div>
+        <div class="flex items-center gap-4">
+            <label class="flex items-center gap-2"><input id="pg_menu" type="checkbox" class="size-5 rounded text-primary bg-bg border-white/10"/> <span class="text-sm text-slate-400">הצג בתפריט</span></label>
+            <label class="flex items-center gap-2"><input id="pg_active" type="checkbox" class="size-5 rounded text-primary bg-bg border-white/10" checked/> <span class="text-sm text-slate-400">פעיל</span></label>
+        </div>
+        <div><label class="block text-sm text-slate-400 mb-1">תוכן הדף (HTML)</label>
+        <textarea id="pg_content" rows="15" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none text-sm font-mono" placeholder="<h1>כותרת</h1><p>תוכן...</p>"></textarea></div>
+        <div id="pageFormError" class="hidden text-center text-sm font-bold text-red-400"></div>
+        <button type="submit" class="w-full bg-primary text-bg py-3 rounded-lg font-bold text-sm hover:bg-primary/90 transition-all mt-2">שמור דף</button>
+    </form>
+</div>
+</div>
+
+<!-- ========== PROCESS STEP MODAL ========== -->
+<div id="stepModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/70 backdrop-blur-sm">
+<div class="relative w-full max-w-[600px] mx-4 bg-card p-8 rounded-xl border border-white/10 shadow-2xl max-h-[90vh] overflow-y-auto">
+    <button onclick="closeStepForm()" class="absolute top-4 left-4 text-slate-400 hover:text-white"><span class="material-symbols-outlined">close</span></button>
+    <h3 id="stepFormTitle" class="text-xl font-bold text-primary mb-6">הוסף שלב</h3>
+    <form id="stepForm" class="space-y-4">
+        <input type="hidden" id="sp_id"/>
+        <div class="grid grid-cols-3 gap-4">
+            <div><label class="block text-sm text-slate-400 mb-1">מספר שלב</label>
+            <input id="sp_number" type="number" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="1" required/></div>
+            <div class="col-span-2"><label class="block text-sm text-slate-400 mb-1">כותרת</label>
+            <input id="sp_title" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" required/></div>
+        </div>
+        <div><label class="block text-sm text-slate-400 mb-1">תיאור</label>
+        <textarea id="sp_desc" rows="4" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" required></textarea></div>
+        <div class="grid grid-cols-2 gap-4">
+            <div><label class="block text-sm text-slate-400 mb-1">אייקון (Material Symbol)</label>
+            <input id="sp_icon" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="forum, favorite, star..."/></div>
+            <div class="flex items-end gap-2 pb-1">
+                <input id="sp_active" type="checkbox" class="size-5 rounded text-primary bg-bg border-white/10" checked/>
+                <label class="text-sm text-slate-400">פעיל</label>
+            </div>
+        </div>
+        <div>
+            <label class="block text-sm text-slate-400 mb-1">תמונה (אופציונלי)</label>
+            <div class="flex gap-3 items-center">
+                <label class="flex-1 flex items-center justify-center gap-2 bg-bg border-2 border-dashed border-white/20 hover:border-primary/50 rounded-lg py-4 px-4 cursor-pointer transition-all">
+                    <span class="material-symbols-outlined text-primary text-2xl">cloud_upload</span>
+                    <span id="sp_image_label" class="text-slate-400 text-sm">לחץ להעלאת תמונה</span>
+                    <input id="sp_image_file" type="file" accept="image/*" class="hidden" onchange="uploadStepImage(this)"/>
+                </label>
+                <img id="sp_image_preview" class="size-16 rounded-lg object-cover border border-white/10 hidden"/>
+            </div>
+            <input id="sp_image" type="hidden"/>
+        </div>
+        <div id="stepFormError" class="hidden text-center text-sm font-bold text-red-400"></div>
+        <button type="submit" class="w-full bg-primary text-bg py-3 rounded-lg font-bold text-sm hover:bg-primary/90 transition-all mt-2">שמור שלב</button>
+    </form>
+</div>
+</div>
+
+<!-- ========== FAQ MODAL ========== -->
+<div id="faqModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/70 backdrop-blur-sm">
+<div class="relative w-full max-w-[600px] mx-4 bg-card p-8 rounded-xl border border-white/10 shadow-2xl max-h-[90vh] overflow-y-auto">
+    <button onclick="closeFaqForm()" class="absolute top-4 left-4 text-slate-400 hover:text-white"><span class="material-symbols-outlined">close</span></button>
+    <h3 id="faqFormTitle" class="text-xl font-bold text-primary mb-6">הוסף שאלה</h3>
+    <form id="faqForm" class="space-y-4">
+        <input type="hidden" id="fq_id"/>
+        <div><label class="block text-sm text-slate-400 mb-1">השאלה</label>
+        <input id="fq_question" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" required/></div>
+        <div><label class="block text-sm text-slate-400 mb-1">התשובה</label>
+        <textarea id="fq_answer" rows="5" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" required></textarea></div>
+        <div class="grid grid-cols-2 gap-4">
+            <div><label class="block text-sm text-slate-400 mb-1">סדר תצוגה</label>
+            <input id="fq_order" type="number" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" value="0"/></div>
+            <div class="flex items-end gap-2 pb-1">
+                <input id="fq_active" type="checkbox" class="size-5 rounded text-primary bg-bg border-white/10" checked/>
+                <label class="text-sm text-slate-400">פעיל</label>
+            </div>
+        </div>
+        <div id="faqFormError" class="hidden text-center text-sm font-bold text-red-400"></div>
+        <button type="submit" class="w-full bg-primary text-bg py-3 rounded-lg font-bold text-sm hover:bg-primary/90 transition-all mt-2">שמור שאלה</button>
+    </form>
+</div>
+</div>
+
+<!-- ========== USER EDIT MODAL ========== -->
+<div id="userModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/70 backdrop-blur-sm">
+<div class="relative w-full max-w-[600px] mx-4 bg-card p-8 rounded-xl border border-white/10 shadow-2xl max-h-[90vh] overflow-y-auto">
+    <button onclick="closeUserForm()" class="absolute top-4 left-4 text-slate-400 hover:text-white"><span class="material-symbols-outlined">close</span></button>
+    <h3 class="text-xl font-bold text-primary mb-6">עריכת משתמש</h3>
+    <form id="userForm" class="space-y-4">
+        <input type="hidden" id="uf_id"/>
+        <div class="grid grid-cols-2 gap-4">
+            <div><label class="block text-sm text-slate-400 mb-1">שם מלא</label>
+            <input id="uf_name" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" required/></div>
+            <div><label class="block text-sm text-slate-400 mb-1">גיל</label>
+            <input id="uf_age" type="number" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none"/></div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+            <div><label class="block text-sm text-slate-400 mb-1">אימייל</label>
+            <input id="uf_email" type="email" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" required/></div>
+            <div><label class="block text-sm text-slate-400 mb-1">טלפון</label>
+            <input id="uf_phone" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none"/></div>
+        </div>
+        <div class="bg-bg/50 border border-primary/20 rounded-lg p-4">
+            <label class="block text-sm text-primary font-bold mb-1">סיסמה חדשה</label>
+            <input id="uf_password" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="השאר ריק אם אין שינוי"/>
+            <p class="text-xs text-slate-500 mt-2">אם תמלא סיסמה חדשה - היא תישלח למייל של המשתמש אוטומטית</p>
+        </div>
+        <div class="flex items-center gap-6">
+            <label class="flex items-center gap-2"><input id="uf_vip" type="checkbox" class="size-5 rounded text-primary bg-bg border-white/10"/> <span class="text-sm text-slate-400">VIP</span></label>
+            <label class="flex items-center gap-2"><input id="uf_active" type="checkbox" class="size-5 rounded text-primary bg-bg border-white/10" checked/> <span class="text-sm text-slate-400">פעיל</span></label>
+        </div>
+        <div id="userFormError" class="hidden text-center text-sm font-bold text-red-400"></div>
+        <div id="userFormSuccess" class="hidden text-center text-sm font-bold text-green-400"></div>
+        <button type="submit" class="w-full bg-primary text-bg py-3 rounded-lg font-bold text-sm hover:bg-primary/90 transition-all mt-2">שמור שינויים</button>
+    </form>
+</div>
+</div>
+
+<!-- ========== STORY MODAL ========== -->
+<div id="storyModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/70 backdrop-blur-sm">
+<div class="relative w-full max-w-[600px] mx-4 bg-card p-8 rounded-xl border border-white/10 shadow-2xl max-h-[90vh] overflow-y-auto">
+    <button onclick="closeStoryForm()" class="absolute top-4 left-4 text-slate-400 hover:text-white"><span class="material-symbols-outlined">close</span></button>
+    <h3 id="storyFormTitle" class="text-xl font-bold text-primary mb-6">הוסף סיפור הצלחה</h3>
+    <form id="storyForm" class="space-y-4">
+        <input type="hidden" id="st_id"/>
+        <div><label class="block text-sm text-slate-400 mb-1">שם הזוג</label>
+        <input id="st_couple" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" required placeholder="דוד וילנה"/></div>
+        <div><label class="block text-sm text-slate-400 mb-1">הסיפור</label>
+        <textarea id="st_text" rows="5" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" required></textarea></div>
+        <div><label class="block text-sm text-slate-400 mb-1">תג (badge)</label>
+        <input id="st_badge" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="חתונה 2024"/></div>
+        <div>
+            <label class="block text-sm text-slate-400 mb-1">תמונת הזוג</label>
+            <div class="flex gap-3 items-center">
+                <label class="flex-1 flex items-center justify-center gap-2 bg-bg border-2 border-dashed border-white/20 hover:border-primary/50 rounded-lg py-4 px-4 cursor-pointer transition-all">
+                    <span class="material-symbols-outlined text-primary text-2xl">cloud_upload</span>
+                    <span id="st_image_label" class="text-slate-400 text-sm">לחץ להעלאת תמונה</span>
+                    <input id="st_image_file" type="file" accept="image/*" class="hidden" onchange="uploadStoryImage(this)"/>
+                </label>
+                <img id="st_image_preview" class="size-16 rounded-lg object-cover border border-white/10 hidden" src=""/>
+            </div>
+            <input id="st_image" type="hidden"/>
+        </div>
+        <div class="flex items-center gap-2">
+            <input id="st_published" type="checkbox" class="size-5 rounded text-primary bg-bg border-white/10" checked/>
+            <label class="text-sm text-slate-400">מפורסם</label>
+        </div>
+        <div id="storyFormError" class="hidden text-center text-sm font-bold text-red-400"></div>
+        <button type="submit" class="w-full bg-primary text-bg py-3 rounded-lg font-bold text-sm hover:bg-primary/90 transition-all mt-2">שמור סיפור</button>
+    </form>
+</div>
+</div>
+
+<script>
+const API = '';
+
+// ===== TABS =====
+function switchTab(tab) {
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('tab-active'));
+    document.getElementById('tab-' + tab).classList.remove('hidden');
+    document.querySelector(`[data-tab="${tab}"]`).classList.add('tab-active');
+    if (tab === 'profiles') loadProfiles();
+    if (tab === 'users') loadUsers();
+    if (tab === 'messages') loadMessages();
+    if (tab === 'leads') loadLeads();
+    if (tab === 'pages') loadPages();
+    if (tab === 'stories') loadStories();
+    if (tab === 'faqs') loadFaqs();
+    if (tab === 'process') loadProcessSteps();
+    if (tab === 'vip') loadVipSettings();
+    if (tab === 'about') loadAboutSettings();
+    if (tab === 'contact') loadContactSettings();
+    if (tab === 'site') loadSiteSettings();
+}
+
+// ===== PROFILES =====
+async function loadProfiles() {
+    const res = await fetch(API + '/api/profiles?page=1&per_page=100');
+    const data = await res.json();
+    const el = document.getElementById('profilesList');
+    if (!data.profiles || data.profiles.length === 0) { el.innerHTML = '<p class="text-slate-500 text-center py-12">אין פרופילים</p>'; return; }
+    el.innerHTML = data.profiles.map(p => `
+        <div class="flex items-center gap-4 bg-card hover:bg-card-hover border border-white/5 rounded-xl p-4 transition-all">
+            <img src="${p.main_image || ''}" class="size-14 rounded-full object-cover border-2 border-primary/20" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22><rect fill=%22%231a1810%22 width=%2240%22 height=%2240%22/><text x=%2220%22 y=%2226%22 text-anchor=%22middle%22 fill=%22%23f2d00d%22 font-size=%2216%22>${p.first_name[0]}</text></svg>'"/>
+            <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2">
+                    <span class="font-bold text-white">${p.first_name}, ${p.age}</span>
+                    ${p.is_vip ? '<span class="text-[10px] bg-primary/20 text-primary px-2 py-0.5 rounded-full font-bold">VIP</span>' : ''}
+                    ${p.is_verified ? '<span class="text-[10px] bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full font-bold">מאומת</span>' : ''}
+                </div>
+                <span class="text-sm text-slate-500">${p.city}, ${p.country === 'moldova' ? 'מולדובה' : 'אוקראינה'} &bull; ${p.occupation || ''}</span>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="editProfile(${p.id})" class="p-2 hover:bg-white/10 rounded-lg transition-colors text-slate-400 hover:text-primary">
+                    <span class="material-symbols-outlined text-xl">edit</span>
+                </button>
+                <button onclick="deleteProfile(${p.id}, '${p.first_name}')" class="p-2 hover:bg-red-500/10 rounded-lg transition-colors text-slate-400 hover:text-red-400">
+                    <span class="material-symbols-outlined text-xl">delete</span>
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function openProfileForm(profile = null) {
+    document.getElementById('profileFormTitle').textContent = profile ? 'עריכת פרופיל' : 'הוסף פרופיל';
+    document.getElementById('pf_id').value = profile ? profile.id : '';
+    document.getElementById('pf_name').value = profile ? profile.first_name : '';
+    document.getElementById('pf_age').value = profile ? profile.age : '';
+    document.getElementById('pf_city').value = profile ? profile.city : '';
+    document.getElementById('pf_country').value = profile ? profile.country : 'moldova';
+    document.getElementById('pf_occupation').value = profile ? profile.occupation || '' : '';
+    document.getElementById('pf_education').value = profile ? profile.education || '' : '';
+    document.getElementById('pf_languages').value = profile ? profile.languages || '' : '';
+    document.getElementById('pf_hobbies').value = profile ? profile.hobbies || '' : '';
+    document.getElementById('pf_bio').value = profile ? profile.bio || '' : '';
+    document.getElementById('pf_quote').value = profile ? profile.quote || '' : '';
+    document.getElementById('pf_image').value = profile ? profile.main_image || '' : '';
+    document.getElementById('pf_marital').value = profile ? profile.marital_status : 'single';
+    document.getElementById('pf_vip').checked = profile ? !!profile.is_vip : false;
+    document.getElementById('pf_verified').checked = profile ? !!profile.is_verified : false;
+    document.getElementById('profileFormError').classList.add('hidden');
+    // Image preview
+    const preview = document.getElementById('pf_image_preview');
+    const label = document.getElementById('pf_image_label');
+    if (profile && profile.main_image) {
+        preview.src = profile.main_image;
+        preview.classList.remove('hidden');
+        label.textContent = 'לחץ להחלפת תמונה';
+    } else {
+        preview.classList.add('hidden');
+        preview.src = '';
+        label.textContent = 'לחץ להעלאת תמונה';
+    }
+    document.getElementById('pf_image_file').value = '';
+    // Gallery
+    galleryPhotos = (profile && profile.photos) ? profile.photos.map(ph => ({ id: ph.id, url: ph.image_url, is_private: ph.is_private })) : [];
+    renderGallery();
+    const m = document.getElementById('profileModal');
+    m.classList.remove('hidden'); m.classList.add('flex');
+}
+function closeProfileForm() { const m = document.getElementById('profileModal'); m.classList.add('hidden'); m.classList.remove('flex'); }
+
+async function editProfile(id) {
+    const res = await fetch(API + '/api/profiles/' + id);
+    const p = await res.json();
+    openProfileForm(p);
+}
+
+async function deleteProfile(id, name) {
+    if (!confirm(`למחוק את הפרופיל של ${name}?`)) return;
+    await fetch(API + '/api/admin/profiles/' + id, { method: 'DELETE' });
+    loadProfiles();
+}
+
+document.getElementById('profileForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('pf_id').value;
+    const body = {
+        first_name: document.getElementById('pf_name').value,
+        age: parseInt(document.getElementById('pf_age').value),
+        city: document.getElementById('pf_city').value,
+        country: document.getElementById('pf_country').value,
+        occupation: document.getElementById('pf_occupation').value,
+        education: document.getElementById('pf_education').value,
+        languages: document.getElementById('pf_languages').value,
+        hobbies: document.getElementById('pf_hobbies').value,
+        bio: document.getElementById('pf_bio').value,
+        quote: document.getElementById('pf_quote').value,
+        main_image: document.getElementById('pf_image').value,
+        marital_status: document.getElementById('pf_marital').value,
+        is_vip: document.getElementById('pf_vip').checked,
+        is_verified: document.getElementById('pf_verified').checked,
+    };
+    const url = id ? API + '/api/admin/profiles/' + id : API + '/api/admin/profiles';
+    const method = id ? 'PUT' : 'POST';
+    const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const data = await res.json();
+    if (data.success) {
+        const profileId = id || data.id;
+        // Save gallery photos (new ones without id)
+        for (const ph of galleryPhotos) {
+            if (!ph.id) {
+                await fetch(API + '/api/admin/photos', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ profile_id: profileId, image_url: ph.url, is_private: ph.is_private })
+                });
+            }
+        }
+        closeProfileForm(); loadProfiles();
+    }
+    else { document.getElementById('profileFormError').textContent = data.error || 'שגיאה'; document.getElementById('profileFormError').classList.remove('hidden'); }
+});
+
+// ===== USERS =====
+async function loadUsers() {
+    const res = await fetch(API + '/api/admin/users');
+    const users = await res.json();
+    const el = document.getElementById('usersList');
+    if (!users.length) { el.innerHTML = '<p class="text-slate-500 text-center py-12">אין משתמשים רשומים</p>'; return; }
+    el.innerHTML = users.map(u => `
+        <div class="flex items-center gap-4 bg-card hover:bg-card-hover border border-white/5 rounded-xl p-4 transition-all">
+            <div class="size-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-lg shrink-0">${u.full_name.charAt(0)}</div>
+            <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 flex-wrap">
+                    <span class="font-bold text-white">${u.full_name}</span>
+                    ${u.is_vip ? '<span class="text-[10px] bg-primary/20 text-primary px-2 py-0.5 rounded-full font-bold">VIP</span>' : ''}
+                    ${u.is_active ? '<span class="text-[10px] bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full font-bold">פעיל</span>' : '<span class="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full font-bold">חסום</span>'}
+                </div>
+                <div class="text-sm text-slate-500 flex items-center gap-3 flex-wrap mt-1">
+                    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">mail</span>${u.email}</span>
+                    ${u.phone ? `<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">phone</span>${u.phone}</span>` : ''}
+                    ${u.age ? `<span>גיל: ${u.age}</span>` : ''}
+                </div>
+            </div>
+            <div class="text-left shrink-0">
+                <span class="text-[10px] text-slate-600">${u.created_at || ''}</span>
+            </div>
+            <div class="flex gap-1 shrink-0">
+                <button onclick="editUser(${u.id})" class="p-2 hover:bg-white/10 rounded-lg transition-colors text-slate-400 hover:text-primary" title="עריכה">
+                    <span class="material-symbols-outlined text-xl">edit</span>
+                </button>
+                <button onclick="viewUserMessages(${u.id}, '${u.full_name}')" class="p-2 hover:bg-white/10 rounded-lg transition-colors text-slate-400 hover:text-primary" title="הודעות">
+                    <span class="material-symbols-outlined text-xl">chat</span>
+                </button>
+                <button onclick="toggleUserActive(${u.id}, ${!u.is_active}, '${u.full_name}')" class="p-2 hover:bg-white/10 rounded-lg transition-colors text-slate-400 hover:text-${u.is_active ? 'red-400' : 'green-400'}" title="${u.is_active ? 'חסום' : 'הפעל'}">
+                    <span class="material-symbols-outlined text-xl">${u.is_active ? 'block' : 'check_circle'}</span>
+                </button>
+                <button onclick="deleteUser(${u.id}, '${u.full_name}')" class="p-2 hover:bg-red-500/10 rounded-lg transition-colors text-slate-400 hover:text-red-400" title="מחק">
+                    <span class="material-symbols-outlined text-xl">delete</span>
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+async function editUser(id) {
+    const res = await fetch(API + '/api/admin/users/' + id);
+    const u = await res.json();
+    document.getElementById('uf_id').value = u.id;
+    document.getElementById('uf_name').value = u.full_name;
+    document.getElementById('uf_email').value = u.email;
+    document.getElementById('uf_phone').value = u.phone || '';
+    document.getElementById('uf_age').value = u.age || '';
+    document.getElementById('uf_password').value = '';
+    document.getElementById('uf_vip').checked = !!u.is_vip;
+    document.getElementById('uf_active').checked = !!u.is_active;
+    document.getElementById('userFormError').classList.add('hidden');
+    document.getElementById('userFormSuccess').classList.add('hidden');
+    const m = document.getElementById('userModal');
+    m.classList.remove('hidden'); m.classList.add('flex');
+}
+
+function closeUserForm() { const m = document.getElementById('userModal'); m.classList.add('hidden'); m.classList.remove('flex'); }
+
+document.getElementById('userForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('uf_id').value;
+    const body = {
+        full_name: document.getElementById('uf_name').value,
+        email: document.getElementById('uf_email').value,
+        phone: document.getElementById('uf_phone').value || null,
+        age: document.getElementById('uf_age').value ? parseInt(document.getElementById('uf_age').value) : null,
+        is_vip: document.getElementById('uf_vip').checked,
+        is_active: document.getElementById('uf_active').checked,
+    };
+    const newPass = document.getElementById('uf_password').value.trim();
+    if (newPass) body.new_password = newPass;
+
+    const res = await fetch(API + '/api/admin/users/' + id, {
+        method: 'PUT', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+    });
+    const data = await res.json();
+    if (data.success) {
+        const successEl = document.getElementById('userFormSuccess');
+        successEl.textContent = newPass ? 'נשמר בהצלחה! הסיסמה החדשה נשלחה למייל.' : 'נשמר בהצלחה!';
+        successEl.classList.remove('hidden');
+        setTimeout(() => { closeUserForm(); loadUsers(); }, 1500);
+    } else {
+        document.getElementById('userFormError').textContent = data.error || 'שגיאה';
+        document.getElementById('userFormError').classList.remove('hidden');
+    }
+});
+
+async function toggleUserActive(id, active, name) {
+    if (!active && !confirm(`לחסום את ${name}? המשתמש לא יוכל להתחבר.`)) return;
+    const res = await fetch(API + '/api/admin/users/' + id);
+    const u = await res.json();
+    await fetch(API + '/api/admin/users/' + id, {
+        method: 'PUT', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ full_name: u.full_name, email: u.email, phone: u.phone, age: u.age, is_vip: u.is_vip, is_active: active })
+    });
+    loadUsers();
+}
+
+async function deleteUser(id, name) {
+    if (!confirm(`למחוק את המשתמש ${name}? פעולה זו לא ניתנת לביטול.`)) return;
+    await fetch(API + '/api/admin/users/' + id, { method: 'DELETE' });
+    loadUsers();
+}
+
+async function viewUserMessages(id, name) {
+    const res = await fetch(API + '/api/admin/users/' + id);
+    const u = await res.json();
+    const msgs = u.messages || [];
+    const el = document.getElementById('usersList');
+    let html = `<div class="mb-4"><button onclick="loadUsers()" class="flex items-center gap-2 text-primary font-bold hover:underline"><span class="material-symbols-outlined">arrow_forward</span> חזרה לרשימה</button></div>`;
+    html += `<div class="bg-card rounded-xl border border-white/10 p-6 mb-6">
+        <h3 class="text-lg font-bold text-primary mb-2">הודעות של ${name}</h3>
+        <div class="text-sm text-slate-400">${u.email} ${u.phone ? '| ' + u.phone : ''} ${u.age ? '| גיל: ' + u.age : ''}</div>
+    </div>`;
+    if (!msgs.length) {
+        html += '<p class="text-slate-500 text-center py-8">אין הודעות</p>';
+    } else {
+        html += msgs.map(m => `
+            <div class="bg-card border border-white/5 rounded-xl p-4">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm text-slate-400">אל: <span class="text-primary font-bold">${m.profile_name || 'פרופיל #' + m.receiver_profile_id}</span></span>
+                    <span class="text-[10px] text-slate-600">${m.created_at || ''}</span>
+                </div>
+                <p class="text-white text-sm">${m.content}</p>
+            </div>
+        `).join('');
+    }
+    el.innerHTML = html;
+}
+
+// ===== MESSAGES =====
+async function loadMessages() {
+    const res = await fetch(API + '/api/admin/messages');
+    const msgs = await res.json();
+    const el = document.getElementById('messagesList');
+    if (!msgs.length) { el.innerHTML = '<p class="text-slate-500 text-center py-12">אין הודעות</p>'; return; }
+    el.innerHTML = msgs.map(m => `
+        <div class="flex items-start gap-4 bg-card border border-white/5 rounded-xl p-4">
+            <span class="material-symbols-outlined text-primary text-2xl mt-1 shrink-0">chat_bubble</span>
+            <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 flex-wrap mb-1">
+                    <span class="font-bold text-white">${m.sender_name || 'אנונימי'}</span>
+                    <span class="text-slate-600">→</span>
+                    <span class="text-primary font-bold">${m.receiver_name || 'פרופיל #' + m.receiver_profile_id}</span>
+                </div>
+                <p class="text-sm text-slate-300 mb-1">${m.content}</p>
+                <div class="text-[10px] text-slate-600 flex items-center gap-3">
+                    <span>${m.created_at || ''}</span>
+                    ${m.sender_email ? `<span>${m.sender_email}</span>` : ''}
+                </div>
+            </div>
+            <button onclick="deleteMessage(${m.id})" class="p-2 hover:bg-red-500/10 rounded-lg transition-colors text-slate-400 hover:text-red-400 shrink-0">
+                <span class="material-symbols-outlined text-xl">delete</span>
+            </button>
+        </div>
+    `).join('');
+}
+
+async function deleteMessage(id) {
+    if (!confirm('למחוק הודעה זו?')) return;
+    await fetch(API + '/api/admin/messages/' + id, { method: 'DELETE' });
+    loadMessages();
+}
+
+// ===== LEADS =====
+async function loadLeads() {
+    const res = await fetch(API + '/api/leads');
+    const leads = await res.json();
+    const el = document.getElementById('leadsList');
+    if (!leads.length) { el.innerHTML = '<p class="text-slate-500 text-center py-12">אין לידים</p>'; return; }
+    el.innerHTML = leads.map(l => `
+        <div class="flex items-center gap-4 bg-card border border-white/5 rounded-xl p-4">
+            <span class="material-symbols-outlined text-primary text-2xl">contact_mail</span>
+            <div class="flex-1">
+                <span class="font-bold text-white">${l.full_name}</span>
+                <span class="text-slate-500 mr-2">${l.email}</span>
+                ${l.age ? `<span class="text-slate-500 mr-2">גיל: ${l.age}</span>` : ''}
+            </div>
+            <div class="text-left">
+                <span class="text-xs text-slate-500">${l.interest || ''}</span><br/>
+                <span class="text-[10px] text-slate-600">${l.created_at || ''}</span>
+            </div>
+            <button onclick="deleteLead(${l.id})" class="p-2 hover:bg-red-500/10 rounded-lg transition-colors text-slate-400 hover:text-red-400">
+                <span class="material-symbols-outlined text-xl">delete</span>
+            </button>
+        </div>
+    `).join('');
+}
+
+async function deleteLead(id) {
+    if (!confirm('למחוק ליד זה?')) return;
+    await fetch(API + '/api/admin/leads/' + id, { method: 'DELETE' });
+    loadLeads();
+}
+
+// ===== PAGES =====
+async function loadPages() {
+    const res = await fetch(API + '/api/admin/pages');
+    const pages = await res.json();
+    const el = document.getElementById('pagesList');
+    if (!pages.length) { el.innerHTML = '<p class="text-slate-500 text-center py-12">אין דפים מותאמים</p>'; return; }
+    el.innerHTML = pages.map(p => `
+        <div class="flex items-center gap-4 bg-card hover:bg-card-hover border border-white/5 rounded-xl p-4 transition-all">
+            <span class="material-symbols-outlined text-primary text-2xl">description</span>
+            <div class="flex-1">
+                <span class="font-bold text-white">${p.title}</span>
+                <span class="text-sm text-slate-500 mr-2">/${p.slug}</span>
+                ${p.show_in_menu ? '<span class="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full font-bold mr-2">בתפריט</span>' : ''}
+                ${p.is_active ? '<span class="text-[10px] bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full font-bold">פעיל</span>' : '<span class="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full font-bold">לא פעיל</span>'}
+            </div>
+            <div class="flex gap-2">
+                <a href="/page/${p.slug}" target="_blank" class="p-2 hover:bg-white/10 rounded-lg transition-colors text-slate-400 hover:text-primary">
+                    <span class="material-symbols-outlined text-xl">open_in_new</span>
+                </a>
+                <button onclick="editPage(${p.id})" class="p-2 hover:bg-white/10 rounded-lg transition-colors text-slate-400 hover:text-primary">
+                    <span class="material-symbols-outlined text-xl">edit</span>
+                </button>
+                <button onclick="deletePage(${p.id}, '${p.title}')" class="p-2 hover:bg-red-500/10 rounded-lg transition-colors text-slate-400 hover:text-red-400">
+                    <span class="material-symbols-outlined text-xl">delete</span>
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function openPageForm(page = null) {
+    document.getElementById('pageFormTitle').textContent = page ? 'עריכת דף' : 'דף חדש';
+    document.getElementById('pg_id').value = page ? page.id : '';
+    document.getElementById('pg_title').value = page ? page.title : '';
+    document.getElementById('pg_slug').value = page ? page.slug : '';
+    document.getElementById('pg_menu').checked = page ? !!page.show_in_menu : false;
+    document.getElementById('pg_active').checked = page ? !!page.is_active : true;
+    document.getElementById('pg_content').value = page ? page.content : '';
+    document.getElementById('pageFormError').classList.add('hidden');
+    const m = document.getElementById('pageModal');
+    m.classList.remove('hidden'); m.classList.add('flex');
+}
+function closePageForm() { const m = document.getElementById('pageModal'); m.classList.add('hidden'); m.classList.remove('flex'); }
+
+async function editPage(id) {
+    const res = await fetch(API + '/api/admin/pages/' + id);
+    const p = await res.json();
+    openPageForm(p);
+}
+
+async function deletePage(id, title) {
+    if (!confirm(`למחוק את הדף "${title}"?`)) return;
+    await fetch(API + '/api/admin/pages/' + id, { method: 'DELETE' });
+    loadPages();
+}
+
+document.getElementById('pageForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('pg_id').value;
+    const body = {
+        title: document.getElementById('pg_title').value,
+        slug: document.getElementById('pg_slug').value,
+        show_in_menu: document.getElementById('pg_menu').checked,
+        is_active: document.getElementById('pg_active').checked,
+        content: document.getElementById('pg_content').value,
+    };
+    const url = id ? API + '/api/admin/pages/' + id : API + '/api/admin/pages';
+    const method = id ? 'PUT' : 'POST';
+    const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const data = await res.json();
+    if (data.success) { closePageForm(); loadPages(); }
+    else { document.getElementById('pageFormError').textContent = data.error || 'שגיאה'; document.getElementById('pageFormError').classList.remove('hidden'); }
+});
+
+// ===== SITE SETTINGS =====
+async function loadSiteSettings() {
+    try {
+        const res = await fetch(API + '/api/admin/settings');
+        const s = await res.json();
+        if (s.site_name) document.getElementById('siteName').value = s.site_name;
+        if (s.site_subtitle) document.getElementById('siteSubtitle').value = s.site_subtitle;
+        if (s.menu_links) document.getElementById('menuLinks').value = s.menu_links;
+        if (s.footer_desc) document.getElementById('footerDescInput').value = s.footer_desc;
+        if (s.footer_links) document.getElementById('footerLinksInput').value = s.footer_links;
+        if (s.footer_phone) document.getElementById('footerPhoneInput').value = s.footer_phone;
+        if (s.footer_email) document.getElementById('footerEmailInput').value = s.footer_email;
+        if (s.footer_address) document.getElementById('footerAddressInput').value = s.footer_address;
+        if (s.footer_copy) document.getElementById('footerCopyInput').value = s.footer_copy;
+        if (s.social_icon1) document.getElementById('socialIcon1Input').value = s.social_icon1;
+        if (s.social_url1) document.getElementById('socialUrl1Input').value = s.social_url1;
+        if (s.social_icon2) document.getElementById('socialIcon2Input').value = s.social_icon2;
+        if (s.social_url2) document.getElementById('socialUrl2Input').value = s.social_url2;
+        if (s.social_icon3) document.getElementById('socialIcon3Input').value = s.social_icon3;
+        if (s.social_url3) document.getElementById('socialUrl3Input').value = s.social_url3;
+        if (s.smtp_host) document.getElementById('smtpHost').value = s.smtp_host;
+        if (s.smtp_port) document.getElementById('smtpPort').value = s.smtp_port;
+        if (s.smtp_user) document.getElementById('smtpUser').value = s.smtp_user;
+        if (s.smtp_password) document.getElementById('smtpPassword').value = s.smtp_password;
+        if (s.smtp_from_name) document.getElementById('smtpFromName').value = s.smtp_from_name;
+    } catch {}
+}
+
+async function saveSiteSettings() {
+    const body = {
+        site_name: document.getElementById('siteName').value,
+        site_subtitle: document.getElementById('siteSubtitle').value,
+        menu_links: document.getElementById('menuLinks').value,
+        footer_desc: document.getElementById('footerDescInput').value,
+        footer_links: document.getElementById('footerLinksInput').value,
+        footer_phone: document.getElementById('footerPhoneInput').value,
+        footer_email: document.getElementById('footerEmailInput').value,
+        footer_address: document.getElementById('footerAddressInput').value,
+        footer_copy: document.getElementById('footerCopyInput').value,
+        social_icon1: document.getElementById('socialIcon1Input').value,
+        social_url1: document.getElementById('socialUrl1Input').value,
+        social_icon2: document.getElementById('socialIcon2Input').value,
+        social_url2: document.getElementById('socialUrl2Input').value,
+        social_icon3: document.getElementById('socialIcon3Input').value,
+        social_url3: document.getElementById('socialUrl3Input').value,
+        smtp_host: document.getElementById('smtpHost').value,
+        smtp_port: document.getElementById('smtpPort').value,
+        smtp_user: document.getElementById('smtpUser').value,
+        smtp_password: document.getElementById('smtpPassword').value,
+        smtp_from_name: document.getElementById('smtpFromName').value,
+    };
+    await fetch(API + '/api/admin/settings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const msg = document.getElementById('siteMsg');
+    msg.classList.remove('hidden');
+    setTimeout(() => msg.classList.add('hidden'), 3000);
+}
+
+// ===== GALLERY =====
+let galleryPhotos = []; // [{id, url, is_private}]
+
+function renderGallery() {
+    const el = document.getElementById('pf_gallery');
+    if (!galleryPhotos.length) { el.innerHTML = '<p class="text-slate-500 text-xs col-span-full">אין תמונות בגלריה</p>'; return; }
+    el.innerHTML = galleryPhotos.map((ph, i) => `
+        <div class="relative group">
+            <img src="${ph.url}" class="w-full aspect-square object-cover rounded-lg border border-white/10"/>
+            <button type="button" onclick="removeGalleryPhoto(${i})" class="absolute top-1 left-1 bg-red-500/80 text-white rounded-full size-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                <span class="material-symbols-outlined text-sm">close</span>
+            </button>
+            <span class="absolute bottom-1 right-1 bg-black/60 text-white text-[10px] px-1 rounded">${i+1}</span>
+        </div>
+    `).join('');
+    el.insertAdjacentHTML('beforeend', '<p class="text-slate-400 text-xs col-span-full mt-1">' + galleryPhotos.length + ' תמונות בגלריה</p>');
+}
+
+function removeGalleryPhoto(index) {
+    const ph = galleryPhotos[index];
+    if (ph.id) {
+        fetch(API + '/api/admin/photos/' + ph.id, { method: 'DELETE' });
+    }
+    galleryPhotos.splice(index, 1);
+    renderGallery();
+}
+
+async function uploadGalleryPhotos(input) {
+    if (!input.files || !input.files.length) return;
+    const label = input.parentElement;
+    const origHTML = label.innerHTML;
+    label.innerHTML = '<span class="text-primary text-sm font-bold">מעלה תמונות...</span>';
+    try {
+        for (const file of input.files) {
+            const formData = new FormData();
+            formData.append('file', file);
+            try {
+                const res = await fetch(API + '/api/upload', { method: 'POST', body: formData });
+                const data = await res.json();
+                if (data.success) {
+                    galleryPhotos.push({ id: null, url: data.url, is_private: false });
+                } else {
+                    console.error('Upload error:', data.error);
+                    alert('שגיאה בהעלאת ' + file.name + ': ' + (data.error || ''));
+                }
+            } catch (err) {
+                console.error('Upload failed:', err);
+                alert('שגיאה בהעלאת ' + file.name);
+            }
+        }
+        renderGallery();
+    } finally {
+        label.innerHTML = origHTML;
+        // Re-attach the onchange since we replaced innerHTML
+        const newInput = label.querySelector('input[type="file"]');
+        if (newInput) newInput.onchange = function() { uploadGalleryPhotos(this); };
+    }
+}
+
+// ===== IMAGE UPLOAD =====
+async function uploadMainImage(input) {
+    if (!input.files[0]) return;
+    const label = document.getElementById('pf_image_label');
+    const preview = document.getElementById('pf_image_preview');
+    label.textContent = 'מעלה...';
+
+    const formData = new FormData();
+    formData.append('file', input.files[0]);
+
+    try {
+        const res = await fetch(API + '/api/upload', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (data.success) {
+            document.getElementById('pf_image').value = data.url;
+            preview.src = data.url;
+            preview.classList.remove('hidden');
+            label.textContent = 'תמונה הועלתה! לחץ להחלפה';
+        } else {
+            label.textContent = data.error || 'שגיאה בהעלאה';
+        }
+    } catch {
+        label.textContent = 'שגיאה בהעלאה';
+    }
+}
+
+// ===== FAQS =====
+async function loadFaqs() {
+    const res = await fetch(API + '/api/admin/faqs');
+    const faqs = await res.json();
+    const el = document.getElementById('faqsList');
+    if (!faqs.length) { el.innerHTML = '<p class="text-slate-500 text-center py-12">אין שאלות נפוצות</p>'; return; }
+    el.innerHTML = faqs.map(f => `
+        <div class="flex items-center gap-4 bg-card hover:bg-card-hover border border-white/5 rounded-xl p-4 transition-all">
+            <span class="material-symbols-outlined text-primary text-2xl">help</span>
+            <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2">
+                    <span class="font-bold text-white">${f.question}</span>
+                    ${f.is_active ? '<span class="text-[10px] bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full font-bold">פעיל</span>' : '<span class="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full font-bold">לא פעיל</span>'}
+                </div>
+                <span class="text-sm text-slate-500 line-clamp-1">${f.answer || ''}</span>
+            </div>
+            <span class="text-xs text-slate-600 shrink-0">#${f.sort_order}</span>
+            <div class="flex gap-2">
+                <button onclick='editFaq(${f.id})' class="p-2 hover:bg-white/10 rounded-lg transition-colors text-slate-400 hover:text-primary">
+                    <span class="material-symbols-outlined text-xl">edit</span>
+                </button>
+                <button onclick='deleteFaq(${f.id})' class="p-2 hover:bg-red-500/10 rounded-lg transition-colors text-slate-400 hover:text-red-400">
+                    <span class="material-symbols-outlined text-xl">delete</span>
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function openFaqForm(faq = null) {
+    document.getElementById('faqFormTitle').textContent = faq ? 'עריכת שאלה' : 'הוסף שאלה';
+    document.getElementById('fq_id').value = faq ? faq.id : '';
+    document.getElementById('fq_question').value = faq ? faq.question : '';
+    document.getElementById('fq_answer').value = faq ? faq.answer || '' : '';
+    document.getElementById('fq_order').value = faq ? faq.sort_order : 0;
+    document.getElementById('fq_active').checked = faq ? !!faq.is_active : true;
+    document.getElementById('faqFormError').classList.add('hidden');
+    const m = document.getElementById('faqModal');
+    m.classList.remove('hidden'); m.classList.add('flex');
+}
+function closeFaqForm() { const m = document.getElementById('faqModal'); m.classList.add('hidden'); m.classList.remove('flex'); }
+
+async function editFaq(id) {
+    const res = await fetch(API + '/api/admin/faqs');
+    const faqs = await res.json();
+    const f = faqs.find(x => x.id === id);
+    if (f) openFaqForm(f);
+}
+
+async function deleteFaq(id) {
+    if (!confirm('למחוק שאלה זו?')) return;
+    await fetch(API + '/api/admin/faqs/' + id, { method: 'DELETE' });
+    loadFaqs();
+}
+
+document.getElementById('faqForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('fq_id').value;
+    const body = {
+        question: document.getElementById('fq_question').value,
+        answer: document.getElementById('fq_answer').value,
+        sort_order: parseInt(document.getElementById('fq_order').value) || 0,
+        is_active: document.getElementById('fq_active').checked,
+    };
+    const url = id ? API + '/api/admin/faqs/' + id : API + '/api/admin/faqs';
+    const method = id ? 'PUT' : 'POST';
+    const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const data = await res.json();
+    if (data.success) { closeFaqForm(); loadFaqs(); }
+    else { document.getElementById('faqFormError').textContent = data.error || 'שגיאה'; document.getElementById('faqFormError').classList.remove('hidden'); }
+});
+
+// ===== STORIES =====
+async function loadStories() {
+    const res = await fetch(API + '/api/admin/stories');
+    const stories = await res.json();
+    const el = document.getElementById('storiesList');
+    if (!stories.length) { el.innerHTML = '<p class="text-slate-500 text-center py-12">אין סיפורי הצלחה</p>'; return; }
+    el.innerHTML = stories.map(s => `
+        <div class="flex items-center gap-4 bg-card hover:bg-card-hover border border-white/5 rounded-xl p-4 transition-all">
+            <img src="${s.image_url || ''}" class="size-14 rounded-lg object-cover border-2 border-primary/20" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22><rect fill=%22%231a1810%22 width=%2240%22 height=%2240%22/><text x=%2220%22 y=%2226%22 text-anchor=%22middle%22 fill=%22%23f2d00d%22 font-size=%2214%22>♥</text></svg>'"/>
+            <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2">
+                    <span class="font-bold text-white">${s.couple_name}</span>
+                    ${s.badge ? `<span class="text-[10px] bg-primary/20 text-primary px-2 py-0.5 rounded-full font-bold">${s.badge}</span>` : ''}
+                    ${s.is_published ? '<span class="text-[10px] bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full font-bold">מפורסם</span>' : '<span class="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full font-bold">טיוטה</span>'}
+                </div>
+                <span class="text-sm text-slate-500 line-clamp-1">${s.story_text || ''}</span>
+            </div>
+            <div class="flex gap-2">
+                <button onclick='editStory(${s.id})' class="p-2 hover:bg-white/10 rounded-lg transition-colors text-slate-400 hover:text-primary">
+                    <span class="material-symbols-outlined text-xl">edit</span>
+                </button>
+                <button onclick='deleteStory(${s.id}, "${s.couple_name}")' class="p-2 hover:bg-red-500/10 rounded-lg transition-colors text-slate-400 hover:text-red-400">
+                    <span class="material-symbols-outlined text-xl">delete</span>
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function openStoryForm(story = null) {
+    document.getElementById('storyFormTitle').textContent = story ? 'עריכת סיפור' : 'הוסף סיפור הצלחה';
+    document.getElementById('st_id').value = story ? story.id : '';
+    document.getElementById('st_couple').value = story ? story.couple_name : '';
+    document.getElementById('st_text').value = story ? story.story_text || '' : '';
+    document.getElementById('st_badge').value = story ? story.badge || '' : '';
+    document.getElementById('st_image').value = story ? story.image_url || '' : '';
+    document.getElementById('st_published').checked = story ? !!story.is_published : true;
+    document.getElementById('storyFormError').classList.add('hidden');
+    const preview = document.getElementById('st_image_preview');
+    const label = document.getElementById('st_image_label');
+    if (story && story.image_url) {
+        preview.src = story.image_url; preview.classList.remove('hidden');
+        label.textContent = 'לחץ להחלפת תמונה';
+    } else {
+        preview.classList.add('hidden'); preview.src = '';
+        label.textContent = 'לחץ להעלאת תמונה';
+    }
+    document.getElementById('st_image_file').value = '';
+    const m = document.getElementById('storyModal');
+    m.classList.remove('hidden'); m.classList.add('flex');
+}
+function closeStoryForm() { const m = document.getElementById('storyModal'); m.classList.add('hidden'); m.classList.remove('flex'); }
+
+async function editStory(id) {
+    const res = await fetch(API + '/api/admin/stories');
+    const stories = await res.json();
+    const s = stories.find(x => x.id === id);
+    if (s) openStoryForm(s);
+}
+
+async function deleteStory(id, name) {
+    if (!confirm(`למחוק את הסיפור של ${name}?`)) return;
+    await fetch(API + '/api/admin/stories/' + id, { method: 'DELETE' });
+    loadStories();
+}
+
+async function uploadStoryImage(input) {
+    if (!input.files[0]) return;
+    const label = document.getElementById('st_image_label');
+    const preview = document.getElementById('st_image_preview');
+    label.textContent = 'מעלה...';
+    const formData = new FormData();
+    formData.append('file', input.files[0]);
+    try {
+        const res = await fetch(API + '/api/upload', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (data.success) {
+            document.getElementById('st_image').value = data.url;
+            preview.src = data.url; preview.classList.remove('hidden');
+            label.textContent = 'תמונה הועלתה! לחץ להחלפה';
+        } else { label.textContent = data.error || 'שגיאה בהעלאה'; }
+    } catch { label.textContent = 'שגיאה בהעלאה'; }
+}
+
+document.getElementById('storyForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('st_id').value;
+    const body = {
+        couple_name: document.getElementById('st_couple').value,
+        story_text: document.getElementById('st_text').value,
+        badge: document.getElementById('st_badge').value,
+        image_url: document.getElementById('st_image').value,
+        is_published: document.getElementById('st_published').checked,
+    };
+    const url = id ? API + '/api/admin/stories/' + id : API + '/api/admin/stories';
+    const method = id ? 'PUT' : 'POST';
+    const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const data = await res.json();
+    if (data.success) { closeStoryForm(); loadStories(); }
+    else { document.getElementById('storyFormError').textContent = data.error || 'שגיאה'; document.getElementById('storyFormError').classList.remove('hidden'); }
+});
+
+// ===== ABOUT PAGE =====
+async function uploadAboutImage(input, hiddenId, labelId, previewId) {
+    if (!input.files[0]) return;
+    const label = document.getElementById(labelId);
+    const preview = document.getElementById(previewId);
+    label.textContent = 'מעלה...';
+    const formData = new FormData();
+    formData.append('file', input.files[0]);
+    try {
+        const res = await fetch(API + '/api/upload', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (data.success) {
+            document.getElementById(hiddenId).value = data.url;
+            preview.src = data.url; preview.classList.remove('hidden');
+            label.textContent = 'הועלה! לחץ להחלפה';
+        } else { label.textContent = data.error || 'שגיאה'; }
+    } catch { label.textContent = 'שגיאה בהעלאה'; }
+}
+
+async function loadAboutSettings() {
+    try {
+        const res = await fetch(API + '/api/admin/settings');
+        const s = await res.json();
+        const map = {
+            about_hero_title: 'aboutHeroTitle', about_hero_subtitle: 'aboutHeroSubtitle',
+            about_hero_image: 'about_hero_image',
+            about_who_title: 'aboutWhoTitle', about_who_text: 'aboutWhoText',
+            about_who_image: 'about_who_image',
+            about_vision_title: 'aboutVisionTitle',
+            about_card1_title: 'aboutCard1Title', about_card1_text: 'aboutCard1Text',
+            about_card2_title: 'aboutCard2Title', about_card2_text: 'aboutCard2Text',
+            about_card3_title: 'aboutCard3Title', about_card3_text: 'aboutCard3Text',
+            about_stat1_num: 'aboutStat1Num', about_stat1_label: 'aboutStat1Label',
+            about_stat2_num: 'aboutStat2Num', about_stat2_label: 'aboutStat2Label',
+            about_stat3_num: 'aboutStat3Num', about_stat3_label: 'aboutStat3Label',
+            about_stat4_num: 'aboutStat4Num', about_stat4_label: 'aboutStat4Label',
+            about_why_title: 'aboutWhyTitle', about_why_image: 'about_why_image',
+            about_why1_title: 'aboutWhy1Title', about_why1_text: 'aboutWhy1Text',
+            about_why2_title: 'aboutWhy2Title', about_why2_text: 'aboutWhy2Text',
+            about_why3_title: 'aboutWhy3Title', about_why3_text: 'aboutWhy3Text',
+            about_cta_title: 'aboutCtaTitle', about_cta_subtitle: 'aboutCtaSubtitle',
+        };
+        for (const [key, elId] of Object.entries(map)) {
+            if (s[key]) {
+                const el = document.getElementById(elId);
+                if (el) el.value = s[key];
+            }
+        }
+        // Show image previews
+        if (s.about_hero_image) { const p = document.getElementById('aboutHeroImgPreview'); p.src = s.about_hero_image; p.classList.remove('hidden'); }
+        if (s.about_who_image) { const p = document.getElementById('aboutWhoImgPreview'); p.src = s.about_who_image; p.classList.remove('hidden'); }
+        if (s.about_why_image) { const p = document.getElementById('aboutWhyImgPreview'); p.src = s.about_why_image; p.classList.remove('hidden'); }
+    } catch {}
+}
+
+async function saveAboutSettings() {
+    const fields = {
+        about_hero_title: 'aboutHeroTitle', about_hero_subtitle: 'aboutHeroSubtitle',
+        about_hero_image: 'about_hero_image',
+        about_who_title: 'aboutWhoTitle', about_who_text: 'aboutWhoText',
+        about_who_image: 'about_who_image',
+        about_vision_title: 'aboutVisionTitle',
+        about_card1_title: 'aboutCard1Title', about_card1_text: 'aboutCard1Text',
+        about_card2_title: 'aboutCard2Title', about_card2_text: 'aboutCard2Text',
+        about_card3_title: 'aboutCard3Title', about_card3_text: 'aboutCard3Text',
+        about_stat1_num: 'aboutStat1Num', about_stat1_label: 'aboutStat1Label',
+        about_stat2_num: 'aboutStat2Num', about_stat2_label: 'aboutStat2Label',
+        about_stat3_num: 'aboutStat3Num', about_stat3_label: 'aboutStat3Label',
+        about_stat4_num: 'aboutStat4Num', about_stat4_label: 'aboutStat4Label',
+        about_why_title: 'aboutWhyTitle', about_why_image: 'about_why_image',
+        about_why1_title: 'aboutWhy1Title', about_why1_text: 'aboutWhy1Text',
+        about_why2_title: 'aboutWhy2Title', about_why2_text: 'aboutWhy2Text',
+        about_why3_title: 'aboutWhy3Title', about_why3_text: 'aboutWhy3Text',
+        about_cta_title: 'aboutCtaTitle', about_cta_subtitle: 'aboutCtaSubtitle',
+    };
+    const body = {};
+    for (const [key, elId] of Object.entries(fields)) {
+        const el = document.getElementById(elId);
+        if (el) body[key] = el.value;
+    }
+    const res = await fetch(API + '/api/admin/settings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const data = await res.json();
+    const msg = document.getElementById('aboutMsg');
+    if (data.success) { msg.classList.remove('hidden'); setTimeout(() => msg.classList.add('hidden'), 3000); }
+}
+
+// ===== PROCESS STEPS =====
+async function loadProcessSteps() {
+    const res = await fetch(API + '/api/admin/process-steps');
+    const steps = await res.json();
+    const el = document.getElementById('stepsList');
+    if (!steps.length) { el.innerHTML = '<p class="text-slate-500 text-center py-12">אין שלבים</p>'; return; }
+    el.innerHTML = steps.map(s => `
+        <div class="flex items-center gap-4 bg-card hover:bg-card-hover border border-white/5 rounded-xl p-4 transition-all">
+            <div class="flex items-center justify-center size-12 rounded-xl bg-primary/10 border border-primary/30 text-primary shrink-0">
+                <span class="material-symbols-outlined text-2xl">${s.icon || 'star'}</span>
+            </div>
+            <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2">
+                    <span class="font-bold text-white">שלב ${s.step_number}: ${s.title}</span>
+                    ${s.is_active ? '<span class="text-[10px] bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full font-bold">פעיל</span>' : '<span class="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full font-bold">מוסתר</span>'}
+                </div>
+                <span class="text-sm text-slate-500 line-clamp-1">${s.description}</span>
+            </div>
+            ${s.image_url ? `<img src="${s.image_url}" class="size-12 rounded-lg object-cover border border-white/10"/>` : ''}
+            <div class="flex gap-2">
+                <button onclick="editStep(${s.id})" class="p-2 hover:bg-white/10 rounded-lg transition-colors text-slate-400 hover:text-primary">
+                    <span class="material-symbols-outlined text-xl">edit</span>
+                </button>
+                <button onclick="deleteStep(${s.id}, '${s.title}')" class="p-2 hover:bg-red-500/10 rounded-lg transition-colors text-slate-400 hover:text-red-400">
+                    <span class="material-symbols-outlined text-xl">delete</span>
+                </button>
+            </div>
+        </div>
+    `).join('');
+    loadProcessTexts();
+}
+
+function openStepForm(step = null) {
+    document.getElementById('stepFormTitle').textContent = step ? 'עריכת שלב' : 'הוסף שלב';
+    document.getElementById('sp_id').value = step ? step.id : '';
+    document.getElementById('sp_number').value = step ? step.step_number : '';
+    document.getElementById('sp_title').value = step ? step.title : '';
+    document.getElementById('sp_desc').value = step ? step.description : '';
+    document.getElementById('sp_icon').value = step ? step.icon || '' : '';
+    document.getElementById('sp_image').value = step ? step.image_url || '' : '';
+    document.getElementById('sp_active').checked = step ? !!step.is_active : true;
+    document.getElementById('stepFormError').classList.add('hidden');
+    const preview = document.getElementById('sp_image_preview');
+    const label = document.getElementById('sp_image_label');
+    if (step && step.image_url) {
+        preview.src = step.image_url; preview.classList.remove('hidden');
+        label.textContent = 'לחץ להחלפת תמונה';
+    } else {
+        preview.classList.add('hidden');
+        label.textContent = 'לחץ להעלאת תמונה';
+    }
+    const m = document.getElementById('stepModal'); m.classList.remove('hidden'); m.classList.add('flex');
+}
+
+function closeStepForm() { const m = document.getElementById('stepModal'); m.classList.add('hidden'); m.classList.remove('flex'); }
+
+async function editStep(id) {
+    const res = await fetch(API + '/api/admin/process-steps');
+    const steps = await res.json();
+    const step = steps.find(s => s.id === id);
+    if (step) openStepForm(step);
+}
+
+async function deleteStep(id, title) {
+    if (!confirm('למחוק את שלב "' + title + '"?')) return;
+    await fetch(API + '/api/admin/process-steps/' + id, { method: 'DELETE' });
+    loadProcessSteps();
+}
+
+async function uploadStepImage(input) {
+    if (!input.files[0]) return;
+    const label = document.getElementById('sp_image_label');
+    const preview = document.getElementById('sp_image_preview');
+    label.textContent = 'מעלה...';
+    const formData = new FormData();
+    formData.append('file', input.files[0]);
+    try {
+        const res = await fetch(API + '/api/upload', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (data.success) {
+            document.getElementById('sp_image').value = data.url;
+            preview.src = data.url; preview.classList.remove('hidden');
+            label.textContent = 'תמונה הועלתה! לחץ להחלפה';
+        } else { label.textContent = data.error || 'שגיאה בהעלאה'; }
+    } catch { label.textContent = 'שגיאה בהעלאה'; }
+}
+
+document.getElementById('stepForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('sp_id').value;
+    const body = {
+        step_number: parseInt(document.getElementById('sp_number').value),
+        title: document.getElementById('sp_title').value,
+        description: document.getElementById('sp_desc').value,
+        icon: document.getElementById('sp_icon').value,
+        image_url: document.getElementById('sp_image').value,
+        is_active: document.getElementById('sp_active').checked,
+    };
+    const url = id ? API + '/api/admin/process-steps/' + id : API + '/api/admin/process-steps';
+    const method = id ? 'PUT' : 'POST';
+    const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const data = await res.json();
+    if (data.success) { closeStepForm(); loadProcessSteps(); }
+    else { document.getElementById('stepFormError').textContent = data.error || 'שגיאה'; document.getElementById('stepFormError').classList.remove('hidden'); }
+});
+
+async function saveProcessTexts() {
+    const body = {
+        process_hero_title: document.getElementById('processHeroTitle').value,
+        process_hero_subtitle: document.getElementById('processHeroSubtitle').value,
+        process_steps_title: document.getElementById('processStepsTitle').value,
+        process_cta_title: document.getElementById('processCtaTitle').value,
+        process_cta_subtitle: document.getElementById('processCtaSubtitle').value,
+    };
+    const res = await fetch(API + '/api/admin/settings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const data = await res.json();
+    const msg = document.getElementById('processMsg');
+    if (data.success) { msg.classList.remove('hidden'); setTimeout(() => msg.classList.add('hidden'), 3000); }
+}
+
+async function loadProcessTexts() {
+    try {
+        const res = await fetch(API + '/api/admin/settings');
+        const s = await res.json();
+        if (s.process_hero_title) document.getElementById('processHeroTitle').value = s.process_hero_title;
+        if (s.process_hero_subtitle) document.getElementById('processHeroSubtitle').value = s.process_hero_subtitle;
+        if (s.process_steps_title) document.getElementById('processStepsTitle').value = s.process_steps_title;
+        if (s.process_cta_title) document.getElementById('processCtaTitle').value = s.process_cta_title;
+        if (s.process_cta_subtitle) document.getElementById('processCtaSubtitle').value = s.process_cta_subtitle;
+    } catch {}
+}
+
+// ===== VIP SETTINGS =====
+// ===== CONTACT SETTINGS =====
+async function loadContactSettings() {
+    try {
+        const res = await fetch(API + '/api/admin/settings');
+        const s = await res.json();
+        const map = {
+            contact_hero_title: 'ctAdmHeroTitle',
+            contact_hero_subtitle: 'ctAdmHeroSubtitle',
+            contact_email_label: 'ctAdmEmailLabel',
+            contact_email_value: 'ctAdmEmailValue',
+            contact_phone_label: 'ctAdmPhoneLabel',
+            contact_phone_value: 'ctAdmPhoneValue',
+            contact_address_label: 'ctAdmAddressLabel',
+            contact_address_value: 'ctAdmAddressValue',
+            contact_hours_label: 'ctAdmHoursLabel',
+            contact_hours_value: 'ctAdmHoursValue',
+            contact_whatsapp_url: 'ctAdmWhatsappUrl',
+            contact_whatsapp_text: 'ctAdmWhatsappText',
+            contact_form_title: 'ctAdmFormTitle',
+            contact_form_subtitle: 'ctAdmFormSubtitle',
+            contact_submit_btn: 'ctAdmSubmitBtn',
+            contact_disclaimer: 'ctAdmDisclaimer',
+        };
+        for (const [key, id] of Object.entries(map)) {
+            const el = document.getElementById(id);
+            if (el && s[key]) el.value = s[key];
+        }
+    } catch (e) { console.error('Error loading contact settings:', e); }
+}
+
+async function saveContactSettings() {
+    const data = {
+        contact_hero_title: document.getElementById('ctAdmHeroTitle').value,
+        contact_hero_subtitle: document.getElementById('ctAdmHeroSubtitle').value,
+        contact_email_label: document.getElementById('ctAdmEmailLabel').value,
+        contact_email_value: document.getElementById('ctAdmEmailValue').value,
+        contact_phone_label: document.getElementById('ctAdmPhoneLabel').value,
+        contact_phone_value: document.getElementById('ctAdmPhoneValue').value,
+        contact_address_label: document.getElementById('ctAdmAddressLabel').value,
+        contact_address_value: document.getElementById('ctAdmAddressValue').value,
+        contact_hours_label: document.getElementById('ctAdmHoursLabel').value,
+        contact_hours_value: document.getElementById('ctAdmHoursValue').value,
+        contact_whatsapp_url: document.getElementById('ctAdmWhatsappUrl').value,
+        contact_whatsapp_text: document.getElementById('ctAdmWhatsappText').value,
+        contact_form_title: document.getElementById('ctAdmFormTitle').value,
+        contact_form_subtitle: document.getElementById('ctAdmFormSubtitle').value,
+        contact_submit_btn: document.getElementById('ctAdmSubmitBtn').value,
+        contact_disclaimer: document.getElementById('ctAdmDisclaimer').value,
+    };
+    try {
+        await fetch(API + '/api/admin/settings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        const msg = document.getElementById('contactMsg');
+        msg.classList.remove('hidden');
+        setTimeout(() => msg.classList.add('hidden'), 3000);
+    } catch (e) { alert('שגיאה בשמירה'); }
+}
+
+async function loadVipSettings() {
+    try {
+        const res = await fetch(API + '/api/admin/settings');
+        const s = await res.json();
+        const map = {
+            vip_hero_title: 'vipAdmHeroTitle', vip_hero_subtitle: 'vipAdmHeroSubtitle',
+            vip_pkg1_name: 'vipAdmPkg1Name', vip_pkg1_price: 'vipAdmPkg1Price',
+            vip_pkg1_period: 'vipAdmPkg1Period', vip_pkg1_btn: 'vipAdmPkg1Btn',
+            vip_pkg1_features: 'vipAdmPkg1Features',
+            vip_pkg2_name: 'vipAdmPkg2Name', vip_pkg2_price: 'vipAdmPkg2Price',
+            vip_pkg2_period: 'vipAdmPkg2Period', vip_pkg2_btn: 'vipAdmPkg2Btn',
+            vip_pkg2_badge: 'vipAdmPkg2Badge', vip_pkg2_features: 'vipAdmPkg2Features',
+            vip_pkg3_name: 'vipAdmPkg3Name', vip_pkg3_price: 'vipAdmPkg3Price',
+            vip_pkg3_period: 'vipAdmPkg3Period', vip_pkg3_btn: 'vipAdmPkg3Btn',
+            vip_pkg3_features: 'vipAdmPkg3Features',
+            vip_why_title: 'vipAdmWhyTitle', vip_why_subtitle: 'vipAdmWhySubtitle',
+            vip_feat1_icon: 'vipAdmFeat1Icon', vip_feat1_title: 'vipAdmFeat1Title', vip_feat1_text: 'vipAdmFeat1Text',
+            vip_feat2_icon: 'vipAdmFeat2Icon', vip_feat2_title: 'vipAdmFeat2Title', vip_feat2_text: 'vipAdmFeat2Text',
+            vip_feat3_icon: 'vipAdmFeat3Icon', vip_feat3_title: 'vipAdmFeat3Title', vip_feat3_text: 'vipAdmFeat3Text',
+            vip_cta_title: 'vipAdmCtaTitle', vip_cta_subtitle: 'vipAdmCtaSubtitle', vip_cta_btn: 'vipAdmCtaBtn',
+        };
+        for (const [key, elId] of Object.entries(map)) {
+            if (s[key]) {
+                const el = document.getElementById(elId);
+                if (el) el.value = s[key];
+            }
+        }
+    } catch {}
+}
+
+async function saveVipSettings() {
+    const fields = {
+        vip_hero_title: 'vipAdmHeroTitle', vip_hero_subtitle: 'vipAdmHeroSubtitle',
+        vip_pkg1_name: 'vipAdmPkg1Name', vip_pkg1_price: 'vipAdmPkg1Price',
+        vip_pkg1_period: 'vipAdmPkg1Period', vip_pkg1_btn: 'vipAdmPkg1Btn',
+        vip_pkg1_features: 'vipAdmPkg1Features',
+        vip_pkg2_name: 'vipAdmPkg2Name', vip_pkg2_price: 'vipAdmPkg2Price',
+        vip_pkg2_period: 'vipAdmPkg2Period', vip_pkg2_btn: 'vipAdmPkg2Btn',
+        vip_pkg2_badge: 'vipAdmPkg2Badge', vip_pkg2_features: 'vipAdmPkg2Features',
+        vip_pkg3_name: 'vipAdmPkg3Name', vip_pkg3_price: 'vipAdmPkg3Price',
+        vip_pkg3_period: 'vipAdmPkg3Period', vip_pkg3_btn: 'vipAdmPkg3Btn',
+        vip_pkg3_features: 'vipAdmPkg3Features',
+        vip_why_title: 'vipAdmWhyTitle', vip_why_subtitle: 'vipAdmWhySubtitle',
+        vip_feat1_icon: 'vipAdmFeat1Icon', vip_feat1_title: 'vipAdmFeat1Title', vip_feat1_text: 'vipAdmFeat1Text',
+        vip_feat2_icon: 'vipAdmFeat2Icon', vip_feat2_title: 'vipAdmFeat2Title', vip_feat2_text: 'vipAdmFeat2Text',
+        vip_feat3_icon: 'vipAdmFeat3Icon', vip_feat3_title: 'vipAdmFeat3Title', vip_feat3_text: 'vipAdmFeat3Text',
+        vip_cta_title: 'vipAdmCtaTitle', vip_cta_subtitle: 'vipAdmCtaSubtitle', vip_cta_btn: 'vipAdmCtaBtn',
+    };
+    const body = {};
+    for (const [key, elId] of Object.entries(fields)) {
+        const el = document.getElementById(elId);
+        if (el) body[key] = el.value;
+    }
+    const res = await fetch(API + '/api/admin/settings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const data = await res.json();
+    const msg = document.getElementById('vipMsg');
+    if (data.success) { msg.classList.remove('hidden'); setTimeout(() => msg.classList.add('hidden'), 3000); }
+}
+
+// ===== ADMIN LOGOUT =====
+async function adminLogout() {
+    await fetch('/api/admin/logout', { method: 'POST' });
+    window.location.href = '/admin';
+}
+
+// Init
+loadProfiles();
+</script>
+</body></html>

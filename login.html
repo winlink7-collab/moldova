@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html class="dark" dir="rtl" lang="he"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#f2d00d",
+              "background-light": "#f8f8f5",
+              "background-dark": "#12110a",
+              "neutral-dark": "#1c1a0f",
+              "gold-muted": "#b59a09",
+            },
+            fontFamily: {
+              "display": ["Heebo", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .luxury-gradient {
+            background: linear-gradient(135deg, rgba(18,17,10,0.95) 0%, rgba(28,26,15,0.8) 100%);
+        }
+        .gold-border {
+            border: 1px solid rgba(242, 208, 13, 0.3);
+        }
+        body {
+            font-family: 'Heebo', sans-serif;
+        }
+        .serif-text {
+            font-family: 'Heebo', sans-serif;
+            font-weight: 800;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Header / Navigation -->
+<header class="fixed top-0 w-full z-50 border-b border-white/10 bg-background-dark/80 backdrop-blur-md">
+<div class="w-full px-6 lg:px-12 xl:px-20 flex h-20 items-center justify-between">
+<a href="/" class="flex items-center gap-3 shrink-0">
+    <div class="size-10 bg-primary rounded-full flex items-center justify-center">
+        <span class="material-symbols-outlined text-background-dark text-2xl">workspace_premium</span>
+    </div>
+    <div class="flex flex-col">
+        <h1 class="text-xl font-extrabold text-white uppercase">Moldova &amp; Ukraine</h1>
+        <span class="text-[10px] tracking-[0.3em] text-primary font-bold uppercase">Luxury Brides</span>
+    </div>
+</a>
+<nav class="hidden lg:flex items-center gap-6 xl:gap-8 2xl:gap-10">
+    <a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/">דף הבית</a>
+    <a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/about">אודות</a>
+    <a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/search">חיפוש פרופילים</a>
+    <a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/process">תהליך השידוך</a>
+    <a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/vip">חבילות VIP</a>
+    <a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/stories">סיפורי הצלחה</a>
+    <a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/faq">שאלות נפוצות</a>
+    <a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/contact">צרו קשר</a>
+</nav>
+<button class="bg-primary text-background-dark px-6 py-2 rounded-lg text-sm font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20">
+    התחברות
+</button>
+</div>
+</header>
+<!-- Main Content Section -->
+<main class="flex-1 flex flex-col items-center justify-center pt-24 px-4 relative">
+<!-- Background Image with Overlay -->
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-b from-background-dark/60 via-background-dark/80 to-background-dark z-10"></div>
+<div class="w-full h-full bg-cover bg-center" data-alt="Sophisticated atmospheric luxury ballroom in Eastern Europe" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBxbzd5c8AUH5cJLdIdk8wP0uXdqkGTliMYCizM3f8GsgAiANsWtMaVmTEelLPHg-6wpbUi-SlOglwGjOB82odPpJBVLyw3aApqHky0eAFZEtfZhexI0t-92HNOW-pJWQHXpmokk8FBw6NQ6bFyiGNspjZpVgu3iy1xXZw52W_jDyuppyGUjY4Kq76IbheULNRHhIieha0kz2oPU6rOsfMdAZc9XNJ5SwVBI1_s0IJZTOQNUBxOtitmCK4vH0c5POwTZXfj8v-u7tCz");'></div>
+</div>
+<!-- Login Modal/Form Container -->
+<div class="relative z-20 w-full max-w-[500px] luxury-gradient p-8 md:p-12 rounded-xl gold-border shadow-2xl backdrop-blur-sm">
+<div class="text-center mb-10">
+<div class="inline-block p-3 rounded-full bg-primary/5 mb-4 gold-border">
+<span class="material-symbols-outlined text-primary text-4xl">lock_person</span>
+</div>
+<h1 class="serif-text text-3xl md:text-4xl font-bold text-white mb-3">כניסת חברי VIP</h1>
+<div class="h-0.5 w-16 bg-primary mx-auto mb-4"></div>
+<p class="text-slate-400 text-base">הזינו את פרטי הגישה שלכם למפגשים בלעדיים</p>
+</div>
+<form class="space-y-6">
+<div class="space-y-2">
+<label class="block text-primary text-sm font-semibold pr-1">שם משתמש או אימייל</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-xl">person</span>
+<input class="w-full bg-neutral-dark/50 border border-white/10 rounded-lg py-4 pr-12 pl-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600" placeholder="הזן שם משתמש" type="text"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="block text-primary text-sm font-semibold pr-1">סיסמה אישית</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-xl">key</span>
+<input class="w-full bg-neutral-dark/50 border border-white/10 rounded-lg py-4 pr-12 pl-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600" placeholder="••••••••" type="password"/>
+</div>
+<div class="flex justify-start pt-1">
+<a class="text-xs text-slate-400 hover:text-primary transition-colors" href="#">שכחת את הסיסמה?</a>
+</div>
+</div>
+<div class="pt-4">
+<button class="w-full bg-primary hover:bg-gold-muted text-background-dark font-bold py-4 rounded-lg text-lg transition-all transform hover:scale-[1.01] shadow-xl shadow-primary/10 serif-text" type="submit">
+                            כניסה למערכת
+                        </button>
+</div>
+<div class="relative py-4">
+<div class="absolute inset-0 flex items-center"><div class="w-full border-t border-white/5"></div></div>
+<div class="relative flex justify-center text-xs uppercase"><span class="bg-[#1c1a0f] px-2 text-slate-500">או באמצעות</span></div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center gap-2 border border-white/10 rounded-lg py-3 hover:bg-white/5 transition-colors" type="button">
+<span class="text-slate-300 text-sm font-medium">Google</span>
+</button>
+<button class="flex items-center justify-center gap-2 border border-white/10 rounded-lg py-3 hover:bg-white/5 transition-colors" type="button">
+<span class="text-slate-300 text-sm font-medium">Apple ID</span>
+</button>
+</div>
+</form>
+<div class="mt-10 text-center">
+<p class="text-slate-400 text-sm">עדיין לא חברים במועדון? <a class="text-primary font-bold hover:underline" href="#">הגשת מועמדות</a></p>
+</div>
+</div>
+<!-- Footer Decorative Element -->
+<div class="mt-12 z-20 text-center space-y-4 max-w-2xl">
+<p class="text-slate-500 text-xs serif-text tracking-widest uppercase opacity-60">
+                    Moldova &amp; Ukraine Elite Matchmaking Services • 2024
+                </p>
+<div class="flex justify-center gap-8 opacity-40 grayscale contrast-125">
+<div class="h-8 w-20 bg-contain bg-no-repeat" data-alt="Luxury partner logo 1" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDjg8AajkUNIaESoaHCkXjr8zBIEY0lwHccA4G9AGxWvU4IuP4xQEfCftDsL7izMpx7pNcfjcin8xdDmVxvDbAhzJXfQm5f81Uerdfz9nGkYMokoBda3EZbtsKwyFQ2X1ofx1O_bUuPzfDJDMWeUdxiF8L3Z30F5VhKomdzZwiVhg66poBLpeaKbkEiQj2WMnPv4-n-wT3mKwSnmo9NDOyZ6w3JTDqVB0uD2Ic_Aeq_wVTau2EOESTDUdoZM8qw-B2SYeEKnTFz0omC");'></div>
+<div class="h-8 w-20 bg-contain bg-no-repeat" data-alt="Luxury partner logo 2" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAQtTbv8Hv9t0kptAmKWs3Um7yTOF7mFY2TXfwkfFUc-fjcwZ3tGUlUs46rxR8WQ9sd0KmmQq_Eim1m-3hMni45npRmKb2AZu4JorVrk3_8fJMvaszj8TS3cLqE-m-7tgO-1rOUIDwO1qG4g5Yxz_uHDtCE4OmkFjwiXrSS4nd86z8fNAJOWULi9yWlLOue1yGJkv2HLlT9_kd2QqIm902D9eKhL5S7neQPYcxpGHNDR9BiaBtOhk3ZK1qh5wxFK4Qdx_bez5U0SN4S");'></div>
+</div>
+</div>
+</main>
+<!-- Subtle Gradient Textures -->
+<div class="fixed top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
+<div class="fixed bottom-0 left-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
+</div>
+</body></html>

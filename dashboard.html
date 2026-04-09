@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html class="dark" dir="rtl" lang="he"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<title>האזור האישי - Moldova & Ukraine</title>
+<script>
+tailwind.config = {
+    darkMode: "class",
+    theme: {
+        extend: {
+            colors: {
+                "primary": "#f2d00d",
+                "bg": "#12110a",
+                "surface": "#1c1a0e",
+                "card": "#1a1810",
+                "gold-muted": "#bab59c",
+                "border-gold": "#393728",
+            },
+            fontFamily: { "display": ["Heebo", "sans-serif"] },
+        },
+    },
+}
+</script>
+<style>
+body { font-family: 'Heebo', sans-serif; }
+.glass-effect { background: rgba(34, 31, 16, 0.8); backdrop-filter: blur(12px); }
+.tab-active { border-color: #f2d00d; color: #f2d00d; }
+</style>
+</head>
+<body class="bg-bg text-slate-100 min-h-screen">
+<div class="relative flex min-h-screen w-full flex-col">
+
+<!-- Header -->
+<header class="sticky top-0 z-50 w-full border-b border-white/10 glass-effect">
+<div class="w-full px-6 lg:px-12 xl:px-20">
+<div class="flex h-20 items-center justify-between">
+<a href="/" class="flex items-center gap-3 shrink-0">
+    <div class="size-10 bg-primary rounded-full flex items-center justify-center">
+        <span class="material-symbols-outlined text-bg text-2xl">workspace_premium</span>
+    </div>
+    <div class="flex flex-col">
+        <h1 class="text-xl font-extrabold text-white uppercase">Moldova & Ukraine</h1>
+        <span class="text-[10px] tracking-[0.3em] text-primary font-bold uppercase">Luxury Brides</span>
+    </div>
+</a>
+<nav class="hidden lg:flex items-center gap-6 xl:gap-8 2xl:gap-10">
+    <a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/">דף הבית</a>
+    <a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/about">אודות</a>
+    <a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/search">חיפוש פרופילים</a>
+    <a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/process">תהליך השידוך</a>
+    <a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/vip">חבילות VIP</a>
+    <a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/stories">סיפורי הצלחה</a>
+    <a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/faq">שאלות נפוצות</a>
+    <a class="text-sm font-semibold text-primary whitespace-nowrap" href="/dashboard">האזור שלי</a>
+</nav>
+<div class="flex items-center gap-4">
+    <div id="userAvatar" class="size-10 rounded-full bg-card border-2 border-primary/30 flex items-center justify-center overflow-hidden">
+        <span class="material-symbols-outlined text-primary text-xl">person</span>
+    </div>
+    <button onclick="logout()" class="text-sm text-slate-400 hover:text-red-400 transition-colors flex items-center gap-1">
+        <span class="material-symbols-outlined text-lg">logout</span> יציאה
+    </button>
+    <button class="md:hidden text-primary"><span class="material-symbols-outlined text-3xl">menu</span></button>
+</div>
+</div>
+</div>
+</header>
+
+<!-- Reset Password View (shown when ?reset=TOKEN) -->
+<div id="resetView" class="hidden flex-1 flex items-center justify-center py-20 px-6">
+    <div class="w-full max-w-md bg-card rounded-2xl border border-white/10 p-8">
+        <div class="text-center mb-8">
+            <span class="material-symbols-outlined text-primary text-5xl mb-4">lock_reset</span>
+            <h2 class="text-2xl font-bold text-white">איפוס סיסמה</h2>
+            <p class="text-slate-400 mt-2">הזן סיסמה חדשה</p>
+        </div>
+        <form id="resetForm" class="space-y-4">
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">סיסמה חדשה</label>
+                <input id="reset_pass" type="password" minlength="6" required class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="לפחות 6 תווים"/>
+            </div>
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">אימות סיסמה</label>
+                <input id="reset_pass2" type="password" minlength="6" required class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none"/>
+            </div>
+            <div id="resetError" class="hidden text-center text-sm font-bold text-red-400"></div>
+            <div id="resetSuccess" class="hidden text-center text-sm font-bold text-green-400"></div>
+            <button type="submit" class="w-full bg-primary text-bg py-3 rounded-xl font-bold text-lg hover:bg-primary/90 transition-all">אפס סיסמה</button>
+        </form>
+        <div class="text-center mt-6">
+            <a href="/?login=1" class="text-primary text-sm hover:underline">חזור להתחברות</a>
+        </div>
+    </div>
+</div>
+
+<!-- Forgot Password View (shown when ?forgot=1) -->
+<div id="forgotView" class="hidden flex-1 flex items-center justify-center py-20 px-6">
+    <div class="w-full max-w-md bg-card rounded-2xl border border-white/10 p-8">
+        <div class="text-center mb-8">
+            <span class="material-symbols-outlined text-primary text-5xl mb-4">mail</span>
+            <h2 class="text-2xl font-bold text-white">שכחת סיסמה?</h2>
+            <p class="text-slate-400 mt-2">הזן את האימייל שלך ונשלח לך קישור לאיפוס</p>
+        </div>
+        <form id="forgotForm" class="space-y-4">
+            <div>
+                <label class="block text-sm text-slate-400 mb-1">אימייל</label>
+                <input id="forgot_email" type="email" required class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="your@email.com"/>
+            </div>
+            <div id="forgotError" class="hidden text-center text-sm font-bold text-red-400"></div>
+            <div id="forgotSuccess" class="hidden text-center text-sm font-bold text-green-400"></div>
+            <button type="submit" class="w-full bg-primary text-bg py-3 rounded-xl font-bold text-lg hover:bg-primary/90 transition-all">שלח קישור לאיפוס</button>
+        </form>
+        <div class="text-center mt-6">
+            <a href="/?login=1" class="text-primary text-sm hover:underline">חזור להתחברות</a>
+        </div>
+    </div>
+</div>
+
+<!-- Dashboard Main -->
+<main id="dashboardMain" class="flex-1 hidden">
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+    <!-- Welcome -->
+    <div class="flex items-center gap-4 mb-10">
+        <div id="dashAvatar" class="size-20 rounded-full bg-card border-4 border-primary/30 flex items-center justify-center overflow-hidden shrink-0">
+            <span class="material-symbols-outlined text-primary text-4xl">person</span>
+        </div>
+        <div>
+            <h2 class="text-2xl md:text-3xl font-bold text-white">שלום, <span id="dashName">משתמש</span></h2>
+            <p class="text-slate-400 mt-1">ברוך הבא לאזור האישי שלך</p>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex gap-2 border-b border-white/10 mb-8 overflow-x-auto">
+        <button onclick="switchDashTab('profile')" data-dtab="profile" class="dtab-btn tab-active flex items-center gap-2 px-6 py-3 text-sm font-bold border-b-2 border-transparent text-slate-400 hover:text-primary transition-all whitespace-nowrap">
+            <span class="material-symbols-outlined text-lg">person</span> פרטים אישיים
+        </button>
+        <button onclick="switchDashTab('password')" data-dtab="password" class="dtab-btn flex items-center gap-2 px-6 py-3 text-sm font-bold border-b-2 border-transparent text-slate-400 hover:text-primary transition-all whitespace-nowrap">
+            <span class="material-symbols-outlined text-lg">lock</span> שינוי סיסמה
+        </button>
+        <button onclick="switchDashTab('messages')" data-dtab="messages" class="dtab-btn flex items-center gap-2 px-6 py-3 text-sm font-bold border-b-2 border-transparent text-slate-400 hover:text-primary transition-all whitespace-nowrap">
+            <span class="material-symbols-outlined text-lg">chat</span> ההודעות שלי
+        </button>
+    </div>
+
+    <!-- Profile Tab -->
+    <div id="dtab-profile" class="dtab-content">
+        <div class="bg-card rounded-2xl border border-white/10 p-6 md:p-8">
+            <h3 class="text-lg font-bold text-primary mb-6 flex items-center gap-2">
+                <span class="material-symbols-outlined">edit</span> עריכת פרטים אישיים
+            </h3>
+            <form id="profileForm" class="space-y-5">
+                <!-- Profile Image -->
+                <div class="flex items-center gap-6 mb-2">
+                    <div id="formAvatar" class="size-24 rounded-full bg-bg border-4 border-primary/20 flex items-center justify-center overflow-hidden shrink-0">
+                        <span class="material-symbols-outlined text-primary text-5xl">person</span>
+                    </div>
+                    <div>
+                        <label class="flex items-center gap-2 bg-bg border-2 border-dashed border-white/20 hover:border-primary/50 rounded-lg py-3 px-6 cursor-pointer transition-all">
+                            <span class="material-symbols-outlined text-primary">cloud_upload</span>
+                            <span id="avatarLabel" class="text-slate-400 text-sm">העלה תמונת פרופיל</span>
+                            <input id="avatarFile" type="file" accept="image/*" class="hidden" onchange="uploadAvatar(this)"/>
+                        </label>
+                        <input id="profileImage" type="hidden"/>
+                        <p class="text-xs text-slate-500 mt-2">JPG, PNG, WEBP - עד 5MB</p>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm text-slate-400 mb-1">שם מלא</label>
+                        <input id="f_name" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" required/>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-slate-400 mb-1">אימייל</label>
+                        <input id="f_email" type="email" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-slate-500 cursor-not-allowed outline-none" disabled/>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm text-slate-400 mb-1">טלפון</label>
+                        <input id="f_phone" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="+972..."/>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-slate-400 mb-1">גיל</label>
+                        <input id="f_age" type="number" min="18" max="99" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none"/>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-slate-400 mb-1">עיר</label>
+                        <input id="f_city" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none"/>
+                    </div>
+                </div>
+                <div id="profileMsg" class="hidden text-center text-sm font-bold"></div>
+                <button type="submit" class="bg-primary text-bg px-10 py-3 rounded-xl font-bold text-sm hover:bg-primary/90 transition-all">
+                    <span class="material-symbols-outlined text-lg align-middle ml-1">save</span> שמור שינויים
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Password Tab -->
+    <div id="dtab-password" class="dtab-content hidden">
+        <div class="bg-card rounded-2xl border border-white/10 p-6 md:p-8 max-w-lg">
+            <h3 class="text-lg font-bold text-primary mb-6 flex items-center gap-2">
+                <span class="material-symbols-outlined">lock</span> שינוי סיסמה
+            </h3>
+            <form id="passwordForm" class="space-y-5">
+                <div>
+                    <label class="block text-sm text-slate-400 mb-1">סיסמה נוכחית</label>
+                    <input id="pw_current" type="password" required class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none"/>
+                </div>
+                <div>
+                    <label class="block text-sm text-slate-400 mb-1">סיסמה חדשה</label>
+                    <input id="pw_new" type="password" minlength="6" required class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none" placeholder="לפחות 6 תווים"/>
+                </div>
+                <div>
+                    <label class="block text-sm text-slate-400 mb-1">אימות סיסמה חדשה</label>
+                    <input id="pw_confirm" type="password" minlength="6" required class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none"/>
+                </div>
+                <div id="pwMsg" class="hidden text-center text-sm font-bold"></div>
+                <button type="submit" class="bg-primary text-bg px-10 py-3 rounded-xl font-bold text-sm hover:bg-primary/90 transition-all">
+                    <span class="material-symbols-outlined text-lg align-middle ml-1">vpn_key</span> עדכן סיסמה
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Messages Tab -->
+    <div id="dtab-messages" class="dtab-content hidden">
+        <div class="bg-card rounded-2xl border border-white/10 p-6 md:p-8">
+            <h3 class="text-lg font-bold text-primary mb-6 flex items-center gap-2">
+                <span class="material-symbols-outlined">chat</span> ההודעות שלי
+            </h3>
+            <div id="messagesList" class="space-y-4">
+                <p class="text-slate-500 text-center py-8">טוען...</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-bg border-t border-white/5 pt-16 pb-8 px-6 lg:px-20">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+    <div class="col-span-1 md:col-span-2 space-y-4">
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-primary text-3xl">workspace_premium</span>
+            <div class="flex flex-col">
+                <span class="text-xl font-extrabold text-white uppercase">Moldova & Ukraine</span>
+                <span class="text-[10px] tracking-[0.3em] text-primary font-bold uppercase">Luxury Brides</span>
+            </div>
+        </div>
+        <p id="footerDesc" class="text-gold-muted text-sm leading-relaxed max-w-sm">הסוכנות המובילה בעולם לשידוכי יוקרה הממוקדת במולדובה ואוקראינה.</p>
+    </div>
+    <div>
+        <h5 class="text-white font-bold mb-6">קישורים מהירים</h5>
+        <ul id="footerLinks" class="space-y-4 text-sm text-gold-muted">
+            <li><a class="hover:text-primary transition-colors" href="/">דף הבית</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/process">תהליך השידוך</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/search">חיפוש פרופילים</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/stories">סיפורי הצלחה</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/faq">שאלות נפוצות</a></li>
+        </ul>
+    </div>
+    <div>
+        <h5 class="text-white font-bold mb-6">צרו קשר</h5>
+        <ul class="space-y-4 text-sm text-gold-muted">
+            <li class="flex items-center gap-3"><span class="material-symbols-outlined text-primary text-lg">location_on</span><span id="footerAddress">משרד ראשי: תל אביב, ישראל</span></li>
+            <li class="flex items-center gap-3"><span class="material-symbols-outlined text-primary text-lg">call</span><span id="footerPhone">+972 3-123-4567</span></li>
+            <li class="flex items-center gap-3"><span class="material-symbols-outlined text-primary text-lg">mail</span><span id="footerEmail">office@moldova-ukraine-brides.com</span></li>
+        </ul>
+    </div>
+</div>
+<div class="border-t border-white/5 pt-8 text-center text-xs text-gold-muted/50">
+    <p id="footerCopy">&copy; 2024 Moldova & Ukraine Brides Luxury Matchmaking. כל הזכויות שמורות.</p>
+</div>
+</div>
+</footer>
+</div>
+
+<script>
+const API = '';
+let currentUser = null;
+
+// ===== Init =====
+function init() {
+    const params = new URLSearchParams(window.location.search);
+
+    // Password reset mode
+    if (params.get('reset')) {
+        document.getElementById('resetView').classList.remove('hidden');
+        document.getElementById('resetView').classList.add('flex');
+        return;
+    }
+
+    // Forgot password mode
+    if (params.get('forgot') === '1') {
+        document.getElementById('forgotView').classList.remove('hidden');
+        document.getElementById('forgotView').classList.add('flex');
+        return;
+    }
+
+    // Check login
+    const u = localStorage.getItem('user');
+    if (!u) {
+        window.location.href = '/?login=1';
+        return;
+    }
+    currentUser = JSON.parse(u);
+    document.getElementById('dashboardMain').classList.remove('hidden');
+    loadUserProfile();
+    loadFooterSettings();
+}
+
+// ===== Dashboard Tabs =====
+function switchDashTab(tab) {
+    document.querySelectorAll('.dtab-content').forEach(c => c.classList.add('hidden'));
+    document.querySelectorAll('.dtab-btn').forEach(b => b.classList.remove('tab-active'));
+    document.getElementById('dtab-' + tab).classList.remove('hidden');
+    document.querySelector(`[data-dtab="${tab}"]`).classList.add('tab-active');
+    if (tab === 'messages') loadMessages();
+}
+
+// ===== Load Profile =====
+async function loadUserProfile() {
+    try {
+        const res = await fetch(API + '/api/user/profile?user_id=' + currentUser.id);
+        const u = await res.json();
+        if (u.error) return;
+
+        document.getElementById('dashName').textContent = u.full_name;
+        document.getElementById('f_name').value = u.full_name || '';
+        document.getElementById('f_email').value = u.email || '';
+        document.getElementById('f_phone').value = u.phone || '';
+        document.getElementById('f_age').value = u.age || '';
+        document.getElementById('f_city').value = u.city || '';
+        document.getElementById('profileImage').value = u.profile_image || '';
+
+        if (u.profile_image) {
+            setAvatarImage(u.profile_image);
+        }
+
+        // Store messages for messages tab
+        currentUser._messages = u.messages || [];
+    } catch {}
+}
+
+function setAvatarImage(url) {
+    const avatars = [document.getElementById('userAvatar'), document.getElementById('dashAvatar'), document.getElementById('formAvatar')];
+    avatars.forEach(el => {
+        if (el) {
+            el.innerHTML = `<img src="${url}" class="w-full h-full object-cover"/>`;
+        }
+    });
+}
+
+// ===== Upload Avatar =====
+async function uploadAvatar(input) {
+    if (!input.files[0]) return;
+    const label = document.getElementById('avatarLabel');
+    label.textContent = 'מעלה...';
+    const formData = new FormData();
+    formData.append('file', input.files[0]);
+    try {
+        const res = await fetch(API + '/api/upload', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (data.success) {
+            document.getElementById('profileImage').value = data.url;
+            setAvatarImage(data.url);
+            label.textContent = 'תמונה הועלתה! לחץ להחלפה';
+        } else { label.textContent = data.error || 'שגיאה'; }
+    } catch { label.textContent = 'שגיאה בהעלאה'; }
+}
+
+// ===== Save Profile =====
+document.getElementById('profileForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const msg = document.getElementById('profileMsg');
+    msg.classList.add('hidden');
+    const body = {
+        user_id: currentUser.id,
+        full_name: document.getElementById('f_name').value,
+        phone: document.getElementById('f_phone').value,
+        age: document.getElementById('f_age').value ? parseInt(document.getElementById('f_age').value) : null,
+        city: document.getElementById('f_city').value,
+        profile_image: document.getElementById('profileImage').value,
+    };
+    try {
+        const res = await fetch(API + '/api/user/profile', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        });
+        const data = await res.json();
+        if (data.success) {
+            msg.textContent = 'הפרטים עודכנו בהצלחה!';
+            msg.className = 'text-center text-sm font-bold text-green-400';
+            msg.classList.remove('hidden');
+            // Update localStorage
+            currentUser.full_name = body.full_name;
+            localStorage.setItem('user', JSON.stringify(currentUser));
+            document.getElementById('dashName').textContent = body.full_name;
+        } else {
+            msg.textContent = data.error || 'שגיאה בשמירה';
+            msg.className = 'text-center text-sm font-bold text-red-400';
+            msg.classList.remove('hidden');
+        }
+    } catch {
+        msg.textContent = 'שגיאת תקשורת';
+        msg.className = 'text-center text-sm font-bold text-red-400';
+        msg.classList.remove('hidden');
+    }
+    setTimeout(() => msg.classList.add('hidden'), 4000);
+});
+
+// ===== Change Password =====
+document.getElementById('passwordForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const msg = document.getElementById('pwMsg');
+    msg.classList.add('hidden');
+    const newPw = document.getElementById('pw_new').value;
+    const confirmPw = document.getElementById('pw_confirm').value;
+    if (newPw !== confirmPw) {
+        msg.textContent = 'הסיסמאות אינן תואמות';
+        msg.className = 'text-center text-sm font-bold text-red-400';
+        msg.classList.remove('hidden');
+        return;
+    }
+    try {
+        const res = await fetch(API + '/api/user/change-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                user_id: currentUser.id,
+                current_password: document.getElementById('pw_current').value,
+                new_password: newPw,
+            })
+        });
+        const data = await res.json();
+        if (data.success) {
+            msg.textContent = 'הסיסמה שונתה בהצלחה!';
+            msg.className = 'text-center text-sm font-bold text-green-400';
+            msg.classList.remove('hidden');
+            document.getElementById('pw_current').value = '';
+            document.getElementById('pw_new').value = '';
+            document.getElementById('pw_confirm').value = '';
+        } else {
+            msg.textContent = data.error || 'שגיאה';
+            msg.className = 'text-center text-sm font-bold text-red-400';
+            msg.classList.remove('hidden');
+        }
+    } catch {
+        msg.textContent = 'שגיאת תקשורת';
+        msg.className = 'text-center text-sm font-bold text-red-400';
+        msg.classList.remove('hidden');
+    }
+    setTimeout(() => msg.classList.add('hidden'), 4000);
+});
+
+// ===== Messages =====
+function loadMessages() {
+    const el = document.getElementById('messagesList');
+    const msgs = currentUser._messages || [];
+    if (!msgs.length) {
+        el.innerHTML = '<div class="text-center py-12"><span class="material-symbols-outlined text-slate-600 text-5xl mb-4 block">chat_bubble_outline</span><p class="text-slate-500">עדיין לא שלחת הודעות</p><a href="/search" class="text-primary text-sm hover:underline mt-2 inline-block">עבור לחיפוש פרופילים</a></div>';
+        return;
+    }
+    el.innerHTML = msgs.map(m => `
+        <div class="flex items-start gap-4 bg-bg rounded-xl border border-white/5 p-4">
+            <div class="size-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 overflow-hidden">
+                ${m.profile_image_url ? `<img src="${m.profile_image_url}" class="w-full h-full object-cover"/>` : '<span class="material-symbols-outlined text-primary">person</span>'}
+            </div>
+            <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                    <span class="font-bold text-white text-sm">${m.profile_name || 'פרופיל'}</span>
+                    <span class="text-xs text-slate-500">${new Date(m.created_at).toLocaleDateString('he-IL')} ${new Date(m.created_at).toLocaleTimeString('he-IL', {hour:'2-digit',minute:'2-digit'})}</span>
+                </div>
+                <p class="text-slate-300 text-sm">${m.content}</p>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ===== Forgot Password =====
+document.getElementById('forgotForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const errEl = document.getElementById('forgotError');
+    const sucEl = document.getElementById('forgotSuccess');
+    errEl.classList.add('hidden'); sucEl.classList.add('hidden');
+    try {
+        const res = await fetch(API + '/api/forgot-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: document.getElementById('forgot_email').value })
+        });
+        const data = await res.json();
+        if (data.success) {
+            sucEl.textContent = data.message;
+            sucEl.classList.remove('hidden');
+        } else {
+            errEl.textContent = data.error;
+            errEl.classList.remove('hidden');
+        }
+    } catch {
+        errEl.textContent = 'שגיאת תקשורת';
+        errEl.classList.remove('hidden');
+    }
+});
+
+// ===== Reset Password =====
+document.getElementById('resetForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const errEl = document.getElementById('resetError');
+    const sucEl = document.getElementById('resetSuccess');
+    errEl.classList.add('hidden'); sucEl.classList.add('hidden');
+    const pass = document.getElementById('reset_pass').value;
+    const pass2 = document.getElementById('reset_pass2').value;
+    if (pass !== pass2) {
+        errEl.textContent = 'הסיסמאות אינן תואמות';
+        errEl.classList.remove('hidden');
+        return;
+    }
+    const token = new URLSearchParams(window.location.search).get('reset');
+    try {
+        const res = await fetch(API + '/api/reset-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token, new_password: pass })
+        });
+        const data = await res.json();
+        if (data.success) {
+            sucEl.textContent = 'הסיסמה אופסה בהצלחה! מועבר להתחברות...';
+            sucEl.classList.remove('hidden');
+            setTimeout(() => { window.location.href = '/?login=1'; }, 2000);
+        } else {
+            errEl.textContent = data.error;
+            errEl.classList.remove('hidden');
+        }
+    } catch {
+        errEl.textContent = 'שגיאת תקשורת';
+        errEl.classList.remove('hidden');
+    }
+});
+
+// ===== Logout =====
+function logout() {
+    localStorage.removeItem('user');
+    window.location.href = '/';
+}
+
+// ===== Footer Settings =====
+async function loadFooterSettings() {
+    try {
+        const res = await fetch(API + '/api/admin/settings');
+        const s = await res.json();
+        if (s.footer_desc) document.getElementById('footerDesc').textContent = s.footer_desc;
+        if (s.footer_phone) document.getElementById('footerPhone').textContent = s.footer_phone;
+        if (s.footer_email) document.getElementById('footerEmail').textContent = s.footer_email;
+        if (s.footer_address) document.getElementById('footerAddress').textContent = s.footer_address;
+        if (s.footer_copy) document.getElementById('footerCopy').textContent = s.footer_copy;
+        if (s.footer_links) {
+            const ul = document.getElementById('footerLinks');
+            const links = s.footer_links.split('\n').filter(l => l.trim());
+            ul.innerHTML = links.map(l => {
+                const [name, url] = l.split('|').map(x => x.trim());
+                return `<li><a class="hover:text-primary transition-colors" href="${url || '#'}">${name}</a></li>`;
+            }).join('');
+        }
+    } catch {}
+}
+
+init();
+</script>
+</body></html>

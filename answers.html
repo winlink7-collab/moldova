@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<html class="dark" dir="rtl" lang="he"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f2d00d",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#181711",
+                        "neutral-gold": "#393728",
+                        "text-muted": "#bab59c",
+                    },
+                    fontFamily: {
+                        "display": ["Heebo", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Heebo', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<div class="relative flex h-auto grow flex-col overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="sticky top-0 z-50 w-full border-b border-white/10 bg-background-dark/95 backdrop-blur-md">
+<div class="w-full px-6 lg:px-12 xl:px-20 flex h-20 items-center justify-between">
+<a href="/" class="flex items-center gap-3 shrink-0">
+    <div class="size-10 bg-primary rounded-full flex items-center justify-center">
+        <span class="material-symbols-outlined text-background-dark text-2xl">workspace_premium</span>
+    </div>
+    <div class="flex flex-col">
+        <h1 class="text-xl font-extrabold text-white uppercase">Moldova &amp; Ukraine</h1>
+        <span class="text-[10px] tracking-[0.3em] text-primary font-bold uppercase">Luxury Brides</span>
+    </div>
+</a>
+<nav class="hidden lg:flex items-center gap-6 xl:gap-8 2xl:gap-10">
+<a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/">דף הבית</a>
+<a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/about">אודות</a>
+<a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/search">חיפוש פרופילים</a>
+<a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/process">תהליך השידוך</a>
+<a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/vip">חבילות VIP</a>
+<a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/stories">סיפורי הצלחה</a>
+<a class="text-sm font-semibold text-primary whitespace-nowrap" href="/faq">שאלות נפוצות</a>
+<a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/contact">צרו קשר</a>
+</nav>
+<div class="flex items-center gap-4">
+<a id="dashLink" href="/dashboard" class="hidden items-center gap-1 text-sm text-slate-300 hover:text-primary transition-colors font-medium">
+    <span class="material-symbols-outlined text-lg">account_circle</span> האזור שלי
+</a>
+<button class="lg:hidden text-primary">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+</div>
+<script>if(localStorage.getItem('user')){const el=document.getElementById('dashLink');el.classList.remove('hidden');el.classList.add('flex');}</script>
+</header>
+<main class="flex-1 flex flex-col items-center">
+<div class="layout-content-container flex flex-col max-w-[960px] w-full px-6 py-12">
+<div class="flex flex-col gap-4 mb-12 text-center md:text-right">
+<h1 class="text-slate-100 text-5xl font-black leading-tight tracking-[-0.033em] font-display">שאלות נפוצות</h1>
+<p class="text-text-muted text-lg font-normal leading-normal max-w-2xl">כאן תמצאו תשובות לכל השאלות בנוגע לשירותי השידוכים היוקרתיים שלנו. אנחנו מחויבים לשקיפות מלאה, דיסקרטיות ואיכות ללא פשרות.</p>
+</div>
+<div id="faqList" class="flex flex-col gap-4">
+<p class="text-text-muted text-center py-8">טוען שאלות...</p>
+</div>
+<script>
+async function loadFaqs() {
+    const el = document.getElementById('faqList');
+    try {
+        const res = await fetch('/api/faqs');
+        const faqs = await res.json();
+        if (!faqs.length) { el.innerHTML = '<p class="text-text-muted text-center py-8">אין שאלות נפוצות עדיין</p>'; return; }
+        el.innerHTML = faqs.map((f, i) => `
+            <details class="group flex flex-col rounded-xl border border-neutral-gold bg-background-dark/50 hover:bg-background-dark transition-all duration-300 px-6 py-4" ${i === 0 ? 'open' : ''}>
+                <summary class="flex cursor-pointer items-center justify-between gap-6 py-2 list-none">
+                    <span class="text-slate-100 text-lg font-bold leading-normal font-display">${f.question}</span>
+                    <span class="material-symbols-outlined text-primary group-open:rotate-180 transition-transform">expand_more</span>
+                </summary>
+                <div class="pt-4 border-t border-neutral-gold/30 mt-2">
+                    <p class="text-text-muted text-base font-normal leading-relaxed">${f.answer}</p>
+                </div>
+            </details>
+        `).join('');
+    } catch { el.innerHTML = '<p class="text-red-400 text-center py-8">שגיאה בטעינה</p>'; }
+}
+loadFaqs();
+</script>
+<div class="mt-16 bg-neutral-gold/20 border border-primary/30 rounded-2xl p-8 @container">
+<div class="flex flex-col @[600px]:flex-row items-center justify-between gap-8">
+<div class="flex flex-col gap-2 text-center @[600px]:text-right">
+<h3 class="text-slate-100 text-2xl font-bold font-display">זקוקים לעזרה או מידע נוסף?</h3>
+<p class="text-text-muted text-base">המומחים שלנו כאן כדי ללוות אתכם בדרך למציאת זוגיות איכותית ומתגמלת.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 shrink-0">
+<button class="bg-primary text-background-dark px-8 py-3 rounded-lg font-bold text-base hover:bg-primary/90 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">call</span>
+                                    שיחת ייעוץ חינם
+                                </button>
+<button class="border border-primary text-primary px-8 py-3 rounded-lg font-bold text-base hover:bg-primary/10 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">mail</span>
+                                    שלחו לנו הודעה
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="bg-background-dark border-t border-neutral-gold px-6 md:px-40 py-12">
+<div class="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-3xl">diamond</span>
+<span class="text-xl font-bold text-slate-100 font-display">Moldova & Ukraine Matchmaking</span>
+</div>
+<p id="footerDesc" class="text-text-muted text-sm leading-relaxed">
+                            הסוכנות המובילה בעולם לשידוכי יוקרה הממוקדת במולדובה ואוקראינה.
+                        </p>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="text-slate-100 font-bold text-lg mb-2">קישורים מהירים</h4>
+<ul id="footerLinks" class="flex flex-col gap-3 text-text-muted text-sm">
+<li><a class="hover:text-primary transition-colors" href="/">דף הבית</a></li>
+<li><a class="hover:text-primary transition-colors" href="/search">חיפוש פרופילים</a></li>
+<li><a class="hover:text-primary transition-colors" href="/stories">סיפורי הצלחה</a></li>
+<li><a class="hover:text-primary transition-colors" href="/faq">שאלות נפוצות</a></li>
+</ul>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="text-slate-100 font-bold text-lg mb-2">צור קשר</h4>
+<div class="flex items-center gap-3 text-text-muted">
+<span class="material-symbols-outlined text-primary text-sm">location_on</span>
+<span id="footerAddress">משרד ראשי: תל אביב, ישראל</span>
+</div>
+<div class="flex items-center gap-3 text-text-muted">
+<span class="material-symbols-outlined text-primary text-sm">phone_iphone</span>
+<span id="footerPhone">+972 3-123-4567</span>
+</div>
+<div class="flex items-center gap-3 text-text-muted">
+<span class="material-symbols-outlined text-primary text-sm">alternate_email</span>
+<span id="footerEmail">office@moldova-ukraine-brides.com</span>
+</div>
+<p id="footerCopy" class="text-text-muted text-xs mt-4">
+                            © 2024 Moldova & Ukraine Brides Luxury Matchmaking. כל הזכויות שמורות.
+                        </p>
+</div>
+</div>
+</footer>
+<script>
+(async function loadFooterSettings() {
+    try {
+        const res = await fetch('/api/admin/settings');
+        const s = await res.json();
+        if (s.footer_desc) document.getElementById('footerDesc').textContent = s.footer_desc;
+        if (s.footer_phone) document.getElementById('footerPhone').textContent = s.footer_phone;
+        if (s.footer_email) document.getElementById('footerEmail').textContent = s.footer_email;
+        if (s.footer_address) document.getElementById('footerAddress').textContent = s.footer_address;
+        if (s.footer_copy) document.getElementById('footerCopy').textContent = s.footer_copy;
+        if (s.footer_links) {
+            const ul = document.getElementById('footerLinks');
+            const links = s.footer_links.split('\n').filter(l => l.trim());
+            ul.innerHTML = links.map(l => {
+                const [name, url] = l.split('|').map(x => x.trim());
+                return `<li><a class="hover:text-primary transition-colors" href="${url || '#'}">${name}</a></li>`;
+            }).join('');
+        }
+    } catch {}
+})();
+</script>
+</div>
+</div>
+</body></html>

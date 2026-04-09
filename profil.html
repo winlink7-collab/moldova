@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html class="dark" dir="rtl" lang="he"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<title>פרופיל - Moldova & Ukraine</title>
+<script>
+tailwind.config = {
+    darkMode: "class",
+    theme: {
+        extend: {
+            colors: {
+                "primary": "#f2d00d",
+                "bg": "#0a0a07",
+                "card": "#1a1914",
+            },
+            fontFamily: {
+                "display": ["Heebo", "sans-serif"],
+            },
+        },
+    },
+}
+</script>
+<style>
+    body { font-family: 'Heebo', sans-serif; }
+    .gold-gradient { background: linear-gradient(135deg, #f2d00d 0%, #b89b06 100%); }
+    .luxury-shadow { box-shadow: 0 0 50px -12px rgba(242, 208, 13, 0.15); }
+    .lightbox { position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,0.92); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+    .lightbox.active { opacity: 1; pointer-events: auto; }
+    .lightbox img { max-width: 90vw; max-height: 85vh; object-fit: contain; border-radius: 12px; box-shadow: 0 0 80px rgba(242,208,13,0.15); transform: scale(0.9); transition: transform 0.3s ease; }
+    .lightbox.active img { transform: scale(1); }
+    .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; color: white; }
+    .lightbox-nav:hover { background: rgba(242,208,13,0.2); border-color: rgba(242,208,13,0.4); color: #f2d00d; }
+    .gallery-item { cursor: pointer; position: relative; overflow: hidden; }
+    .gallery-item::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0); transition: background 0.3s; display: flex; align-items: center; justify-content: center; }
+    .gallery-item:hover::after { background: rgba(0,0,0,0.25); }
+    .gallery-item .zoom-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); opacity: 0; transition: all 0.3s; z-index: 5; background: rgba(0,0,0,0.6); border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; }
+    .gallery-item:hover .zoom-icon { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+</style>
+</head>
+<body class="bg-bg text-slate-100 antialiased">
+
+<!-- Loading -->
+<div id="loading" class="fixed inset-0 z-[200] bg-bg flex items-center justify-center">
+    <span class="material-symbols-outlined text-primary text-5xl animate-spin">progress_activity</span>
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
+    <button onclick="closeLightbox()" class="absolute top-6 left-6 z-10 w-12 h-12 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:text-primary hover:border-primary/50 transition-all">
+        <span class="material-symbols-outlined text-2xl">close</span>
+    </button>
+    <button onclick="prevImage(event)" class="lightbox-nav right-6">
+        <span class="material-symbols-outlined text-2xl">chevron_right</span>
+    </button>
+    <button onclick="nextImage(event)" class="lightbox-nav left-6">
+        <span class="material-symbols-outlined text-2xl">chevron_left</span>
+    </button>
+    <img id="lightboxImg" src="" alt=""/>
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-sm text-slate-400 font-medium">
+        <span id="lightboxCounter"></span>
+    </div>
+</div>
+
+<!-- Header -->
+<header class="sticky top-0 z-50 w-full border-b border-white/5 bg-bg/90 backdrop-blur-xl">
+<div class="w-full px-6 lg:px-12 xl:px-20 flex h-20 items-center justify-between">
+    <a href="/" class="flex items-center gap-3 shrink-0">
+        <div class="size-10 bg-primary rounded-full flex items-center justify-center">
+            <span class="material-symbols-outlined text-bg text-2xl">workspace_premium</span>
+        </div>
+        <div class="flex flex-col">
+            <h1 class="text-xl font-extrabold text-white uppercase">Moldova & Ukraine</h1>
+            <span class="text-[10px] tracking-[0.3em] text-primary font-bold uppercase">Luxury Brides</span>
+        </div>
+    </a>
+    <nav class="hidden lg:flex items-center gap-6 xl:gap-8 2xl:gap-10">
+        <a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/">דף הבית</a>
+        <a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/about">אודות</a>
+        <a class="text-sm font-semibold text-primary whitespace-nowrap" href="/search">חיפוש פרופילים</a>
+        <a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/process">תהליך השידוך</a>
+        <a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/vip">חבילות VIP</a>
+        <a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/stories">סיפורי הצלחה</a>
+        <a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/faq">שאלות נפוצות</a>
+        <a class="text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap" href="/contact">צרו קשר</a>
+    </nav>
+    <a href="/search" class="flex items-center gap-2 text-sm text-slate-400 hover:text-primary transition-colors">
+        <span class="material-symbols-outlined">arrow_forward</span> חזרה לחיפוש
+    </a>
+</div>
+</header>
+
+<main class="max-w-[1400px] mx-auto px-6 lg:px-20 py-12">
+
+<!-- Hero: Image + Info -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20">
+
+    <!-- Main Image -->
+    <div class="lg:col-span-7 relative group overflow-hidden rounded-3xl luxury-shadow gallery-item" style="height: 750px;" onclick="openLightbox(0)">
+        <div class="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent opacity-80 z-10 pointer-events-none"></div>
+        <img id="mainImage" alt="" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" src=""/>
+        <div class="zoom-icon"><span class="material-symbols-outlined text-white text-2xl">zoom_in</span></div>
+        <div class="absolute bottom-10 right-10 z-20 pointer-events-none">
+            <div id="badge" class="hidden items-center gap-2 bg-primary/95 text-bg px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest mb-6 w-fit shadow-2xl">
+                <span class="material-symbols-outlined text-base">verified</span> <span id="badgeText"></span>
+            </div>
+            <h2 class="text-7xl lg:text-8xl font-black text-white drop-shadow-2xl leading-[0.85]">
+                <span id="heroName">...</span>, <span id="heroAge" class="font-light"></span>
+            </h2>
+        </div>
+    </div>
+
+    <!-- Profile Details -->
+    <div class="lg:col-span-5 flex flex-col justify-between">
+        <div>
+            <!-- Location -->
+            <div class="flex items-center gap-4 mb-10 pb-10 border-b border-white/5">
+                <span class="material-symbols-outlined text-primary text-4xl">location_on</span>
+                <div>
+                    <p class="text-primary font-black uppercase tracking-[0.3em] text-[10px] mb-1">מקום מגורים</p>
+                    <span id="location" class="text-2xl font-light text-white"></span>
+                </div>
+            </div>
+
+            <!-- Details Grid -->
+            <div class="space-y-6 mb-10">
+                <div class="flex items-center gap-4 p-4 bg-card/50 rounded-xl border border-white/5">
+                    <span class="material-symbols-outlined text-primary text-2xl">cake</span>
+                    <div><p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">גיל</p>
+                    <p id="detAge" class="text-lg text-white font-medium"></p></div>
+                </div>
+                <div class="flex items-center gap-4 p-4 bg-card/50 rounded-xl border border-white/5">
+                    <span class="material-symbols-outlined text-primary text-2xl">work</span>
+                    <div><p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">מקצוע</p>
+                    <p id="detOccupation" class="text-lg text-white font-medium"></p></div>
+                </div>
+                <div class="flex items-center gap-4 p-4 bg-card/50 rounded-xl border border-white/5">
+                    <span class="material-symbols-outlined text-primary text-2xl">school</span>
+                    <div><p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">השכלה</p>
+                    <p id="detEducation" class="text-lg text-white font-medium"></p></div>
+                </div>
+                <div class="flex items-center gap-4 p-4 bg-card/50 rounded-xl border border-white/5">
+                    <span class="material-symbols-outlined text-primary text-2xl">translate</span>
+                    <div><p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">שפות</p>
+                    <p id="detLanguages" class="text-lg text-white font-medium"></p></div>
+                </div>
+                <div class="flex items-center gap-4 p-4 bg-card/50 rounded-xl border border-white/5">
+                    <span class="material-symbols-outlined text-primary text-2xl">interests</span>
+                    <div><p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">תחביבים</p>
+                    <p id="detHobbies" class="text-lg text-white font-medium"></p></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="space-y-4">
+            <button onclick="openMessageModal()" class="w-full gold-gradient py-5 rounded-2xl text-bg font-black text-lg uppercase tracking-widest hover:brightness-110 transition-all shadow-2xl flex items-center justify-center gap-3">
+                <span class="material-symbols-outlined text-2xl">mail</span> שלח הודעה
+            </button>
+            <div class="grid grid-cols-2 gap-4">
+                <button class="border-2 border-primary/40 text-primary py-4 rounded-2xl font-black text-sm uppercase tracking-wider hover:bg-primary/10 transition-all flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined">videocam</span> שיחת וידאו
+                </button>
+                <button class="bg-card text-white py-4 rounded-2xl font-black text-sm uppercase tracking-wider hover:bg-card/80 transition-all flex items-center justify-center gap-2 border border-white/10">
+                    <span class="material-symbols-outlined">card_giftcard</span> שלח מתנה
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery -->
+<section class="mb-20">
+    <div class="flex items-end justify-between mb-8 border-b border-white/10 pb-4">
+        <h3 class="text-4xl font-bold text-white">גלריה פרטית</h3>
+        <span id="photoCount" class="text-slate-500 uppercase tracking-widest text-xs font-black"></span>
+    </div>
+    <div id="gallery" class="grid grid-cols-2 md:grid-cols-4 gap-6"></div>
+</section>
+
+<!-- Bio + Preferences -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-16 py-20 border-t border-white/10">
+    <div class="lg:col-span-2">
+        <h4 class="text-4xl font-bold mb-8 text-white">במילים שלה</h4>
+        <div class="space-y-8">
+            <p id="bioQuote" class="text-2xl font-light text-primary/90 leading-snug border-r-2 border-primary/30 pr-8 py-2"></p>
+            <p id="bioText" class="text-lg font-light leading-loose text-slate-400"></p>
+        </div>
+    </div>
+    <div class="bg-card/50 p-10 rounded-3xl border border-primary/10 shadow-2xl h-fit">
+        <h5 class="text-primary font-black uppercase tracking-[0.3em] text-[11px] mb-10 flex items-center gap-3">
+            <span class="material-symbols-outlined text-xl">tune</span> העדפות התאמה
+        </h5>
+        <ul class="space-y-8">
+            <li class="flex items-start gap-4">
+                <span class="material-symbols-outlined text-primary text-2xl mt-0.5">check_circle</span>
+                <div><p class="font-black text-white uppercase text-[10px] tracking-widest mb-1">מחפשת</p>
+                <p id="prefAge" class="text-slate-300 text-lg font-light"></p></div>
+            </li>
+            <li class="flex items-start gap-4">
+                <span class="material-symbols-outlined text-primary text-2xl mt-0.5">check_circle</span>
+                <div><p class="font-black text-white uppercase text-[10px] tracking-widest mb-1">מעבר דירה</p>
+                <p id="prefRelocate" class="text-slate-300 text-lg font-light"></p></div>
+            </li>
+            <li class="flex items-start gap-4">
+                <span class="material-symbols-outlined text-primary text-2xl mt-0.5">check_circle</span>
+                <div><p class="font-black text-white uppercase text-[10px] tracking-widest mb-1">מטרת הקשר</p>
+                <p id="prefGoal" class="text-slate-300 text-lg font-light"></p></div>
+            </li>
+            <li class="flex items-start gap-4">
+                <span class="material-symbols-outlined text-primary text-2xl mt-0.5">check_circle</span>
+                <div><p class="font-black text-white uppercase text-[10px] tracking-widest mb-1">מצב משפחתי</p>
+                <p id="prefMarital" class="text-slate-300 text-lg font-light"></p></div>
+            </li>
+            <li class="flex items-start gap-4">
+                <span class="material-symbols-outlined text-primary text-2xl mt-0.5">check_circle</span>
+                <div><p class="font-black text-white uppercase text-[10px] tracking-widest mb-1">ילדים</p>
+                <p id="prefChildren" class="text-slate-300 text-lg font-light"></p></div>
+            </li>
+        </ul>
+    </div>
+</section>
+</main>
+
+<!-- Message Modal -->
+<div id="messageModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/70 backdrop-blur-sm">
+<div class="relative w-full max-w-[500px] mx-4 bg-card p-8 rounded-xl border border-white/10 shadow-2xl">
+    <button onclick="closeMessageModal()" class="absolute top-4 left-4 text-slate-400 hover:text-white"><span class="material-symbols-outlined">close</span></button>
+    <div class="text-center mb-6">
+        <span class="material-symbols-outlined text-primary text-4xl mb-2">mail</span>
+        <h3 class="text-xl font-bold text-white">שלח הודעה ל-<span id="msgProfileName" class="text-primary"></span></h3>
+    </div>
+    <div id="msgLoginPrompt" class="hidden text-center py-6">
+        <p class="text-slate-400 mb-4">עליך להתחבר כדי לשלוח הודעות</p>
+        <a href="/?login=1" class="bg-primary text-bg px-8 py-3 rounded-lg font-bold hover:bg-primary/90 transition-all inline-block">התחבר עכשיו</a>
+    </div>
+    <form id="msgForm" class="space-y-4">
+        <textarea id="msgContent" rows="5" class="w-full bg-bg border border-white/10 rounded-lg py-3 px-4 text-white focus:border-primary outline-none resize-none" placeholder="כתוב את ההודעה שלך כאן..." required></textarea>
+        <div id="msgError" class="hidden text-center text-sm font-bold text-red-400"></div>
+        <div id="msgSuccess" class="hidden text-center text-sm font-bold text-green-400">ההודעה נשלחה בהצלחה!</div>
+        <button type="submit" id="msgSubmitBtn" class="w-full gold-gradient text-bg py-3 rounded-lg font-bold hover:brightness-110 transition-all">שלח הודעה</button>
+    </form>
+</div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-[#050503] border-t border-white/5 py-12 px-6 lg:px-20">
+<div class="max-w-[1400px] mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
+        <div>
+            <div class="flex items-center gap-3 mb-4">
+                <span class="material-symbols-outlined text-primary text-2xl">workspace_premium</span>
+                <div class="flex flex-col">
+                    <span class="text-lg font-extrabold text-white uppercase">Moldova & Ukraine</span>
+                    <span class="text-[10px] tracking-[0.3em] text-primary font-bold uppercase">Luxury Brides</span>
+                </div>
+            </div>
+            <p id="footerDesc" class="text-slate-500 text-sm leading-relaxed">הסוכנות המובילה בעולם לשידוכי יוקרה הממוקדת במולדובה ואוקראינה.</p>
+        </div>
+        <div>
+            <h5 class="text-white font-bold mb-4">קישורים מהירים</h5>
+            <ul id="footerLinks" class="space-y-3 text-sm text-slate-500">
+                <li><a class="hover:text-primary transition-colors" href="/">דף הבית</a></li>
+                <li><a class="hover:text-primary transition-colors" href="/search">חיפוש פרופילים</a></li>
+                <li><a class="hover:text-primary transition-colors" href="/vip">חבילות VIP</a></li>
+                <li><a class="hover:text-primary transition-colors" href="/stories">סיפורי הצלחה</a></li>
+                <li><a class="hover:text-primary transition-colors" href="/faq">שאלות נפוצות</a></li>
+            </ul>
+        </div>
+        <div>
+            <h5 class="text-white font-bold mb-4">צרו קשר</h5>
+            <ul class="space-y-3 text-sm text-slate-500">
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-base">location_on</span><span id="footerAddress">משרד ראשי: תל אביב, ישראל</span></li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-base">call</span><span id="footerPhone">+972 3-123-4567</span></li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-base">mail</span><span id="footerEmail">office@moldova-ukraine-brides.com</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="border-t border-white/5 pt-6 text-center">
+        <p id="footerCopy" class="text-slate-600 text-xs uppercase tracking-widest">&copy; 2024 Moldova & Ukraine Brides. כל הזכויות שמורות.</p>
+    </div>
+</div>
+</footer>
+
+<script>
+const maritalMap = { single: 'רווקה', divorced: 'גרושה', widowed: 'אלמנה' };
+
+// Lightbox
+let lightboxImages = [];
+let lightboxIndex = 0;
+
+function openLightbox(index) {
+    lightboxIndex = index;
+    const lb = document.getElementById('lightbox');
+    const img = document.getElementById('lightboxImg');
+    img.src = lightboxImages[index];
+    document.getElementById('lightboxCounter').textContent = `${index + 1} / ${lightboxImages.length}`;
+    lb.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox(e) {
+    if (e && e.target !== e.currentTarget && !e.target.closest('button')) return;
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function nextImage(e) {
+    if (e) e.stopPropagation();
+    lightboxIndex = (lightboxIndex + 1) % lightboxImages.length;
+    document.getElementById('lightboxImg').src = lightboxImages[lightboxIndex];
+    document.getElementById('lightboxCounter').textContent = `${lightboxIndex + 1} / ${lightboxImages.length}`;
+}
+
+function prevImage(e) {
+    if (e) e.stopPropagation();
+    lightboxIndex = (lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
+    document.getElementById('lightboxImg').src = lightboxImages[lightboxIndex];
+    document.getElementById('lightboxCounter').textContent = `${lightboxIndex + 1} / ${lightboxImages.length}`;
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+    const lb = document.getElementById('lightbox');
+    if (!lb.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') nextImage();
+    if (e.key === 'ArrowRight') prevImage();
+});
+
+async function loadProfile() {
+    const pathParts = window.location.pathname.split('/');
+    const profileId = pathParts[pathParts.length - 1];
+    if (!profileId || isNaN(profileId)) return;
+
+    const res = await fetch(`/api/profiles/${profileId}`);
+    if (!res.ok) { document.getElementById('loading').innerHTML = '<p class="text-red-400 text-xl">פרופיל לא נמצא</p>'; return; }
+    const p = await res.json();
+    const countryName = p.country === 'moldova' ? 'מולדובה' : 'אוקראינה';
+
+    // Hero
+    document.getElementById('mainImage').src = p.main_image || '';
+    document.getElementById('mainImage').alt = p.first_name;
+    document.getElementById('heroName').textContent = p.first_name;
+    document.getElementById('heroAge').textContent = p.age;
+    document.title = `${p.first_name}, ${p.age} - Moldova & Ukraine`;
+
+    // Badge
+    if (p.is_verified) {
+        const badge = document.getElementById('badge');
+        badge.classList.remove('hidden');
+        badge.classList.add('flex');
+        document.getElementById('badgeText').textContent = p.is_vip ? 'חברת עלית VIP מאומתת' : 'פרופיל מאומת';
+    }
+
+    // Location
+    document.getElementById('location').innerHTML = `${p.city}, <span class="font-semibold">${countryName}</span>`;
+
+    // Details
+    document.getElementById('detAge').textContent = `בת ${p.age}`;
+    document.getElementById('detOccupation').textContent = p.occupation || '—';
+    document.getElementById('detEducation').textContent = p.education || '—';
+    document.getElementById('detLanguages').textContent = p.languages || '—';
+    document.getElementById('detHobbies').textContent = p.hobbies || '—';
+
+    // Bio
+    if (p.quote) document.getElementById('bioQuote').textContent = `"${p.quote}"`;
+    if (p.bio) document.getElementById('bioText').textContent = p.bio;
+
+    // Preferences
+    document.getElementById('prefAge').textContent = `ג'נטלמן, ${p.looking_for_age_min || 28} - ${p.looking_for_age_max || 45}`;
+    document.getElementById('prefRelocate').textContent = p.willing_to_relocate ? 'פתוחה למעבר בינלאומי' : 'מעדיפה להישאר';
+    document.getElementById('prefGoal').textContent = p.relationship_goal || 'נישואין רציניים';
+    document.getElementById('prefMarital').textContent = maritalMap[p.marital_status] || 'רווקה';
+    document.getElementById('prefChildren').textContent = p.wants_children ? 'רוצה ילדים בעתיד' : 'לא מתכננת ילדים';
+
+    // Gallery
+    const gallery = document.getElementById('gallery');
+    const photos = p.photos || [];
+    const allPhotos = [p.main_image, ...photos.filter(ph => !ph.is_private).map(ph => ph.image_url)].filter(Boolean);
+    const privateCount = photos.filter(ph => ph.is_private).length;
+
+    // Store for lightbox
+    lightboxImages = [...allPhotos];
+
+    document.getElementById('photoCount').textContent = `${allPhotos.length + privateCount} תמונות`;
+
+    gallery.innerHTML = allPhotos.map((url, i) => `
+        <div class="aspect-[3/4] rounded-2xl overflow-hidden border border-white/5 luxury-shadow gallery-item" onclick="openLightbox(${i})">
+            <img src="${url}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy"/>
+            <div class="zoom-icon"><span class="material-symbols-outlined text-white text-2xl">zoom_in</span></div>
+        </div>
+    `).join('');
+
+    // Add locked private section
+    if (privateCount > 0 || allPhotos.length <= 3) {
+        gallery.innerHTML += `
+        <div class="aspect-[3/4] rounded-2xl overflow-hidden border border-white/5 relative">
+            <div class="absolute inset-0 bg-bg/90 flex flex-col items-center justify-center z-10 cursor-pointer hover:bg-bg/75 transition-colors">
+                <div class="size-14 rounded-full border border-primary/30 flex items-center justify-center mb-4">
+                    <span class="material-symbols-outlined text-primary text-3xl">lock</span>
+                </div>
+                <p class="font-black uppercase tracking-widest text-sm text-white mb-1">אוסף פרטי</p>
+                <p class="text-[10px] text-slate-500 font-bold tracking-widest uppercase">חברות VIP נדרשת</p>
+            </div>
+            <img src="${p.main_image || ''}" class="w-full h-full object-cover blur-2xl grayscale"/>
+        </div>`;
+    }
+
+    // Hide loading
+    document.getElementById('loading').style.display = 'none';
+}
+
+loadProfile();
+
+// Message modal
+let currentProfileId = null;
+
+function openMessageModal() {
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    const m = document.getElementById('messageModal');
+    m.classList.remove('hidden'); m.classList.add('flex');
+    document.getElementById('msgProfileName').textContent = document.getElementById('heroName').textContent;
+    document.getElementById('msgError').classList.add('hidden');
+    document.getElementById('msgSuccess').classList.add('hidden');
+    document.getElementById('msgContent').value = '';
+    currentProfileId = window.location.pathname.split('/').pop();
+    if (!user) {
+        document.getElementById('msgLoginPrompt').classList.remove('hidden');
+        document.getElementById('msgForm').classList.add('hidden');
+    } else {
+        document.getElementById('msgLoginPrompt').classList.add('hidden');
+        document.getElementById('msgForm').classList.remove('hidden');
+    }
+}
+
+function closeMessageModal() {
+    const m = document.getElementById('messageModal');
+    m.classList.add('hidden'); m.classList.remove('flex');
+}
+
+document.getElementById('messageModal').addEventListener('click', e => { if (e.target.id === 'messageModal') closeMessageModal(); });
+
+document.getElementById('msgForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    if (!user) return;
+    const content = document.getElementById('msgContent').value.trim();
+    if (!content) return;
+    const errEl = document.getElementById('msgError');
+    const successEl = document.getElementById('msgSuccess');
+    errEl.classList.add('hidden');
+    successEl.classList.add('hidden');
+    try {
+        const res = await fetch('/api/messages', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user_id: user.id, profile_id: currentProfileId, content })
+        });
+        const data = await res.json();
+        if (data.success) {
+            successEl.classList.remove('hidden');
+            document.getElementById('msgContent').value = '';
+            document.getElementById('msgSubmitBtn').textContent = 'נשלח!';
+            setTimeout(() => closeMessageModal(), 2000);
+        } else {
+            errEl.textContent = data.error || 'שגיאה';
+            errEl.classList.remove('hidden');
+        }
+    } catch {
+        errEl.textContent = 'שגיאה בחיבור לשרת';
+        errEl.classList.remove('hidden');
+    }
+});
+
+// Load footer from settings
+(async function loadFooterSettings() {
+    try {
+        const res = await fetch('/api/admin/settings');
+        const s = await res.json();
+        if (s.footer_desc) document.getElementById('footerDesc').textContent = s.footer_desc;
+        if (s.footer_phone) document.getElementById('footerPhone').textContent = s.footer_phone;
+        if (s.footer_email) document.getElementById('footerEmail').textContent = s.footer_email;
+        if (s.footer_address) document.getElementById('footerAddress').textContent = s.footer_address;
+        if (s.footer_copy) document.getElementById('footerCopy').textContent = s.footer_copy;
+        if (s.footer_links) {
+            const ul = document.getElementById('footerLinks');
+            const links = s.footer_links.split('\n').filter(l => l.trim());
+            ul.innerHTML = links.map(l => {
+                const [name, url] = l.split('|').map(x => x.trim());
+                return `<li><a class="hover:text-primary transition-colors" href="${url || '#'}">${name}</a></li>`;
+            }).join('');
+        }
+    } catch {}
+})();
+</script>
+</body></html>
