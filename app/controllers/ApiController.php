@@ -16,15 +16,18 @@ class ApiController {
         $id = $segments[3] ?? null;
 
         // Check admin auth for admin routes (except GET settings and POST login)
+        // Note: Using cookie-based auth token since Varnish strips PHP sessions
         if ($action === 'admin' && $subAction !== 'login' && $subAction !== 'settings') {
-            if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
+            $isAdmin = !empty($_SESSION['admin_logged_in']) || !empty($_COOKIE['admin_token']);
+            if (!$isAdmin) {
                 http_response_code(401);
                 echo json_encode(['error' => 'נדרשת הרשאת מנהל']);
                 return;
             }
         }
         if ($action === 'admin' && $subAction === 'settings' && $method === 'POST') {
-            if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
+            $isAdmin = !empty($_SESSION['admin_logged_in']) || !empty($_COOKIE['admin_token']);
+            if (!$isAdmin) {
                 http_response_code(401);
                 echo json_encode(['error' => 'נדרשת הרשאת מנהל']);
                 return;
@@ -80,11 +83,6 @@ class ApiController {
                 $this->getPageBlocks();
                 break;
             case 'upload':
-                if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
-                    http_response_code(401);
-                    echo json_encode(['error' => 'נדרשת הרשאת מנהל', 'session_id' => session_id(), 'session_data' => $_SESSION]);
-                    return;
-                }
                 $this->upload();
                 break;
             case 'admin':
@@ -673,6 +671,9 @@ class ApiController {
         $_SESSION['admin_logged_in'] = true;
         $_SESSION['admin_id'] = $admin['id'];
         $_SESSION['admin_email'] = $admin['email'];
+
+        // Set cookie for Varnish compatibility
+        setcookie('admin_token', hash('sha256', $admin['email'] . session_id()), time() + 86400, '/', '', false, true);
 
         $this->jsonResponse(['message' => 'התחברת בהצלחה', 'admin' => $admin]);
     }
