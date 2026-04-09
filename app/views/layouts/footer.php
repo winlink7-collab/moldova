@@ -67,7 +67,16 @@
 
     <!-- Copyright -->
     <div class="border-t border-white/5 pt-8 text-center text-xs text-gold-muted/50">
-        <p id="footerCopy">&copy; <?= date('Y') ?> Moldova &amp; Ukraine Brides Luxury Matchmaking. כל הזכויות שמורות.</p>
+        <p id="footerCopy">&copy; <?= date('Y') ?> Moldova &amp; Ukraine Brides Luxury Matchmaking. <?= t('all_rights') ?></p>
+        <!-- Footer Language Switcher -->
+        <div class="flex items-center justify-center gap-3 mt-4">
+            <?php foreach (['he' => 'עברית', 'ru' => 'Русский', 'en' => 'English'] as $code => $label): ?>
+            <a href="?lang=<?= $code ?>" class="text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === $code ? 'text-primary' : 'text-slate-500 hover:text-primary' ?>">
+                <?= $label ?>
+            </a>
+            <?php if ($code !== 'en'): ?><span class="text-slate-700">|</span><?php endif; ?>
+            <?php endforeach; ?>
+        </div>
     </div>
 </div>
 </footer>

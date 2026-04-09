@@ -35,6 +35,7 @@ define('BASE_PATH', __DIR__);
 define('BASE_URL', '');
 
 require_once BASE_PATH . '/config/database.php';
+require_once BASE_PATH . '/config/translations.php';
 require_once BASE_PATH . '/app/models/Database.php';
 
 spl_autoload_register(function ($class) {

@@ -22,7 +22,7 @@ function navClass(string $page, string $current): string {
 }
 ?>
 <!DOCTYPE html>
-<html class="dark" dir="rtl" lang="he">
+<html class="dark" dir="<?= $LANG_DIR ?? 'rtl' ?>" lang="<?= $CURRENT_LANG ?? 'he' ?>">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -243,7 +243,13 @@ function navClass(string $page, string $current): string {
 </head>
 
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden">
-<script>var BASE = '<?= BASE_URL ?>'; var BASE_URL = '<?= BASE_URL ?>'; var CURRENT_PAGE = '<?= $currentPage ?? "home" ?>';</script>
+<script>
+var BASE = '<?= BASE_URL ?>';
+var BASE_URL = '<?= BASE_URL ?>';
+var CURRENT_PAGE = '<?= $currentPage ?? "home" ?>';
+var LANG = '<?= $CURRENT_LANG ?? "he" ?>';
+var T = <?= json_encode($T ?? [], JSON_UNESCAPED_UNICODE) ?>;
+</script>
 <div class="relative flex min-h-screen w-full flex-col">
 
 <!-- Navigation -->
@@ -267,20 +273,30 @@ function navClass(string $page, string $current): string {
 
     <!-- Desktop Navigation -->
     <nav class="hidden lg:flex items-center gap-6 xl:gap-8 2xl:gap-10">
-        <a id="navHome" class="<?= navClass('home', $currentPage) ?>" href="<?= BASE_URL ?>/">דף הבית</a>
-        <a id="navAbout" class="<?= navClass('about', $currentPage) ?>" href="<?= BASE_URL ?>/about">אודות</a>
-        <a id="navSearch" class="<?= navClass('search', $currentPage) ?>" href="<?= BASE_URL ?>/search">חיפוש פרופילים</a>
-        <a id="navProcess" class="<?= navClass('process', $currentPage) ?>" href="<?= BASE_URL ?>/process">תהליך השידוך</a>
-        <a id="navVip" class="<?= navClass('vip', $currentPage) ?>" href="<?= BASE_URL ?>/vip">חבילות VIP</a>
-        <a id="navStories" class="<?= navClass('stories', $currentPage) ?>" href="<?= BASE_URL ?>/stories">סיפורי הצלחה</a>
-        <a id="navFaq" class="<?= navClass('faq', $currentPage) ?>" href="<?= BASE_URL ?>/faq">שאלות נפוצות</a>
-        <a id="navContact" class="<?= navClass('contact', $currentPage) ?>" href="<?= BASE_URL ?>/contact">צרו קשר</a>
+        <a id="navHome" class="<?= navClass('home', $currentPage) ?>" href="<?= BASE_URL ?>/"><?= t('nav_home') ?></a>
+        <a id="navAbout" class="<?= navClass('about', $currentPage) ?>" href="<?= BASE_URL ?>/about"><?= t('nav_about') ?></a>
+        <a id="navSearch" class="<?= navClass('search', $currentPage) ?>" href="<?= BASE_URL ?>/search"><?= t('nav_search') ?></a>
+        <a id="navProcess" class="<?= navClass('process', $currentPage) ?>" href="<?= BASE_URL ?>/process"><?= t('nav_process') ?></a>
+        <a id="navVip" class="<?= navClass('vip', $currentPage) ?>" href="<?= BASE_URL ?>/vip"><?= t('nav_vip') ?></a>
+        <a id="navStories" class="<?= navClass('stories', $currentPage) ?>" href="<?= BASE_URL ?>/stories"><?= t('nav_stories') ?></a>
+        <a id="navFaq" class="<?= navClass('faq', $currentPage) ?>" href="<?= BASE_URL ?>/faq"><?= t('nav_faq') ?></a>
+        <a id="navContact" class="<?= navClass('contact', $currentPage) ?>" href="<?= BASE_URL ?>/contact"><?= t('nav_contact') ?></a>
     </nav>
 
+    <!-- Language Switcher -->
+    <div class="hidden lg:flex items-center gap-1">
+        <?php $langs = ['he' => 'עב', 'ru' => 'RU', 'en' => 'EN']; ?>
+        <?php foreach ($langs as $code => $label): ?>
+        <a href="?lang=<?= $code ?>" class="px-2 py-1 rounded text-xs font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === $code ? 'bg-primary text-background-dark' : 'text-slate-400 hover:text-primary hover:bg-white/5' ?>">
+            <?= $label ?>
+        </a>
+        <?php endforeach; ?>
+    </div>
+
     <!-- Theme Toggle -->
-    <button id="themeToggleBtn" onclick="toggleTheme()" class="hidden lg:flex items-center gap-2 text-slate-400 hover:text-primary transition-colors px-3 py-1.5 rounded-lg hover:bg-white/5 border border-white/10 hover:border-primary/30" title="החלף עיצוב">
+    <button id="themeToggleBtn" onclick="toggleTheme()" class="hidden lg:flex items-center gap-2 text-slate-400 hover:text-primary transition-colors px-3 py-1.5 rounded-lg hover:bg-white/5 border border-white/10 hover:border-primary/30" title="<?= t('change_theme') ?>">
         <span id="themeIcon" class="material-symbols-outlined text-lg">light_mode</span>
-        <span id="themeLabel" class="text-xs font-bold">שנה עיצוב</span>
+        <span id="themeLabel" class="text-xs font-bold"><?= t('change_theme') ?></span>
     </button>
 
     <!-- Quick Search -->
@@ -303,10 +319,10 @@ function navClass(string $page, string $current): string {
         <!-- Logged out state -->
         <div id="authButtons" class="flex items-center gap-3">
             <button onclick="openModal('loginModal')" class="hidden sm:flex px-5 py-2.5 border border-primary/30 hover:bg-primary/10 text-primary text-sm font-bold rounded-lg transition-all">
-                התחברות
+                <?= t('login') ?>
             </button>
             <button onclick="openModal('registerModal')" class="hidden sm:flex px-5 py-2.5 bg-primary hover:bg-primary/90 text-background-dark text-sm font-bold rounded-lg transition-all transform hover:scale-105">
-                הרשמה
+                <?= t('register') ?>
             </button>
         </div>
 
@@ -342,20 +358,28 @@ function navClass(string $page, string $current): string {
 <!-- Mobile Navigation Menu -->
 <div id="mobileMenu" class="hidden lg:hidden border-t border-white/10 bg-background-dark/95 backdrop-blur-xl">
     <nav class="flex flex-col px-6 py-4 space-y-3">
-        <a class="<?= navClass('home', $currentPage) ?> block py-2" href="<?= BASE_URL ?>/" data-nav-mobile="home">דף הבית</a>
-        <a class="<?= navClass('about', $currentPage) ?> block py-2" href="<?= BASE_URL ?>/about" data-nav-mobile="about">אודות</a>
-        <a class="<?= navClass('search', $currentPage) ?> block py-2" href="<?= BASE_URL ?>/search" data-nav-mobile="search">חיפוש פרופילים</a>
-        <a class="<?= navClass('process', $currentPage) ?> block py-2" href="<?= BASE_URL ?>/process" data-nav-mobile="process">תהליך השידוך</a>
-        <a class="<?= navClass('vip', $currentPage) ?> block py-2" href="<?= BASE_URL ?>/vip" data-nav-mobile="vip">חבילות VIP</a>
-        <a class="<?= navClass('stories', $currentPage) ?> block py-2" href="<?= BASE_URL ?>/stories" data-nav-mobile="stories">סיפורי הצלחה</a>
-        <a class="<?= navClass('faq', $currentPage) ?> block py-2" href="<?= BASE_URL ?>/faq" data-nav-mobile="faq">שאלות נפוצות</a>
-        <a class="<?= navClass('contact', $currentPage) ?> block py-2" href="<?= BASE_URL ?>/contact" data-nav-mobile="contact">צרו קשר</a>
+        <a class="<?= navClass('home', $currentPage) ?> block py-2" href="<?= BASE_URL ?>/"><?= t('nav_home') ?></a>
+        <a class="<?= navClass('about', $currentPage) ?> block py-2" href="<?= BASE_URL ?>/about"><?= t('nav_about') ?></a>
+        <a class="<?= navClass('search', $currentPage) ?> block py-2" href="<?= BASE_URL ?>/search"><?= t('nav_search') ?></a>
+        <a class="<?= navClass('process', $currentPage) ?> block py-2" href="<?= BASE_URL ?>/process"><?= t('nav_process') ?></a>
+        <a class="<?= navClass('vip', $currentPage) ?> block py-2" href="<?= BASE_URL ?>/vip"><?= t('nav_vip') ?></a>
+        <a class="<?= navClass('stories', $currentPage) ?> block py-2" href="<?= BASE_URL ?>/stories"><?= t('nav_stories') ?></a>
+        <a class="<?= navClass('faq', $currentPage) ?> block py-2" href="<?= BASE_URL ?>/faq"><?= t('nav_faq') ?></a>
+        <a class="<?= navClass('contact', $currentPage) ?> block py-2" href="<?= BASE_URL ?>/contact"><?= t('nav_contact') ?></a>
+        <!-- Mobile Language Switcher -->
+        <div class="flex gap-2 pt-3 border-t border-white/10">
+            <?php foreach (['he' => 'עברית', 'ru' => 'Русский', 'en' => 'English'] as $code => $label): ?>
+            <a href="?lang=<?= $code ?>" class="flex-1 text-center px-3 py-2 rounded-lg text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === $code ? 'bg-primary text-background-dark' : 'border border-white/10 text-slate-300 hover:border-primary/30' ?>">
+                <?= $label ?>
+            </a>
+            <?php endforeach; ?>
+        </div>
         <div class="flex gap-3 pt-3 border-t border-white/10">
             <button onclick="openModal('loginModal')" class="flex-1 px-4 py-2.5 border border-primary/30 hover:bg-primary/10 text-primary text-sm font-bold rounded-lg transition-all text-center">
-                התחברות
+                <?= t('login') ?>
             </button>
             <button onclick="openModal('registerModal')" class="flex-1 px-4 py-2.5 bg-primary hover:bg-primary/90 text-background-dark text-sm font-bold rounded-lg transition-all text-center">
-                הרשמה
+                <?= t('register') ?>
             </button>
         </div>
     </nav>
