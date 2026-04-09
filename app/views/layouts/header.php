@@ -174,8 +174,31 @@ function navClass(string $page, string $current): string {
     html.light section, html.light main {
         background: transparent !important;
     }
+    /* Hero section in light mode */
+    html.light .relative.min-h-\[90vh\] .absolute.inset-0 .bg-gradient-to-l {
+        background: linear-gradient(to left, rgba(248,247,242,0.2), rgba(248,247,242,0.85), rgba(248,247,242,1)) !important;
+    }
     html.light .luxury-gradient {
         background: linear-gradient(135deg, rgba(248,247,242,0.95) 0%, rgba(255,255,255,0.8) 100%) !important;
+    }
+    /* Cards & sections with dark bg */
+    html.light .gold-border, html.light [class*="gold-border"] {
+        border-color: rgba(184,155,6,0.2) !important;
+    }
+    html.light .bg-accent-dark, html.light [class*="bg-accent-dark"] {
+        background: #f0efe8 !important;
+    }
+    html.light .bg-primary\/10 {
+        background: rgba(184,155,6,0.08) !important;
+    }
+    html.light .border-primary\/30 {
+        border-color: rgba(184,155,6,0.25) !important;
+    }
+    html.light .text-primary {
+        color: #9a8200 !important;
+    }
+    html.light .bg-primary {
+        background: #c9a800 !important;
     }
     html.light footer {
         background: #1a1810 !important;
@@ -255,8 +278,9 @@ function navClass(string $page, string $current): string {
     </nav>
 
     <!-- Theme Toggle -->
-    <button id="themeToggleBtn" onclick="toggleTheme()" class="hidden lg:flex items-center gap-1 text-slate-400 hover:text-primary transition-colors px-2 py-1.5 rounded-lg hover:bg-white/5" title="החלף עיצוב">
-        <span id="themeIcon" class="material-symbols-outlined text-xl">light_mode</span>
+    <button id="themeToggleBtn" onclick="toggleTheme()" class="hidden lg:flex items-center gap-2 text-slate-400 hover:text-primary transition-colors px-3 py-1.5 rounded-lg hover:bg-white/5 border border-white/10 hover:border-primary/30" title="החלף עיצוב">
+        <span id="themeIcon" class="material-symbols-outlined text-lg">light_mode</span>
+        <span id="themeLabel" class="text-xs font-bold">שנה עיצוב</span>
     </button>
 
     <!-- Quick Search -->
