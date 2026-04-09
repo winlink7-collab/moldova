@@ -175,6 +175,45 @@ function navClass(string $page, string $current): string {
     html.light main .text-white, html.light main .text-slate-100 {
         color: #2a2a2a !important;
     }
+    /* Keep white text on cards with image overlays */
+    html.light main .profile-card .text-white,
+    html.light main .profile-card h3,
+    html.light main .profile-card h4,
+    html.light main .profile-card p,
+    html.light main .aspect-\[3\/4\] .text-white,
+    html.light main .aspect-\[3\/4\] h3,
+    html.light main .aspect-\[3\/4\] h4,
+    html.light main .aspect-\[3\/4\] p,
+    html.light main .aspect-\[3\/4\] span {
+        color: #fff !important;
+    }
+    html.light main .profile-card .text-white\/70,
+    html.light main .aspect-\[3\/4\] .text-white\/70 {
+        color: rgba(255,255,255,0.7) !important;
+    }
+    html.light main .profile-card .text-white\/50,
+    html.light main .aspect-\[3\/4\] .text-white\/50 {
+        color: rgba(255,255,255,0.5) !important;
+    }
+    html.light main .profile-card,
+    html.light main .group.relative.rounded-2xl {
+        border-color: rgba(0,0,0,0.1) !important;
+        box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+    /* Hero and profile name stays white on images */
+    html.light main .drop-shadow-2xl,
+    html.light main .drop-shadow-lg {
+        color: #fff !important;
+    }
+    html.light main #heroName, html.light main #heroAge,
+    html.light main #mainImage + div h2 {
+        color: #fff !important;
+    }
+    /* Gallery items text white */
+    html.light main .gallery-item .text-white {
+        color: #fff !important;
+    }
     html.light main .text-slate-300, html.light main .text-slate-400,
     html.light main .text-slate-500, html.light main .text-gold-muted {
         color: #666 !important;
