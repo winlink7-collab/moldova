@@ -535,5 +535,30 @@ setTimeout(async function aieApplyStyleSettings() {
 require BASE_PATH . '/app/views/layouts/admin-inline.php';
 ?>
 
+<script>
+function toggleTheme() {
+    var html = document.documentElement;
+    var isLight = html.classList.contains('light');
+    if (isLight) {
+        html.classList.remove('light');
+        html.classList.add('dark');
+        localStorage.setItem('site_theme', 'dark');
+    } else {
+        html.classList.remove('dark');
+        html.classList.add('light');
+        localStorage.setItem('site_theme', 'light');
+    }
+    updateThemeIcons();
+}
+function updateThemeIcons() {
+    var isLight = document.documentElement.classList.contains('light');
+    var newIcon = isLight ? 'dark_mode' : 'light_mode';
+    ['themeIcon', 'themeIconMobile'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = newIcon;
+    });
+}
+document.addEventListener('DOMContentLoaded', updateThemeIcons);
+</script>
 </body>
 </html>

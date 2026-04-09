@@ -131,7 +131,92 @@ function navClass(string $page, string $current): string {
         background: linear-gradient(135deg, #f2d00d 0%, #b89b06 100%);
         color: #12110a;
     }
+
+    /* ===== Light Theme ===== */
+    html.light body {
+        background: #f8f7f2 !important;
+        color: #1a1a1a !important;
+    }
+    html.light .glass-effect {
+        background: rgba(255,255,255,0.92) !important;
+        border-color: rgba(0,0,0,0.08) !important;
+    }
+    html.light header a, html.light nav a {
+        color: #333 !important;
+    }
+    html.light nav a:hover, html.light .text-primary {
+        color: #b89b06 !important;
+    }
+    html.light h1, html.light h2, html.light h3, html.light h4 {
+        color: #1a1a1a !important;
+    }
+    html.light .text-slate-100, html.light .text-white {
+        color: #1a1a1a !important;
+    }
+    html.light .text-slate-300, html.light .text-slate-400, html.light .text-gold-muted {
+        color: #555 !important;
+    }
+    html.light .bg-background-dark, html.light [class*="bg-background-dark"] {
+        background: #f8f7f2 !important;
+    }
+    html.light .bg-surface, html.light [class*="bg-surface"] {
+        background: #fff !important;
+    }
+    html.light .bg-card, html.light [class*="bg-card"] {
+        background: #fff !important;
+    }
+    html.light .border-white\/10, html.light .border-white\/5, html.light .border-white\/15 {
+        border-color: rgba(0,0,0,0.1) !important;
+    }
+    html.light .border-border-gold {
+        border-color: rgba(184,155,6,0.3) !important;
+    }
+    html.light section, html.light main {
+        background: transparent !important;
+    }
+    html.light .luxury-gradient {
+        background: linear-gradient(135deg, rgba(248,247,242,0.95) 0%, rgba(255,255,255,0.8) 100%) !important;
+    }
+    html.light footer {
+        background: #1a1810 !important;
+        color: #ccc !important;
+    }
+    html.light footer h3, html.light footer a, html.light footer span {
+        color: #ccc !important;
+    }
+    html.light .gold-gradient-text {
+        background: linear-gradient(135deg, #b89b06 0%, #8a7404 100%) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+    }
+    html.light .bg-white\/5, html.light .bg-white\/10 {
+        background: rgba(0,0,0,0.03) !important;
+    }
+    html.light .hover\:bg-white\/5:hover {
+        background: rgba(0,0,0,0.05) !important;
+    }
+    html.light input, html.light select, html.light textarea {
+        background: #fff !important;
+        color: #1a1a1a !important;
+        border-color: rgba(0,0,0,0.15) !important;
+    }
+    html.light #headerLogoTitle {
+        color: #1a1a1a !important;
+    }
+    html.light .rounded-2xl, html.light .rounded-xl {
+        box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
 </style>
+<script>
+// Theme toggle - load saved preference
+(function() {
+    var saved = localStorage.getItem('site_theme');
+    if (saved === 'light') {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
+    }
+})();
+</script>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden">
@@ -168,6 +253,11 @@ function navClass(string $page, string $current): string {
         <a id="navFaq" class="<?= navClass('faq', $currentPage) ?>" href="<?= BASE_URL ?>/faq">שאלות נפוצות</a>
         <a id="navContact" class="<?= navClass('contact', $currentPage) ?>" href="<?= BASE_URL ?>/contact">צרו קשר</a>
     </nav>
+
+    <!-- Theme Toggle -->
+    <button id="themeToggleBtn" onclick="toggleTheme()" class="hidden lg:flex items-center gap-1 text-slate-400 hover:text-primary transition-colors px-2 py-1.5 rounded-lg hover:bg-white/5" title="החלף עיצוב">
+        <span id="themeIcon" class="material-symbols-outlined text-xl">light_mode</span>
+    </button>
 
     <!-- Quick Search -->
     <div class="hidden lg:flex items-center relative">
@@ -212,6 +302,10 @@ function navClass(string $page, string $current): string {
             </div>
         </div>
 
+        <!-- Mobile theme toggle -->
+        <button onclick="toggleTheme()" class="lg:hidden text-slate-400 hover:text-primary transition-colors">
+            <span id="themeIconMobile" class="material-symbols-outlined text-2xl">light_mode</span>
+        </button>
         <!-- Mobile menu button -->
         <button id="mobileMenuBtn" class="lg:hidden text-slate-100" onclick="toggleMobileMenu()">
             <span class="material-symbols-outlined text-3xl">menu</span>
