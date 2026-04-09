@@ -114,6 +114,12 @@ switch ($page) {
         $slug = $segments[1] ?? '';
         $c->customPage($slug);
         break;
+    case 'fix-hebrew':
+        require BASE_PATH . '/fix_hebrew.php';
+        break;
+    case 'fix-permissions':
+        require BASE_PATH . '/fix_permissions.php';
+        break;
     default:
         http_response_code(404);
         echo '<h1>404 - דף לא נמצא</h1>';
