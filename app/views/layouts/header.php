@@ -243,14 +243,13 @@ function navClass(string $page, string $current): string {
 </head>
 
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden">
-<script class="notranslate">
+<script>
 var BASE = '<?= BASE_URL ?>';
 var BASE_URL = '<?= BASE_URL ?>';
 var CURRENT_PAGE = '<?= $currentPage ?? "home" ?>';
 var LANG = '<?= $CURRENT_LANG ?? "he" ?>';
-var T = <?= json_encode($T ?? [], JSON_UNESCAPED_UNICODE) ?>;
-// Fallback for translation keys
-function tr(key) { return T[key] || key; }
+var T = JSON.parse(atob('<?= base64_encode(json_encode($T ?? [], JSON_UNESCAPED_UNICODE)) ?>'));
+function tr(key) { return (T && T[key]) ? T[key] : key; }
 </script>
 <div class="relative flex min-h-screen w-full flex-col">
 
