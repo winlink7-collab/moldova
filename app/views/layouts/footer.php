@@ -17,7 +17,7 @@
                 </div>
             </a>
             <p id="footerDesc" class="text-gold-muted text-sm leading-relaxed max-w-sm">
-                הסוכנות המובילה בעולם לשידוכי יוקרה הממוקדת במולדובה ואוקראינה. אנו מביאים את השילוב המנצח של יופי מזרח אירופאי וערכים מסורתיים ללקוחותינו ברחבי העולם.
+                <?= t('footer_desc') ?>
             </p>
             <div id="footerSocial" class="flex gap-4">
                 <a class="size-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-primary hover:text-background-dark transition-all" href="#" id="socialLink1">
@@ -34,23 +34,23 @@
 
         <!-- Quick Links -->
         <div>
-            <h5 class="text-white font-bold mb-6">קישורים מהירים</h5>
+            <h5 class="text-white font-bold mb-6"><?= t('quick_links') ?></h5>
             <ul id="footerLinks" class="space-y-4 text-sm text-gold-muted">
-                <li><a class="hover:text-primary transition-colors" href="<?= BASE_URL ?>/about">אודותינו</a></li>
-                <li><a class="hover:text-primary transition-colors" href="<?= BASE_URL ?>/process">תהליך השידוך</a></li>
-                <li><a class="hover:text-primary transition-colors" href="<?= BASE_URL ?>/vip">חבילות VIP</a></li>
-                <li><a class="hover:text-primary transition-colors" href="<?= BASE_URL ?>/faq">שאלות נפוצות</a></li>
-                <li><a class="hover:text-primary transition-colors" href="<?= BASE_URL ?>/contact">צרו קשר</a></li>
+                <li><a class="hover:text-primary transition-colors" href="<?= BASE_URL ?>/about"><?= t('footer_about_link') ?></a></li>
+                <li><a class="hover:text-primary transition-colors" href="<?= BASE_URL ?>/process"><?= t('footer_process_link') ?></a></li>
+                <li><a class="hover:text-primary transition-colors" href="<?= BASE_URL ?>/vip"><?= t('footer_vip_link') ?></a></li>
+                <li><a class="hover:text-primary transition-colors" href="<?= BASE_URL ?>/faq"><?= t('footer_faq_link') ?></a></li>
+                <li><a class="hover:text-primary transition-colors" href="<?= BASE_URL ?>/contact"><?= t('footer_contact_link') ?></a></li>
             </ul>
         </div>
 
         <!-- Contact Info -->
         <div>
-            <h5 class="text-white font-bold mb-6">צרו קשר</h5>
+            <h5 class="text-white font-bold mb-6"><?= t('contact_us') ?></h5>
             <ul class="space-y-4 text-sm text-gold-muted">
                 <li class="flex items-center gap-3">
                     <span class="material-symbols-outlined text-primary text-lg">location_on</span>
-                    <span id="footerAddress">משרד ראשי: תל אביב, ישראל</span>
+                    <span id="footerAddress"><?= t('footer_address') ?></span>
                 </li>
                 <li class="flex items-center gap-3">
                     <span class="material-symbols-outlined text-primary text-lg">call</span>
@@ -102,20 +102,20 @@
         <div class="inline-block p-3 rounded-full bg-primary/5 mb-4 gold-border">
             <span class="material-symbols-outlined text-primary text-4xl">lock_person</span>
         </div>
-        <h1 class="serif-text text-3xl md:text-4xl font-bold text-white mb-3">כניסת חברי VIP</h1>
+        <h1 class="serif-text text-3xl md:text-4xl font-bold text-white mb-3"><?= t('login_modal_title') ?></h1>
         <div class="h-0.5 w-16 bg-primary mx-auto mb-4"></div>
-        <p class="text-slate-400 text-base">הזינו את פרטי הגישה שלכם</p>
+        <p class="text-slate-400 text-base"><?= t('login_modal_subtitle') ?></p>
     </div>
     <form id="loginForm" class="space-y-6">
         <div class="space-y-2">
-            <label class="block text-primary text-sm font-semibold pr-1">אימייל</label>
+            <label class="block text-primary text-sm font-semibold pr-1"><?= t('email') ?></label>
             <div class="relative">
                 <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-xl">person</span>
                 <input id="loginEmail" class="w-full bg-[#1c1a0f]/50 border border-white/10 rounded-lg py-4 pr-12 pl-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600" placeholder="email@example.com" type="email" required/>
             </div>
         </div>
         <div class="space-y-2">
-            <label class="block text-primary text-sm font-semibold pr-1">סיסמה</label>
+            <label class="block text-primary text-sm font-semibold pr-1"><?= t('password') ?></label>
             <div class="relative">
                 <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-xl">key</span>
                 <input id="loginPassword" class="w-full bg-[#1c1a0f]/50 border border-white/10 rounded-lg py-4 pr-12 pl-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600" placeholder="••••••••" type="password" required/>
@@ -124,13 +124,13 @@
         <div id="loginError" class="hidden text-center text-sm font-bold text-red-400"></div>
         <div class="pt-2">
             <button class="w-full bg-primary hover:bg-primary/80 text-background-dark font-bold py-4 rounded-lg text-lg transition-all transform hover:scale-[1.01] shadow-xl shadow-primary/10 serif-text" type="submit">
-                כניסה למערכת
+                <?= t('login_modal_submit') ?>
             </button>
         </div>
     </form>
     <div class="mt-6 text-center space-y-3">
-        <p><a href="<?= BASE_URL ?>/dashboard?forgot=1" class="text-slate-400 text-sm hover:text-primary transition-colors">שכחת סיסמה?</a></p>
-        <p class="text-slate-400 text-sm">עדיין לא חברים? <a onclick="closeModal('loginModal'); openModal('registerModal')" class="text-primary font-bold hover:underline cursor-pointer">הרשמה</a></p>
+        <p><a href="<?= BASE_URL ?>/dashboard?forgot=1" class="text-slate-400 text-sm hover:text-primary transition-colors"><?= t('forgot_password') ?></a></p>
+        <p class="text-slate-400 text-sm"><?= t('not_member_yet') ?> <a onclick="closeModal('loginModal'); openModal('registerModal')" class="text-primary font-bold hover:underline cursor-pointer"><?= t('register') ?></a></p>
     </div>
 </div>
 </div>
@@ -145,20 +145,20 @@
         <div class="inline-block p-3 rounded-full bg-primary/5 mb-4 gold-border">
             <span class="material-symbols-outlined text-primary text-4xl">person_add</span>
         </div>
-        <h1 class="serif-text text-3xl md:text-4xl font-bold text-white mb-3">הצטרפות למועדון</h1>
+        <h1 class="serif-text text-3xl md:text-4xl font-bold text-white mb-3"><?= t('register_modal_title') ?></h1>
         <div class="h-0.5 w-16 bg-primary mx-auto mb-4"></div>
-        <p class="text-slate-400 text-base">צור חשבון וגלה את ההתאמה המושלמת</p>
+        <p class="text-slate-400 text-base"><?= t('register_modal_subtitle') ?></p>
     </div>
     <form id="registerForm" class="space-y-5">
         <div class="space-y-2">
-            <label class="block text-primary text-sm font-semibold pr-1">שם מלא</label>
+            <label class="block text-primary text-sm font-semibold pr-1"><?= t('full_name') ?></label>
             <div class="relative">
                 <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-xl">badge</span>
-                <input id="regName" class="w-full bg-[#1c1a0f]/50 border border-white/10 rounded-lg py-4 pr-12 pl-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600" placeholder="ישראל ישראלי" type="text" required/>
+                <input id="regName" class="w-full bg-[#1c1a0f]/50 border border-white/10 rounded-lg py-4 pr-12 pl-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600" placeholder="<?= t('register_placeholder_name') ?>" type="text" required/>
             </div>
         </div>
         <div class="space-y-2">
-            <label class="block text-primary text-sm font-semibold pr-1">אימייל</label>
+            <label class="block text-primary text-sm font-semibold pr-1"><?= t('email') ?></label>
             <div class="relative">
                 <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-xl">mail</span>
                 <input id="regEmail" class="w-full bg-[#1c1a0f]/50 border border-white/10 rounded-lg py-4 pr-12 pl-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600" placeholder="email@example.com" type="email" required/>
@@ -166,16 +166,16 @@
         </div>
         <div class="grid grid-cols-2 gap-4">
             <div class="space-y-2">
-                <label class="block text-primary text-sm font-semibold pr-1">סיסמה</label>
+                <label class="block text-primary text-sm font-semibold pr-1"><?= t('password') ?></label>
                 <input id="regPassword" class="w-full bg-[#1c1a0f]/50 border border-white/10 rounded-lg py-4 px-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600" placeholder="••••••••" type="password" required/>
             </div>
             <div class="space-y-2">
-                <label class="block text-primary text-sm font-semibold pr-1">גיל</label>
+                <label class="block text-primary text-sm font-semibold pr-1"><?= t('age') ?></label>
                 <input id="regAge" class="w-full bg-[#1c1a0f]/50 border border-white/10 rounded-lg py-4 px-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600" placeholder="35" type="number"/>
             </div>
         </div>
         <div class="space-y-2">
-            <label class="block text-primary text-sm font-semibold pr-1">טלפון</label>
+            <label class="block text-primary text-sm font-semibold pr-1"><?= t('phone') ?></label>
             <div class="relative">
                 <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-xl">phone</span>
                 <input id="regPhone" class="w-full bg-[#1c1a0f]/50 border border-white/10 rounded-lg py-4 pr-12 pl-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600" placeholder="050-1234567" type="tel"/>
@@ -184,12 +184,12 @@
         <div id="registerError" class="hidden text-center text-sm font-bold text-red-400"></div>
         <div class="pt-2">
             <button class="w-full bg-primary hover:bg-primary/80 text-background-dark font-bold py-4 rounded-lg text-lg transition-all transform hover:scale-[1.01] shadow-xl shadow-primary/10 serif-text" type="submit">
-                יצירת חשבון VIP
+                <?= t('register_modal_submit') ?>
             </button>
         </div>
     </form>
     <div class="mt-8 text-center">
-        <p class="text-slate-400 text-sm">כבר חברים? <a onclick="closeModal('registerModal'); openModal('loginModal')" class="text-primary font-bold hover:underline cursor-pointer">התחברות</a></p>
+        <p class="text-slate-400 text-sm"><?= t('already_member') ?> <a onclick="closeModal('registerModal'); openModal('loginModal')" class="text-primary font-bold hover:underline cursor-pointer"><?= t('login') ?></a></p>
     </div>
 </div>
 </div>
@@ -275,11 +275,11 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
             closeModal('registerModal');
             updateAuthUI();
         } else {
-            errEl.textContent = data.error || 'שגיאה בהרשמה';
+            errEl.textContent = data.error || T.register_error;
             errEl.classList.remove('hidden');
         }
     } catch {
-        errEl.textContent = 'שגיאה בחיבור לשרת';
+        errEl.textContent = T.server_error;
         errEl.classList.remove('hidden');
     }
 });
@@ -304,11 +304,11 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
             closeModal('loginModal');
             updateAuthUI();
         } else {
-            errEl.textContent = data.error || 'אימייל או סיסמה שגויים';
+            errEl.textContent = data.error || T.login_error;
             errEl.classList.remove('hidden');
         }
     } catch {
-        errEl.textContent = 'שגיאה בחיבור לשרת';
+        errEl.textContent = T.server_error;
         errEl.classList.remove('hidden');
     }
 });
@@ -380,7 +380,7 @@ if (new URLSearchParams(window.location.search).get('login') === '1') {
 <!-- Admin Float Button (hidden when admin inline bar is active) -->
 <a id="adminFloatBtn" href="<?= BASE_URL ?>/admin" class="fixed bottom-6 left-6 z-50 flex items-center gap-2 bg-card/90 border border-white/10 hover:border-primary/50 text-slate-400 hover:text-primary px-4 py-3 rounded-xl shadow-2xl backdrop-blur-sm transition-all hover:scale-105 group">
     <span class="material-symbols-outlined text-xl">admin_panel_settings</span>
-    <span class="text-sm font-bold">פאנל ניהול</span>
+    <span class="text-sm font-bold"><?= t('admin_panel') ?></span>
     <span class="material-symbols-outlined text-sm text-slate-600">lock</span>
 </a>
 

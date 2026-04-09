@@ -13,14 +13,14 @@
 <aside class="w-full lg:w-80 flex-shrink-0">
 <div class="sticky top-28 bg-card rounded-2xl border border-white/10 p-6 space-y-6">
     <div>
-        <h2 class="text-xl font-bold text-primary mb-1">מסננים מתקדמים</h2>
-        <p class="text-sm text-slate-500">צמצם את תוצאות החיפוש שלך</p>
+        <h2 class="text-xl font-bold text-primary mb-1"><?= t('filters') ?></h2>
+        <p class="text-sm text-slate-500"><?= t('narrow_results') ?></p>
     </div>
 
     <!-- Age -->
     <div class="space-y-2">
         <div class="flex items-center gap-2 text-sm font-bold text-slate-300">
-            <span class="material-symbols-outlined text-primary text-lg">person_search</span> טווח גילאים
+            <span class="material-symbols-outlined text-primary text-lg">person_search</span> <?= t('age_range') ?>
         </div>
         <div class="flex items-center gap-3">
             <input id="ageMin" class="w-full bg-background-dark border border-white/10 rounded-lg py-2.5 px-3 text-white text-center focus:border-primary outline-none" type="number" value="18" min="18" max="60"/>
@@ -32,33 +32,33 @@
     <!-- Country -->
     <div class="space-y-2">
         <div class="flex items-center gap-2 text-sm font-bold text-slate-300">
-            <span class="material-symbols-outlined text-primary text-lg">location_on</span> מדינה
+            <span class="material-symbols-outlined text-primary text-lg">location_on</span> <?= t('country') ?>
         </div>
         <select id="countryFilter" class="w-full bg-background-dark border border-white/10 rounded-lg py-2.5 px-3 text-white focus:border-primary outline-none">
-            <option value="">כל המדינות</option>
-            <option value="moldova">מולדובה 🇲🇩</option>
-            <option value="ukraine">אוקראינה 🇺🇦</option>
+            <option value=""><?= t('all_countries') ?></option>
+            <option value="moldova"><?= t('moldova_country') ?> 🇲🇩</option>
+            <option value="ukraine"><?= t('ukraine') ?> 🇺🇦</option>
         </select>
     </div>
 
     <!-- Marital Status -->
     <div class="space-y-2">
         <div class="flex items-center gap-2 text-sm font-bold text-slate-300">
-            <span class="material-symbols-outlined text-primary text-lg">favorite</span> מצב משפחתי
+            <span class="material-symbols-outlined text-primary text-lg">favorite</span> <?= t('marital_status') ?>
         </div>
         <select id="maritalFilter" class="w-full bg-background-dark border border-white/10 rounded-lg py-2.5 px-3 text-white focus:border-primary outline-none">
-            <option value="">הכל</option>
-            <option value="single">רווקה</option>
-            <option value="divorced">גרושה</option>
-            <option value="widowed">אלמנה</option>
+            <option value=""><?= t('all') ?></option>
+            <option value="single"><?= t('single') ?></option>
+            <option value="divorced"><?= t('divorced') ?></option>
+            <option value="widowed"><?= t('widowed') ?></option>
         </select>
     </div>
 
     <button onclick="applyFilters()" class="w-full py-3.5 bg-primary text-background-dark text-base font-bold rounded-xl hover:bg-primary/90 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/10">
-        <span class="material-symbols-outlined">search</span> חפש עכשיו
+        <span class="material-symbols-outlined">search</span> <?= t('search_now') ?>
     </button>
     <button onclick="resetFilters()" class="w-full py-2.5 text-sm text-slate-400 hover:text-primary transition-colors">
-        <span class="material-symbols-outlined text-sm align-middle">restart_alt</span> נקה מסננים
+        <span class="material-symbols-outlined text-sm align-middle">restart_alt</span> <?= t('clear_filters') ?>
     </button>
 </div>
 </aside>
@@ -69,25 +69,25 @@
     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
         <div class="flex items-center gap-4">
             <h2 class="text-2xl md:text-3xl font-bold">
-                מצאנו <span id="totalCount" class="text-primary font-black">0</span> התאמות עבורך
+                <?= t('found') ?> <span id="totalCount" class="text-primary font-black">0</span> <?= t('matches_for_you') ?>
             </h2>
             <?php if (!empty($isAdmin)): ?>
             <button onclick="openAddProfile()" class="bg-primary text-background-dark px-4 py-2 rounded-xl font-bold text-sm hover:opacity-90 transition flex items-center gap-2 shadow-lg">
                 <span class="material-symbols-outlined text-lg">person_add</span>
-                הוסף פרופיל
+                <?= t('add_profile') ?>
             </button>
             <?php endif; ?>
         </div>
         <div class="flex gap-2">
-            <button onclick="filterCountry('')" class="country-btn px-4 py-2 rounded-lg text-sm font-bold border border-white/10 hover:border-primary/40 transition-all bg-card text-slate-300 hover:text-primary">הכל</button>
-            <button onclick="filterCountry('moldova')" class="country-btn px-4 py-2 rounded-lg text-sm font-bold border border-white/10 hover:border-primary/40 transition-all bg-card text-slate-300 hover:text-primary">🇲🇩 מולדובה</button>
-            <button onclick="filterCountry('ukraine')" class="country-btn px-4 py-2 rounded-lg text-sm font-bold border border-white/10 hover:border-primary/40 transition-all bg-card text-slate-300 hover:text-primary">🇺🇦 אוקראינה</button>
+            <button onclick="filterCountry('')" class="country-btn px-4 py-2 rounded-lg text-sm font-bold border border-white/10 hover:border-primary/40 transition-all bg-card text-slate-300 hover:text-primary"><?= t('all') ?></button>
+            <button onclick="filterCountry('moldova')" class="country-btn px-4 py-2 rounded-lg text-sm font-bold border border-white/10 hover:border-primary/40 transition-all bg-card text-slate-300 hover:text-primary">🇲🇩 <?= t('moldova_country') ?></button>
+            <button onclick="filterCountry('ukraine')" class="country-btn px-4 py-2 rounded-lg text-sm font-bold border border-white/10 hover:border-primary/40 transition-all bg-card text-slate-300 hover:text-primary">🇺🇦 <?= t('ukraine') ?></button>
         </div>
     </div>
 
     <!-- Profile Grid -->
     <div id="profileGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        <p class="text-slate-500 text-center py-20 col-span-full">טוען פרופילים...</p>
+        <p class="text-slate-500 text-center py-20 col-span-full"><?= t('loading_profiles') ?></p>
     </div>
 
     <!-- Pagination -->
@@ -149,19 +149,19 @@ async function loadProfiles(page = 1) {
         renderProfiles(data.profiles);
         renderPagination(data.page, data.total_pages);
     } catch {
-        document.getElementById('profileGrid').innerHTML = '<p class="text-red-400 text-center py-20 col-span-full">שגיאה בטעינה</p>';
+        document.getElementById('profileGrid').innerHTML = `<p class="text-red-400 text-center py-20 col-span-full">${T.error_loading}</p>`;
     }
 }
 
 function renderProfiles(profiles) {
     const grid = document.getElementById('profileGrid');
     if (!profiles.length) {
-        grid.innerHTML = '<div class="col-span-full text-center py-20"><span class="material-symbols-outlined text-slate-600 text-6xl block mb-4">search_off</span><p class="text-slate-500 text-lg">לא נמצאו פרופילים התואמים לחיפוש</p><button onclick="resetFilters()" class="text-primary text-sm mt-3 hover:underline">נקה מסננים ונסה שוב</button></div>';
+        grid.innerHTML = `<div class="col-span-full text-center py-20"><span class="material-symbols-outlined text-slate-600 text-6xl block mb-4">search_off</span><p class="text-slate-500 text-lg">${T.no_profiles_found}</p><button onclick="resetFilters()" class="text-primary text-sm mt-3 hover:underline">${T.clear_and_retry}</button></div>`;
         return;
     }
     grid.innerHTML = profiles.map(p => {
         const flag = p.country === 'moldova' ? '🇲🇩' : '🇺🇦';
-        const countryName = p.country === 'moldova' ? 'מולדובה' : 'אוקראינה';
+        const countryName = p.country === 'moldova' ? T.moldova_country : T.ukraine;
         return `
         <a href="${BASE}/profile/${p.id}" class="profile-card group relative rounded-2xl overflow-hidden border border-white/5 cursor-pointer transition-all duration-500 block">
             <div class="aspect-[3/4] relative overflow-hidden">
@@ -183,7 +183,7 @@ function renderProfiles(profiles) {
                 <!-- Online indicator -->
                 ${p.is_online ? `<div class="absolute top-4 left-4 ${p.is_verified ? 'top-14' : ''} z-10 flex items-center gap-1.5 bg-black/40 backdrop-blur-sm px-2.5 py-1 rounded-full">
                     <div class="size-2 rounded-full bg-emerald-400 animate-pulse"></div>
-                    <span class="text-[10px] text-emerald-300 font-bold">מחוברת</span>
+                    <span class="text-[10px] text-emerald-300 font-bold">${T.online}</span>
                 </div>` : ''}
 
                 <!-- Info overlay on image -->
@@ -229,87 +229,87 @@ loadProfiles();
 <div id="addProfileModal" class="fixed inset-0 z-[10001] hidden items-center justify-center bg-black/70 backdrop-blur-sm">
 <div class="relative w-full max-w-3xl mx-4 bg-[#1c1a0e] border border-primary/30 rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto" dir="rtl">
     <div class="sticky top-0 bg-[#1c1a0e] border-b border-white/10 px-6 py-4 flex items-center justify-between z-10">
-        <h3 class="text-lg font-bold text-primary">הוסף פרופיל חדש</h3>
+        <h3 class="text-lg font-bold text-primary"><?= t('add_new_profile') ?></h3>
         <button onclick="closeAddProfile()" class="text-slate-400 hover:text-white"><span class="material-symbols-outlined">close</span></button>
     </div>
     <form id="addProfileForm" onsubmit="submitNewProfile(event)" class="p-6 space-y-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-                <label class="block text-sm text-white/60 mb-1">שם</label>
+                <label class="block text-sm text-white/60 mb-1"><?= t('name') ?></label>
                 <input id="ap_name" type="text" required class="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-3 text-white"/>
             </div>
             <div>
-                <label class="block text-sm text-white/60 mb-1">גיל</label>
+                <label class="block text-sm text-white/60 mb-1"><?= t('age') ?></label>
                 <input id="ap_age" type="number" required min="18" max="60" class="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-3 text-white"/>
             </div>
             <div>
-                <label class="block text-sm text-white/60 mb-1">עיר</label>
+                <label class="block text-sm text-white/60 mb-1"><?= t('city') ?></label>
                 <input id="ap_city" type="text" required class="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-3 text-white"/>
             </div>
             <div>
-                <label class="block text-sm text-white/60 mb-1">מדינה</label>
+                <label class="block text-sm text-white/60 mb-1"><?= t('country') ?></label>
                 <select id="ap_country" required class="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-3 text-white">
-                    <option value="moldova">מולדובה</option>
-                    <option value="ukraine">אוקראינה</option>
+                    <option value="moldova"><?= t('moldova_country') ?></option>
+                    <option value="ukraine"><?= t('ukraine') ?></option>
                 </select>
             </div>
             <div>
-                <label class="block text-sm text-white/60 mb-1">עיסוק</label>
+                <label class="block text-sm text-white/60 mb-1"><?= t('occupation') ?></label>
                 <input id="ap_occupation" type="text" class="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-3 text-white"/>
             </div>
             <div>
-                <label class="block text-sm text-white/60 mb-1">השכלה</label>
+                <label class="block text-sm text-white/60 mb-1"><?= t('education') ?></label>
                 <input id="ap_education" type="text" class="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-3 text-white"/>
             </div>
             <div>
-                <label class="block text-sm text-white/60 mb-1">שפות</label>
+                <label class="block text-sm text-white/60 mb-1"><?= t('languages') ?></label>
                 <input id="ap_languages" type="text" class="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-3 text-white"/>
             </div>
             <div>
-                <label class="block text-sm text-white/60 mb-1">תחביבים</label>
+                <label class="block text-sm text-white/60 mb-1"><?= t('hobbies') ?></label>
                 <input id="ap_hobbies" type="text" class="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-3 text-white"/>
             </div>
             <div>
-                <label class="block text-sm text-white/60 mb-1">מצב משפחתי</label>
+                <label class="block text-sm text-white/60 mb-1"><?= t('marital_status') ?></label>
                 <select id="ap_marital" class="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-3 text-white">
-                    <option value="single">רווקה</option>
-                    <option value="divorced">גרושה</option>
-                    <option value="widowed">אלמנה</option>
+                    <option value="single"><?= t('single') ?></option>
+                    <option value="divorced"><?= t('divorced') ?></option>
+                    <option value="widowed"><?= t('widowed') ?></option>
                 </select>
             </div>
             <div>
-                <label class="block text-sm text-white/60 mb-1">גובה</label>
+                <label class="block text-sm text-white/60 mb-1"><?= t('height') ?></label>
                 <input id="ap_height" type="text" class="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-3 text-white" placeholder="165cm"/>
             </div>
             <div>
-                <label class="block text-sm text-white/60 mb-1">משקל</label>
+                <label class="block text-sm text-white/60 mb-1"><?= t('weight') ?></label>
                 <input id="ap_weight" type="text" class="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-3 text-white" placeholder="55kg"/>
             </div>
             <div>
-                <label class="block text-sm text-white/60 mb-1">ילדים</label>
-                <input id="ap_children" type="text" class="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-3 text-white" placeholder="אין / 1 / 2"/>
+                <label class="block text-sm text-white/60 mb-1"><?= t('children') ?></label>
+                <input id="ap_children" type="text" class="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-3 text-white" placeholder="<?= t('children_placeholder') ?>"/>
             </div>
             <div>
-                <label class="block text-sm text-white/60 mb-1">מזל</label>
-                <input id="ap_zodiac" type="text" class="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-3 text-white" placeholder="מזל טלה, שור..."/>
+                <label class="block text-sm text-white/60 mb-1"><?= t('zodiac') ?></label>
+                <input id="ap_zodiac" type="text" class="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-3 text-white" placeholder="<?= t('zodiac_placeholder') ?>"/>
             </div>
         </div>
         <div>
-            <label class="block text-sm text-white/60 mb-1">ביוגרפיה</label>
+            <label class="block text-sm text-white/60 mb-1"><?= t('biography') ?></label>
             <textarea id="ap_bio" rows="3" class="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-3 text-white resize-none"></textarea>
         </div>
         <div>
-            <label class="block text-sm text-white/60 mb-1">מחפשת / ציטוט</label>
+            <label class="block text-sm text-white/60 mb-1"><?= t('looking_for') ?></label>
             <input id="ap_quote" type="text" class="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-3 text-white"/>
         </div>
 
         <!-- Main Photo -->
         <div>
-            <label class="block text-sm text-white/60 mb-1">תמונה ראשית</label>
+            <label class="block text-sm text-white/60 mb-1"><?= t('main_photo') ?></label>
             <div class="flex items-center gap-4">
                 <input id="ap_main_file" type="file" accept="image/*" onchange="apUploadMain(this)" class="hidden"/>
                 <button type="button" onclick="document.getElementById('ap_main_file').click()" class="bg-primary/20 text-primary px-5 py-3 rounded-lg font-bold text-sm hover:bg-primary/30 flex items-center gap-2">
-                    <span class="material-symbols-outlined text-lg">add_photo_alternate</span> בחר תמונה
+                    <span class="material-symbols-outlined text-lg">add_photo_alternate</span> <?= t('choose_photo') ?>
                 </button>
                 <img id="ap_main_preview" src="" class="h-16 rounded hidden"/>
                 <input id="ap_main_url" type="hidden"/>
@@ -318,26 +318,26 @@ loadProfiles();
 
         <!-- Gallery Photos -->
         <div>
-            <label class="block text-sm text-white/60 mb-1">תמונות גלריה</label>
+            <label class="block text-sm text-white/60 mb-1"><?= t('gallery_photos') ?></label>
             <div class="flex items-center gap-4">
                 <input id="ap_gallery_files" type="file" accept="image/*" multiple onchange="apUploadGallery(this)" class="hidden"/>
                 <button type="button" onclick="document.getElementById('ap_gallery_files').click()" class="bg-primary/20 text-primary px-5 py-3 rounded-lg font-bold text-sm hover:bg-primary/30 flex items-center gap-2">
-                    <span class="material-symbols-outlined text-lg">photo_library</span> בחר תמונות
+                    <span class="material-symbols-outlined text-lg">photo_library</span> <?= t('choose_photos') ?>
                 </button>
-                <span id="ap_gallery_progress" class="text-sm text-primary hidden">מעלה...</span>
+                <span id="ap_gallery_progress" class="text-sm text-primary hidden"><?= t('uploading') ?></span>
             </div>
             <div id="ap_gallery_preview" class="flex flex-wrap gap-2 mt-3"></div>
         </div>
 
         <!-- Videos -->
         <div>
-            <label class="block text-sm text-white/60 mb-1">סרטונים</label>
+            <label class="block text-sm text-white/60 mb-1"><?= t('videos') ?></label>
             <div class="flex items-center gap-4">
                 <input id="ap_video_files" type="file" accept="video/mp4,video/webm,.mp4,.webm,.mov" multiple onchange="apUploadVideos(this)" class="hidden"/>
                 <button type="button" onclick="document.getElementById('ap_video_files').click()" class="bg-primary/20 text-primary px-5 py-3 rounded-lg font-bold text-sm hover:bg-primary/30 flex items-center gap-2">
-                    <span class="material-symbols-outlined text-lg">video_call</span> בחר סרטונים
+                    <span class="material-symbols-outlined text-lg">video_call</span> <?= t('choose_videos') ?>
                 </button>
-                <span id="ap_video_progress" class="text-sm text-primary hidden">מעלה...</span>
+                <span id="ap_video_progress" class="text-sm text-primary hidden"><?= t('uploading') ?></span>
             </div>
             <div id="ap_video_preview" class="flex flex-wrap gap-2 mt-3"></div>
         </div>
@@ -345,8 +345,8 @@ loadProfiles();
         <div id="ap_error" class="text-sm text-red-400 hidden"></div>
 
         <div class="flex justify-end gap-3 pt-4 border-t border-white/10">
-            <button type="button" onclick="closeAddProfile()" class="px-6 bg-white/10 text-slate-300 py-3 rounded-xl font-bold">ביטול</button>
-            <button type="submit" id="ap_submit" class="bg-primary text-background-dark px-8 py-3 rounded-xl font-bold text-lg hover:opacity-90 transition">שמור פרופיל</button>
+            <button type="button" onclick="closeAddProfile()" class="px-6 bg-white/10 text-slate-300 py-3 rounded-xl font-bold"><?= t('cancel') ?></button>
+            <button type="submit" id="ap_submit" class="bg-primary text-background-dark px-8 py-3 rounded-xl font-bold text-lg hover:opacity-90 transition"><?= t('save_profile') ?></button>
         </div>
     </form>
 </div>
@@ -394,7 +394,7 @@ async function apUploadGallery(input) {
     const prog = document.getElementById('ap_gallery_progress');
     prog.classList.remove('hidden');
     for (let i = 0; i < input.files.length; i++) {
-        prog.textContent = `מעלה ${i+1} מתוך ${input.files.length}...`;
+        prog.textContent = T.uploading_n_of_m ? T.uploading_n_of_m.replace('%d', i+1).replace('%d', input.files.length) : `${i+1}/${input.files.length}`;
         const fd = new FormData(); fd.append('file', input.files[i]);
         try {
             const res = await fetch(BASE + '/api/upload', { method: 'POST', body: fd });
@@ -403,7 +403,7 @@ async function apUploadGallery(input) {
         } catch(e) { console.error(e); }
     }
     renderApGallery();
-    prog.textContent = 'הועלו!';
+    prog.textContent = T.uploaded;
     setTimeout(() => prog.classList.add('hidden'), 2000);
     input.value = '';
 }
@@ -421,7 +421,7 @@ async function apUploadVideos(input) {
     const prog = document.getElementById('ap_video_progress');
     prog.classList.remove('hidden');
     for (let i = 0; i < input.files.length; i++) {
-        prog.textContent = `מעלה סרטון ${i+1} מתוך ${input.files.length}...`;
+        prog.textContent = T.uploading_video_n_of_m ? T.uploading_video_n_of_m.replace('%d', i+1).replace('%d', input.files.length) : `${i+1}/${input.files.length}`;
         const fd = new FormData(); fd.append('file', input.files[i]);
         try {
             const res = await fetch(BASE + '/api/upload', { method: 'POST', body: fd });
@@ -430,7 +430,7 @@ async function apUploadVideos(input) {
         } catch(e) { console.error(e); }
     }
     renderApVideos();
-    prog.textContent = 'הועלו!';
+    prog.textContent = T.uploaded;
     setTimeout(() => prog.classList.add('hidden'), 2000);
     input.value = '';
 }
@@ -450,7 +450,7 @@ async function submitNewProfile(e) {
     const errEl = document.getElementById('ap_error');
     const btn = document.getElementById('ap_submit');
     errEl.classList.add('hidden');
-    btn.textContent = 'שומר...';
+    btn.textContent = T.saving;
     btn.disabled = true;
 
     const body = {
@@ -480,7 +480,7 @@ async function submitNewProfile(e) {
             body: JSON.stringify(body)
         });
         const result = await res.json();
-        if (!res.ok) throw new Error(result.error || 'שגיאה');
+        if (!res.ok) throw new Error(result.error || T.error);
 
         const profileId = result.profile.id;
 
@@ -514,7 +514,7 @@ async function submitNewProfile(e) {
             });
         }
 
-        if (typeof aieToast === 'function') aieToast('פרופיל נוצר בהצלחה!');
+        if (typeof aieToast === 'function') aieToast(T.profile_created);
         closeAddProfile();
         loadProfiles(currentPage);
     } catch(err) {
@@ -522,7 +522,7 @@ async function submitNewProfile(e) {
         errEl.classList.remove('hidden');
     }
 
-    btn.textContent = 'שמור פרופיל';
+    btn.textContent = T.save_profile;
     btn.disabled = false;
 }
 </script>

@@ -1,6 +1,6 @@
 <?php
-$pageTitle = 'Moldova & Ukraine Luxury Brides - שידוכי יוקרה בינלאומי';
-$pageDescription = 'שירות שידוכי יוקרה בינלאומי - חיבור בין גברים מצליחים לנשים יפות וערכיות ממולדובה ואוקראינה';
+$pageTitle = 'Moldova & Ukraine Luxury Brides - ' . t('hero_title_1') . ' ' . t('hero_title_2');
+$pageDescription = t('hero_subtitle');
 $currentPage = 'home';
 require BASE_PATH . '/app/views/layouts/header.php';
 ?>
@@ -11,7 +11,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
     "@context": "https://schema.org",
     "@type": "MatchmakingService",
     "name": "Moldova & Ukraine Luxury Brides",
-    "description": "שירות שידוכי יוקרה בינלאומי",
+    "description": "<?= t('hero_subtitle') ?>",
     "url": "<?= BASE_URL ?>/",
     "areaServed": ["IL", "MD", "UA"],
     "availableLanguage": ["he", "en", "ru", "ro", "uk"]
@@ -28,21 +28,21 @@ require BASE_PATH . '/app/views/layouts/header.php';
         <div class="flex flex-col gap-8 text-right">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/10 w-fit">
                 <span class="size-2 rounded-full bg-primary animate-pulse"></span>
-                <span id="homeHeroBadge" class="text-primary text-xs font-bold tracking-widest uppercase">בלעדי לחברי מועדון ה-VIP</span>
+                <span id="homeHeroBadge" class="text-primary text-xs font-bold tracking-widest uppercase"><?= t('hero_badge') ?></span>
             </div>
             <h1 id="homeHeroTitle" class="text-5xl md:text-7xl font-black text-white leading-tight">
-                מצא את <span class="text-primary italic">האחת</span><br/>
-                במזרח אירופה
+                <?= t('hero_title_1') ?> <span class="text-primary italic"><?= t('hero_title_2') ?></span><br/>
+                <?= t('hero_title_3') ?>
             </h1>
             <p id="homeHeroSubtitle" class="text-lg text-slate-300 max-w-xl leading-relaxed">
-                שירות שידוכי יוקרה המיועד לגברים בעלי חזון. אנו מחברים בין גברים מצליחים לנשים היפות, המשכילות והערכיות ביותר ממולדובה ואוקראינה.
+                <?= t('hero_subtitle') ?>
             </p>
             <div class="flex flex-wrap gap-4 mt-4">
                 <div class="flex items-center gap-3 bg-white/5 border border-white/10 p-3 rounded-xl">
                     <div class="w-10 h-7 bg-blue-600 rounded-sm relative overflow-hidden shadow-lg border border-white/20">
                         <div class="absolute bottom-0 w-full h-1/2 bg-yellow-400"></div>
                     </div>
-                    <span class="text-white text-sm font-medium">אוקראינה</span>
+                    <span class="text-white text-sm font-medium"><?= t('ukraine') ?></span>
                 </div>
                 <div class="flex items-center gap-3 bg-white/5 border border-white/10 p-3 rounded-xl">
                     <div class="w-10 h-7 flex shadow-lg border border-white/20 overflow-hidden">
@@ -50,43 +50,43 @@ require BASE_PATH . '/app/views/layouts/header.php';
                         <div class="w-1/3 bg-yellow-400 h-full"></div>
                         <div class="w-1/3 bg-red-600 h-full"></div>
                     </div>
-                    <span class="text-white text-sm font-medium">מולדובה</span>
+                    <span class="text-white text-sm font-medium"><?= t('moldova_country') ?></span>
                 </div>
             </div>
         </div>
 
         <!-- Lead Form -->
         <div class="bg-accent-dark/95 border border-primary/20 p-8 md:p-10 rounded-2xl shadow-2xl backdrop-blur-xl">
-            <h3 id="homeFormTitle" class="text-2xl font-bold text-white mb-6">התחל את המסע שלך היום</h3>
+            <h3 id="homeFormTitle" class="text-2xl font-bold text-white mb-6"><?= t('home_form_title') ?></h3>
             <form id="leadForm" class="space-y-4">
                 <div class="grid grid-cols-2 gap-4">
                     <div class="space-y-2">
-                        <label class="text-xs font-bold text-gold-muted uppercase tracking-wider">שם מלא</label>
-                        <input id="fullName" class="w-full bg-white/5 border-white/10 rounded-lg py-3 px-4 text-white focus:ring-primary focus:border-primary" placeholder="ישראל ישראלי" type="text" required/>
+                        <label class="text-xs font-bold text-gold-muted uppercase tracking-wider"><?= t('home_form_name') ?></label>
+                        <input id="fullName" class="w-full bg-white/5 border-white/10 rounded-lg py-3 px-4 text-white focus:ring-primary focus:border-primary" placeholder="" type="text" required/>
                     </div>
                     <div class="space-y-2">
-                        <label class="text-xs font-bold text-gold-muted uppercase tracking-wider">גיל</label>
+                        <label class="text-xs font-bold text-gold-muted uppercase tracking-wider"><?= t('home_form_age') ?></label>
                         <input id="age" class="w-full bg-white/5 border-white/10 rounded-lg py-3 px-4 text-white focus:ring-primary focus:border-primary" placeholder="35+" type="number"/>
                     </div>
                 </div>
                 <div class="space-y-2">
-                    <label class="text-xs font-bold text-gold-muted uppercase tracking-wider">אימייל</label>
+                    <label class="text-xs font-bold text-gold-muted uppercase tracking-wider"><?= t('home_form_email') ?></label>
                     <input id="email" class="w-full bg-white/5 border-white/10 rounded-lg py-3 px-4 text-white focus:ring-primary focus:border-primary" placeholder="email@example.com" type="email" required/>
                 </div>
                 <div class="space-y-2">
-                    <label class="text-xs font-bold text-gold-muted uppercase tracking-wider">מה אתה מחפש?</label>
+                    <label class="text-xs font-bold text-gold-muted uppercase tracking-wider"><?= t('home_form_interest') ?></label>
                     <select id="interest" class="w-full bg-white/5 border-white/10 rounded-lg py-3 px-4 text-white focus:ring-primary focus:border-primary appearance-none">
-                        <option>קשר רציני לנישואין</option>
-                        <option>היכרות VIP אישית</option>
-                        <option>ייעוץ ושידוך עסקי-זוגי</option>
+                        <option><?= t('home_form_interest1') ?></option>
+                        <option><?= t('home_form_interest2') ?></option>
+                        <option><?= t('home_form_interest3') ?></option>
                     </select>
                 </div>
                 <button id="submitBtn" class="w-full py-4 bg-primary text-background-dark font-black text-lg rounded-lg shadow-[0_4px_20px_rgba(242,208,13,0.3)] hover:translate-y-[-2px] transition-all" type="submit">
-                    הגש מועמדות לשיחת ייעוץ
+                    <?= t('home_form_submit') ?>
                 </button>
                 <div id="formMessage" class="hidden text-center text-sm pt-2 font-bold"></div>
                 <p class="text-center text-[11px] text-gold-muted pt-2 italic">
-                    * אנו מבטיחים דיסקרטיות מלאה ושמירה על פרטיותך
+                    <?= t('home_form_disclaimer') ?>
                 </p>
             </form>
         </div>
@@ -98,16 +98,16 @@ require BASE_PATH . '/app/views/layouts/header.php';
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
             <div class="text-right">
-                <h2 id="homeProfilesLabel" class="text-primary font-bold text-sm tracking-[0.3em] uppercase mb-4">הפרופילים החדשים</h2>
-                <h3 id="homeProfilesTitle" class="text-4xl font-black text-white">מועמדות שהצטרפו לאחרונה</h3>
+                <h2 id="homeProfilesLabel" class="text-primary font-bold text-sm tracking-[0.3em] uppercase mb-4"><?= t('home_profiles_label') ?></h2>
+                <h3 id="homeProfilesTitle" class="text-4xl font-black text-white"><?= t('home_profiles_title') ?></h3>
             </div>
             <a href="<?= BASE_URL ?>/search" class="flex items-center gap-2 text-primary font-bold border-b-2 border-primary/30 pb-1 hover:border-primary transition-all">
-                <span>לכל הפרופילים</span>
+                <span><?= t('all_profiles') ?></span>
                 <span class="material-symbols-outlined">arrow_left_alt</span>
             </a>
         </div>
         <div id="homeProfilesGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
-            <p class="text-slate-500 text-center col-span-full py-12">טוען פרופילים...</p>
+            <p class="text-slate-500 text-center col-span-full py-12"><?= t('loading_profiles') ?></p>
         </div>
     </div>
 </section>
@@ -116,8 +116,8 @@ require BASE_PATH . '/app/views/layouts/header.php';
 <section class="py-24 bg-background-light dark:bg-accent-dark">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
-            <h2 id="homeWhyLabel" class="text-primary font-bold text-sm tracking-[0.3em] uppercase mb-4">הסטנדרט שלנו</h2>
-            <h3 id="homeWhyTitle" class="text-4xl md:text-5xl font-black text-white">למה לבחור בשירות ה-VIP שלנו?</h3>
+            <h2 id="homeWhyLabel" class="text-primary font-bold text-sm tracking-[0.3em] uppercase mb-4"><?= t('home_why_label') ?></h2>
+            <h3 id="homeWhyTitle" class="text-4xl md:text-5xl font-black text-white"><?= t('home_why_title') ?></h3>
         </div>
         <div class="grid md:grid-cols-3 gap-8">
             <!-- Feature 1 -->
@@ -125,9 +125,9 @@ require BASE_PATH . '/app/views/layouts/header.php';
                 <div class="size-16 mx-auto mb-6 flex items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-background-dark transition-all">
                     <span class="material-symbols-outlined text-4xl">verified_user</span>
                 </div>
-                <h4 id="homeFeat1Title" class="text-xl font-bold text-white mb-4">אימות פרופילים קפדני</h4>
+                <h4 id="homeFeat1Title" class="text-xl font-bold text-white mb-4"><?= t('home_feat1_title') ?></h4>
                 <p id="homeFeat1Text" class="text-gold-muted leading-relaxed">
-                    כל מועמדת עוברת תהליך אימות אישי הכולל ראיונות ובדיקת רקע, כדי להבטיח אמינות וכוונות רציניות.
+                    <?= t('home_feat1_text') ?>
                 </p>
             </div>
             <!-- Feature 2 -->
@@ -135,9 +135,9 @@ require BASE_PATH . '/app/views/layouts/header.php';
                 <div class="size-16 mx-auto mb-6 flex items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-background-dark transition-all">
                     <span class="material-symbols-outlined text-4xl">travel_explore</span>
                 </div>
-                <h4 id="homeFeat2Title" class="text-xl font-bold text-white mb-4">ליווי אישי בחו"ל</h4>
+                <h4 id="homeFeat2Title" class="text-xl font-bold text-white mb-4"><?= t('home_feat2_title') ?></h4>
                 <p id="homeFeat2Text" class="text-gold-muted leading-relaxed">
-                    הנציגים שלנו בקישינב ובקייב ידאגו לכל הפרטים הקטנים: מתרגום, לוגיסטיקה ועד הפקת דייטים יוקרתיים.
+                    <?= t('home_feat2_text') ?>
                 </p>
             </div>
             <!-- Feature 3 -->
@@ -145,9 +145,9 @@ require BASE_PATH . '/app/views/layouts/header.php';
                 <div class="size-16 mx-auto mb-6 flex items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-background-dark transition-all">
                     <span class="material-symbols-outlined text-4xl">psychology_alt</span>
                 </div>
-                <h4 id="homeFeat3Title" class="text-xl font-bold text-white mb-4">התאמה פסיכולוגית</h4>
+                <h4 id="homeFeat3Title" class="text-xl font-bold text-white mb-4"><?= t('home_feat3_title') ?></h4>
                 <p id="homeFeat3Text" class="text-gold-muted leading-relaxed">
-                    אנו לא רק מחברים בין אנשים, אלא משתמשים במודלים של התאמה רגשית וערכית ליצירת קשרים ארוכי טווח.
+                    <?= t('home_feat3_text') ?>
                 </p>
             </div>
         </div>
@@ -160,19 +160,19 @@ require BASE_PATH . '/app/views/layouts/header.php';
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-background-dark">
             <div class="text-center">
                 <div id="homeStat1Num" class="text-4xl md:text-5xl font-black mb-2">1,200+</div>
-                <div id="homeStat1Label" class="text-sm font-bold uppercase tracking-wider">זוגות נשואים</div>
+                <div id="homeStat1Label" class="text-sm font-bold uppercase tracking-wider"><?= t('home_stat1_label') ?></div>
             </div>
             <div class="text-center">
                 <div id="homeStat2Num" class="text-4xl md:text-5xl font-black mb-2">15</div>
-                <div id="homeStat2Label" class="text-sm font-bold uppercase tracking-wider">שנות ניסיון</div>
+                <div id="homeStat2Label" class="text-sm font-bold uppercase tracking-wider"><?= t('home_stat2_label') ?></div>
             </div>
             <div class="text-center">
                 <div id="homeStat3Num" class="text-4xl md:text-5xl font-black mb-2">98%</div>
-                <div id="homeStat3Label" class="text-sm font-bold uppercase tracking-wider">דירוג שביעות רצון</div>
+                <div id="homeStat3Label" class="text-sm font-bold uppercase tracking-wider"><?= t('home_stat3_label') ?></div>
             </div>
             <div class="text-center">
                 <div id="homeStat4Num" class="text-4xl md:text-5xl font-black mb-2">VIP</div>
-                <div id="homeStat4Label" class="text-sm font-bold uppercase tracking-wider">שירות בלעדי</div>
+                <div id="homeStat4Label" class="text-sm font-bold uppercase tracking-wider"><?= t('home_stat4_label') ?></div>
             </div>
         </div>
     </div>
@@ -183,11 +183,11 @@ require BASE_PATH . '/app/views/layouts/header.php';
     <div class="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-[150px]"></div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="text-center mb-16">
-            <h2 id="homeReviewsLabel" class="text-primary font-bold text-sm tracking-[0.3em] uppercase mb-4">מה הלקוחות אומרים</h2>
-            <h3 id="homeReviewsTitle" class="text-4xl md:text-5xl font-black text-white">ביקורות מלקוחות מרוצים</h3>
+            <h2 id="homeReviewsLabel" class="text-primary font-bold text-sm tracking-[0.3em] uppercase mb-4"><?= t('home_reviews_label') ?></h2>
+            <h3 id="homeReviewsTitle" class="text-4xl md:text-5xl font-black text-white"><?= t('home_reviews_title') ?></h3>
         </div>
         <div id="reviewsGrid" class="grid md:grid-cols-3 gap-8">
-            <p class="text-slate-500 text-center col-span-full py-12">טוען ביקורות...</p>
+            <p class="text-slate-500 text-center col-span-full py-12"><?= t('loading') ?></p>
         </div>
     </div>
 </section>
@@ -197,11 +197,11 @@ require BASE_PATH . '/app/views/layouts/header.php';
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
             <div class="text-right">
-                <h2 id="homeStoriesLabel" class="text-primary font-bold text-sm tracking-[0.3em] uppercase mb-4">מהשטח</h2>
-                <h3 id="homeStoriesTitle" class="text-4xl font-black text-white">סיפורי הצלחה מעוררי השראה</h3>
+                <h2 id="homeStoriesLabel" class="text-primary font-bold text-sm tracking-[0.3em] uppercase mb-4"><?= t('home_stories_label') ?></h2>
+                <h3 id="homeStoriesTitle" class="text-4xl font-black text-white"><?= t('home_stories_title') ?></h3>
             </div>
             <a href="<?= BASE_URL ?>/stories" class="flex items-center gap-2 text-primary font-bold border-b-2 border-primary/30 pb-1 hover:border-primary transition-all">
-                <span>לכל הסיפורים</span>
+                <span><?= t('all_stories') ?></span>
                 <span class="material-symbols-outlined">arrow_left_alt</span>
             </a>
         </div>
@@ -212,13 +212,13 @@ require BASE_PATH . '/app/views/layouts/header.php';
                     <img id="homeStory1Img" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Happy elegant couple on their wedding day" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRl8m3xCKcuaz8TUFEUX-F4g-FdiHONlkHeT5NQzGfQBp_qxKdKhhjG8pJR_a88IFki41XCwxiCYVlHa6IJp2SnY75wn7l_IjJjKA8Mf2kMMcKqU4NfxDivHvkarldQd028psN1yMyVDEunPp-g7dZe_cPWzS5MjE72nPTDIvphnhYc_pk_LuS-Kk0_mNrEUQx-LICl7fOVQzX0yuVwEdD-DAjDTD5yQB7eh8HFBv2sQhrAsk1_Om6SkvRGnJ9jTF4glctIa7dRi5Q"/>
                     <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-60"></div>
                     <div class="absolute bottom-6 right-6">
-                        <div id="homeStory1Badge" class="bg-primary px-3 py-1 rounded text-background-dark text-xs font-black uppercase">נשואים באושר</div>
+                        <div id="homeStory1Badge" class="bg-primary px-3 py-1 rounded text-background-dark text-xs font-black uppercase"><?= t('home_story1_badge') ?></div>
                     </div>
                 </div>
                 <div class="text-right">
-                    <h4 id="homeStory1Name" class="text-xl font-bold text-white mb-2">דוד ואולגה</h4>
+                    <h4 id="homeStory1Name" class="text-xl font-bold text-white mb-2"><?= t('home_story1_name') ?></h4>
                     <p id="homeStory1Text" class="text-gold-muted text-sm leading-relaxed">
-                        "חשבתי שכבר לא אמצא אהבה כזו. השירות היה מקצועי, דיסקרטי ומדויק להפליא. היום אנחנו חיים יחד בתל אביב."
+                        "<?= t('home_story1_text') ?>"
                     </p>
                 </div>
             </a>
@@ -228,13 +228,13 @@ require BASE_PATH . '/app/views/layouts/header.php';
                     <img id="homeStory2Img" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Elegant couple holding hands at luxury event" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXlo-gZ5PCyhKp9FmvV-ztLSrQDD5dujR-Veyk50aI8GhpQn_fZt32SM4ZZsxA7nrGPaHqzBs0N7SB6QpTF7fHY30T2h9mp7CdEuEF-lw5c-4gkUSYz0wevvP_8fs8S4dDtdGPn4-StpFsqRCTXYCKx2wevd2pYAy7dLMX7LlqgOniKjbpitcW_CRoEjuVtsmCMV9MzGgKP9Vp6sbXxOKcXQ_b3TQMb6VCUuAlgIDmaQ6bA8UwvwGSb2y6nPHqVsjB0kfX8yiI6pLh"/>
                     <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-60"></div>
                     <div class="absolute bottom-6 right-6">
-                        <div id="homeStory2Badge" class="bg-primary px-3 py-1 rounded text-background-dark text-xs font-black uppercase">שידוך VIP</div>
+                        <div id="homeStory2Badge" class="bg-primary px-3 py-1 rounded text-background-dark text-xs font-black uppercase"><?= t('home_story2_badge') ?></div>
                     </div>
                 </div>
                 <div class="text-right">
-                    <h4 id="homeStory2Name" class="text-xl font-bold text-white mb-2">איתן ויוליה</h4>
+                    <h4 id="homeStory2Name" class="text-xl font-bold text-white mb-2"><?= t('home_story2_name') ?></h4>
                     <p id="homeStory2Text" class="text-gold-muted text-sm leading-relaxed">
-                        "הליווי של הצוות במולדובה היה יוצא מן הכלל. הם דאגו לכל פרט וגרמו לי להרגיש בבית. יוליה היא בדיוק מה שחיפשתי."
+                        "<?= t('home_story2_text') ?>"
                     </p>
                 </div>
             </a>
@@ -244,13 +244,13 @@ require BASE_PATH . '/app/views/layouts/header.php';
                     <img id="homeStory3Img" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Beautiful couple on vacation in Europe" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRauqP-EVXn2W_0PWxvqQvHWwly8zTFQTZcLyJ2XCeYP7qaaRWmDjQLdMljqJntd2VaDYYpRJReZ7pZX5MemNFi7apgdsYdg2aw79djeh745CjlSzPYbPXhbFJL2bdx8vNiCmg1Gd9UKSpG7WL9UCQEkKhxCIIEHJTGUeSJkvFn-jns2tERas1Qtpgq75vHW03U1fQoRPgtAn5We9i58zavtQB1dsTkJ-zHZ38T4BNKyLhsQS-XdrTmPJiisprls1_d88wm10aUanj"/>
                     <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-60"></div>
                     <div class="absolute bottom-6 right-6">
-                        <div id="homeStory3Badge" class="bg-primary px-3 py-1 rounded text-background-dark text-xs font-black uppercase">סיפור אהבה</div>
+                        <div id="homeStory3Badge" class="bg-primary px-3 py-1 rounded text-background-dark text-xs font-black uppercase"><?= t('home_story3_badge') ?></div>
                     </div>
                 </div>
                 <div class="text-right">
-                    <h4 id="homeStory3Name" class="text-xl font-bold text-white mb-2">רון ונטליה</h4>
+                    <h4 id="homeStory3Name" class="text-xl font-bold text-white mb-2"><?= t('home_story3_name') ?></h4>
                     <p id="homeStory3Text" class="text-gold-muted text-sm leading-relaxed">
-                        "תהליך הסינון שלהם עובד. הכרתי אישה אינטליגנטית עם ערכי משפחה מדהימים. תודה על הכל!"
+                        "<?= t('home_story3_text') ?>"
                     </p>
                 </div>
             </a>
@@ -263,17 +263,16 @@ require BASE_PATH . '/app/views/layouts/header.php';
     <div class="absolute top-0 left-0 w-64 h-64 bg-primary/10 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2"></div>
     <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
         <span class="material-symbols-outlined text-primary text-6xl mb-6">workspace_premium</span>
-        <h2 id="homeCtaTitle" class="text-4xl md:text-5xl font-black text-white mb-8">מוכן לשנות את חייך?</h2>
+        <h2 id="homeCtaTitle" class="text-4xl md:text-5xl font-black text-white mb-8"><?= t('home_cta_title') ?></h2>
         <p id="homeCtaSubtitle" class="text-xl text-gold-muted mb-10 leading-relaxed">
-            מספר המקומות לחברי VIP מוגבל בכל חודש כדי להבטיח איכות מקסימלית.
-            צרו קשר לתיאום פגישת היכרות ראשונית ללא התחייבות.
+            <?= t('home_cta_subtitle') ?>
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a id="homeCtaBtn1" href="<?= BASE_URL ?>/contact" class="w-full sm:w-auto px-10 py-4 bg-primary text-background-dark font-black text-lg rounded-xl shadow-lg transition-transform hover:scale-105 inline-block text-center">
-                תיאום שיחת ייעוץ
+                <?= t('home_cta_btn1') ?>
             </a>
             <a id="homeCtaBtn2" href="<?= BASE_URL ?>/contact" class="w-full sm:w-auto px-10 py-4 bg-transparent border-2 border-white/20 text-white font-bold text-lg rounded-xl hover:bg-white/5 transition-all inline-block text-center">
-                קבלת מידע נוסף ב-WhatsApp
+                <?= t('home_cta_btn2') ?>
             </a>
         </div>
     </div>
@@ -286,7 +285,7 @@ document.getElementById('leadForm').addEventListener('submit', async (e) => {
     const btn = document.getElementById('submitBtn');
     const msg = document.getElementById('formMessage');
     btn.disabled = true;
-    btn.textContent = 'שולח...';
+    btn.textContent = T.sending;
     msg.classList.add('hidden');
 
     try {
@@ -296,25 +295,25 @@ document.getElementById('leadForm').addEventListener('submit', async (e) => {
             body: JSON.stringify({
                 name: document.getElementById('fullName').value,
                 email: document.getElementById('email').value,
-                message: (document.getElementById('interest').value || '') + (document.getElementById('age').value ? ' | גיל: ' + document.getElementById('age').value : ''),
+                message: (document.getElementById('interest').value || '') + (document.getElementById('age').value ? ' | ' + T.age_label_prefix + ': ' + document.getElementById('age').value : ''),
                 source: 'hero_form'
             })
         });
         const data = await res.json();
         if (res.ok) {
-            msg.textContent = 'הפנייה נשלחה בהצלחה! ניצור איתך קשר בהקדם.';
+            msg.textContent = T.home_form_success;
             msg.className = 'text-center text-sm pt-2 font-bold text-green-400';
             e.target.reset();
         } else {
-            msg.textContent = data.error || 'שגיאה בשליחת הטופס';
+            msg.textContent = data.error || T.home_form_error;
             msg.className = 'text-center text-sm pt-2 font-bold text-red-400';
         }
     } catch (err) {
-        msg.textContent = 'שגיאה בחיבור לשרת';
+        msg.textContent = T.server_error;
         msg.className = 'text-center text-sm pt-2 font-bold text-red-400';
     }
     btn.disabled = false;
-    btn.textContent = 'הגש מועמדות לשיחת ייעוץ';
+    btn.textContent = T.home_form_submit;
 });
 
 // Load home page settings
@@ -382,7 +381,7 @@ document.getElementById('leadForm').addEventListener('submit', async (e) => {
         const reviews = await res.json();
         const grid = document.getElementById('reviewsGrid');
         if (!reviews.length) {
-            grid.innerHTML = '<p class="text-slate-500 text-center col-span-full py-12">אין ביקורות עדיין</p>';
+            grid.innerHTML = `<p class="text-slate-500 text-center col-span-full py-12">${T.no_reviews_yet}</p>`;
             return;
         }
         grid.innerHTML = reviews.slice(0, 6).map(r => {
@@ -401,7 +400,7 @@ document.getElementById('leadForm').addEventListener('submit', async (e) => {
                         }
                         <div>
                             <p class="text-white font-bold text-sm">${r.client_name}</p>
-                            <p class="text-slate-500 text-xs">לקוח מאומת</p>
+                            <p class="text-slate-500 text-xs">${T.verified_client}</p>
                         </div>
                         <span class="material-symbols-outlined text-primary/30 text-xl mr-auto" style="font-variation-settings:'FILL' 1;">verified</span>
                     </div>
@@ -421,11 +420,11 @@ document.getElementById('leadForm').addEventListener('submit', async (e) => {
         const profiles = data.profiles || [];
         const grid = document.getElementById('homeProfilesGrid');
         if (!profiles.length) {
-            grid.innerHTML = '<p class="text-slate-500 text-center col-span-full py-12">אין פרופילים עדיין</p>';
+            grid.innerHTML = `<p class="text-slate-500 text-center col-span-full py-12">${T.no_profiles_yet}</p>`;
             return;
         }
         grid.innerHTML = profiles.map(p => {
-            const countryName = p.country === 'moldova' ? 'מולדובה' : 'אוקראינה';
+            const countryName = p.country === 'moldova' ? T.moldova_country : T.ukraine;
             const flag = p.country === 'moldova' ? '🇲🇩' : '🇺🇦';
             return `
             <a href="${BASE}/profile/${p.id}" class="group relative rounded-2xl overflow-hidden border border-white/5 hover:border-primary/40 transition-all duration-500 block">
@@ -444,7 +443,7 @@ document.getElementById('leadForm').addEventListener('submit', async (e) => {
             </a>`;
         }).join('');
     } catch {
-        document.getElementById('homeProfilesGrid').innerHTML = '<p class="text-red-400 text-center col-span-full py-8">שגיאה בטעינה</p>';
+        document.getElementById('homeProfilesGrid').innerHTML = `<p class="text-red-400 text-center col-span-full py-8">${T.error_loading}</p>`;
     }
 })();
 </script>

@@ -1,6 +1,6 @@
 <?php
-$pageTitle = 'חבילות VIP - Moldova & Ukraine Luxury Brides';
-$pageDescription = 'הדרך המהירה והיוקרתית ביותר למציאת אהבת אמת. שירות עילית המותאם אישית לסטנדרטים שלך';
+$pageTitle = t('vip_title') . ' - Moldova & Ukraine Luxury Brides';
+$pageDescription = t('vip_hero_subtitle');
 $currentPage = 'vip';
 require BASE_PATH . '/app/views/layouts/header.php';
 ?>
@@ -15,9 +15,9 @@ require BASE_PATH . '/app/views/layouts/header.php';
 <section class="relative py-24 md:py-32 px-6 text-center overflow-hidden">
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px]"></div>
     <div class="relative z-10 max-w-4xl mx-auto">
-        <span id="vipHeroBadge" class="text-primary font-bold tracking-[0.2em] uppercase text-sm mb-4 block">EXCLUSIVE VIP PACKAGES</span>
-        <h2 id="vipHeroTitle" class="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight leading-tight">חבילות VIP אקסקלוסיביות</h2>
-        <p id="vipHeroSubtitle" class="text-slate-400 text-lg md:text-xl mb-10 max-w-2xl mx-auto">הדרך המהירה והיוקרתית ביותר למציאת אהבת אמת. שירות עילית המותאם אישית לסטנדרטים שלך.</p>
+        <span id="vipHeroBadge" class="text-primary font-bold tracking-[0.2em] uppercase text-sm mb-4 block"><?= t('vip_hero_badge') ?></span>
+        <h2 id="vipHeroTitle" class="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight leading-tight"><?= t('vip_hero_title') ?></h2>
+        <p id="vipHeroSubtitle" class="text-slate-400 text-lg md:text-xl mb-10 max-w-2xl mx-auto"><?= t('vip_hero_subtitle') ?></p>
     </div>
 </section>
 
@@ -34,36 +34,36 @@ require BASE_PATH . '/app/views/layouts/header.php';
                 <h3 id="vipPkg1Name" class="text-3xl font-black text-[#E5E4E2] mb-2 uppercase tracking-wide">Silver VIP</h3>
                 <div class="flex items-baseline gap-1">
                     <span id="vipPkg1Price" class="text-4xl font-black text-[#E5E4E2]">&#8362;2,900</span>
-                    <span id="vipPkg1Period" class="text-slate-400 text-sm">/ לחודש</span>
+                    <span id="vipPkg1Period" class="text-slate-400 text-sm"><?= t('vip_per_month') ?></span>
                 </div>
             </div>
             <ul id="vipPkg1Features" class="flex-1 space-y-5 mb-12">
                 <li class="flex items-start gap-3 text-slate-300">
                     <span class="material-symbols-outlined text-[#E5E4E2] text-xl">verified_user</span>
-                    <span id="vipPkg1Feat1" class="text-lg">פרופיל VIP מאומת ומוערך</span>
+                    <span id="vipPkg1Feat1" class="text-lg"><?= t('vip_pkg1_feat1') ?></span>
                 </li>
                 <li class="flex items-start gap-3 text-slate-300">
                     <span class="material-symbols-outlined text-[#E5E4E2] text-xl">database</span>
-                    <span id="vipPkg1Feat2" class="text-lg">גישה מלאה למאגר הכלות האקסקלוסיבי</span>
+                    <span id="vipPkg1Feat2" class="text-lg"><?= t('vip_pkg1_feat2') ?></span>
                 </li>
                 <li class="flex items-start gap-3 text-slate-300">
                     <span class="material-symbols-outlined text-[#E5E4E2] text-xl">chat</span>
-                    <span id="vipPkg1Feat3" class="text-lg">מערכת הודעות ללא הגבלה</span>
+                    <span id="vipPkg1Feat3" class="text-lg"><?= t('vip_pkg1_feat3') ?></span>
                 </li>
                 <li class="flex items-start gap-3 text-slate-300">
                     <span class="material-symbols-outlined text-[#E5E4E2] text-xl">filter_list</span>
-                    <span id="vipPkg1Feat4" class="text-lg">סינון מתקדם לפי העדפות אישיות</span>
+                    <span id="vipPkg1Feat4" class="text-lg"><?= t('vip_pkg1_feat4') ?></span>
                 </li>
             </ul>
             <button id="vipPkg1Btn" onclick="openModal('registerModal')" class="w-full py-5 border-2 border-[#E5E4E2]/50 text-[#E5E4E2] rounded-xl font-black hover:bg-[#E5E4E2] hover:text-background-dark transition-all uppercase tracking-widest text-sm">
-                בחר במסלול כסף
+                <?= t('vip_pkg1_btn') ?>
             </button>
         </div>
 
         <!-- Gold -->
         <div class="bg-zinc-900/90 border-2 border-primary/40 rounded-2xl p-10 flex flex-col relative scale-105 z-10 shadow-2xl shadow-primary/20 transition-all hover:shadow-primary/30">
             <div id="vipPkg2Badge" class="absolute -top-5 left-1/2 -translate-x-1/2 px-6 py-1.5 rounded-full text-sm font-black uppercase tracking-widest shadow-xl" style="background:linear-gradient(135deg,#f2d00d 0%,#b59b09 100%);color:#12110a;">
-                הנבחר ביותר
+                <?= t('vip_most_popular') ?>
             </div>
             <div class="mb-10">
                 <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4 shadow-lg" style="background:linear-gradient(135deg,#f2d00d 0%,#b59b09 100%);">
@@ -72,33 +72,33 @@ require BASE_PATH . '/app/views/layouts/header.php';
                 <h3 id="vipPkg2Name" class="text-3xl font-black text-primary mb-2 uppercase tracking-wide">Gold VIP</h3>
                 <div class="flex items-baseline gap-1">
                     <span id="vipPkg2Price" class="text-5xl font-black text-primary drop-shadow-md">&#8362;5,500</span>
-                    <span id="vipPkg2Period" class="text-slate-400 text-sm">/ לחודש</span>
+                    <span id="vipPkg2Period" class="text-slate-400 text-sm"><?= t('vip_per_month') ?></span>
                 </div>
             </div>
             <ul id="vipPkg2Features" class="flex-1 space-y-5 mb-12">
                 <li class="flex items-start gap-3 text-slate-200">
                     <span class="material-symbols-outlined text-primary text-xl">video_call</span>
-                    <span id="vipPkg2Feat1" class="text-lg font-bold">שיחות וידאו Live Hello</span>
+                    <span id="vipPkg2Feat1" class="text-lg font-bold"><?= t('vip_pkg2_feat1') ?></span>
                 </li>
                 <li class="flex items-start gap-3 text-slate-200">
                     <span class="material-symbols-outlined text-primary text-xl">person_pin</span>
-                    <span id="vipPkg2Feat2" class="text-lg">שדכן אישי צמוד המלווה את התהליך</span>
+                    <span id="vipPkg2Feat2" class="text-lg"><?= t('vip_pkg2_feat2') ?></span>
                 </li>
                 <li class="flex items-start gap-3 text-slate-200">
                     <span class="material-symbols-outlined text-primary text-xl">ads_click</span>
-                    <span id="vipPkg2Feat3" class="text-lg">מיקום בעדיפות גבוהה בחיפושים</span>
+                    <span id="vipPkg2Feat3" class="text-lg"><?= t('vip_pkg2_feat3') ?></span>
                 </li>
                 <li class="flex items-start gap-3 text-slate-200">
                     <span class="material-symbols-outlined text-primary text-xl">translate</span>
-                    <span id="vipPkg2Feat4" class="text-lg">שירותי תרגום הודעות מקצועיים</span>
+                    <span id="vipPkg2Feat4" class="text-lg"><?= t('vip_pkg2_feat4') ?></span>
                 </li>
                 <li class="flex items-start gap-3 text-slate-200">
                     <span class="material-symbols-outlined text-primary text-xl">add_circle</span>
-                    <span id="vipPkg2Feat5" class="text-lg">כל הטבות מסלול Silver</span>
+                    <span id="vipPkg2Feat5" class="text-lg"><?= t('vip_pkg2_feat5') ?></span>
                 </li>
             </ul>
             <button id="vipPkg2Btn" onclick="openModal('registerModal')" class="w-full py-5 rounded-xl font-black hover:scale-[1.02] transition-transform uppercase tracking-widest text-sm shadow-lg shadow-primary/20" style="background:linear-gradient(135deg,#f2d00d 0%,#b59b09 100%);color:#12110a;">
-                בחר במסלול זהב
+                <?= t('vip_pkg2_btn') ?>
             </button>
         </div>
 
@@ -112,33 +112,33 @@ require BASE_PATH . '/app/views/layouts/header.php';
                 <h3 id="vipPkg3Name" class="text-3xl font-black text-[#b9f2ff] mb-2 uppercase tracking-wide">Diamond VIP</h3>
                 <div class="flex items-baseline gap-1">
                     <span id="vipPkg3Price" class="text-4xl font-black text-[#b9f2ff]">&#8362;9,900</span>
-                    <span id="vipPkg3Period" class="text-slate-400 text-sm">/ לחודש</span>
+                    <span id="vipPkg3Period" class="text-slate-400 text-sm"><?= t('vip_per_month') ?></span>
                 </div>
             </div>
             <ul id="vipPkg3Features" class="flex-1 space-y-5 mb-12 relative z-10">
                 <li class="flex items-start gap-3 text-slate-100">
                     <span class="material-symbols-outlined text-[#b9f2ff] text-xl">flight_takeoff</span>
-                    <span id="vipPkg3Feat1" class="text-lg font-bold">סיורי הכרות בהתאמה אישית מלאה</span>
+                    <span id="vipPkg3Feat1" class="text-lg font-bold"><?= t('vip_pkg3_feat1') ?></span>
                 </li>
                 <li class="flex items-start gap-3 text-slate-200">
                     <span class="material-symbols-outlined text-[#b9f2ff] text-xl">concierge</span>
-                    <span id="vipPkg3Feat2" class="text-lg">שירותי קונסיירז' מלאים בחו"ל</span>
+                    <span id="vipPkg3Feat2" class="text-lg"><?= t('vip_pkg3_feat2') ?></span>
                 </li>
                 <li class="flex items-start gap-3 text-slate-200">
                     <span class="material-symbols-outlined text-[#b9f2ff] text-xl">all_inclusive</span>
-                    <span id="vipPkg3Feat3" class="text-lg">היכרויות ללא הגבלה</span>
+                    <span id="vipPkg3Feat3" class="text-lg"><?= t('vip_pkg3_feat3') ?></span>
                 </li>
                 <li class="flex items-start gap-3 text-slate-200">
                     <span class="material-symbols-outlined text-[#b9f2ff] text-xl">airport_shuttle</span>
-                    <span id="vipPkg3Feat4" class="text-lg">ליווי VIP משדה התעופה</span>
+                    <span id="vipPkg3Feat4" class="text-lg"><?= t('vip_pkg3_feat4') ?></span>
                 </li>
                 <li class="flex items-start gap-3 text-slate-200">
                     <span class="material-symbols-outlined text-[#b9f2ff] text-xl">lock</span>
-                    <span id="vipPkg3Feat5" class="text-lg">פרטיות מוחלטת ודיסקרטיות מלאה</span>
+                    <span id="vipPkg3Feat5" class="text-lg"><?= t('vip_pkg3_feat5') ?></span>
                 </li>
             </ul>
             <button id="vipPkg3Btn" onclick="openModal('registerModal')" class="w-full py-5 border-2 border-[#b9f2ff]/50 text-[#b9f2ff] rounded-xl font-black hover:bg-[#b9f2ff] hover:text-background-dark transition-all uppercase tracking-widest text-sm relative z-10">
-                בחר במסלול יהלום
+                <?= t('vip_pkg3_btn') ?>
             </button>
         </div>
 
@@ -148,31 +148,31 @@ require BASE_PATH . '/app/views/layouts/header.php';
 <!-- Why Choose Us -->
 <section class="max-w-7xl mx-auto px-6 py-24 bg-zinc-900/40 rounded-[3rem] mb-20 border border-primary/10 backdrop-blur-sm">
     <div class="text-center mb-20">
-        <h2 id="vipWhyTitle" class="text-4xl md:text-5xl font-black text-white mb-6">למה לבחור בשירות ה-VIP שלנו?</h2>
+        <h2 id="vipWhyTitle" class="text-4xl md:text-5xl font-black text-white mb-6"><?= t('vip_why_title') ?></h2>
         <div class="w-24 h-1 gold-gradient mx-auto mb-6 rounded-full"></div>
-        <p id="vipWhySubtitle" class="text-xl text-slate-400 max-w-2xl mx-auto font-light">הבטחת הצלחה וביטחון מלא בתהליך מציאת הזוגיות המושלמת עבורך</p>
+        <p id="vipWhySubtitle" class="text-xl text-slate-400 max-w-2xl mx-auto font-light"><?= t('vip_why_subtitle') ?></p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-16">
         <div class="text-center flex flex-col items-center group">
             <div class="w-20 h-20 rounded-full border border-primary/20 flex items-center justify-center mb-8 transition-all group-hover:border-primary/60 group-hover:shadow-[0_0_20px_rgba(242,208,13,0.2)]">
                 <span id="vipFeat1Icon" class="material-symbols-outlined text-primary text-4xl">shield_person</span>
             </div>
-            <h4 id="vipFeat1Title" class="text-2xl font-bold text-white mb-4">אימות קפדני</h4>
-            <p id="vipFeat1Text" class="text-slate-400 text-lg leading-relaxed font-light">כל פרופיל במאגר שלנו עובר תהליך אימות ידני, פיזי ומעמיק להבטחת אמינות מקסימלית ללא פשרות.</p>
+            <h4 id="vipFeat1Title" class="text-2xl font-bold text-white mb-4"><?= t('vip_feat1_title') ?></h4>
+            <p id="vipFeat1Text" class="text-slate-400 text-lg leading-relaxed font-light"><?= t('vip_feat1_text') ?></p>
         </div>
         <div class="text-center flex flex-col items-center group">
             <div class="w-20 h-20 rounded-full border border-primary/20 flex items-center justify-center mb-8 transition-all group-hover:border-primary/60 group-hover:shadow-[0_0_20px_rgba(242,208,13,0.2)]">
                 <span id="vipFeat2Icon" class="material-symbols-outlined text-primary text-4xl">handshake</span>
             </div>
-            <h4 id="vipFeat2Title" class="text-2xl font-bold text-white mb-4">ליווי אישי מקצועי</h4>
-            <p id="vipFeat2Text" class="text-slate-400 text-lg leading-relaxed font-light">מומחי ההתאמה שלנו זמינים עבורך לכל שאלה, הכוונה וייעוץ אישי צמוד לאורך כל הדרך אל החופה.</p>
+            <h4 id="vipFeat2Title" class="text-2xl font-bold text-white mb-4"><?= t('vip_feat2_title') ?></h4>
+            <p id="vipFeat2Text" class="text-slate-400 text-lg leading-relaxed font-light"><?= t('vip_feat2_text') ?></p>
         </div>
         <div class="text-center flex flex-col items-center group">
             <div class="w-20 h-20 rounded-full border border-primary/20 flex items-center justify-center mb-8 transition-all group-hover:border-primary/60 group-hover:shadow-[0_0_20px_rgba(242,208,13,0.2)]">
                 <span id="vipFeat3Icon" class="material-symbols-outlined text-primary text-4xl">encrypted</span>
             </div>
-            <h4 id="vipFeat3Title" class="text-2xl font-bold text-white mb-4">דיסקרטיות מלאה</h4>
-            <p id="vipFeat3Text" class="text-slate-400 text-lg leading-relaxed font-light">שמירה על הפרטיות והמידע שלך היא הערך העליון שלנו. אנו מתחייבים לסודיות ודיסקרטיות מוחלטת.</p>
+            <h4 id="vipFeat3Title" class="text-2xl font-bold text-white mb-4"><?= t('vip_feat3_title') ?></h4>
+            <p id="vipFeat3Text" class="text-slate-400 text-lg leading-relaxed font-light"><?= t('vip_feat3_text') ?></p>
         </div>
     </div>
 </section>
@@ -182,32 +182,26 @@ require BASE_PATH . '/app/views/layouts/header.php';
     <div class="absolute top-0 left-0 w-64 h-64 bg-primary/10 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2"></div>
     <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
         <span class="material-symbols-outlined text-primary text-6xl mb-6">workspace_premium</span>
-        <h2 id="vipCtaTitle" class="text-4xl md:text-5xl font-black text-white mb-8">מוכן להתחיל את סיפור האהבה שלך?</h2>
-        <p id="vipCtaSubtitle" class="text-xl text-gold-muted mb-10 leading-relaxed">מספר המקומות לחברי VIP מוגבל בכל חודש כדי להבטיח איכות מקסימלית. צרו קשר לתיאום פגישת היכרות ראשונית.</p>
+        <h2 id="vipCtaTitle" class="text-4xl md:text-5xl font-black text-white mb-8"><?= t('vip_cta_title') ?></h2>
+        <p id="vipCtaSubtitle" class="text-xl text-gold-muted mb-10 leading-relaxed"><?= t('vip_cta_subtitle') ?></p>
         <button id="vipCtaBtn" onclick="openModal('registerModal')" class="px-12 py-5 gold-gradient rounded-2xl font-black text-xl hover:scale-105 transition-all shadow-2xl shadow-primary/30 active:scale-95">
-            קבע פגישת ייעוץ אישית עכשיו
+            <?= t('vip_cta_btn') ?>
         </button>
     </div>
 </section>
 
 <script>
-// Load dynamic content from settings
 (async function loadVipPage() {
     try {
         const res = await fetch(BASE + '/api/admin/settings');
         const s = await res.json();
-
-        // Hero
         if (s.vip_hero_badge) document.getElementById('vipHeroBadge').textContent = s.vip_hero_badge;
         if (s.vip_hero_title) document.getElementById('vipHeroTitle').textContent = s.vip_hero_title;
         if (s.vip_hero_subtitle) document.getElementById('vipHeroSubtitle').textContent = s.vip_hero_subtitle;
-
-        // Package 1 - Silver
         if (s.vip_pkg1_name) document.getElementById('vipPkg1Name').textContent = s.vip_pkg1_name;
         if (s.vip_pkg1_price) document.getElementById('vipPkg1Price').textContent = s.vip_pkg1_price;
         if (s.vip_pkg1_period) document.getElementById('vipPkg1Period').textContent = s.vip_pkg1_period;
         if (s.vip_pkg1_btn) document.getElementById('vipPkg1Btn').textContent = s.vip_pkg1_btn;
-        // Individual feature texts
         if (s.vip_pkg1_feat1) document.getElementById('vipPkg1Feat1').textContent = s.vip_pkg1_feat1;
         if (s.vip_pkg1_feat2) document.getElementById('vipPkg1Feat2').textContent = s.vip_pkg1_feat2;
         if (s.vip_pkg1_feat3) document.getElementById('vipPkg1Feat3').textContent = s.vip_pkg1_feat3;
@@ -219,8 +213,6 @@ require BASE_PATH . '/app/views/layouts/header.php';
                 return `<li class="flex items-start gap-3 text-slate-300"><span class="material-symbols-outlined text-[#E5E4E2] text-xl">${icon}</span><span class="text-lg">${text}</span></li>`;
             }).join('');
         }
-
-        // Package 2 - Gold
         if (s.vip_pkg2_name) document.getElementById('vipPkg2Name').textContent = s.vip_pkg2_name;
         if (s.vip_pkg2_price) document.getElementById('vipPkg2Price').textContent = s.vip_pkg2_price;
         if (s.vip_pkg2_period) document.getElementById('vipPkg2Period').textContent = s.vip_pkg2_period;
@@ -238,8 +230,6 @@ require BASE_PATH . '/app/views/layouts/header.php';
                 return `<li class="flex items-start gap-3 text-slate-200"><span class="material-symbols-outlined text-primary text-xl">${icon}</span><span class="text-lg">${text}</span></li>`;
             }).join('');
         }
-
-        // Package 3 - Diamond
         if (s.vip_pkg3_name) document.getElementById('vipPkg3Name').textContent = s.vip_pkg3_name;
         if (s.vip_pkg3_price) document.getElementById('vipPkg3Price').textContent = s.vip_pkg3_price;
         if (s.vip_pkg3_period) document.getElementById('vipPkg3Period').textContent = s.vip_pkg3_period;
@@ -256,8 +246,6 @@ require BASE_PATH . '/app/views/layouts/header.php';
                 return `<li class="flex items-start gap-3 text-slate-200"><span class="material-symbols-outlined text-[#b9f2ff] text-xl">${icon}</span><span class="text-lg">${text}</span></li>`;
             }).join('');
         }
-
-        // Why Choose Us
         if (s.vip_why_title) document.getElementById('vipWhyTitle').textContent = s.vip_why_title;
         if (s.vip_why_subtitle) document.getElementById('vipWhySubtitle').textContent = s.vip_why_subtitle;
         if (s.vip_feat1_icon) document.getElementById('vipFeat1Icon').textContent = s.vip_feat1_icon;
@@ -269,8 +257,6 @@ require BASE_PATH . '/app/views/layouts/header.php';
         if (s.vip_feat3_icon) document.getElementById('vipFeat3Icon').textContent = s.vip_feat3_icon;
         if (s.vip_feat3_title) document.getElementById('vipFeat3Title').textContent = s.vip_feat3_title;
         if (s.vip_feat3_text) document.getElementById('vipFeat3Text').textContent = s.vip_feat3_text;
-
-        // CTA
         if (s.vip_cta_title) document.getElementById('vipCtaTitle').textContent = s.vip_cta_title;
         if (s.vip_cta_subtitle) document.getElementById('vipCtaSubtitle').textContent = s.vip_cta_subtitle;
         if (s.vip_cta_btn) document.getElementById('vipCtaBtn').textContent = s.vip_cta_btn;
