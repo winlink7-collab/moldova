@@ -144,146 +144,168 @@ function navClass(string $page, string $current): string {
         color: #12110a;
     }
 
-    /* ===== Light Theme ===== */
+    /* ===== Light Theme - Clean Gold & White ===== */
     html.light body {
-        background: #f8f7f2 !important;
-        color: #1a1a1a !important;
+        background: #faf9f5 !important;
+        color: #2a2a2a !important;
     }
+
+    /* --- Header --- */
     html.light .glass-effect {
-        background: rgba(255,255,255,0.95) !important;
-        border-color: rgba(0,0,0,0.08) !important;
-        box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+        background: rgba(255,255,255,0.97) !important;
+        border-color: rgba(0,0,0,0.06) !important;
+        box-shadow: 0 1px 12px rgba(0,0,0,0.05);
     }
     html.light header a, html.light header nav a {
-        color: #333 !important;
+        color: #444 !important;
     }
     html.light header nav a:hover {
-        color: #9a8200 !important;
+        color: #b89b06 !important;
+    }
+    html.light header .text-slate-100, html.light #headerLogoTitle {
+        color: #1a1a1a !important;
+    }
+
+    /* --- Main Content --- */
+    html.light main { background: transparent !important; }
+    html.light main h1, html.light main h2, html.light main h3,
+    html.light main h4, html.light main h5, html.light main h6 {
+        color: #1a1a1a !important;
+    }
+    html.light main .text-white, html.light main .text-slate-100 {
+        color: #2a2a2a !important;
+    }
+    html.light main .text-slate-300, html.light main .text-slate-400,
+    html.light main .text-slate-500, html.light main .text-gold-muted {
+        color: #666 !important;
     }
     html.light main .text-primary {
-        color: #9a8200 !important;
+        color: #b89b06 !important;
     }
-    html.light main h1, html.light main h2, html.light main h3, html.light main h4, html.light main h5 {
-        color: #1a1a1a !important;
+    html.light main .bg-primary {
+        background: linear-gradient(135deg, #dbb80e 0%, #b89b06 100%) !important;
+        color: #fff !important;
     }
-    html.light main .text-slate-100, html.light main .text-white {
-        color: #1a1a1a !important;
+    html.light main .bg-primary\/10 {
+        background: rgba(184,155,6,0.06) !important;
     }
-    html.light main .text-slate-300, html.light main .text-slate-400, html.light main .text-gold-muted {
-        color: #555 !important;
+
+    /* --- Backgrounds --- */
+    html.light main .bg-background-dark,
+    html.light main [class*="bg-background-dark"] {
+        background: #faf9f5 !important;
     }
-    html.light header .text-slate-100 {
-        color: #1a1a1a !important;
-    }
-    html.light body, html.light main .bg-background-dark {
-        background: #f8f7f2 !important;
-    }
+    html.light main .bg-card, html.light main [class*="bg-card"],
     html.light main .bg-surface {
-        background: #fff !important;
+        background: #ffffff !important;
+        box-shadow: 0 1px 8px rgba(0,0,0,0.04);
     }
-    html.light main .bg-card, html.light main [class*="bg-card"] {
-        background: #fff !important;
+    html.light main .bg-accent-dark, html.light main [class*="bg-accent-dark"] {
+        background: #f5f4ee !important;
+    }
+    html.light main .bg-white\/5, html.light main .bg-white\/10 {
+        background: rgba(0,0,0,0.02) !important;
+    }
+
+    /* --- Borders --- */
+    html.light main .border-white\/5, html.light main .border-white\/10,
+    html.light main .border-white\/15 {
         border-color: rgba(0,0,0,0.08) !important;
     }
-    html.light .border-white\/10, html.light .border-white\/5, html.light .border-white\/15 {
-        border-color: rgba(0,0,0,0.1) !important;
-    }
-    html.light .border-border-gold {
-        border-color: rgba(184,155,6,0.3) !important;
-    }
-    html.light section, html.light main {
-        background: transparent !important;
-    }
-    /* Hero section in light mode */
-    html.light .relative.min-h-\[90vh\] .absolute.inset-0 .bg-gradient-to-l {
-        background: linear-gradient(to left, rgba(248,247,242,0.2), rgba(248,247,242,0.85), rgba(248,247,242,1)) !important;
-    }
-    html.light .luxury-gradient {
-        background: linear-gradient(135deg, rgba(248,247,242,0.95) 0%, rgba(255,255,255,0.8) 100%) !important;
-    }
-    /* Cards & sections with dark bg */
-    html.light .gold-border, html.light [class*="gold-border"] {
+    html.light main .border-border-gold, html.light main .gold-border {
         border-color: rgba(184,155,6,0.2) !important;
     }
-    html.light .bg-accent-dark, html.light [class*="bg-accent-dark"] {
-        background: #f0efe8 !important;
+    html.light main .border-primary\/30, html.light main .border-primary\/40 {
+        border-color: rgba(184,155,6,0.3) !important;
     }
-    html.light .bg-primary\/10 {
-        background: rgba(184,155,6,0.08) !important;
+
+    /* --- VIP Cards --- */
+    html.light main .bg-card\/50 {
+        background: #fff !important;
+        border: 1px solid rgba(0,0,0,0.08) !important;
+        box-shadow: 0 2px 16px rgba(0,0,0,0.05);
     }
-    html.light .border-primary\/30 {
-        border-color: rgba(184,155,6,0.25) !important;
+    html.light main .bg-\[\#1c1a0e\], html.light main .bg-\[\#1a1810\],
+    html.light main [style*="background-dark"], html.light main .luxury-gradient {
+        background: #fff !important;
+        border: 1px solid rgba(184,155,6,0.15) !important;
+        box-shadow: 0 4px 24px rgba(184,155,6,0.08);
     }
-    html.light .text-primary {
-        color: #9a8200 !important;
+
+    /* --- FAQ Accordion --- */
+    html.light main details {
+        background: #fff !important;
+        border: 1px solid rgba(0,0,0,0.08) !important;
+        box-shadow: 0 1px 6px rgba(0,0,0,0.03);
     }
-    html.light .bg-primary {
-        background: #c9a800 !important;
+    html.light main details summary span:first-child {
+        color: #2a2a2a !important;
     }
-    /* Footer stays dark in light mode */
-    html.light footer,
-    html.light footer#siteFooter {
-        background: #1a1810 !important;
-        color: #ccc !important;
+    html.light main details .text-gold-muted {
+        color: #555 !important;
     }
-    html.light footer h1, html.light footer h2, html.light footer h3,
-    html.light footer h4, html.light footer h5, html.light footer h6,
-    html.light footer p, html.light footer a, html.light footer span,
-    html.light footer div, html.light footer li {
-        color: inherit !important;
-    }
-    html.light footer .text-primary,
-    html.light footer .text-primary a {
-        color: #f2d00d !important;
-    }
-    html.light footer .text-slate-500,
-    html.light footer .text-slate-400,
-    html.light footer .text-gold-muted {
-        color: #888 !important;
-    }
-    html.light footer .text-white,
-    html.light footer .text-slate-100 {
-        color: #eee !important;
-    }
-    html.light footer .border-white\/10 {
-        border-color: rgba(255,255,255,0.1) !important;
-    }
-    html.light footer input, html.light footer select, html.light footer textarea {
-        background: rgba(255,255,255,0.05) !important;
-        color: #fff !important;
-        border-color: rgba(255,255,255,0.1) !important;
-    }
-    html.light .gold-gradient-text {
+
+    /* --- Gradient Text --- */
+    html.light main .gold-gradient-text {
         background: linear-gradient(135deg, #b89b06 0%, #8a7404 100%) !important;
         -webkit-background-clip: text !important;
         -webkit-text-fill-color: transparent !important;
     }
-    html.light .bg-white\/5, html.light .bg-white\/10 {
-        background: rgba(0,0,0,0.03) !important;
+
+    /* --- Hero overlay --- */
+    html.light main .bg-gradient-to-l {
+        background: linear-gradient(to left, rgba(250,249,245,0.1), rgba(250,249,245,0.8), rgba(250,249,245,1)) !important;
     }
-    html.light .hover\:bg-white\/5:hover {
-        background: rgba(0,0,0,0.05) !important;
+    html.light main .bg-gradient-to-t {
+        background: linear-gradient(to top, rgba(250,249,245,0.9), transparent, transparent) !important;
     }
+
+    /* --- Forms in main --- */
     html.light main input, html.light main select, html.light main textarea,
-    html.light header input, html.light header select {
+    html.light header input {
         background: #fff !important;
-        color: #1a1a1a !important;
-        border-color: rgba(0,0,0,0.15) !important;
+        color: #2a2a2a !important;
+        border-color: rgba(0,0,0,0.12) !important;
     }
-    /* Keep modals dark */
-    html.light .fixed[id$="Modal"], html.light #loginModal, html.light #registerModal {
+    html.light main input:focus, html.light main select:focus, html.light main textarea:focus {
+        border-color: #b89b06 !important;
+        box-shadow: 0 0 0 2px rgba(184,155,6,0.1);
+    }
+
+    /* --- Buttons --- */
+    html.light main .gold-gradient {
+        background: linear-gradient(135deg, #dbb80e 0%, #b89b06 100%) !important;
         color: #fff !important;
     }
-    html.light .fixed[id$="Modal"] input, html.light #loginModal input, html.light #registerModal input {
-        background: rgba(28,26,15,0.5) !important;
+
+    /* --- Footer ALWAYS dark --- */
+    html.light footer, html.light footer#siteFooter {
+        background: #12110a !important;
+        color: #aaa !important;
+    }
+    html.light footer * { color: inherit !important; }
+    html.light footer .text-primary { color: #f2d00d !important; }
+    html.light footer .text-white, html.light footer .text-slate-100 { color: #ddd !important; }
+    html.light footer .text-slate-400, html.light footer .text-slate-500,
+    html.light footer .text-gold-muted { color: #777 !important; }
+    html.light footer .border-white\/10 { border-color: rgba(255,255,255,0.08) !important; }
+    html.light footer input, html.light footer textarea {
+        background: rgba(255,255,255,0.05) !important;
         color: #fff !important;
         border-color: rgba(255,255,255,0.1) !important;
     }
-    html.light #headerLogoTitle {
-        color: #1a1a1a !important;
+
+    /* --- Modals ALWAYS dark --- */
+    html.light .fixed[id*="Modal"], html.light #loginModal, html.light #registerModal,
+    html.light #msgModal {
+        color: #fff !important;
     }
-    html.light .rounded-2xl, html.light .rounded-xl {
-        box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    html.light .fixed[id*="Modal"] input, html.light #loginModal input,
+    html.light #registerModal input, html.light #msgModal input,
+    html.light #msgModal textarea {
+        background: rgba(28,26,15,0.5) !important;
+        color: #fff !important;
+        border-color: rgba(255,255,255,0.1) !important;
     }
 </style>
 <script>
