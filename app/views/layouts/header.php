@@ -295,6 +295,53 @@ function navClass(string $page, string $current): string {
         border-color: rgba(255,255,255,0.1) !important;
     }
 
+    /* --- VIP Package Cards --- */
+    html.light main .bg-zinc-900\/80,
+    html.light main .bg-zinc-900\/40,
+    html.light main [class*="bg-zinc-900"] {
+        background: #ffffff !important;
+        border-color: rgba(184,155,6,0.2) !important;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+    html.light main .bg-zinc-900\/80 h3,
+    html.light main .bg-zinc-900\/80 span[id*="Price"],
+    html.light main [class*="bg-zinc-900"] h3 {
+        color: #1a1a1a !important;
+    }
+    html.light main .bg-zinc-900\/80 .text-slate-300,
+    html.light main .bg-zinc-900\/80 .text-slate-400,
+    html.light main [class*="bg-zinc-900"] .text-slate-300,
+    html.light main [class*="bg-zinc-900"] .text-slate-400 {
+        color: #555 !important;
+    }
+    html.light main .bg-zinc-900\/80 .text-\[\#E5E4E2\],
+    html.light main [class*="bg-zinc-900"] .text-\[\#E5E4E2\] {
+        color: #888 !important;
+    }
+    html.light main .border-\[\#E5E4E2\]\/20,
+    html.light main .border-\[\#E5E4E2\]\/50 {
+        border-color: rgba(0,0,0,0.12) !important;
+    }
+    /* Gold VIP center card */
+    html.light main .bg-gradient-to-b {
+        background: linear-gradient(to bottom, #fff8e1, #ffffff) !important;
+        border-color: rgba(184,155,6,0.3) !important;
+        box-shadow: 0 8px 40px rgba(184,155,6,0.12);
+    }
+    /* Silver gradient */
+    html.light main .silver-gradient {
+        background: linear-gradient(135deg, #ccc 0%, #999 100%) !important;
+    }
+    /* "Why choose us" section */
+    html.light main .backdrop-blur-sm {
+        background: #f5f4ee !important;
+        border-color: rgba(184,155,6,0.1) !important;
+    }
+    html.light main .backdrop-blur-sm h3,
+    html.light main .backdrop-blur-sm h4 {
+        color: #1a1a1a !important;
+    }
+
     /* --- Modals ALWAYS dark --- */
     html.light .fixed[id*="Modal"], html.light #loginModal, html.light #registerModal,
     html.light #msgModal {
