@@ -7,7 +7,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
 
 <!-- Hero -->
 <section class="relative py-24 md:py-32 px-6 text-center overflow-hidden">
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px]"></div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-primary/5 rounded-full blur-[150px] hidden md:block"></div>
     <div class="relative z-10 max-w-4xl mx-auto">
         <span class="text-primary font-bold tracking-[0.2em] uppercase text-sm mb-4 block">PREMIUM MATCHMAKING</span>
         <h2 id="aboutHeroTitle" class="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight leading-tight"><?= t('about_hero_title') ?></h2>
@@ -87,7 +87,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
 <section class="py-20 px-6 lg:px-20 bg-surface/30">
     <div class="max-w-7xl mx-auto">
         <div class="flex flex-wrap items-center gap-12">
-            <div class="flex-1 min-w-[300px]">
+            <div class="flex-1 min-w-0 md:min-w-[300px]">
                 <h3 id="aboutWhyTitle" class="text-primary text-3xl font-bold mb-8"><?= t('about_why_title') ?></h3>
                 <div id="aboutWhyList">
                     <ul class="space-y-6">
@@ -115,7 +115,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
                     </ul>
                 </div>
             </div>
-            <div class="flex-1 min-w-[300px]">
+            <div class="flex-1 min-w-0 md:min-w-[300px]">
                 <img id="aboutWhyImage" alt="Why Choose Us" class="rounded-xl shadow-2xl w-full aspect-[4/3] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCm6jtPi3mVhqoVkuZhpmggeOtBBFXFdgeUVxX9oZv8KYSKA41m2mvsQ3SS5znKJUsvQFNbgxhVKhMkWDeDLrLJ4fPD_Taawd2PLgKoubEBQc2YUoIvlBoulRLW76WqHTO8qDhtHNv2CcIJm5p2ogjR2nEOqASTK2UV8R6s9Wi4TljGhWtjjPumXh1jNZHfxZw_hugz75clGm02va_GcXfMI36tDPGvRRpRCaT6bt4tfmPnus9JJpBSJ2fPF458IZemcMnXZZ1L-dJR"/>
             </div>
         </div>

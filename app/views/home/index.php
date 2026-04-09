@@ -30,7 +30,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
                 <span class="size-2 rounded-full bg-primary animate-pulse"></span>
                 <span id="homeHeroBadge" class="text-primary text-xs font-bold tracking-widest uppercase"><?= t('hero_badge') ?></span>
             </div>
-            <h1 id="homeHeroTitle" class="text-5xl md:text-7xl font-black text-white leading-tight">
+            <h1 id="homeHeroTitle" class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black text-white leading-tight">
                 <?= t('hero_title_1') ?> <span class="text-primary italic"><?= t('hero_title_2') ?></span><br/>
                 <?= t('hero_title_3') ?>
             </h1>

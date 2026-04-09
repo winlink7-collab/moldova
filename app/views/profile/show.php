@@ -103,10 +103,10 @@ body header.sticky { top: 56px !important; }
 <div class="max-w-[1400px] mx-auto px-6 lg:px-20 py-12">
 
 <!-- Hero: Image + Info -->
-<section class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20">
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-12 mb-12 md:mb-20">
 
     <!-- Main Image -->
-    <div class="lg:col-span-7 relative group overflow-hidden rounded-3xl luxury-shadow gallery-item editable-section" style="height: 750px;" onclick="openLightbox(0)">
+    <div class="lg:col-span-7 relative group overflow-hidden rounded-3xl luxury-shadow gallery-item editable-section h-[450px] md:h-[600px] lg:h-[750px]" onclick="openLightbox(0)">
         <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-80 z-10 pointer-events-none"></div>
         <img id="mainImage" alt="" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" src=""/>
         <div class="zoom-icon"><span class="material-symbols-outlined text-white text-2xl">zoom_in</span></div>
@@ -114,7 +114,7 @@ body header.sticky { top: 56px !important; }
             <div id="badge" class="hidden items-center gap-2 bg-primary/95 text-background-dark px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest mb-6 w-fit shadow-2xl">
                 <span class="material-symbols-outlined text-base">verified</span> <span id="badgeText"></span>
             </div>
-            <h2 class="text-7xl lg:text-8xl font-black text-white drop-shadow-2xl leading-[0.85]">
+            <h2 class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-white drop-shadow-2xl leading-[0.85]">
                 <span id="heroName">...</span>, <span id="heroAge" class="font-light"></span>
             </h2>
         </div>
@@ -133,7 +133,7 @@ body header.sticky { top: 56px !important; }
                 <span class="material-symbols-outlined text-primary text-4xl">location_on</span>
                 <div>
                     <p class="text-primary font-black uppercase tracking-[0.3em] text-[10px] mb-1"><?= t('location') ?></p>
-                    <span id="location" class="text-3xl font-light text-white"></span>
+                    <span id="location" class="text-xl md:text-3xl font-light text-white"></span>
                 </div>
                 <?php if (!empty($isAdmin)): ?>
                 <div class="edit-overlay" onclick="openEditor('basic')">
@@ -200,7 +200,7 @@ body header.sticky { top: 56px !important; }
 <!-- Gallery -->
 <section class="mb-20 editable-section relative">
     <div class="flex items-end justify-between mb-8 border-b border-white/10 pb-4">
-        <h3 class="text-5xl font-black text-white"><?= t('gallery') ?></h3>
+        <h3 class="text-3xl md:text-5xl font-black text-white"><?= t('gallery') ?></h3>
         <span id="photoCount" class="text-slate-500 uppercase tracking-widest text-base font-black"></span>
     </div>
     <div id="gallery" class="grid grid-cols-2 md:grid-cols-4 gap-6"></div>
@@ -214,7 +214,7 @@ body header.sticky { top: 56px !important; }
 <!-- Videos -->
 <section id="videosSection" class="mb-20 editable-section relative" style="display:none;">
     <div class="flex items-end justify-between mb-8 border-b border-white/10 pb-4">
-        <h3 class="text-5xl font-black text-white"><?= t('videos') ?></h3>
+        <h3 class="text-3xl md:text-5xl font-black text-white"><?= t('videos') ?></h3>
         <span id="videoCount" class="text-slate-500 uppercase tracking-widest text-base font-black"></span>
     </div>
     <div id="videoGallery" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
@@ -226,12 +226,12 @@ body header.sticky { top: 56px !important; }
 </section>
 
 <!-- Bio + Preferences -->
-<section class="grid grid-cols-1 lg:grid-cols-3 gap-16 py-20 border-t border-white/10">
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12 lg:gap-16 py-12 md:py-20 border-t border-white/10">
     <div class="lg:col-span-2 editable-section relative">
-        <h4 class="text-5xl font-black mb-8 text-white"><?= t('in_her_words') ?></h4>
+        <h4 class="text-3xl md:text-5xl font-black mb-6 md:mb-8 text-white"><?= t('in_her_words') ?></h4>
         <div class="space-y-8">
-            <p id="bioQuote" class="text-3xl font-light text-primary/90 leading-snug border-r-2 border-primary/30 pr-8 py-2"></p>
-            <p id="bioText" class="text-xl font-light leading-loose text-slate-400"></p>
+            <p id="bioQuote" class="text-xl md:text-3xl font-light text-primary/90 leading-snug border-r-2 border-primary/30 pr-4 md:pr-8 py-2"></p>
+            <p id="bioText" class="text-base md:text-xl font-light leading-loose text-slate-400"></p>
         </div>
         <?php if (!empty($isAdmin)): ?>
         <div class="edit-overlay" onclick="openEditor('bio')">

@@ -11,7 +11,7 @@
         <div class="inline-block p-3 rounded-full bg-primary/10 border border-primary/20 mb-6">
             <span class="material-symbols-outlined text-primary text-4xl">support_agent</span>
         </div>
-        <h2 id="contactHeroTitle" class="text-4xl md:text-6xl font-black mb-6"><?= t('contact_hero_title') ?></h2>
+        <h2 id="contactHeroTitle" class="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-black mb-6"><?= t('contact_hero_title') ?></h2>
         <p id="contactHeroSubtitle" class="text-xl text-slate-400 font-light max-w-2xl mx-auto leading-relaxed">
             <?= t('contact_hero_subtitle') ?>
         </p>

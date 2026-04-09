@@ -11,7 +11,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
 
 <!-- Hero -->
 <section class="relative py-24 md:py-32 px-6 text-center overflow-hidden">
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px]"></div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-primary/5 rounded-full blur-[150px] hidden md:block"></div>
     <div class="relative z-10 max-w-4xl mx-auto">
         <span class="text-primary font-bold tracking-[0.2em] uppercase text-sm mb-4 block"><?= t('process_art') ?></span>
         <h2 id="processHeroTitle" class="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight leading-tight"><?= t('process_hero_title') ?></h2>
