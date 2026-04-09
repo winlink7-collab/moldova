@@ -70,17 +70,17 @@
         <p id="footerCopy">&copy; <?= date('Y') ?> Moldova &amp; Ukraine Brides Luxury Matchmaking. <?= t('all_rights') ?></p>
         <!-- Footer Language Switcher -->
         <div class="flex items-center justify-center gap-4 mt-5">
-            <a href="?lang=he" class="flex items-center gap-2 text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'he' ? 'text-primary' : 'text-slate-500 hover:text-primary' ?>">
+            <a href="?lang=he" onclick="switchLang('he')" class="flex items-center gap-2 text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'he' ? 'text-primary' : 'text-slate-500 hover:text-primary' ?>">
                 <span style="display:inline-block;width:24px;height:16px;background:linear-gradient(to bottom,#fff 15%,#0038b8 15%,#0038b8 30%,#fff 30%,#fff 70%,#0038b8 70%,#0038b8 85%,#fff 85%);border-radius:2px;border:1px solid rgba(255,255,255,0.15);position:relative;overflow:hidden;"><span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;color:#0038b8;">✡</span></span>
                 עברית
             </a>
             <span class="text-slate-700">|</span>
-            <a href="?lang=ru" class="flex items-center gap-2 text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'ru' ? 'text-primary' : 'text-slate-500 hover:text-primary' ?>">
+            <a href="?lang=ru" onclick="switchLang('ru')" class="flex items-center gap-2 text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'ru' ? 'text-primary' : 'text-slate-500 hover:text-primary' ?>">
                 <span style="display:inline-block;width:24px;height:16px;border-radius:2px;border:1px solid rgba(255,255,255,0.15);background:linear-gradient(to bottom,#fff 33%,#0039a6 33%,#0039a6 66%,#d52b1e 66%);"></span>
                 Русский
             </a>
             <span class="text-slate-700">|</span>
-            <a href="?lang=en" class="flex items-center gap-2 text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'en' ? 'text-primary' : 'text-slate-500 hover:text-primary' ?>">
+            <a href="?lang=en" onclick="switchLang('en')" class="flex items-center gap-2 text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'en' ? 'text-primary' : 'text-slate-500 hover:text-primary' ?>">
                 <span style="display:inline-block;width:24px;height:16px;border-radius:2px;border:1px solid rgba(255,255,255,0.15);background:#00247d;position:relative;overflow:hidden;"><span style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 35%,#fff 35%,#fff 42%,#cf142b 42%,#cf142b 58%,#fff 58%,#fff 65%,transparent 65%);"></span><span style="position:absolute;inset:0;background:linear-gradient(to right,transparent 40%,#fff 40%,#fff 47%,#cf142b 47%,#cf142b 53%,#fff 53%,#fff 60%,transparent 60%);"></span></span>
                 English
             </a>
@@ -577,5 +577,68 @@ function updateThemeIcons() {
 }
 document.addEventListener('DOMContentLoaded', updateThemeIcons);
 </script>
+
+<!-- Google Translate - Auto translation for dynamic content -->
+<div id="google_translate_element" style="display:none;"></div>
+<script>
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+        pageLanguage: 'he',
+        includedLanguages: 'he,ru,en',
+        autoDisplay: false,
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');
+
+    // Auto-trigger if language is not Hebrew
+    if (LANG && LANG !== 'he') {
+        var attempts = 0;
+        var triggerInterval = setInterval(function() {
+            var select = document.querySelector('.goog-te-combo');
+            if (select) {
+                clearInterval(triggerInterval);
+                var targetLang = LANG === 'ru' ? 'ru' : 'en';
+                select.value = targetLang;
+                select.dispatchEvent(new Event('change'));
+            }
+            attempts++;
+            if (attempts > 30) clearInterval(triggerInterval);
+        }, 300);
+    }
+}
+
+// Switch language - set cookies and reload
+function switchLang(lang) {
+    event.preventDefault();
+    // Set our language cookie
+    document.cookie = 'site_lang=' + lang + '; path=/; max-age=31536000';
+
+    if (lang === 'he') {
+        // Reset Google Translate
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.' + location.hostname;
+    } else {
+        var target = lang === 'ru' ? 'ru' : 'en';
+        document.cookie = 'googtrans=/he/' + target + '; path=/;';
+        document.cookie = 'googtrans=/he/' + target + '; path=/; domain=.' + location.hostname;
+    }
+
+    // Reload page with lang parameter
+    var url = new URL(window.location.href);
+    url.searchParams.set('lang', lang);
+    window.location.href = url.toString();
+}
+</script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<!-- Hide Google Translate bar and branding -->
+<style>
+.goog-te-banner-frame, .goog-te-balloon-frame { display: none !important; }
+#goog-gt-tt, .goog-te-balloon-frame { display: none !important; }
+.goog-text-highlight { background: none !important; box-shadow: none !important; }
+body { top: 0 !important; position: static !important; }
+.skiptranslate { display: none !important; }
+.goog-te-gadget { display: none !important; }
+font[style] { background: none !important; box-shadow: none !important; }
+</style>
 </body>
 </html>

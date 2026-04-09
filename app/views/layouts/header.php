@@ -285,15 +285,15 @@ var T = <?= json_encode($T ?? [], JSON_UNESCAPED_UNICODE) ?>;
 
     <!-- Language Switcher -->
     <div class="hidden lg:flex items-center gap-1.5">
-        <a href="?lang=he" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'he' ? 'bg-primary text-background-dark' : 'text-slate-400 hover:text-primary hover:bg-white/5 border border-white/10' ?>">
-            <span class="fi fi-il" style="display:inline-block;width:20px;height:14px;background:linear-gradient(to bottom,#fff 15%,#0038b8 15%,#0038b8 30%,#fff 30%,#fff 70%,#0038b8 70%,#0038b8 85%,#fff 85%);border-radius:2px;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.2);"><span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:10px;color:#0038b8;">✡</span></span>
+        <a href="?lang=he" onclick="switchLang('he')" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'he' ? 'bg-primary text-background-dark' : 'text-slate-400 hover:text-primary hover:bg-white/5 border border-white/10' ?>">
+            <span style="display:inline-block;width:20px;height:14px;background:linear-gradient(to bottom,#fff 15%,#0038b8 15%,#0038b8 30%,#fff 30%,#fff 70%,#0038b8 70%,#0038b8 85%,#fff 85%);border-radius:2px;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.2);"><span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:10px;color:#0038b8;">✡</span></span>
             עב
         </a>
-        <a href="?lang=ru" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'ru' ? 'bg-primary text-background-dark' : 'text-slate-400 hover:text-primary hover:bg-white/5 border border-white/10' ?>">
+        <a href="?lang=ru" onclick="switchLang('ru')" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'ru' ? 'bg-primary text-background-dark' : 'text-slate-400 hover:text-primary hover:bg-white/5 border border-white/10' ?>">
             <span style="display:inline-block;width:20px;height:14px;border-radius:2px;overflow:hidden;border:1px solid rgba(255,255,255,0.2);background:linear-gradient(to bottom,#fff 33%,#0039a6 33%,#0039a6 66%,#d52b1e 66%);"></span>
             RU
         </a>
-        <a href="?lang=en" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'en' ? 'bg-primary text-background-dark' : 'text-slate-400 hover:text-primary hover:bg-white/5 border border-white/10' ?>">
+        <a href="?lang=en" onclick="switchLang('en')" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'en' ? 'bg-primary text-background-dark' : 'text-slate-400 hover:text-primary hover:bg-white/5 border border-white/10' ?>">
             <span style="display:inline-block;width:20px;height:14px;border-radius:2px;overflow:hidden;border:1px solid rgba(255,255,255,0.2);background:#00247d;position:relative;"><span style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 35%,#fff 35%,#fff 42%,#cf142b 42%,#cf142b 58%,#fff 58%,#fff 65%,transparent 65%);"></span><span style="position:absolute;inset:0;background:linear-gradient(to right,transparent 40%,#fff 40%,#fff 47%,#cf142b 47%,#cf142b 53%,#fff 53%,#fff 60%,transparent 60%);"></span></span>
             EN
         </a>
@@ -374,15 +374,15 @@ var T = <?= json_encode($T ?? [], JSON_UNESCAPED_UNICODE) ?>;
         <a class="<?= navClass('contact', $currentPage) ?> block py-2" href="<?= BASE_URL ?>/contact"><?= t('nav_contact') ?></a>
         <!-- Mobile Language Switcher -->
         <div class="flex gap-2 pt-3 border-t border-white/10">
-            <a href="?lang=he" class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'he' ? 'bg-primary text-background-dark' : 'border border-white/10 text-slate-300 hover:border-primary/30' ?>">
+            <a href="?lang=he" onclick="switchLang('he')" class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'he' ? 'bg-primary text-background-dark' : 'border border-white/10 text-slate-300 hover:border-primary/30' ?>">
                 <span style="display:inline-block;width:22px;height:15px;background:linear-gradient(to bottom,#fff 15%,#0038b8 15%,#0038b8 30%,#fff 30%,#fff 70%,#0038b8 70%,#0038b8 85%,#fff 85%);border-radius:2px;border:1px solid rgba(255,255,255,0.2);position:relative;overflow:hidden;"><span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:10px;color:#0038b8;">✡</span></span>
                 עברית
             </a>
-            <a href="?lang=ru" class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'ru' ? 'bg-primary text-background-dark' : 'border border-white/10 text-slate-300 hover:border-primary/30' ?>">
+            <a href="?lang=ru" onclick="switchLang('ru')" class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'ru' ? 'bg-primary text-background-dark' : 'border border-white/10 text-slate-300 hover:border-primary/30' ?>">
                 <span style="display:inline-block;width:22px;height:15px;border-radius:2px;border:1px solid rgba(255,255,255,0.2);background:linear-gradient(to bottom,#fff 33%,#0039a6 33%,#0039a6 66%,#d52b1e 66%);"></span>
                 Русский
             </a>
-            <a href="?lang=en" class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'en' ? 'bg-primary text-background-dark' : 'border border-white/10 text-slate-300 hover:border-primary/30' ?>">
+            <a href="?lang=en" onclick="switchLang('en')" class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'en' ? 'bg-primary text-background-dark' : 'border border-white/10 text-slate-300 hover:border-primary/30' ?>">
                 <span style="display:inline-block;width:22px;height:15px;border-radius:2px;border:1px solid rgba(255,255,255,0.2);background:#00247d;position:relative;overflow:hidden;"><span style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 35%,#fff 35%,#fff 42%,#cf142b 42%,#cf142b 58%,#fff 58%,#fff 65%,transparent 65%);"></span><span style="position:absolute;inset:0;background:linear-gradient(to right,transparent 40%,#fff 40%,#fff 47%,#cf142b 47%,#cf142b 53%,#fff 53%,#fff 60%,transparent 60%);"></span></span>
                 English
             </a>
