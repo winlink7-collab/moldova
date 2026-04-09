@@ -360,11 +360,14 @@ async function loadProfile() {
             document.getElementById('loading').innerHTML = `<p class="text-red-400 text-xl">${T.profile_not_found}</p>`;
             return;
         }
-        const p = await res.json();
-        currentProfile = p;
+        const rawP = await res.json();
+        // Auto-translate profile fields if not Hebrew
+        const p = (typeof translateProfile === 'function') ? translateProfile(rawP, LANG) : rawP;
+        currentProfile = rawP; // Keep raw for admin editing
         const mainPhoto = (p.photos || []).find(ph => ph.is_primary == 1 || ph.is_primary === true) || (p.photos || [])[0] || {};
         p.primary_photo = mainPhoto.photo_url || '';
         const countryName = p.country === 'moldova' ? T.moldova_country : T.ukraine;
+        const cityTranslated = (typeof autoTranslate === 'function') ? autoTranslate(p.city || '', LANG) : (p.city || '');
 
         // Hero
         document.getElementById('mainImage').src = p.primary_photo || '';
@@ -374,7 +377,7 @@ async function loadProfile() {
         document.title = `${p.name}, ${p.age} - Moldova & Ukraine`;
 
         // Location
-        document.getElementById('location').innerHTML = `${p.city}, <span class="font-semibold">${countryName}</span>`;
+        document.getElementById('location').innerHTML = `${cityTranslated}, <span class="font-semibold">${countryName}</span>`;
 
         // Details
         document.getElementById('detAge').textContent = T.age_prefix ? `${T.age_prefix} ${p.age}` : p.age;

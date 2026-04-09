@@ -159,9 +159,11 @@ function renderProfiles(profiles) {
         grid.innerHTML = `<div class="col-span-full text-center py-20"><span class="material-symbols-outlined text-slate-600 text-6xl block mb-4">search_off</span><p class="text-slate-500 text-lg">${T.no_profiles_found}</p><button onclick="resetFilters()" class="text-primary text-sm mt-3 hover:underline">${T.clear_and_retry}</button></div>`;
         return;
     }
-    grid.innerHTML = profiles.map(p => {
+    grid.innerHTML = profiles.map(rawP => {
+        const p = (typeof translateProfile === 'function') ? translateProfile(rawP, LANG) : rawP;
         const flag = p.country === 'moldova' ? '🇲🇩' : '🇺🇦';
         const countryName = p.country === 'moldova' ? T.moldova_country : T.ukraine;
+        const cityT = (typeof autoTranslate === 'function') ? autoTranslate(p.city || '', LANG) : (p.city || '');
         return `
         <a href="${BASE}/profile/${p.id}" class="profile-card group relative rounded-2xl overflow-hidden border border-white/5 cursor-pointer transition-all duration-500 block">
             <div class="aspect-[3/4] relative overflow-hidden">
@@ -191,7 +193,7 @@ function renderProfiles(profiles) {
                     <h3 class="text-2xl font-extrabold text-white mb-1 drop-shadow-lg">${p.name}, ${p.age}</h3>
                     <p class="text-sm text-white/70 flex items-center gap-1.5 font-medium">
                         <span class="material-symbols-outlined text-primary text-base">location_on</span>
-                        ${p.city}, ${countryName} ${flag}
+                        ${cityT}, ${countryName} ${flag}
                     </p>
                     ${p.occupation ? `<p class="text-xs text-white/50 mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-xs">work</span> ${p.occupation}</p>` : ''}
                 </div>

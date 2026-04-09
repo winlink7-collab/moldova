@@ -425,9 +425,11 @@ document.getElementById('leadForm').addEventListener('submit', async (e) => {
             grid.innerHTML = `<p class="text-slate-500 text-center col-span-full py-12">${T.no_profiles_yet}</p>`;
             return;
         }
-        grid.innerHTML = profiles.map(p => {
+        grid.innerHTML = profiles.map(rawP => {
+            const p = (typeof translateProfile === 'function') ? translateProfile(rawP, LANG) : rawP;
             const countryName = p.country === 'moldova' ? T.moldova_country : T.ukraine;
             const flag = p.country === 'moldova' ? '🇲🇩' : '🇺🇦';
+            const cityT = (typeof autoTranslate === 'function') ? autoTranslate(p.city || '', LANG) : (p.city || '');
             return `
             <a href="${BASE}/profile/${p.id}" class="group relative rounded-2xl overflow-hidden border border-white/5 hover:border-primary/40 transition-all duration-500 block">
                 <div class="aspect-[3/4] relative overflow-hidden">
@@ -437,7 +439,7 @@ document.getElementById('leadForm').addEventListener('submit', async (e) => {
                         <h4 class="text-lg font-extrabold text-white drop-shadow-lg">${p.name}, ${p.age}</h4>
                         <p class="text-xs text-white/70 flex items-center gap-1 mt-1">
                             <span class="material-symbols-outlined text-primary" style="font-size:14px;">location_on</span>
-                            ${p.city}, ${countryName} ${flag}
+                            ${cityT}, ${countryName} ${flag}
                         </p>
                     </div>
                     <div class="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
