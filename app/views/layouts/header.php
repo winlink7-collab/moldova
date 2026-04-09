@@ -150,32 +150,40 @@ function navClass(string $page, string $current): string {
         color: #1a1a1a !important;
     }
     html.light .glass-effect {
-        background: rgba(255,255,255,0.92) !important;
+        background: rgba(255,255,255,0.95) !important;
         border-color: rgba(0,0,0,0.08) !important;
+        box-shadow: 0 2px 20px rgba(0,0,0,0.06);
     }
-    html.light header a, html.light nav a {
+    html.light header a, html.light header nav a {
         color: #333 !important;
     }
-    html.light nav a:hover, html.light .text-primary {
-        color: #b89b06 !important;
+    html.light header nav a:hover {
+        color: #9a8200 !important;
     }
-    html.light h1, html.light h2, html.light h3, html.light h4 {
+    html.light main .text-primary {
+        color: #9a8200 !important;
+    }
+    html.light main h1, html.light main h2, html.light main h3, html.light main h4, html.light main h5 {
         color: #1a1a1a !important;
     }
-    html.light .text-slate-100, html.light .text-white {
+    html.light main .text-slate-100, html.light main .text-white {
         color: #1a1a1a !important;
     }
-    html.light .text-slate-300, html.light .text-slate-400, html.light .text-gold-muted {
+    html.light main .text-slate-300, html.light main .text-slate-400, html.light main .text-gold-muted {
         color: #555 !important;
     }
-    html.light .bg-background-dark, html.light [class*="bg-background-dark"] {
+    html.light header .text-slate-100 {
+        color: #1a1a1a !important;
+    }
+    html.light body, html.light main .bg-background-dark {
         background: #f8f7f2 !important;
     }
-    html.light .bg-surface, html.light [class*="bg-surface"] {
+    html.light main .bg-surface {
         background: #fff !important;
     }
-    html.light .bg-card, html.light [class*="bg-card"] {
+    html.light main .bg-card, html.light main [class*="bg-card"] {
         background: #fff !important;
+        border-color: rgba(0,0,0,0.08) !important;
     }
     html.light .border-white\/10, html.light .border-white\/5, html.light .border-white\/15 {
         border-color: rgba(0,0,0,0.1) !important;
@@ -212,12 +220,38 @@ function navClass(string $page, string $current): string {
     html.light .bg-primary {
         background: #c9a800 !important;
     }
-    html.light footer {
+    /* Footer stays dark in light mode */
+    html.light footer,
+    html.light footer#siteFooter {
         background: #1a1810 !important;
         color: #ccc !important;
     }
-    html.light footer h3, html.light footer a, html.light footer span {
-        color: #ccc !important;
+    html.light footer h1, html.light footer h2, html.light footer h3,
+    html.light footer h4, html.light footer h5, html.light footer h6,
+    html.light footer p, html.light footer a, html.light footer span,
+    html.light footer div, html.light footer li {
+        color: inherit !important;
+    }
+    html.light footer .text-primary,
+    html.light footer .text-primary a {
+        color: #f2d00d !important;
+    }
+    html.light footer .text-slate-500,
+    html.light footer .text-slate-400,
+    html.light footer .text-gold-muted {
+        color: #888 !important;
+    }
+    html.light footer .text-white,
+    html.light footer .text-slate-100 {
+        color: #eee !important;
+    }
+    html.light footer .border-white\/10 {
+        border-color: rgba(255,255,255,0.1) !important;
+    }
+    html.light footer input, html.light footer select, html.light footer textarea {
+        background: rgba(255,255,255,0.05) !important;
+        color: #fff !important;
+        border-color: rgba(255,255,255,0.1) !important;
     }
     html.light .gold-gradient-text {
         background: linear-gradient(135deg, #b89b06 0%, #8a7404 100%) !important;
@@ -230,10 +264,20 @@ function navClass(string $page, string $current): string {
     html.light .hover\:bg-white\/5:hover {
         background: rgba(0,0,0,0.05) !important;
     }
-    html.light input, html.light select, html.light textarea {
+    html.light main input, html.light main select, html.light main textarea,
+    html.light header input, html.light header select {
         background: #fff !important;
         color: #1a1a1a !important;
         border-color: rgba(0,0,0,0.15) !important;
+    }
+    /* Keep modals dark */
+    html.light .fixed[id$="Modal"], html.light #loginModal, html.light #registerModal {
+        color: #fff !important;
+    }
+    html.light .fixed[id$="Modal"] input, html.light #loginModal input, html.light #registerModal input {
+        background: rgba(28,26,15,0.5) !important;
+        color: #fff !important;
+        border-color: rgba(255,255,255,0.1) !important;
     }
     html.light #headerLogoTitle {
         color: #1a1a1a !important;
