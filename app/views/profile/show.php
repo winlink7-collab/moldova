@@ -200,8 +200,8 @@ body header.sticky { top: 56px !important; }
 <!-- Gallery -->
 <section class="mb-20 editable-section relative">
     <div class="flex items-end justify-between mb-8 border-b border-white/10 pb-4">
-        <h3 class="text-4xl font-bold text-white"><?= t('gallery') ?></h3>
-        <span id="photoCount" class="text-slate-500 uppercase tracking-widest text-xs font-black"></span>
+        <h3 class="text-5xl font-black text-white"><?= t('gallery') ?></h3>
+        <span id="photoCount" class="text-slate-500 uppercase tracking-widest text-base font-black"></span>
     </div>
     <div id="gallery" class="grid grid-cols-2 md:grid-cols-4 gap-6"></div>
     <?php if (!empty($isAdmin)): ?>
@@ -214,8 +214,8 @@ body header.sticky { top: 56px !important; }
 <!-- Videos -->
 <section id="videosSection" class="mb-20 editable-section relative" style="display:none;">
     <div class="flex items-end justify-between mb-8 border-b border-white/10 pb-4">
-        <h3 class="text-4xl font-bold text-white"><?= t('videos') ?></h3>
-        <span id="videoCount" class="text-slate-500 uppercase tracking-widest text-xs font-black"></span>
+        <h3 class="text-5xl font-black text-white"><?= t('videos') ?></h3>
+        <span id="videoCount" class="text-slate-500 uppercase tracking-widest text-base font-black"></span>
     </div>
     <div id="videoGallery" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
     <?php if (!empty($isAdmin)): ?>
@@ -228,7 +228,7 @@ body header.sticky { top: 56px !important; }
 <!-- Bio + Preferences -->
 <section class="grid grid-cols-1 lg:grid-cols-3 gap-16 py-20 border-t border-white/10">
     <div class="lg:col-span-2 editable-section relative">
-        <h4 class="text-4xl font-bold mb-8 text-white"><?= t('in_her_words') ?></h4>
+        <h4 class="text-5xl font-black mb-8 text-white"><?= t('in_her_words') ?></h4>
         <div class="space-y-8">
             <p id="bioQuote" class="text-3xl font-light text-primary/90 leading-snug border-r-2 border-primary/30 pr-8 py-2"></p>
             <p id="bioText" class="text-xl font-light leading-loose text-slate-400"></p>
@@ -240,24 +240,24 @@ body header.sticky { top: 56px !important; }
         <?php endif; ?>
     </div>
     <div class="bg-card/50 p-10 rounded-3xl border border-primary/10 shadow-2xl h-fit editable-section relative">
-        <h5 class="text-primary font-black uppercase tracking-[0.3em] text-[11px] mb-10 flex items-center gap-3">
-            <span class="material-symbols-outlined text-xl">tune</span> <?= t('match_preferences') ?>
+        <h5 class="text-primary font-black uppercase tracking-[0.3em] text-sm mb-10 flex items-center gap-3">
+            <span class="material-symbols-outlined text-2xl">tune</span> <?= t('match_preferences') ?>
         </h5>
         <ul class="space-y-8">
             <li class="flex items-start gap-4">
-                <span class="material-symbols-outlined text-primary text-2xl mt-0.5">check_circle</span>
-                <div><p class="font-black text-white uppercase text-[10px] tracking-widest mb-1"><?= t('relationship_goal') ?></p>
-                <p id="prefGoal" class="text-slate-300 text-lg font-light"></p></div>
+                <span class="material-symbols-outlined text-primary text-3xl mt-0.5">check_circle</span>
+                <div><p class="font-black text-white uppercase text-xs tracking-widest mb-1"><?= t('relationship_goal') ?></p>
+                <p id="prefGoal" class="text-slate-300 text-xl font-light"></p></div>
             </li>
             <li class="flex items-start gap-4">
-                <span class="material-symbols-outlined text-primary text-2xl mt-0.5">check_circle</span>
-                <div><p class="font-black text-white uppercase text-[10px] tracking-widest mb-1"><?= t('marital_status') ?></p>
-                <p id="prefMarital" class="text-slate-300 text-lg font-light"></p></div>
+                <span class="material-symbols-outlined text-primary text-3xl mt-0.5">check_circle</span>
+                <div><p class="font-black text-white uppercase text-xs tracking-widest mb-1"><?= t('marital_status') ?></p>
+                <p id="prefMarital" class="text-slate-300 text-xl font-light"></p></div>
             </li>
             <li class="flex items-start gap-4">
-                <span class="material-symbols-outlined text-primary text-2xl mt-0.5">check_circle</span>
-                <div><p class="font-black text-white uppercase text-[10px] tracking-widest mb-1"><?= t('zodiac') ?></p>
-                <p id="prefZodiac" class="text-slate-300 text-lg font-light"></p></div>
+                <span class="material-symbols-outlined text-primary text-3xl mt-0.5">check_circle</span>
+                <div><p class="font-black text-white uppercase text-xs tracking-widest mb-1"><?= t('zodiac') ?></p>
+                <p id="prefZodiac" class="text-slate-300 text-xl font-light"></p></div>
             </li>
         </ul>
         <?php if (!empty($isAdmin)): ?>
