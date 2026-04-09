@@ -936,8 +936,11 @@ async function ieUploadPhotos(input) {
         try {
             const upRes = await fetch(BASE + '/api/upload', { method: 'POST', body: formData });
             const upData = await upRes.json();
+            console.log('Upload response:', upRes.status, upData);
             if (!upRes.ok) {
-                errorMessages.push(`${files[i].name}: ${upData.error || 'שגיאה בהעלאה'}`);
+                const errMsg = `${files[i].name}: ${upData.error || 'שגיאה בהעלאה'} (status: ${upRes.status})`;
+                alert('שגיאת העלאה: ' + JSON.stringify(upData));
+                errorMessages.push(errMsg);
                 continue;
             }
             const url = upData.url || upData.path;
@@ -945,10 +948,12 @@ async function ieUploadPhotos(input) {
                 const photoRes = await fetch(BASE + '/api/admin/photos', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ profile_id: profileId, photo_url: url, is_primary: false })
+                    body: JSON.stringify({ profile_id: parseInt(profileId), photo_url: url, is_primary: false })
                 });
                 const photoData = await photoRes.json();
+                console.log('Photo save response:', photoRes.status, photoData);
                 if (!photoRes.ok) {
+                    alert('שגיאת שמירת תמונה: ' + JSON.stringify(photoData));
                     errorMessages.push(`${files[i].name}: ${photoData.error || 'שגיאה בשמירה'}`);
                     continue;
                 }
