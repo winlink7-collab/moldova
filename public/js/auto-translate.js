@@ -5,6 +5,13 @@
 
 var DICT = {
     ru: {
+        // Names
+        'אלנה': 'Елена', 'לנה': 'Елена', 'נטליה': 'Наталия', 'אולגה': 'Ольга',
+        'יקטרינה': 'Екатерина', 'ויקטוריה': 'Виктория', 'אנה': 'Анна',
+        'אינסטסיה': 'Анастасия', 'מריה': 'Мария', 'אירינה': 'Ирина',
+        'טטיאנה': 'Татьяна', 'סבטלנה': 'Светлана', 'יוליה': 'Юлия',
+        'אלינה': 'Алина', 'דיאנה': 'Диана', 'קסניה': 'Ксения',
+        'ולריה': 'Валерия', 'דריה': 'Дарья', 'סופיה': 'София',
         // Cities
         'קישינב': 'Кишинёв', 'קייב': 'Киев', 'אודסה': 'Одесса', 'טירספול': 'Тирасполь',
         'לבוב': 'Львов', 'בלץ': 'Бельцы', 'חרקוב': 'Харьков', 'דניפרו': 'Днепр',
@@ -61,6 +68,13 @@ var DICT = {
         'גבר שמעריך אוכל טוב וחיי משפחה': 'Мужчина, ценящий хорошую еду и семью',
     },
     en: {
+        // Names
+        'אלנה': 'Elena', 'לנה': 'Elena', 'נטליה': 'Natalia', 'אולגה': 'Olga',
+        'יקטרינה': 'Yekaterina', 'ויקטוריה': 'Victoria', 'אנה': 'Anna',
+        'אינסטסיה': 'Anastasia', 'מריה': 'Maria', 'אירינה': 'Irina',
+        'טטיאנה': 'Tatiana', 'סבטלנה': 'Svetlana', 'יוליה': 'Julia',
+        'אלינה': 'Alina', 'דיאנה': 'Diana', 'קסניה': 'Ksenia',
+        'ולריה': 'Valeria', 'דריה': 'Daria', 'סופיה': 'Sofia',
         // Cities
         'קישינב': 'Chisinau', 'קייב': 'Kyiv', 'אודסה': 'Odessa', 'טירספול': 'Tiraspol',
         'לבוב': 'Lviv', 'בלץ': 'Balti', 'חרקוב': 'Kharkiv', 'דניפרו': 'Dnipro',
@@ -154,6 +168,7 @@ function autoTranslate(text, lang) {
 function translateProfile(p, lang) {
     if (!lang || lang === 'he') return p;
     var copy = Object.assign({}, p);
+    if (copy.name) copy.name = autoTranslate(copy.name, lang);
     if (copy.city) copy.city = autoTranslate(copy.city, lang);
     if (copy.occupation) copy.occupation = autoTranslate(copy.occupation, lang);
     if (copy.education) copy.education = autoTranslate(copy.education, lang);
