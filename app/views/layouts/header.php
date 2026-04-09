@@ -8,8 +8,8 @@
  *   $currentPage     - Current page identifier (home, about, search, stories, process, faq, contact, vip, dashboard, login, admin)
  */
 
-$pageTitle       = $pageTitle ?? 'Moldova & Ukraine Luxury Brides - שידוכי יוקרה';
-$pageDescription = $pageDescription ?? 'שירות שידוכי יוקרה בינלאומי - חיבור בין גברים מצליחים לנשים יפות וערכיות ממולדובה ואוקראינה';
+$pageTitle       = $pageTitle ?? ('Moldova & Ukraine Luxury Brides - ' . t('hero_badge'));
+$pageDescription = $pageDescription ?? t('hero_subtitle');
 $currentPage     = $currentPage ?? 'home';
 
 $canonicalUrl = 'https://' . ($_SERVER['HTTP_HOST'] ?? 'moldova-ukraine-brides.com') . ($_SERVER['REQUEST_URI'] ?? '/');
@@ -307,13 +307,13 @@ var T = <?= json_encode($T ?? [], JSON_UNESCAPED_UNICODE) ?>;
 
     <!-- Quick Search -->
     <div class="hidden lg:flex items-center relative">
-        <button onclick="toggleHeaderSearch()" class="flex items-center gap-1 text-slate-400 hover:text-primary transition-colors px-2 py-1.5 rounded-lg hover:bg-white/5" title="חיפוש">
+        <button onclick="toggleHeaderSearch()" class="flex items-center gap-1 text-slate-400 hover:text-primary transition-colors px-2 py-1.5 rounded-lg hover:bg-white/5" title="<?= t('search_now') ?>">
             <span class="material-symbols-outlined text-xl">search</span>
         </button>
         <div id="headerSearchBox" class="hidden absolute top-full left-0 mt-2 w-80 bg-background-dark border border-white/15 rounded-xl shadow-2xl overflow-hidden z-[100]" style="direction:rtl;">
             <div class="flex items-center gap-2 px-4 py-3 border-b border-white/10">
                 <span class="material-symbols-outlined text-primary text-xl">search</span>
-                <input id="headerSearchInput" type="text" placeholder="חפש לפי שם..." class="flex-1 bg-transparent text-white text-sm outline-none placeholder:text-slate-500" autocomplete="off"/>
+                <input id="headerSearchInput" type="text" placeholder="<?= t('search_placeholder') ?>" class="flex-1 bg-transparent text-white text-sm outline-none placeholder:text-slate-500" autocomplete="off"/>
                 <button onclick="closeHeaderSearch()" class="text-slate-500 hover:text-white"><span class="material-symbols-outlined text-lg">close</span></button>
             </div>
             <div id="headerSearchResults" class="max-h-80 overflow-y-auto"></div>
@@ -335,10 +335,10 @@ var T = <?= json_encode($T ?? [], JSON_UNESCAPED_UNICODE) ?>;
         <!-- Logged in state (hidden by default) -->
         <div id="userMenu" class="hidden items-center gap-4">
             <a href="<?= BASE_URL ?>/search" class="hidden sm:flex px-5 py-2.5 bg-primary hover:bg-primary/90 text-background-dark text-sm font-bold rounded-lg transition-all">
-                חיפוש פרופילים
+                <?= t('search_profiles') ?>
             </a>
             <a href="<?= BASE_URL ?>/dashboard" class="hidden sm:flex items-center gap-1 text-sm text-slate-300 hover:text-primary transition-colors font-medium">
-                <span class="material-symbols-outlined text-lg">account_circle</span> האזור שלי
+                <span class="material-symbols-outlined text-lg">account_circle</span> <?= t('my_area') ?>
             </a>
             <div class="flex items-center gap-3">
                 <span id="userName" class="text-sm text-slate-300 font-medium"></span>
@@ -427,19 +427,19 @@ document.addEventListener('DOMContentLoaded', function() {
         clearTimeout(headerSearchTimeout);
         const q = this.value.trim();
         const results = document.getElementById('headerSearchResults');
-        if (q.length < 2) { results.innerHTML = '<div class="px-4 py-3 text-sm text-slate-500 text-center">הקלד לפחות 2 תווים...</div>'; return; }
-        results.innerHTML = '<div class="px-4 py-3 text-sm text-slate-500 text-center">מחפש...</div>';
+        if (q.length < 2) { results.innerHTML = '<div class="px-4 py-3 text-sm text-slate-500 text-center">' + (T.search_min_chars || 'Type at least 2 characters...') + '</div>'; return; }
+        results.innerHTML = '<div class="px-4 py-3 text-sm text-slate-500 text-center">' + (T.searching || 'Searching...') + '</div>';
         headerSearchTimeout = setTimeout(async () => {
             try {
                 const res = await fetch(BASE + '/api/profiles?q=' + encodeURIComponent(q) + '&per_page=5');
                 const data = await res.json();
                 const profiles = data.profiles || [];
                 if (!profiles.length) {
-                    results.innerHTML = '<div class="px-4 py-6 text-sm text-slate-500 text-center">לא נמצאו תוצאות</div>';
+                    results.innerHTML = '<div class="px-4 py-6 text-sm text-slate-500 text-center">' + (T.no_results || 'No results found') + '</div>';
                     return;
                 }
                 results.innerHTML = profiles.map(p => {
-                    const country = p.country === 'moldova' ? 'מולדובה' : 'אוקראינה';
+                    const country = p.country === 'moldova' ? (T.moldova_country || 'Moldova') : (T.ukraine || 'Ukraine');
                     return `<a href="${BASE}/profile/${p.id}" class="flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors border-b border-white/5">
                         <img src="${p.primary_photo || ''}" class="w-10 h-10 rounded-full object-cover bg-white/10 flex-shrink-0" onerror="this.style.display='none'"/>
                         <div class="flex-1 min-w-0">
@@ -448,8 +448,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                         <span class="material-symbols-outlined text-slate-600 text-lg">arrow_back</span>
                     </a>`;
-                }).join('') + `<a href="${BASE}/search" class="block px-4 py-3 text-center text-sm text-primary font-bold hover:bg-white/5 transition-colors">חיפוש מתקדם</a>`;
-            } catch { results.innerHTML = '<div class="px-4 py-3 text-sm text-red-400 text-center">שגיאה</div>'; }
+                }).join('') + `<a href="${BASE}/search" class="block px-4 py-3 text-center text-sm text-primary font-bold hover:bg-white/5 transition-colors">${T.filters || 'Advanced Search'}</a>`;
+            } catch { results.innerHTML = '<div class="px-4 py-3 text-sm text-red-400 text-center">' + (T.error_loading || 'Error') + '</div>'; }
         }, 300);
     });
     input.addEventListener('keydown', function(e) {
