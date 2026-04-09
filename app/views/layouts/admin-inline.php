@@ -580,10 +580,11 @@ body.aie-nav-open header.sticky { right: 300px; width: calc(100% - 300px); }
         const currentVal = el.innerText.trim();
         const inputEl = isMultiline ? `<textarea rows="4">${currentVal}</textarea>` : `<input type="text" value="${currentVal.replace(/"/g, '&quot;')}"/>`;
 
-        // Detect if element is a link or button
-        const isLink = el.tagName === 'A';
-        const isButton = el.tagName === 'BUTTON';
-        const linkHref = isLink ? (el.getAttribute('href') || '') : '';
+        // Detect if element is a link or button (also check parent)
+        const linkEl = el.tagName === 'A' ? el : (el.closest('a') || null);
+        const isLink = !!linkEl;
+        const isButton = el.tagName === 'BUTTON' || !!el.closest('button');
+        const linkHref = isLink ? (linkEl.getAttribute('href') || '') : '';
 
         // Build link field HTML
         let linkHTML = '';
@@ -647,11 +648,11 @@ body.aie-nav-open header.sticky { right: 300px; width: calc(100% - 300px); }
             el.textContent = newVal;
 
             // Save link
-            if (isLink) {
+            if (isLink && linkEl) {
                 const newHref = popup.querySelector('.aie-link-input').value;
                 if (newHref !== linkHref) {
                     await aieSaveSetting(key + '_link', newHref);
-                    el.setAttribute('href', newHref);
+                    linkEl.setAttribute('href', newHref);
                 }
             }
 
