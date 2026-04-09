@@ -175,25 +175,33 @@ function navClass(string $page, string $current): string {
     html.light main .text-white, html.light main .text-slate-100 {
         color: #2a2a2a !important;
     }
-    /* Keep white text on cards with image overlays */
-    html.light main .profile-card .text-white,
+    /* Profile cards - name white, details dark */
     html.light main .profile-card h3,
     html.light main .profile-card h4,
-    html.light main .profile-card p,
-    html.light main .aspect-\[3\/4\] .text-white,
     html.light main .aspect-\[3\/4\] h3,
-    html.light main .aspect-\[3\/4\] h4,
-    html.light main .aspect-\[3\/4\] p,
-    html.light main .aspect-\[3\/4\] span {
+    html.light main .aspect-\[3\/4\] h4 {
         color: #fff !important;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.6);
     }
     html.light main .profile-card .text-white\/70,
-    html.light main .aspect-\[3\/4\] .text-white\/70 {
-        color: rgba(255,255,255,0.7) !important;
+    html.light main .aspect-\[3\/4\] .text-white\/70,
+    html.light main .profile-card p.text-sm,
+    html.light main .aspect-\[3\/4\] p.text-sm {
+        color: #1a1a1a !important;
+        text-shadow: none;
     }
     html.light main .profile-card .text-white\/50,
-    html.light main .aspect-\[3\/4\] .text-white\/50 {
-        color: rgba(255,255,255,0.5) !important;
+    html.light main .aspect-\[3\/4\] .text-white\/50,
+    html.light main .profile-card p.text-xs,
+    html.light main .aspect-\[3\/4\] p.text-xs {
+        color: #444 !important;
+        text-shadow: none;
+    }
+    /* Card bottom section - light bg for readability */
+    html.light main .profile-card .absolute.bottom-0,
+    html.light main .aspect-\[3\/4\] .absolute.bottom-0,
+    html.light main .group .absolute.bottom-0 {
+        background: linear-gradient(to top, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 60%, transparent 100%) !important;
     }
     html.light main .profile-card,
     html.light main .group.relative.rounded-2xl {
@@ -201,16 +209,13 @@ function navClass(string $page, string $current): string {
         box-shadow: 0 2px 16px rgba(0,0,0,0.08);
         overflow: hidden;
     }
-    /* Hero and profile name stays white on images */
+    /* Hero and profile page name stays white on dark image */
     html.light main .drop-shadow-2xl,
-    html.light main .drop-shadow-lg {
+    html.light main #heroName, html.light main #heroAge {
         color: #fff !important;
+        text-shadow: 0 2px 12px rgba(0,0,0,0.5);
     }
-    html.light main #heroName, html.light main #heroAge,
-    html.light main #mainImage + div h2 {
-        color: #fff !important;
-    }
-    /* Gallery items text white */
+    /* Gallery items */
     html.light main .gallery-item .text-white {
         color: #fff !important;
     }
