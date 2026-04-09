@@ -69,13 +69,21 @@
     <div class="border-t border-white/5 pt-8 text-center text-xs text-gold-muted/50">
         <p id="footerCopy">&copy; <?= date('Y') ?> Moldova &amp; Ukraine Brides Luxury Matchmaking. <?= t('all_rights') ?></p>
         <!-- Footer Language Switcher -->
-        <div class="flex items-center justify-center gap-3 mt-4">
-            <?php foreach (['he' => 'עברית', 'ru' => 'Русский', 'en' => 'English'] as $code => $label): ?>
-            <a href="?lang=<?= $code ?>" class="text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === $code ? 'text-primary' : 'text-slate-500 hover:text-primary' ?>">
-                <?= $label ?>
+        <div class="flex items-center justify-center gap-4 mt-5">
+            <a href="?lang=he" class="flex items-center gap-2 text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'he' ? 'text-primary' : 'text-slate-500 hover:text-primary' ?>">
+                <span style="display:inline-block;width:24px;height:16px;background:linear-gradient(to bottom,#fff 15%,#0038b8 15%,#0038b8 30%,#fff 30%,#fff 70%,#0038b8 70%,#0038b8 85%,#fff 85%);border-radius:2px;border:1px solid rgba(255,255,255,0.15);position:relative;overflow:hidden;"><span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;color:#0038b8;">✡</span></span>
+                עברית
             </a>
-            <?php if ($code !== 'en'): ?><span class="text-slate-700">|</span><?php endif; ?>
-            <?php endforeach; ?>
+            <span class="text-slate-700">|</span>
+            <a href="?lang=ru" class="flex items-center gap-2 text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'ru' ? 'text-primary' : 'text-slate-500 hover:text-primary' ?>">
+                <span style="display:inline-block;width:24px;height:16px;border-radius:2px;border:1px solid rgba(255,255,255,0.15);background:linear-gradient(to bottom,#fff 33%,#0039a6 33%,#0039a6 66%,#d52b1e 66%);"></span>
+                Русский
+            </a>
+            <span class="text-slate-700">|</span>
+            <a href="?lang=en" class="flex items-center gap-2 text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'en' ? 'text-primary' : 'text-slate-500 hover:text-primary' ?>">
+                <span style="display:inline-block;width:24px;height:16px;border-radius:2px;border:1px solid rgba(255,255,255,0.15);background:#00247d;position:relative;overflow:hidden;"><span style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 35%,#fff 35%,#fff 42%,#cf142b 42%,#cf142b 58%,#fff 58%,#fff 65%,transparent 65%);"></span><span style="position:absolute;inset:0;background:linear-gradient(to right,transparent 40%,#fff 40%,#fff 47%,#cf142b 47%,#cf142b 53%,#fff 53%,#fff 60%,transparent 60%);"></span></span>
+                English
+            </a>
         </div>
     </div>
 </div>
