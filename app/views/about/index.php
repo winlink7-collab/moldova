@@ -171,7 +171,9 @@ require BASE_PATH . '/app/views/layouts/header.php';
         if (s.about_cta_title) document.getElementById('aboutCtaTitle').textContent = s.about_cta_title;
         if (s.about_cta_subtitle) document.getElementById('aboutCtaSubtitle').textContent = s.about_cta_subtitle;
         if (s.about_cta_btn1) document.getElementById('aboutCtaBtn1').textContent = s.about_cta_btn1;
+        if (s.about_cta_btn1_link) document.getElementById('aboutCtaBtn1').href = s.about_cta_btn1_link;
         if (s.about_cta_btn2) document.getElementById('aboutCtaBtn2').textContent = s.about_cta_btn2;
+        if (s.about_cta_btn2_link) document.getElementById('aboutCtaBtn2').href = s.about_cta_btn2_link;
     } catch(e) {}
 })();
 </script>

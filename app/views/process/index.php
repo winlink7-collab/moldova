@@ -93,8 +93,11 @@ async function loadPageSettings() {
         if (s.process_cta_title) document.getElementById('processCtaTitle').textContent = s.process_cta_title;
         if (s.process_cta_subtitle) document.getElementById('processCtaSubtitle').textContent = s.process_cta_subtitle;
         if (s.process_hero_btn) document.getElementById('processHeroBtn').textContent = s.process_hero_btn;
+        if (s.process_hero_btn_link) document.getElementById('processHeroBtn').closest('a').href = s.process_hero_btn_link;
         if (s.process_cta_btn1) document.getElementById('processCtaBtn1').textContent = s.process_cta_btn1;
+        if (s.process_cta_btn1_link) document.getElementById('processCtaBtn1').closest('a').href = s.process_cta_btn1_link;
         if (s.process_cta_btn2) document.getElementById('processCtaBtn2').textContent = s.process_cta_btn2;
+        if (s.process_cta_btn2_link) document.getElementById('processCtaBtn2').closest('a').href = s.process_cta_btn2_link;
     } catch {}
 }
 

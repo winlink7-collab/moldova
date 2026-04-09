@@ -364,7 +364,9 @@ document.getElementById('leadForm').addEventListener('submit', async (e) => {
         if (s.home_cta_title) document.getElementById('homeCtaTitle').textContent = s.home_cta_title;
         if (s.home_cta_subtitle) document.getElementById('homeCtaSubtitle').textContent = s.home_cta_subtitle;
         if (s.home_cta_btn1) document.getElementById('homeCtaBtn1').textContent = s.home_cta_btn1;
+        if (s.home_cta_btn1_link) document.getElementById('homeCtaBtn1').href = s.home_cta_btn1_link;
         if (s.home_cta_btn2) document.getElementById('homeCtaBtn2').textContent = s.home_cta_btn2;
+        if (s.home_cta_btn2_link) document.getElementById('homeCtaBtn2').href = s.home_cta_btn2_link;
         // Profiles section
         if (s.home_profiles_label) document.getElementById('homeProfilesLabel').textContent = s.home_profiles_label;
         if (s.home_profiles_title) document.getElementById('homeProfilesTitle').textContent = s.home_profiles_title;

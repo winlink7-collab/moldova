@@ -24,13 +24,13 @@
                 <p class="text-gold-muted text-base"><?= t('experts_here') ?></p>
             </div>
             <div class="flex flex-col sm:flex-row gap-4 shrink-0">
-                <a href="tel:" class="bg-primary text-background-dark px-8 py-3 rounded-lg font-bold text-base hover:bg-primary/90 transition-all flex items-center justify-center gap-2">
+                <a id="faqCtaBtn1" href="tel:" class="bg-primary text-background-dark px-8 py-3 rounded-lg font-bold text-base hover:bg-primary/90 transition-all flex items-center justify-center gap-2">
                     <span class="material-symbols-outlined">call</span>
-                    <?= t('free_consultation') ?>
+                    <span id="faqCtaBtn1Text"><?= t('free_consultation') ?></span>
                 </a>
-                <a href="<?= BASE_URL ?>/contact" class="border border-primary text-primary px-8 py-3 rounded-lg font-bold text-base hover:bg-primary/10 transition-all flex items-center justify-center gap-2">
+                <a id="faqCtaBtn2" href="<?= BASE_URL ?>/contact" class="border border-primary text-primary px-8 py-3 rounded-lg font-bold text-base hover:bg-primary/10 transition-all flex items-center justify-center gap-2">
                     <span class="material-symbols-outlined">mail</span>
-                    <?= t('send_us_message') ?>
+                    <span id="faqCtaBtn2Text"><?= t('send_us_message') ?></span>
                 </a>
             </div>
         </div>
@@ -64,6 +64,19 @@ async function loadFaqs() {
     }
 }
 loadFaqs();
+
+// Load CTA button settings
+(async function() {
+    try {
+        const res = await fetch(BASE + '/api/admin/settings');
+        const s = await res.json();
+        if (s.faq_cta_btn1_text) document.getElementById('faqCtaBtn1Text').textContent = s.faq_cta_btn1_text;
+        if (s.faq_cta_btn1_link) document.getElementById('faqCtaBtn1').href = s.faq_cta_btn1_link;
+        if (s.faq_cta_btn2_text) document.getElementById('faqCtaBtn2Text').textContent = s.faq_cta_btn2_text;
+        if (s.faq_cta_btn2_link) document.getElementById('faqCtaBtn2').href = s.faq_cta_btn2_link;
+        if (s.site_phone && !s.faq_cta_btn1_link) document.getElementById('faqCtaBtn1').href = 'tel:' + s.site_phone.replace(/[^+\d]/g, '');
+    } catch(e) {}
+})();
 </script>
 
 <?php if (!empty($isAdmin)): ?>
