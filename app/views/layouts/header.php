@@ -244,12 +244,13 @@ function navClass(string $page, string $current): string {
 
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden">
 <?php global $T, $CURRENT_LANG, $LANG_DIR, $TRANSLATIONS; if (empty($T) && !empty($TRANSLATIONS)) { $T = $TRANSLATIONS[$CURRENT_LANG ?? 'he'] ?? $TRANSLATIONS['he']; } ?>
+<script id="__translations" type="application/json"><?= json_encode($T ?? [], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP) ?></script>
 <script>
 var BASE = '<?= BASE_URL ?>';
 var BASE_URL = '<?= BASE_URL ?>';
 var CURRENT_PAGE = '<?= $currentPage ?? "home" ?>';
 var LANG = '<?= $CURRENT_LANG ?? "he" ?>';
-var T = JSON.parse(atob('<?= base64_encode(json_encode($T ?? [], JSON_UNESCAPED_UNICODE)) ?>'));
+var T = JSON.parse(document.getElementById('__translations').textContent);
 function tr(key) { return (T && T[key]) ? T[key] : key; }
 </script>
 <div class="relative flex min-h-screen w-full flex-col">

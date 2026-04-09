@@ -578,83 +578,15 @@ function updateThemeIcons() {
 document.addEventListener('DOMContentLoaded', updateThemeIcons);
 </script>
 
-<!-- Google Translate - Auto translation for dynamic content -->
-<div id="google_translate_element" style="display:none;"></div>
+<!-- Language Switcher Script -->
 <script>
-function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-        pageLanguage: 'he',
-        includedLanguages: 'he,ru,en',
-        autoDisplay: false,
-        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-    }, 'google_translate_element');
-
-    // Auto-trigger if language is not Hebrew
-    if (LANG && LANG !== 'he') {
-        var targetLang = LANG === 'ru' ? 'ru' : 'en';
-        var attempts = 0;
-        var triggerInterval = setInterval(function() {
-            var select = document.querySelector('.goog-te-combo');
-            if (select) {
-                clearInterval(triggerInterval);
-                select.value = targetLang;
-                select.dispatchEvent(new Event('change'));
-                // Re-trigger translation when dynamic content loads
-                setTimeout(function() {
-                    var select2 = document.querySelector('.goog-te-combo');
-                    if (select2) {
-                        select2.value = targetLang;
-                        select2.dispatchEvent(new Event('change'));
-                    }
-                }, 3000);
-                // And again after more content loads
-                setTimeout(function() {
-                    var select3 = document.querySelector('.goog-te-combo');
-                    if (select3) {
-                        select3.value = targetLang;
-                        select3.dispatchEvent(new Event('change'));
-                    }
-                }, 6000);
-            }
-            attempts++;
-            if (attempts > 30) clearInterval(triggerInterval);
-        }, 300);
-    }
-}
-
-// Switch language - set cookies and reload
 function switchLang(lang) {
-    event.preventDefault();
-    // Set our language cookie
+    if (event) event.preventDefault();
     document.cookie = 'site_lang=' + lang + '; path=/; max-age=31536000';
-
-    if (lang === 'he') {
-        // Reset Google Translate
-        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.' + location.hostname;
-    } else {
-        var target = lang === 'ru' ? 'ru' : 'en';
-        document.cookie = 'googtrans=/he/' + target + '; path=/;';
-        document.cookie = 'googtrans=/he/' + target + '; path=/; domain=.' + location.hostname;
-    }
-
-    // Reload page with lang parameter
     var url = new URL(window.location.href);
     url.searchParams.set('lang', lang);
     window.location.href = url.toString();
 }
 </script>
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-<!-- Hide Google Translate bar and branding -->
-<style>
-.goog-te-banner-frame, .goog-te-balloon-frame { display: none !important; }
-#goog-gt-tt, .goog-te-balloon-frame { display: none !important; }
-.goog-text-highlight { background: none !important; box-shadow: none !important; }
-body { top: 0 !important; position: static !important; }
-.skiptranslate { display: none !important; }
-.goog-te-gadget { display: none !important; }
-font[style] { background: none !important; box-shadow: none !important; }
-</style>
 </body>
 </html>
