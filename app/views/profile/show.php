@@ -303,7 +303,7 @@ body header.sticky { top: 56px !important; }
 </div>
 <?php endif; ?>
 
-<script>
+<script class="notranslate">
 const profileId = <?= (int)$profileId ?>;
 const isAdmin = <?= !empty($isAdmin) ? 'true' : 'false' ?>;
 const maritalMap = { single: T.single, divorced: T.divorced, widowed: T.widowed };

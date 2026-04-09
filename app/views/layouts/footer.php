@@ -591,14 +591,30 @@ function googleTranslateElementInit() {
 
     // Auto-trigger if language is not Hebrew
     if (LANG && LANG !== 'he') {
+        var targetLang = LANG === 'ru' ? 'ru' : 'en';
         var attempts = 0;
         var triggerInterval = setInterval(function() {
             var select = document.querySelector('.goog-te-combo');
             if (select) {
                 clearInterval(triggerInterval);
-                var targetLang = LANG === 'ru' ? 'ru' : 'en';
                 select.value = targetLang;
                 select.dispatchEvent(new Event('change'));
+                // Re-trigger translation when dynamic content loads
+                setTimeout(function() {
+                    var select2 = document.querySelector('.goog-te-combo');
+                    if (select2) {
+                        select2.value = targetLang;
+                        select2.dispatchEvent(new Event('change'));
+                    }
+                }, 3000);
+                // And again after more content loads
+                setTimeout(function() {
+                    var select3 = document.querySelector('.goog-te-combo');
+                    if (select3) {
+                        select3.value = targetLang;
+                        select3.dispatchEvent(new Event('change'));
+                    }
+                }, 6000);
             }
             attempts++;
             if (attempts > 30) clearInterval(triggerInterval);
