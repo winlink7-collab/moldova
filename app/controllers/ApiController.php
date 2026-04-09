@@ -82,7 +82,7 @@ class ApiController {
             case 'upload':
                 if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
                     http_response_code(401);
-                    echo json_encode(['error' => 'נדרשת הרשאת מנהל']);
+                    echo json_encode(['error' => 'נדרשת הרשאת מנהל', 'session_id' => session_id(), 'session_data' => $_SESSION]);
                     return;
                 }
                 $this->upload();
