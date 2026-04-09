@@ -882,9 +882,9 @@ class ApiController {
                     }
 
                     $this->db->insert('profile_photos', [
-                        'profile_id' => $profileId,
+                        'profile_id' => intval($profileId),
                         'photo_url' => $photoUrl,
-                        'is_primary' => $isPrimary,
+                        'is_primary' => $isPrimary ? 1 : 0,
                         'created_at' => date('Y-m-d H:i:s')
                     ]);
 
@@ -924,9 +924,9 @@ class ApiController {
                 }
 
                 $this->db->insert('profile_photos', [
-                    'profile_id' => $profileId,
+                    'profile_id' => intval($profileId),
                     'photo_url' => $photoUrl,
-                    'is_primary' => $isPrimary,
+                    'is_primary' => $isPrimary ? 1 : 0,
                     'created_at' => date('Y-m-d H:i:s')
                 ]);
 
@@ -999,12 +999,18 @@ class ApiController {
                     return $this->jsonResponse(['error' => 'נדרש מזהה פרופיל וכתובת סרטון'], 400);
                 }
 
-                $this->db->insert('profile_videos', [
-                    'profile_id' => $profileId,
+                $videoData = [
+                    'profile_id' => intval($profileId),
                     'video_url' => $videoUrl,
-                    'title' => $title ?: null,
                     'created_at' => date('Y-m-d H:i:s')
-                ]);
+                ];
+                // Only add title if column exists
+                try {
+                    $this->db->insert('profile_videos', array_merge($videoData, ['title' => $title ?: '']));
+                } catch (\Exception $e) {
+                    // title column might not exist, try without it
+                    $this->db->insert('profile_videos', $videoData);
+                }
 
                 $video = $this->db->fetchOne('SELECT * FROM profile_videos ORDER BY id DESC LIMIT 1');
                 return $this->jsonResponse(['message' => 'הסרטון נוסף בהצלחה', 'video' => $video], 201);
