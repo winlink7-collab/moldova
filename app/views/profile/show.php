@@ -133,7 +133,7 @@ body header.sticky { top: 56px !important; }
                 <span class="material-symbols-outlined text-primary text-4xl">location_on</span>
                 <div>
                     <p class="text-primary font-black uppercase tracking-[0.3em] text-[10px] mb-1"><?= t('location') ?></p>
-                    <span id="location" class="text-2xl font-light text-white"></span>
+                    <span id="location" class="text-3xl font-light text-white"></span>
                 </div>
                 <?php if (!empty($isAdmin)): ?>
                 <div class="edit-overlay" onclick="openEditor('basic')">
@@ -144,30 +144,30 @@ body header.sticky { top: 56px !important; }
 
             <!-- Details Grid -->
             <div class="space-y-6 mb-10 editable-section relative">
-                <div class="flex items-center gap-4 p-4 bg-card/50 rounded-xl border border-white/5">
-                    <span class="material-symbols-outlined text-primary text-2xl">cake</span>
-                    <div><p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest"><?= t('age') ?></p>
-                    <p id="detAge" class="text-lg text-white font-medium"></p></div>
+                <div class="flex items-center gap-4 p-5 bg-card/50 rounded-xl border border-white/5">
+                    <span class="material-symbols-outlined text-primary text-3xl">cake</span>
+                    <div><p class="text-xs text-slate-500 font-bold uppercase tracking-widest"><?= t('age') ?></p>
+                    <p id="detAge" class="text-xl text-white font-semibold"></p></div>
                 </div>
-                <div class="flex items-center gap-4 p-4 bg-card/50 rounded-xl border border-white/5">
-                    <span class="material-symbols-outlined text-primary text-2xl">work</span>
-                    <div><p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest"><?= t('occupation') ?></p>
-                    <p id="detOccupation" class="text-lg text-white font-medium"></p></div>
+                <div class="flex items-center gap-4 p-5 bg-card/50 rounded-xl border border-white/5">
+                    <span class="material-symbols-outlined text-primary text-3xl">work</span>
+                    <div><p class="text-xs text-slate-500 font-bold uppercase tracking-widest"><?= t('occupation') ?></p>
+                    <p id="detOccupation" class="text-xl text-white font-semibold"></p></div>
                 </div>
-                <div class="flex items-center gap-4 p-4 bg-card/50 rounded-xl border border-white/5">
-                    <span class="material-symbols-outlined text-primary text-2xl">school</span>
-                    <div><p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest"><?= t('education') ?></p>
-                    <p id="detEducation" class="text-lg text-white font-medium"></p></div>
+                <div class="flex items-center gap-4 p-5 bg-card/50 rounded-xl border border-white/5">
+                    <span class="material-symbols-outlined text-primary text-3xl">school</span>
+                    <div><p class="text-xs text-slate-500 font-bold uppercase tracking-widest"><?= t('education') ?></p>
+                    <p id="detEducation" class="text-xl text-white font-semibold"></p></div>
                 </div>
-                <div class="flex items-center gap-4 p-4 bg-card/50 rounded-xl border border-white/5">
-                    <span class="material-symbols-outlined text-primary text-2xl">translate</span>
-                    <div><p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest"><?= t('languages') ?></p>
-                    <p id="detLanguages" class="text-lg text-white font-medium"></p></div>
+                <div class="flex items-center gap-4 p-5 bg-card/50 rounded-xl border border-white/5">
+                    <span class="material-symbols-outlined text-primary text-3xl">translate</span>
+                    <div><p class="text-xs text-slate-500 font-bold uppercase tracking-widest"><?= t('languages') ?></p>
+                    <p id="detLanguages" class="text-xl text-white font-semibold"></p></div>
                 </div>
-                <div class="flex items-center gap-4 p-4 bg-card/50 rounded-xl border border-white/5">
-                    <span class="material-symbols-outlined text-primary text-2xl">interests</span>
-                    <div><p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest"><?= t('hobbies') ?></p>
-                    <p id="detHobbies" class="text-lg text-white font-medium"></p></div>
+                <div class="flex items-center gap-4 p-5 bg-card/50 rounded-xl border border-white/5">
+                    <span class="material-symbols-outlined text-primary text-3xl">interests</span>
+                    <div><p class="text-xs text-slate-500 font-bold uppercase tracking-widest"><?= t('hobbies') ?></p>
+                    <p id="detHobbies" class="text-xl text-white font-semibold"></p></div>
                 </div>
                 <?php if (!empty($isAdmin)): ?>
                 <div class="edit-overlay" onclick="openEditor('details')">
@@ -230,8 +230,8 @@ body header.sticky { top: 56px !important; }
     <div class="lg:col-span-2 editable-section relative">
         <h4 class="text-4xl font-bold mb-8 text-white"><?= t('in_her_words') ?></h4>
         <div class="space-y-8">
-            <p id="bioQuote" class="text-2xl font-light text-primary/90 leading-snug border-r-2 border-primary/30 pr-8 py-2"></p>
-            <p id="bioText" class="text-lg font-light leading-loose text-slate-400"></p>
+            <p id="bioQuote" class="text-3xl font-light text-primary/90 leading-snug border-r-2 border-primary/30 pr-8 py-2"></p>
+            <p id="bioText" class="text-xl font-light leading-loose text-slate-400"></p>
         </div>
         <?php if (!empty($isAdmin)): ?>
         <div class="edit-overlay" onclick="openEditor('bio')">

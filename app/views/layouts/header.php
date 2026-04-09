@@ -69,8 +69,17 @@ function navClass(string $page, string $current): string {
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
 <!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Assistant:wght@300;400;500;600;700;800&family=Rubik:wght@300;400;500;600;700;800;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+// Load saved font preference
+(function() {
+    var savedFont = localStorage.getItem('site_font');
+    if (savedFont) {
+        document.documentElement.style.setProperty('--site-font', savedFont);
+    }
+})();
+</script>
 
 <!-- Tailwind Config -->
 <script id="tailwind-config">
@@ -104,15 +113,18 @@ function navClass(string $page, string $current): string {
 
 <!-- Common Styles -->
 <style>
+    :root {
+        --site-font: 'Heebo', sans-serif;
+    }
     body {
-        font-family: 'Heebo', sans-serif;
+        font-family: var(--site-font) !important;
     }
     .glass-effect {
         background: rgba(34, 31, 16, 0.8);
         backdrop-filter: blur(12px);
     }
     .serif-text {
-        font-family: 'Heebo', sans-serif;
+        font-family: var(--site-font) !important;
         font-weight: 800;
     }
     .luxury-gradient {
@@ -301,6 +313,27 @@ function tr(key) { return (T && T[key]) ? T[key] : key; }
             EN
         </a>
     </div>
+
+    <!-- Font Picker (Admin only) -->
+    <?php if (!empty($isAdmin)): ?>
+    <div class="hidden lg:flex items-center relative">
+        <button onclick="document.getElementById('fontPicker').classList.toggle('hidden')" class="flex items-center gap-1 text-slate-400 hover:text-primary transition-colors px-2 py-1.5 rounded-lg hover:bg-white/5 border border-white/10" title="<?= t('change_font') ?? 'Change Font' ?>">
+            <span class="material-symbols-outlined text-lg">text_fields</span>
+        </button>
+        <div id="fontPicker" class="hidden absolute top-full left-0 mt-2 w-56 bg-background-dark border border-white/15 rounded-xl shadow-2xl overflow-hidden z-[100] p-3" style="direction:rtl;">
+            <p class="text-xs text-slate-500 font-bold mb-2 uppercase"><?= t('change_font') ?? 'Font' ?></p>
+            <div class="space-y-1 max-h-64 overflow-y-auto">
+                <button onclick="setFont('Heebo')" class="font-btn w-full text-right px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-white/10 hover:text-primary transition-all" style="font-family:Heebo">Heebo (ברירת מחדל)</button>
+                <button onclick="setFont('Assistant')" class="font-btn w-full text-right px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-white/10 hover:text-primary transition-all" style="font-family:Assistant">Assistant</button>
+                <button onclick="setFont('Rubik')" class="font-btn w-full text-right px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-white/10 hover:text-primary transition-all" style="font-family:Rubik">Rubik</button>
+                <button onclick="setFont('Noto Sans Hebrew')" class="font-btn w-full text-right px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-white/10 hover:text-primary transition-all" style="font-family:'Noto Sans Hebrew'">Noto Sans Hebrew</button>
+                <button onclick="setFont('Playfair Display')" class="font-btn w-full text-right px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-white/10 hover:text-primary transition-all" style="font-family:'Playfair Display'">Playfair Display</button>
+                <button onclick="setFont('Inter')" class="font-btn w-full text-right px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-white/10 hover:text-primary transition-all" style="font-family:Inter">Inter</button>
+                <button onclick="setFont('Poppins')" class="font-btn w-full text-right px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-white/10 hover:text-primary transition-all" style="font-family:Poppins">Poppins</button>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
 
     <!-- Theme Toggle -->
     <button id="themeToggleBtn" onclick="toggleTheme()" class="hidden lg:flex items-center gap-2 text-slate-400 hover:text-primary transition-colors px-3 py-1.5 rounded-lg hover:bg-white/5 border border-white/10 hover:border-primary/30" title="<?= t('change_theme') ?>">

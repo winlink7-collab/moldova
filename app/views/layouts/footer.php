@@ -578,7 +578,7 @@ function updateThemeIcons() {
 document.addEventListener('DOMContentLoaded', updateThemeIcons);
 </script>
 
-<!-- Language Switcher Script -->
+<!-- Language & Font Scripts -->
 <script>
 function switchLang(lang) {
     if (event) event.preventDefault();
@@ -586,6 +586,30 @@ function switchLang(lang) {
     var url = new URL(window.location.href);
     url.searchParams.set('lang', lang);
     window.location.href = url.toString();
+}
+
+function setFont(fontName) {
+    document.documentElement.style.setProperty('--site-font', "'" + fontName + "', sans-serif");
+    document.body.style.fontFamily = "'" + fontName + "', sans-serif";
+    localStorage.setItem('site_font', "'" + fontName + "', sans-serif");
+    // Save to server settings too
+    if (typeof BASE !== 'undefined') {
+        fetch(BASE + '/api/admin/settings', {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({site_font: fontName})
+        }).catch(function(){});
+    }
+    // Highlight active
+    document.querySelectorAll('.font-btn').forEach(function(btn) {
+        btn.classList.remove('bg-primary/20', 'text-primary');
+    });
+    if (event && event.target) {
+        event.target.classList.add('bg-primary/20', 'text-primary');
+    }
+    // Close picker
+    var picker = document.getElementById('fontPicker');
+    if (picker) picker.classList.add('hidden');
 }
 </script>
 </body>
