@@ -1537,53 +1537,68 @@ async function saveProfile(e) {
         const method = id ? 'PUT' : 'POST';
         const res = await fetch(url, { method, headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
         const result = await res.json();
+        if (!res.ok) { alert('שגיאה בשמירת פרופיל: ' + (result.error || JSON.stringify(result))); return; }
         const profileId = id || (result.profile && result.profile.id);
 
         if (profileId) {
             // Delete existing photos if editing
             if (id) {
-                await fetch(API + '/api/admin/photos?profile_id=' + profileId, { method: 'DELETE' });
+                const delRes = await fetch(API + '/api/admin/photos?profile_id=' + profileId, { method: 'DELETE' });
+                console.log('Delete photos:', await delRes.json());
             }
             // Add main photo
             const mainPhotoUrl = document.getElementById('profile_main_photo').value;
             if (mainPhotoUrl) {
-                await fetch(API + '/api/admin/photos', {
+                const mainRes = await fetch(API + '/api/admin/photos', {
                     method: 'POST',
                     headers: {'Content-Type':'application/json'},
-                    body: JSON.stringify({ profile_id: profileId, photo_url: mainPhotoUrl, is_primary: true })
+                    body: JSON.stringify({ profile_id: parseInt(profileId), photo_url: mainPhotoUrl, is_primary: true })
                 });
+                const mainResult = await mainRes.json();
+                console.log('Main photo save:', mainResult);
+                if (!mainRes.ok) alert('שגיאה בשמירת תמונה ראשית: ' + (mainResult.error || ''));
             }
             // Add gallery photos
+            console.log('Gallery photos to save:', galleryPhotos);
             for (const photoUrl of galleryPhotos) {
-                if (photoUrl !== mainPhotoUrl) {
-                    await fetch(API + '/api/admin/photos', {
+                if (photoUrl && photoUrl !== mainPhotoUrl) {
+                    const galRes = await fetch(API + '/api/admin/photos', {
                         method: 'POST',
                         headers: {'Content-Type':'application/json'},
-                        body: JSON.stringify({ profile_id: profileId, photo_url: photoUrl, is_primary: false })
+                        body: JSON.stringify({ profile_id: parseInt(profileId), photo_url: photoUrl, is_primary: false })
                     });
+                    const galResult = await galRes.json();
+                    console.log('Gallery photo save:', galResult);
+                    if (!galRes.ok) alert('שגיאה בשמירת תמונת גלריה: ' + (galResult.error || ''));
                 }
             }
 
             // Delete existing videos if editing, then re-add
             if (id) {
-                const existingRes = await fetch(API + '/api/profiles/' + profileId);
-                const existingProfile = await existingRes.json();
-                if (existingProfile.videos) {
-                    for (const v of existingProfile.videos) {
-                        await fetch(API + '/api/admin/videos/' + v.id, { method: 'DELETE' });
+                try {
+                    const existingRes = await fetch(API + '/api/profiles/' + profileId);
+                    const existingProfile = await existingRes.json();
+                    if (existingProfile.videos) {
+                        for (const v of existingProfile.videos) {
+                            await fetch(API + '/api/admin/videos/' + v.id, { method: 'DELETE' });
+                        }
                     }
-                }
+                } catch(ve) { console.error('Video delete error:', ve); }
             }
             // Add videos
+            console.log('Videos to save:', profileVideos);
             for (const v of profileVideos) {
-                await fetch(API + '/api/admin/videos', {
+                const vidRes = await fetch(API + '/api/admin/videos', {
                     method: 'POST',
                     headers: {'Content-Type':'application/json'},
-                    body: JSON.stringify({ profile_id: profileId, video_url: v.url, title: v.title || '' })
+                    body: JSON.stringify({ profile_id: parseInt(profileId), video_url: v.url, title: v.title || '' })
                 });
+                const vidResult = await vidRes.json();
+                console.log('Video save:', vidResult);
             }
         }
 
+        alert('הפרופיל נשמר בהצלחה!');
         closeProfileForm();
         loadProfiles();
     } catch(e) {
