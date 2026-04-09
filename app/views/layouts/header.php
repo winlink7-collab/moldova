@@ -308,15 +308,30 @@ function navClass(string $page, string $current): string {
     html.light main [class*="bg-zinc-900"] h3 {
         color: #1a1a1a !important;
     }
+    html.light main .bg-zinc-900\/80 span,
+    html.light main .bg-zinc-900\/80 li,
+    html.light main .bg-zinc-900\/80 p,
+    html.light main .bg-zinc-900\/80 div,
     html.light main .bg-zinc-900\/80 .text-slate-300,
     html.light main .bg-zinc-900\/80 .text-slate-400,
+    html.light main [class*="bg-zinc-900"] span,
+    html.light main [class*="bg-zinc-900"] li,
+    html.light main [class*="bg-zinc-900"] p,
     html.light main [class*="bg-zinc-900"] .text-slate-300,
     html.light main [class*="bg-zinc-900"] .text-slate-400 {
-        color: #555 !important;
+        color: #333 !important;
     }
     html.light main .bg-zinc-900\/80 .text-\[\#E5E4E2\],
     html.light main [class*="bg-zinc-900"] .text-\[\#E5E4E2\] {
-        color: #888 !important;
+        color: #333 !important;
+    }
+    /* Gold card text */
+    html.light main .bg-gradient-to-b span,
+    html.light main .bg-gradient-to-b li,
+    html.light main .bg-gradient-to-b p,
+    html.light main .bg-gradient-to-b div,
+    html.light main .bg-gradient-to-b .text-slate-300 {
+        color: #333 !important;
     }
     html.light main .border-\[\#E5E4E2\]\/20,
     html.light main .border-\[\#E5E4E2\]\/50 {
