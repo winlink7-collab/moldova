@@ -24,6 +24,12 @@ if (isset($_GET['dbrun']) && $_GET['dbrun'] === 'Moldova2026') {
 
 session_start();
 header('Content-Type: text/html; charset=utf-8');
+// Prevent Varnish from caching API and admin requests
+if (isset($_GET['url']) && (strpos($_GET['url'], 'api/') === 0 || strpos($_GET['url'], 'admin') === 0)) {
+    header('Cache-Control: no-cache, no-store, must-revalidate, private');
+    header('Pragma: no-cache');
+    header('X-Varnish-No-Cache: true');
+}
 
 define('BASE_PATH', __DIR__);
 define('BASE_URL', '');

@@ -8,6 +8,8 @@ class ApiController {
 
     public function handleRequest($segments) {
         header('Content-Type: application/json; charset=utf-8');
+        header('Cache-Control: no-cache, no-store, must-revalidate, private');
+        header('Pragma: no-cache');
         $method = $_SERVER['REQUEST_METHOD'];
         $action = $segments[1] ?? '';
         $subAction = $segments[2] ?? '';

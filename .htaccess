@@ -6,6 +6,14 @@ RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)/$ $1 [L,R=301]
 
+# Disable cache for API and admin
+<IfModule mod_headers.c>
+    <If "%{REQUEST_URI} =~ m#^/(api|admin)#">
+        Header set Cache-Control "no-cache, no-store, must-revalidate, private"
+        Header set Pragma "no-cache"
+    </If>
+</IfModule>
+
 # Security headers
 Header set X-Content-Type-Options "nosniff"
 Header set X-Frame-Options "SAMEORIGIN"
