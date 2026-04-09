@@ -8,6 +8,18 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->exec("SET NAMES utf8mb4");
 
+    // Fix charset on all tables
+    $tables = ['admin_users','profiles','profile_photos','leads','messages','success_stories','events','event_registrations','favorites','pages','settings','faqs','page_blocks','process_steps','users','profile_videos'];
+    foreach ($tables as $t) {
+        try {
+            $pdo->exec("ALTER TABLE `$t` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+            echo "Table $t converted to utf8mb4<br>";
+        } catch (Exception $e) {
+            echo "Table $t skip: " . $e->getMessage() . "<br>";
+        }
+    }
+    echo "<br>";
+
     // Fix FAQs
     $faqs = [
         [1, 'איך אנחנו מאמתים את הפרופילים במערכת?', 'תהליך האימות שלנו הוא הקפדני ביותר בתחום. כל מועמדת עוברת ראיון וידאו אישי, אימות תעודות מזהות ובדיקת רקע מקיפה.'],
