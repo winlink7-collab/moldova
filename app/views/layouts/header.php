@@ -243,6 +243,7 @@ function navClass(string $page, string $current): string {
 </head>
 
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden">
+<?php global $T, $CURRENT_LANG, $LANG_DIR, $TRANSLATIONS; if (empty($T) && !empty($TRANSLATIONS)) { $T = $TRANSLATIONS[$CURRENT_LANG ?? 'he'] ?? $TRANSLATIONS['he']; } ?>
 <script>
 var BASE = '<?= BASE_URL ?>';
 var BASE_URL = '<?= BASE_URL ?>';
