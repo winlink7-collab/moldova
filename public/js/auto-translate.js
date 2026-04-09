@@ -133,14 +133,46 @@ var DICT = {
 };
 
 /**
+ * Transliterate Hebrew name to Latin/Cyrillic automatically
+ * Used when name is not found in dictionary
+ */
+var HE_TO_EN = {'א':'a','ב':'b','ג':'g','ד':'d','ה':'h','ו':'v','ז':'z','ח':'kh','ט':'t','י':'i','כ':'k','ך':'k','ל':'l','מ':'m','ם':'m','נ':'n','ן':'n','ס':'s','ע':'a','פ':'p','ף':'f','צ':'ts','ץ':'ts','ק':'k','ר':'r','ש':'sh','ת':'t'};
+var HE_TO_RU = {'א':'а','ב':'б','ג':'г','ד':'д','ה':'х','ו':'в','ז':'з','ח':'х','ט':'т','י':'и','כ':'к','ך':'к','ל':'л','מ':'м','ם':'м','נ':'н','ן':'н','ס':'с','ע':'а','פ':'п','ף':'ф','צ':'ц','ץ':'ц','ק':'к','ר':'р','ש':'ш','ת':'т'};
+
+function transliterateName(name, lang) {
+    if (!name) return name;
+    var map = lang === 'ru' ? HE_TO_RU : HE_TO_EN;
+    var result = '';
+    for (var i = 0; i < name.length; i++) {
+        var ch = name[i];
+        if (map[ch]) {
+            // Capitalize first letter of each word
+            var mapped = map[ch];
+            if (i === 0 || name[i-1] === ' ') {
+                mapped = mapped.charAt(0).toUpperCase() + mapped.slice(1);
+            }
+            result += mapped;
+        } else {
+            result += ch;
+        }
+    }
+    return result;
+}
+
+/**
  * Translate a Hebrew text string to target language
  */
-function autoTranslate(text, lang) {
+function autoTranslate(text, lang, isName) {
     if (!text || !lang || lang === 'he') return text;
     var dict = DICT[lang] || {};
 
     // Try exact match first
     if (dict[text]) return dict[text];
+
+    // If it's a name and not in dictionary, transliterate it
+    if (isName && /[\u0590-\u05FF]/.test(text)) {
+        return transliterateName(text, lang);
+    }
 
     // Try translating comma-separated lists (like languages, hobbies)
     if (text.indexOf(',') > -1) {
@@ -159,6 +191,12 @@ function autoTranslate(text, lang) {
             result = result.split(keys[i]).join(dict[keys[i]]);
         }
     }
+
+    // If still has Hebrew characters, try transliteration as last resort
+    if (/[\u0590-\u05FF]/.test(result)) {
+        result = transliterateName(result, lang);
+    }
+
     return result;
 }
 
@@ -168,7 +206,7 @@ function autoTranslate(text, lang) {
 function translateProfile(p, lang) {
     if (!lang || lang === 'he') return p;
     var copy = Object.assign({}, p);
-    if (copy.name) copy.name = autoTranslate(copy.name, lang);
+    if (copy.name) copy.name = autoTranslate(copy.name, lang, true);
     if (copy.city) copy.city = autoTranslate(copy.city, lang);
     if (copy.occupation) copy.occupation = autoTranslate(copy.occupation, lang);
     if (copy.education) copy.education = autoTranslate(copy.education, lang);
