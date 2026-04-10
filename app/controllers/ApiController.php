@@ -700,6 +700,8 @@ class ApiController {
         unset($_SESSION['admin_logged_in']);
         unset($_SESSION['admin_id']);
         unset($_SESSION['admin_email']);
+        // Clear admin cookie
+        setcookie('admin_token', '', time() - 3600, '/', '', false, true);
         $this->jsonResponse(['message' => 'התנתקת בהצלחה']);
     }
 
