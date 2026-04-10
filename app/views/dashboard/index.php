@@ -83,9 +83,9 @@
 <section id="dashboardMain" class="hidden px-6 md:px-20 py-12">
     <div class="max-w-4xl mx-auto">
 
-        <div class="flex flex-col sm:flex-row items-center gap-6 mb-12 p-8 bg-surface border border-border-gold/30 rounded-2xl gold-glow">
+        <div class="flex flex-col sm:flex-row items-center gap-6 mb-8 p-6 sm:p-8 bg-gradient-to-l from-primary/5 via-surface to-surface border border-border-gold/30 rounded-2xl gold-glow">
             <div class="relative group">
-                <img id="dashAvatar" src="" alt="avatar" class="w-24 h-24 rounded-full object-cover border-2 border-primary/40 shadow-lg bg-background-dark" />
+                <img id="dashAvatar" src="" alt="avatar" class="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-2 border-primary/40 shadow-lg bg-background-dark" />
                 <div class="absolute inset-0 flex items-center justify-center rounded-full bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer" onclick="document.getElementById('avatarInput').click()">
                     <span class="material-symbols-outlined text-white text-2xl">photo_camera</span>
                 </div>
@@ -101,7 +101,38 @@
             </button>
         </div>
 
-        <div class="flex gap-2 mb-8 border-b border-border-gold/20 pb-0">
+        <!-- Quick Actions -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
+            <a href="<?= BASE_URL ?>/search" class="flex items-center gap-4 p-5 bg-surface border border-border-gold/20 rounded-2xl hover:border-primary/40 transition-all group">
+                <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all">
+                    <span class="material-symbols-outlined text-primary text-2xl">search</span>
+                </div>
+                <div>
+                    <p class="text-white font-bold text-sm"><?= t('search_profiles') ?></p>
+                    <p class="text-slate-500 text-xs"><?= t('browse_matches') ?? 'מצא התאמות חדשות' ?></p>
+                </div>
+            </a>
+            <a id="dashWhatsappLink" href="https://wa.me/972500000000?text=שלום, אני מעוניין להכיר בחורה" target="_blank" class="flex items-center gap-4 p-5 bg-surface border border-green-500/20 rounded-2xl hover:border-green-500/40 transition-all group">
+                <div class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center group-hover:bg-green-500/20 transition-all">
+                    <svg class="w-6 h-6 text-green-500" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                </div>
+                <div>
+                    <p class="text-white font-bold text-sm"><?= t('want_to_meet') ?? 'רוצה להכיר בחורה?' ?></p>
+                    <p class="text-green-500/70 text-xs"><?= t('chat_whatsapp') ?? 'דבר איתנו בוואטסאפ' ?></p>
+                </div>
+            </a>
+            <a href="<?= BASE_URL ?>/vip" class="flex items-center gap-4 p-5 bg-surface border border-primary/20 rounded-2xl hover:border-primary/40 transition-all group">
+                <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all">
+                    <span class="material-symbols-outlined text-primary text-2xl">star</span>
+                </div>
+                <div>
+                    <p class="text-white font-bold text-sm"><?= t('vip_title') ?></p>
+                    <p class="text-slate-500 text-xs"><?= t('upgrade_vip') ?? 'שדרג את החשבון שלך' ?></p>
+                </div>
+            </a>
+        </div>
+
+        <div class="flex gap-2 mb-8 border-b border-border-gold/20 pb-0 overflow-x-auto">
             <button class="dtab-btn tab-active px-6 py-3 text-sm font-bold border-b-2 transition-all hover:text-primary" onclick="switchDashTab('profile')" data-tab="profile">
                 <span class="material-symbols-outlined text-base align-middle ml-1">person</span>
                 <?= t('personal_details') ?>
@@ -298,6 +329,16 @@ async function loadUserProfile() {
     document.getElementById('profilePhone').value = user.phone || '';
     document.getElementById('profileAge').value = user.age || '';
     document.getElementById('profileCity').value = user.city || '';
+
+    // Load WhatsApp link from settings
+    try {
+        const sRes = await fetch(BASE + '/api/admin/settings');
+        const s = await sRes.json();
+        if (s.whatsapp) {
+            var waNum = s.whatsapp.replace(/[^0-9]/g, '');
+            document.getElementById('dashWhatsappLink').href = 'https://wa.me/' + waNum + '?text=' + encodeURIComponent(T.whatsapp_message || 'שלום, אני מעוניין להכיר בחורה');
+        }
+    } catch(e) {}
 }
 
 async function uploadAvatar(input) {
