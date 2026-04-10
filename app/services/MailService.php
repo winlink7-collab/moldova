@@ -60,6 +60,28 @@ class MailService {
     }
 
     /**
+     * Send email verification after registration
+     */
+    public static function sendVerificationEmail($user, $token) {
+        $config = self::getConfig();
+        $name = htmlspecialchars($user['name']);
+        $siteUrl = $config['site_url'];
+        $siteName = $config['from_name'];
+        $verifyUrl = $siteUrl . '/api/verify-email?token=' . $token;
+
+        $subject = "אימות כתובת מייל | Verify Your Email - $siteName";
+
+        $html = self::getTemplate('verify', [
+            'name' => $name,
+            'verify_url' => $verifyUrl,
+            'site_url' => $siteUrl,
+            'site_name' => $siteName,
+        ]);
+
+        return self::send($user['email'], $subject, $html);
+    }
+
+    /**
      * Send welcome email after registration
      */
     public static function sendWelcomeEmail($user) {
@@ -163,6 +185,25 @@ class MailService {
             . '</div>';
 
         switch ($name) {
+            case 'verify':
+                return '<!DOCTYPE html><html dir="rtl"><head><meta charset="UTF-8"></head>'
+                    . '<body style="margin:0;padding:0;background:#12110a;font-family:Arial,sans-serif;">'
+                    . '<div style="max-width:600px;margin:0 auto;background:#1a1810;border:1px solid #393728;border-radius:12px;overflow:hidden;">'
+                    . $logo
+                    . '<div style="padding:30px 40px;color:#fff;">'
+                    . '<h1 style="color:#f2d00d;font-size:24px;margin-bottom:20px;">שלום ' . $vars['name'] . '! 👋</h1>'
+                    . '<p style="font-size:16px;line-height:1.8;color:#ccc;">תודה שנרשמת לשירות השידוכים היוקרתי שלנו!</p>'
+                    . '<p style="font-size:16px;line-height:1.8;color:#ccc;">כדי להשלים את ההרשמה ולהתחבר, אנא אמת את כתובת המייל שלך:</p>'
+                    . '<div style="text-align:center;margin:30px 0;">'
+                    . '<a href="' . $vars['verify_url'] . '" style="display:inline-block;background:linear-gradient(135deg,#f2d00d,#b89b06);color:#12110a;padding:18px 50px;border-radius:12px;text-decoration:none;font-weight:900;font-size:18px;">אמת את המייל שלי ✓</a>'
+                    . '</div>'
+                    . '<p style="font-size:14px;color:#888;text-align:center;">או העתק את הקישור:</p>'
+                    . '<p style="font-size:12px;color:#666;word-break:break-all;background:#0f0e08;padding:12px;border-radius:8px;direction:ltr;">' . $vars['verify_url'] . '</p>'
+                    . '<p style="font-size:13px;color:#666;margin-top:20px;">אם לא נרשמת לאתר, התעלם מהודעה זו.</p>'
+                    . '</div>'
+                    . $footer
+                    . '</div></body></html>';
+
             case 'welcome':
                 return '<!DOCTYPE html><html dir="rtl"><head><meta charset="UTF-8"></head>'
                     . '<body style="margin:0;padding:0;background:#12110a;font-family:Arial,sans-serif;">'

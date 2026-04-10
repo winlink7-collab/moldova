@@ -45,6 +45,12 @@ class ApiController {
             case 'user':
                 $this->handleUser($subAction, $method);
                 break;
+            case 'verify-email':
+                $this->verifyEmail();
+                break;
+            case 'resend-verification':
+                $this->resendVerification();
+                break;
             case 'forgot-password':
                 $this->forgotPassword();
                 break;
@@ -132,24 +138,26 @@ class ApiController {
         }
 
         $hashedPassword = $this->hashPassword($password);
+        $verifyToken = bin2hex(random_bytes(32));
+
         $this->db->insert('users', [
             'name' => $name,
             'email' => $email,
             'phone' => $phone,
             'password' => $hashedPassword,
+            'email_verified' => 0,
+            'verify_token' => $verifyToken,
             'created_at' => date('Y-m-d H:i:s')
         ]);
 
-        $user = $this->db->fetchOne('SELECT id, name, email, phone FROM users WHERE email = ?', [$email]);
-
-        // Send welcome email
+        // Send verification email
         require_once BASE_PATH . '/app/services/MailService.php';
-        MailService::sendWelcomeEmail(['name' => $name, 'email' => $email]);
+        MailService::sendVerificationEmail(['name' => $name, 'email' => $email], $verifyToken);
 
         // Notify admin
         MailService::sendAdminNotification('new_user', ['name' => $name, 'email' => $email, 'phone' => $phone]);
 
-        $this->jsonResponse(['message' => 'ההרשמה בוצעה בהצלחה', 'user' => $user], 201);
+        $this->jsonResponse(['message' => 'נשלח אליך מייל אימות. אנא אשר את כתובת המייל שלך כדי להתחבר.', 'needs_verification' => true], 201);
     }
 
     private function login() {
@@ -162,10 +170,15 @@ class ApiController {
         }
 
         $hashedPassword = $this->hashPassword($password);
-        $user = $this->db->fetchOne('SELECT id, name, email, phone, vip_level FROM users WHERE email = ? AND password = ?', [$email, $hashedPassword]);
+        $user = $this->db->fetchOne('SELECT id, name, email, phone, vip_level, email_verified FROM users WHERE email = ? AND password = ?', [$email, $hashedPassword]);
 
         if (!$user) {
             return $this->jsonResponse(['error' => 'אימייל או סיסמה שגויים'], 401);
+        }
+
+        // Check email verification
+        if (empty($user['email_verified'])) {
+            return $this->jsonResponse(['error' => 'יש לאמת את כתובת המייל לפני ההתחברות. בדוק את תיבת הדואר שלך.', 'needs_verification' => true, 'email' => $email], 403);
         }
 
         $_SESSION['user_id'] = $user['id'];
@@ -173,6 +186,86 @@ class ApiController {
         $_SESSION['user_email'] = $user['email'];
 
         $this->jsonResponse(['message' => 'התחברת בהצלחה', 'user' => $user]);
+    }
+
+    // ========================
+    // Email verification
+    // ========================
+
+    private function verifyEmail() {
+        $token = $_GET['token'] ?? ($_POST['token'] ?? '');
+        if (!$token) {
+            $data = $this->getJson();
+            $token = $data['token'] ?? '';
+        }
+
+        // If accessed via GET (from email link), show HTML page
+        $isGet = $_SERVER['REQUEST_METHOD'] === 'GET';
+
+        if (!$token) {
+            if ($isGet) { $this->showVerifyPage(false, 'קישור אימות לא תקין'); return; }
+            return $this->jsonResponse(['error' => 'טוקן אימות חסר'], 400);
+        }
+
+        $user = $this->db->fetchOne('SELECT id, name, email FROM users WHERE verify_token = ?', [$token]);
+        if (!$user) {
+            if ($isGet) { $this->showVerifyPage(false, 'קישור אימות לא תקין או שפג תוקפו'); return; }
+            return $this->jsonResponse(['error' => 'קישור אימות לא תקין או שפג תוקפו'], 400);
+        }
+
+        $this->db->execute('UPDATE users SET email_verified = 1, verify_token = NULL WHERE id = ?', [$user['id']]);
+
+        // Send welcome email now that they're verified
+        require_once BASE_PATH . '/app/services/MailService.php';
+        MailService::sendWelcomeEmail(['name' => $user['name'], 'email' => $user['email']]);
+
+        if ($isGet) { $this->showVerifyPage(true, 'המייל אומת בהצלחה!', $user['name']); return; }
+        $this->jsonResponse(['message' => 'המייל אומת בהצלחה! כעת ניתן להתחבר.', 'verified' => true]);
+    }
+
+    private function showVerifyPage($success, $message, $name = '') {
+        header('Content-Type: text/html; charset=utf-8');
+        $icon = $success ? '✓' : '✗';
+        $color = $success ? '#16a34a' : '#dc2626';
+        $greeting = $name ? "שלום $name!" : '';
+        echo '<!DOCTYPE html><html dir="rtl" lang="he"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>אימות מייל</title></head>'
+            . '<body style="margin:0;padding:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#12110a;font-family:Arial,sans-serif;">'
+            . '<div style="max-width:500px;margin:20px;padding:50px 40px;background:#1a1810;border:1px solid #393728;border-radius:20px;text-align:center;">'
+            . '<div style="width:80px;height:80px;margin:0 auto 20px;border-radius:50%;background:' . $color . ';display:flex;align-items:center;justify-content:center;font-size:40px;color:#fff;">' . $icon . '</div>'
+            . ($greeting ? '<p style="color:#f2d00d;font-size:20px;font-weight:700;margin-bottom:10px;">' . $greeting . '</p>' : '')
+            . '<h1 style="color:#fff;font-size:24px;margin-bottom:15px;">' . htmlspecialchars($message) . '</h1>'
+            . ($success ? '<p style="color:#888;font-size:16px;margin-bottom:30px;">החשבון שלך אומת בהצלחה. כעת תוכל להתחבר לאתר.</p>'
+                . '<a href="' . BASE_URL . '/" style="display:inline-block;background:linear-gradient(135deg,#f2d00d,#b89b06);color:#12110a;padding:15px 40px;border-radius:12px;text-decoration:none;font-weight:900;font-size:16px;">כניסה לאתר</a>'
+                : '<p style="color:#888;font-size:16px;margin-bottom:30px;">נסה להירשם מחדש או צור קשר עם התמיכה.</p>'
+                . '<a href="' . BASE_URL . '/" style="display:inline-block;background:rgba(255,255,255,0.1);color:#fff;padding:15px 40px;border-radius:12px;text-decoration:none;font-weight:700;font-size:16px;">חזרה לאתר</a>')
+            . '</div></body></html>';
+        exit;
+    }
+
+    private function resendVerification() {
+        $data = $this->getJson();
+        $email = trim($data['email'] ?? '');
+
+        if (!$email) {
+            return $this->jsonResponse(['error' => 'נדרשת כתובת אימייל'], 400);
+        }
+
+        $user = $this->db->fetchOne('SELECT id, name, email, email_verified FROM users WHERE email = ?', [$email]);
+        if (!$user) {
+            return $this->jsonResponse(['message' => 'אם הכתובת קיימת, נשלח מייל אימות חדש']);
+        }
+
+        if (!empty($user['email_verified'])) {
+            return $this->jsonResponse(['message' => 'המייל כבר אומת. ניתן להתחבר.']);
+        }
+
+        $newToken = bin2hex(random_bytes(32));
+        $this->db->execute('UPDATE users SET verify_token = ? WHERE id = ?', [$newToken, $user['id']]);
+
+        require_once BASE_PATH . '/app/services/MailService.php';
+        MailService::sendVerificationEmail(['name' => $user['name'], 'email' => $email], $newToken);
+
+        $this->jsonResponse(['message' => 'מייל אימות חדש נשלח. אנא בדוק את תיבת הדואר שלך.']);
     }
 
     // ========================
