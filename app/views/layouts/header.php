@@ -17,8 +17,8 @@ $canonicalUrl = 'https://' . ($_SERVER['HTTP_HOST'] ?? 'moldova-ukraine-brides.c
 /** Helper: returns active nav class */
 function navClass(string $page, string $current): string {
     return $page === $current
-        ? 'text-sm font-semibold text-primary hover:text-primary transition-colors whitespace-nowrap'
-        : 'text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap';
+        ? 'text-xs xl:text-sm font-semibold text-primary hover:text-primary transition-colors whitespace-nowrap'
+        : 'text-xs xl:text-sm font-semibold text-slate-100 hover:text-primary transition-colors whitespace-nowrap';
 }
 ?>
 <!DOCTYPE html>
@@ -460,7 +460,7 @@ function tr(key) { return (T && T[key]) ? T[key] : key; }
     </a>
 
     <!-- Desktop Navigation -->
-    <nav class="hidden lg:flex items-center gap-6 xl:gap-8 2xl:gap-10">
+    <nav class="hidden lg:flex items-center gap-3 xl:gap-5 2xl:gap-8 flex-shrink min-w-0">
         <a id="navHome" class="<?= navClass('home', $currentPage) ?>" href="<?= BASE_URL ?>/"><?= t('nav_home') ?></a>
         <a id="navAbout" class="<?= navClass('about', $currentPage) ?>" href="<?= BASE_URL ?>/about"><?= t('nav_about') ?></a>
         <a id="navSearch" class="<?= navClass('search', $currentPage) ?>" href="<?= BASE_URL ?>/search"><?= t('nav_search') ?></a>
