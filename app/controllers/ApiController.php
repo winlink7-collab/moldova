@@ -142,6 +142,13 @@ class ApiController {
 
         $user = $this->db->fetchOne('SELECT id, name, email, phone FROM users WHERE email = ?', [$email]);
 
+        // Send welcome email
+        require_once BASE_PATH . '/app/services/MailService.php';
+        MailService::sendWelcomeEmail(['name' => $name, 'email' => $email]);
+
+        // Notify admin
+        MailService::sendAdminNotification('new_user', ['name' => $name, 'email' => $email, 'phone' => $phone]);
+
         $this->jsonResponse(['message' => 'ההרשמה בוצעה בהצלחה', 'user' => $user], 201);
     }
 
@@ -298,8 +305,11 @@ class ApiController {
 
         $this->db->execute('UPDATE users SET reset_token = ?, reset_token_expiry = ? WHERE id = ?', [$token, $expiry, $user['id']]);
 
-        // In production, send email here
-        $this->jsonResponse(['message' => 'אם הכתובת קיימת במערכת, נשלח אליה קישור לאיפוס סיסמה', 'token' => $token]);
+        // Send reset email
+        require_once BASE_PATH . '/app/services/MailService.php';
+        MailService::sendPasswordResetEmail($email, $token);
+
+        $this->jsonResponse(['message' => 'אם הכתובת קיימת במערכת, נשלח אליה קישור לאיפוס סיסמה']);
     }
 
     private function resetPassword() {
@@ -350,6 +360,10 @@ class ApiController {
             'created_at' => date('Y-m-d H:i:s')
         ]);
 
+        // Notify admin
+        require_once BASE_PATH . '/app/services/MailService.php';
+        MailService::sendAdminNotification('new_lead', ['name' => $name, 'email' => $email, 'phone' => $phone, 'message' => $message]);
+
         $this->jsonResponse(['message' => 'הפנייה נשלחה בהצלחה! ניצור איתך קשר בהקדם'], 201);
     }
 
@@ -383,6 +397,10 @@ class ApiController {
             'status' => 'new',
             'created_at' => date('Y-m-d H:i:s')
         ]);
+
+        // Notify admin
+        require_once BASE_PATH . '/app/services/MailService.php';
+        MailService::sendAdminNotification('new_lead', ['name' => $name, 'email' => $email, 'phone' => $phone, 'message' => ($subject ? $subject . ': ' : '') . $message]);
 
         $this->jsonResponse(['message' => 'ההודעה נשלחה בהצלחה! ניצור איתך קשר בהקדם'], 201);
     }
