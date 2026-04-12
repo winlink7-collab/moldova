@@ -93,103 +93,97 @@
 <!-- End .relative.flex.min-h-screen -->
 
 <!-- Login Modal -->
-<div id="loginModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/70 backdrop-blur-sm">
-<div class="relative w-full max-w-[500px] mx-4 luxury-gradient p-8 md:p-12 rounded-xl gold-border shadow-2xl backdrop-blur-sm">
-    <button onclick="closeModal('loginModal')" class="absolute top-4 left-4 text-slate-400 hover:text-white transition-colors">
-        <span class="material-symbols-outlined text-2xl">close</span>
+<div id="loginModal" class="fixed inset-0 z-[100] hidden items-start sm:items-center justify-center bg-black/80 backdrop-blur-sm overflow-y-auto p-3 sm:p-4">
+<div class="relative w-full max-w-[420px] bg-[#1a1810] border border-border-gold/40 p-6 sm:p-8 rounded-2xl shadow-2xl my-4 sm:my-auto">
+    <button onclick="closeModal('loginModal')" class="absolute top-3 left-3 text-slate-400 hover:text-white transition-colors p-1">
+        <span class="material-symbols-outlined text-xl">close</span>
     </button>
-    <div class="text-center mb-10">
-        <div class="inline-block p-3 rounded-full bg-primary/5 mb-4 gold-border">
-            <span class="material-symbols-outlined text-primary text-4xl">lock_person</span>
+    <div class="text-center mb-6">
+        <div class="inline-block p-2.5 rounded-full bg-primary/10 mb-3 border border-primary/30">
+            <span class="material-symbols-outlined text-primary text-3xl">lock_person</span>
         </div>
-        <h1 class="serif-text text-3xl md:text-4xl font-bold text-white mb-3"><?= t('login_modal_title') ?></h1>
-        <div class="h-0.5 w-16 bg-primary mx-auto mb-4"></div>
-        <p class="text-slate-400 text-base"><?= t('login_modal_subtitle') ?></p>
+        <h1 class="text-xl sm:text-2xl font-black text-white mb-1"><?= t('login_modal_title') ?></h1>
+        <p class="text-slate-400 text-xs sm:text-sm"><?= t('login_modal_subtitle') ?></p>
     </div>
-    <form id="loginForm" class="space-y-6">
-        <div class="space-y-2">
-            <label class="block text-primary text-sm font-semibold pr-1"><?= t('email') ?></label>
+    <form id="loginForm" class="space-y-4">
+        <div>
+            <label class="block text-primary text-xs font-bold mb-1.5 pr-1"><?= t('email') ?></label>
             <div class="relative">
-                <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-xl">person</span>
-                <input id="loginEmail" class="w-full bg-[#1c1a0f]/50 border border-white/10 rounded-lg py-4 pr-12 pl-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600" placeholder="email@example.com" type="email" required/>
+                <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-base">person</span>
+                <input id="loginEmail" class="w-full bg-[#0f0e08] border border-white/10 rounded-lg py-2.5 pr-10 pl-3 text-white text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600" placeholder="email@example.com" type="email" required/>
             </div>
         </div>
-        <div class="space-y-2">
-            <label class="block text-primary text-sm font-semibold pr-1"><?= t('password') ?></label>
+        <div>
+            <label class="block text-primary text-xs font-bold mb-1.5 pr-1"><?= t('password') ?></label>
             <div class="relative">
-                <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-xl">key</span>
-                <input id="loginPassword" class="w-full bg-[#1c1a0f]/50 border border-white/10 rounded-lg py-4 pr-12 pl-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600" placeholder="••••••••" type="password" required/>
+                <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-base">key</span>
+                <input id="loginPassword" class="w-full bg-[#0f0e08] border border-white/10 rounded-lg py-2.5 pr-10 pl-3 text-white text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600" placeholder="••••••••" type="password" required/>
             </div>
         </div>
-        <div id="loginError" class="hidden text-center text-sm font-bold text-red-400"></div>
-        <div class="pt-2">
-            <button class="w-full bg-primary hover:bg-primary/80 text-background-dark font-bold py-4 rounded-lg text-lg transition-all transform hover:scale-[1.01] shadow-xl shadow-primary/10 serif-text" type="submit">
-                <?= t('login_modal_submit') ?>
-            </button>
-        </div>
+        <div id="loginError" class="hidden text-center text-xs font-bold text-red-400 py-1"></div>
+        <button class="w-full bg-gradient-to-r from-primary to-[#b89b06] hover:brightness-110 text-background-dark font-black py-3.5 rounded-lg text-base transition-all shadow-lg" type="submit">
+            <?= t('login_modal_submit') ?>
+        </button>
     </form>
-    <div class="mt-6 text-center space-y-3">
-        <p><a href="<?= BASE_URL ?>/dashboard?forgot=1" class="text-slate-400 text-sm hover:text-primary transition-colors"><?= t('forgot_password') ?></a></p>
-        <p class="text-slate-400 text-sm"><?= t('not_member_yet') ?> <a onclick="closeModal('loginModal'); openModal('registerModal')" class="text-primary font-bold hover:underline cursor-pointer"><?= t('register') ?></a></p>
+    <div class="mt-4 text-center space-y-2">
+        <p><a href="<?= BASE_URL ?>/dashboard?forgot=1" class="text-slate-400 text-xs hover:text-primary transition-colors"><?= t('forgot_password') ?></a></p>
+        <p class="text-slate-400 text-xs"><?= t('not_member_yet') ?> <a onclick="closeModal('loginModal'); openModal('registerModal')" class="text-primary font-bold hover:underline cursor-pointer"><?= t('register') ?></a></p>
     </div>
 </div>
 </div>
 
 <!-- Register Modal -->
-<div id="registerModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/70 backdrop-blur-sm">
-<div class="relative w-full max-w-[500px] mx-4 luxury-gradient p-8 md:p-12 rounded-xl gold-border shadow-2xl backdrop-blur-sm max-h-[90vh] overflow-y-auto">
-    <button onclick="closeModal('registerModal')" class="absolute top-4 left-4 text-slate-400 hover:text-white transition-colors">
-        <span class="material-symbols-outlined text-2xl">close</span>
+<div id="registerModal" class="fixed inset-0 z-[100] hidden items-start sm:items-center justify-center bg-black/80 backdrop-blur-sm overflow-y-auto p-3 sm:p-4">
+<div class="relative w-full max-w-[460px] bg-[#1a1810] border border-border-gold/40 p-6 sm:p-8 rounded-2xl shadow-2xl my-4 sm:my-auto">
+    <button onclick="closeModal('registerModal')" class="absolute top-3 left-3 text-slate-400 hover:text-white transition-colors p-1">
+        <span class="material-symbols-outlined text-xl">close</span>
     </button>
-    <div class="text-center mb-10">
-        <div class="inline-block p-3 rounded-full bg-primary/5 mb-4 gold-border">
-            <span class="material-symbols-outlined text-primary text-4xl">person_add</span>
+    <div class="text-center mb-6">
+        <div class="inline-block p-2.5 rounded-full bg-primary/10 mb-3 border border-primary/30">
+            <span class="material-symbols-outlined text-primary text-3xl">person_add</span>
         </div>
-        <h1 class="serif-text text-3xl md:text-4xl font-bold text-white mb-3"><?= t('register_modal_title') ?></h1>
-        <div class="h-0.5 w-16 bg-primary mx-auto mb-4"></div>
-        <p class="text-slate-400 text-base"><?= t('register_modal_subtitle') ?></p>
+        <h1 class="text-xl sm:text-2xl font-black text-white mb-1"><?= t('register_modal_title') ?></h1>
+        <p class="text-slate-400 text-xs sm:text-sm"><?= t('register_modal_subtitle') ?></p>
     </div>
-    <form id="registerForm" class="space-y-5">
-        <div class="space-y-2">
-            <label class="block text-primary text-sm font-semibold pr-1"><?= t('full_name') ?></label>
+    <form id="registerForm" class="space-y-3">
+        <div>
+            <label class="block text-primary text-xs font-bold mb-1.5 pr-1"><?= t('full_name') ?></label>
             <div class="relative">
-                <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-xl">badge</span>
-                <input id="regName" class="w-full bg-[#1c1a0f]/50 border border-white/10 rounded-lg py-4 pr-12 pl-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600" placeholder="<?= t('register_placeholder_name') ?>" type="text" required/>
+                <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-base">badge</span>
+                <input id="regName" class="w-full bg-[#0f0e08] border border-white/10 rounded-lg py-2.5 pr-10 pl-3 text-white text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600" placeholder="<?= t('register_placeholder_name') ?>" type="text" required/>
             </div>
         </div>
-        <div class="space-y-2">
-            <label class="block text-primary text-sm font-semibold pr-1"><?= t('email') ?></label>
+        <div>
+            <label class="block text-primary text-xs font-bold mb-1.5 pr-1"><?= t('email') ?></label>
             <div class="relative">
-                <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-xl">mail</span>
-                <input id="regEmail" class="w-full bg-[#1c1a0f]/50 border border-white/10 rounded-lg py-4 pr-12 pl-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600" placeholder="email@example.com" type="email" required/>
+                <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-base">mail</span>
+                <input id="regEmail" class="w-full bg-[#0f0e08] border border-white/10 rounded-lg py-2.5 pr-10 pl-3 text-white text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600" placeholder="email@example.com" type="email" required/>
             </div>
         </div>
-        <div class="grid grid-cols-2 gap-4">
-            <div class="space-y-2">
-                <label class="block text-primary text-sm font-semibold pr-1"><?= t('password') ?></label>
-                <input id="regPassword" class="w-full bg-[#1c1a0f]/50 border border-white/10 rounded-lg py-4 px-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600" placeholder="••••••••" type="password" required/>
+        <div class="grid grid-cols-2 gap-3">
+            <div>
+                <label class="block text-primary text-xs font-bold mb-1.5 pr-1"><?= t('password') ?></label>
+                <input id="regPassword" class="w-full bg-[#0f0e08] border border-white/10 rounded-lg py-2.5 px-3 text-white text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600" placeholder="••••••••" type="password" required/>
             </div>
-            <div class="space-y-2">
-                <label class="block text-primary text-sm font-semibold pr-1"><?= t('age') ?></label>
-                <input id="regAge" class="w-full bg-[#1c1a0f]/50 border border-white/10 rounded-lg py-4 px-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600" placeholder="35" type="number"/>
+            <div>
+                <label class="block text-primary text-xs font-bold mb-1.5 pr-1"><?= t('age') ?></label>
+                <input id="regAge" class="w-full bg-[#0f0e08] border border-white/10 rounded-lg py-2.5 px-3 text-white text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600" placeholder="35" type="number"/>
             </div>
         </div>
-        <div class="space-y-2">
-            <label class="block text-primary text-sm font-semibold pr-1"><?= t('phone') ?></label>
+        <div>
+            <label class="block text-primary text-xs font-bold mb-1.5 pr-1"><?= t('phone') ?></label>
             <div class="relative">
-                <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-xl">phone</span>
-                <input id="regPhone" class="w-full bg-[#1c1a0f]/50 border border-white/10 rounded-lg py-4 pr-12 pl-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600" placeholder="050-1234567" type="tel"/>
+                <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-base">phone</span>
+                <input id="regPhone" class="w-full bg-[#0f0e08] border border-white/10 rounded-lg py-2.5 pr-10 pl-3 text-white text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-slate-600" placeholder="050-1234567" type="tel"/>
             </div>
         </div>
-        <div id="registerError" class="hidden text-center text-sm font-bold text-red-400"></div>
-        <div class="pt-2">
-            <button class="w-full bg-primary hover:bg-primary/80 text-background-dark font-bold py-4 rounded-lg text-lg transition-all transform hover:scale-[1.01] shadow-xl shadow-primary/10 serif-text" type="submit">
-                <?= t('register_modal_submit') ?>
-            </button>
-        </div>
+        <div id="registerError" class="hidden text-center text-xs font-bold text-red-400 py-1"></div>
+        <button class="w-full bg-gradient-to-r from-primary to-[#b89b06] hover:brightness-110 text-background-dark font-black py-3.5 rounded-lg text-base transition-all shadow-lg mt-2" type="submit">
+            <?= t('register_modal_submit') ?>
+        </button>
     </form>
-    <div class="mt-8 text-center">
-        <p class="text-slate-400 text-sm"><?= t('already_member') ?> <a onclick="closeModal('registerModal'); openModal('loginModal')" class="text-primary font-bold hover:underline cursor-pointer"><?= t('login') ?></a></p>
+    <div class="mt-4 text-center">
+        <p class="text-slate-400 text-xs"><?= t('already_member') ?> <a onclick="closeModal('registerModal'); openModal('loginModal')" class="text-primary font-bold hover:underline cursor-pointer"><?= t('login') ?></a></p>
     </div>
 </div>
 </div>
