@@ -113,7 +113,7 @@
             <label class="block text-primary text-xs font-bold mb-1.5 pr-1"><?= t('phone') ?? 'טלפון' ?></label>
             <div class="relative">
                 <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[#25D366] text-base">phone</span>
-                <input id="loginPhone" class="w-full bg-[#0f0e08] border border-white/10 rounded-lg py-3 pr-10 pl-3 text-white text-sm focus:border-[#25D366] focus:ring-1 focus:ring-[#25D366] outline-none transition-all placeholder:text-slate-600" placeholder="050-1234567" type="tel" required dir="ltr"/>
+                <input id="loginPhone" class="w-full bg-white border-2 border-slate-200 rounded-lg py-3 pr-10 pl-3 text-slate-900 text-sm focus:border-[#25D366] focus:ring-2 focus:ring-[#25D366]/30 outline-none transition-all placeholder:text-slate-400" placeholder="050-1234567" type="tel" required dir="ltr"/>
             </div>
         </div>
         <div id="loginError" class="hidden text-center text-xs font-bold text-red-400 py-1"></div>
@@ -148,8 +148,8 @@
         <div>
             <label class="block text-primary text-xs font-bold mb-1.5 pr-1"><?= t('full_name') ?></label>
             <div class="relative">
-                <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-base">badge</span>
-                <input id="regName" class="w-full bg-[#0f0e08] border border-white/10 rounded-lg py-3 pr-10 pl-3 text-white text-sm focus:border-[#25D366] focus:ring-1 focus:ring-[#25D366] outline-none transition-all placeholder:text-slate-600" placeholder="<?= t('register_placeholder_name') ?>" type="text" required/>
+                <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-base z-10">badge</span>
+                <input id="regName" class="w-full bg-white border-2 border-slate-200 rounded-lg py-3 pr-10 pl-3 text-slate-900 text-sm focus:border-[#25D366] focus:ring-2 focus:ring-[#25D366]/30 outline-none transition-all placeholder:text-slate-400" placeholder="<?= t('register_placeholder_name') ?>" type="text" required/>
             </div>
         </div>
         <div class="grid grid-cols-3 gap-3">
@@ -157,12 +157,12 @@
                 <label class="block text-primary text-xs font-bold mb-1.5 pr-1"><?= t('phone') ?? 'טלפון' ?></label>
                 <div class="relative">
                     <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[#25D366] text-base">phone</span>
-                    <input id="regPhone" class="w-full bg-[#0f0e08] border border-white/10 rounded-lg py-3 pr-10 pl-3 text-white text-sm focus:border-[#25D366] focus:ring-1 focus:ring-[#25D366] outline-none transition-all placeholder:text-slate-600" placeholder="050-1234567" type="tel" required dir="ltr"/>
+                    <input id="regPhone" class="w-full bg-white border-2 border-slate-200 rounded-lg py-3 pr-10 pl-3 text-slate-900 text-sm focus:border-[#25D366] focus:ring-2 focus:ring-[#25D366]/30 outline-none transition-all placeholder:text-slate-400" placeholder="050-1234567" type="tel" required dir="ltr"/>
                 </div>
             </div>
             <div>
                 <label class="block text-primary text-xs font-bold mb-1.5 pr-1"><?= t('age') ?? 'גיל' ?></label>
-                <input id="regAge" class="w-full bg-[#0f0e08] border border-white/10 rounded-lg py-3 px-3 text-white text-sm focus:border-[#25D366] focus:ring-1 focus:ring-[#25D366] outline-none transition-all placeholder:text-slate-600 text-center" placeholder="35" type="number" min="18" max="99" required/>
+                <input id="regAge" class="w-full bg-white border-2 border-slate-200 rounded-lg py-3 px-3 text-slate-900 text-sm focus:border-[#25D366] focus:ring-2 focus:ring-[#25D366]/30 outline-none transition-all placeholder:text-slate-400 text-center" placeholder="35" type="number" min="18" max="99" required/>
             </div>
         </div>
         <div id="registerError" class="hidden text-center text-xs font-bold text-red-400 py-1"></div>
