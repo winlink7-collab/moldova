@@ -37,26 +37,78 @@ class MailService {
      */
     public static function send($to, $subject, $htmlBody, $textBody = '') {
         $config = self::getConfig();
-        $from = $config['from_email'];
+
+        // Try SendGrid first if API key configured
+        $apiKey = defined('SENDGRID_API_KEY') ? SENDGRID_API_KEY : '';
+        if (!$apiKey) {
+            // Load from config file
+            $configFile = BASE_PATH . '/config/mail.php';
+            if (file_exists($configFile)) {
+                require_once $configFile;
+                $apiKey = defined('SENDGRID_API_KEY') ? SENDGRID_API_KEY : '';
+            }
+        }
+
+        if ($apiKey) {
+            $result = self::sendViaSendGrid($apiKey, $to, $subject, $htmlBody);
+        } else {
+            // Fallback to PHP mail()
+            $from = $config['from_email'];
+            $fromName = $config['from_name'];
+            $headers = [
+                'MIME-Version: 1.0',
+                'Content-Type: text/html; charset=UTF-8',
+                'From: ' . $fromName . ' <' . $from . '>',
+                'Reply-To: ' . $from,
+                'X-Mailer: PHP/' . phpversion(),
+            ];
+            $result = @mail($to, $subject, $htmlBody, implode("\r\n", $headers));
+        }
+
+        self::log($to, $subject, $result);
+        return $result;
+    }
+
+    /**
+     * Send email via SendGrid API
+     */
+    private static function sendViaSendGrid($apiKey, $to, $subject, $htmlBody) {
+        $config = self::getConfig();
+        $fromEmail = defined('SENDGRID_FROM_EMAIL') ? SENDGRID_FROM_EMAIL : $config['from_email'];
         $fromName = $config['from_name'];
 
-        $headers = [
-            'MIME-Version: 1.0',
-            'Content-Type: text/html; charset=UTF-8',
-            'From: ' . $fromName . ' <' . $from . '>',
-            'Reply-To: ' . $from,
-            'X-Mailer: PHP/' . phpversion(),
+        $payload = [
+            'personalizations' => [[
+                'to' => [['email' => $to]]
+            ]],
+            'from' => ['email' => $fromEmail, 'name' => $fromName],
+            'subject' => $subject,
+            'content' => [[
+                'type' => 'text/html',
+                'value' => $htmlBody
+            ]]
         ];
 
-        $headerStr = implode("\r\n", $headers);
+        $ch = curl_init('https://api.sendgrid.com/v3/mail/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Authorization: Bearer ' . $apiKey,
+            'Content-Type: application/json'
+        ]);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $error = curl_error($ch);
+        curl_close($ch);
 
-        // Try PHP mail()
-        $result = @mail($to, $subject, $htmlBody, $headerStr);
+        // Log response for debugging
+        @file_put_contents(BASE_PATH . '/uploads/email_log.txt',
+            date('Y-m-d H:i:s') . " | SendGrid HTTP:$httpCode | To:$to | Response:$response | Error:$error\n",
+            FILE_APPEND);
 
-        // Log the attempt
-        self::log($to, $subject, $result);
-
-        return $result;
+        return $httpCode >= 200 && $httpCode < 300;
     }
 
     /**

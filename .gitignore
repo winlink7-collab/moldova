@@ -2,3 +2,4 @@
 __pycache__/
 *.pyc
 public.zip
+config/mail.local.php
