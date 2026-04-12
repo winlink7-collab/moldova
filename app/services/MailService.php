@@ -196,7 +196,13 @@ class MailService {
      */
     public static function sendAdminNotification($type, $data) {
         $config = self::getConfig();
-        $adminEmail = $config['from_email'];
+        // Use verified sender email as admin notification destination
+        $adminEmail = defined('SENDGRID_FROM_EMAIL') ? SENDGRID_FROM_EMAIL : $config['from_email'];
+        // Validate email domain exists - skip if not a real domain
+        $domain = substr(strrchr($adminEmail, '@'), 1);
+        if (!$domain || $domain === 'moldovabrides.co.il' || $domain === 'moldova-ukraine-brides.com') {
+            return false; // Skip sending to non-existent domain
+        }
 
         switch ($type) {
             case 'new_user':
