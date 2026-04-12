@@ -264,10 +264,19 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
             })
         });
         const data = await res.json();
-        if (res.ok && data.user) {
-            localStorage.setItem('user', JSON.stringify(data.user));
-            closeModal('registerModal');
-            updateAuthUI();
+        if (res.ok) {
+            if (data.needs_verification) {
+                // Show success message with email verification notice
+                closeModal('registerModal');
+                alert(data.message || 'נשלח אליך מייל אימות. אנא אשר את כתובת המייל שלך כדי להתחבר.');
+            } else if (data.user) {
+                localStorage.setItem('user', JSON.stringify(data.user));
+                closeModal('registerModal');
+                updateAuthUI();
+            } else {
+                closeModal('registerModal');
+                alert(data.message || 'הרשמה בוצעה בהצלחה!');
+            }
         } else {
             errEl.textContent = data.error || T.register_error;
             errEl.classList.remove('hidden');
