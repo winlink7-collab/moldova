@@ -121,6 +121,9 @@ switch ($page) {
         $slug = $segments[1] ?? '';
         $c->customPage($slug);
         break;
+    case 'check-mail':
+        require BASE_PATH . '/check_mail.php';
+        break;
     case 'fix-hebrew':
         require BASE_PATH . '/fix_hebrew.php';
         break;
