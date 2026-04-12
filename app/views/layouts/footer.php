@@ -152,11 +152,17 @@
                 <input id="regName" class="w-full bg-[#0f0e08] border border-white/10 rounded-lg py-3 pr-10 pl-3 text-white text-sm focus:border-[#25D366] focus:ring-1 focus:ring-[#25D366] outline-none transition-all placeholder:text-slate-600" placeholder="<?= t('register_placeholder_name') ?>" type="text" required/>
             </div>
         </div>
-        <div>
-            <label class="block text-primary text-xs font-bold mb-1.5 pr-1"><?= t('phone') ?? 'טלפון' ?></label>
-            <div class="relative">
-                <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[#25D366] text-base">phone</span>
-                <input id="regPhone" class="w-full bg-[#0f0e08] border border-white/10 rounded-lg py-3 pr-10 pl-3 text-white text-sm focus:border-[#25D366] focus:ring-1 focus:ring-[#25D366] outline-none transition-all placeholder:text-slate-600" placeholder="050-1234567" type="tel" required dir="ltr"/>
+        <div class="grid grid-cols-3 gap-3">
+            <div class="col-span-2">
+                <label class="block text-primary text-xs font-bold mb-1.5 pr-1"><?= t('phone') ?? 'טלפון' ?></label>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[#25D366] text-base">phone</span>
+                    <input id="regPhone" class="w-full bg-[#0f0e08] border border-white/10 rounded-lg py-3 pr-10 pl-3 text-white text-sm focus:border-[#25D366] focus:ring-1 focus:ring-[#25D366] outline-none transition-all placeholder:text-slate-600" placeholder="050-1234567" type="tel" required dir="ltr"/>
+                </div>
+            </div>
+            <div>
+                <label class="block text-primary text-xs font-bold mb-1.5 pr-1"><?= t('age') ?? 'גיל' ?></label>
+                <input id="regAge" class="w-full bg-[#0f0e08] border border-white/10 rounded-lg py-3 px-3 text-white text-sm focus:border-[#25D366] focus:ring-1 focus:ring-[#25D366] outline-none transition-all placeholder:text-slate-600 text-center" placeholder="35" type="number" min="18" max="99" required/>
             </div>
         </div>
         <div id="registerError" class="hidden text-center text-xs font-bold text-red-400 py-1"></div>
@@ -313,21 +319,25 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
 
     const name = document.getElementById('regName').value.trim();
     const phone = document.getElementById('regPhone').value.trim();
+    const age = document.getElementById('regAge').value.trim();
 
-    if (!name || !phone) {
+    if (!name || !phone || !age) {
         errEl.textContent = T.fill_all_fields || 'אנא מלא את כל השדות';
         errEl.classList.remove('hidden');
         return;
     }
 
-    // Save name+phone temporarily for after verification
-    window._pendingRegistration = { name: name, phone: phone };
+    if (parseInt(age) < 18) {
+        errEl.textContent = 'הרישום מותר מגיל 18 ומעלה';
+        errEl.classList.remove('hidden');
+        return;
+    }
+
+    window._pendingRegistration = { name: name, phone: phone, age: age };
     closeModal('registerModal');
 
-    // Open WhatsApp OTP verification
     if (typeof openWhatsappVerify === 'function') {
         openWhatsappVerify(phone, async function(result) {
-            // After OTP verified, create user with phone-based account
             try {
                 const email = phone.replace(/[^\d]/g, '') + '@whatsapp.local';
                 const password = 'wa_' + Math.random().toString(36).substring(2, 15);
@@ -338,7 +348,8 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
                         name: name,
                         email: email,
                         password: password,
-                        phone: phone
+                        phone: phone,
+                        age: parseInt(age)
                     })
                 });
                 const data = await res.json();
