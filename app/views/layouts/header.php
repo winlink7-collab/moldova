@@ -438,6 +438,7 @@ var T = JSON.parse(document.getElementById('__translations').textContent);
 function tr(key) { return (T && T[key]) ? T[key] : key; }
 </script>
 <script src="<?= BASE_URL ?>/public/js/auto-translate.js?v=<?= time() ?>"></script>
+<script src="<?= BASE_URL ?>/public/js/whatsapp-verify.js?v=<?= time() ?>"></script>
 <div class="relative flex min-h-screen w-full flex-col">
 
 <!-- Navigation -->

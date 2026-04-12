@@ -124,6 +124,9 @@ switch ($page) {
     case 'setup-mail':
         require BASE_PATH . '/setup_mail.php';
         break;
+    case 'setup-whatsapp':
+        require BASE_PATH . '/setup_whatsapp.php';
+        break;
     case 'check-mail':
         require BASE_PATH . '/check_mail.php';
         break;

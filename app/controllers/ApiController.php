@@ -51,6 +51,12 @@ class ApiController {
             case 'resend-verification':
                 $this->resendVerification();
                 break;
+            case 'send-whatsapp-otp':
+                $this->sendWhatsappOtp();
+                break;
+            case 'verify-whatsapp-otp':
+                $this->verifyWhatsappOtp();
+                break;
             case 'forgot-password':
                 $this->forgotPassword();
                 break;
@@ -266,6 +272,60 @@ class ApiController {
         MailService::sendVerificationEmail(['name' => $user['name'], 'email' => $email], $newToken);
 
         $this->jsonResponse(['message' => 'מייל אימות חדש נשלח. אנא בדוק את תיבת הדואר שלך.']);
+    }
+
+    // ========================
+    // WhatsApp OTP
+    // ========================
+
+    private function sendWhatsappOtp() {
+        $data = $this->getJson();
+        $phone = trim($data['phone'] ?? '');
+
+        if (!$phone) {
+            return $this->jsonResponse(['error' => 'נדרש מספר טלפון'], 400);
+        }
+
+        require_once BASE_PATH . '/app/services/WhatsAppService.php';
+        $result = WhatsAppService::sendOtp($phone);
+
+        if ($result['success']) {
+            $this->jsonResponse(['message' => $result['message']]);
+        } else {
+            $this->jsonResponse(['error' => $result['message']], 400);
+        }
+    }
+
+    private function verifyWhatsappOtp() {
+        $data = $this->getJson();
+        $phone = trim($data['phone'] ?? '');
+        $code = trim($data['code'] ?? '');
+
+        if (!$phone || !$code) {
+            return $this->jsonResponse(['error' => 'נדרש מספר טלפון וקוד'], 400);
+        }
+
+        require_once BASE_PATH . '/app/services/WhatsAppService.php';
+        $valid = WhatsAppService::verifyOtp($phone, $code);
+
+        if (!$valid) {
+            return $this->jsonResponse(['error' => 'קוד שגוי או שפג תוקף'], 400);
+        }
+
+        // Mark user as verified if exists
+        $normalizedPhone = WhatsAppService::normalizePhone($phone);
+        $user = $this->db->fetchOne("SELECT id FROM users WHERE REPLACE(REPLACE(REPLACE(phone, '-', ''), ' ', ''), '+', '') LIKE ?", ['%' . substr($normalizedPhone, -9) . '%']);
+
+        if ($user) {
+            $this->db->execute('UPDATE users SET email_verified = 1, verify_token = NULL WHERE id = ?', [$user['id']]);
+            $userData = $this->db->fetchOne('SELECT id, name, email, phone, vip_level FROM users WHERE id = ?', [$user['id']]);
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_name'] = $userData['name'];
+            $_SESSION['user_email'] = $userData['email'];
+            return $this->jsonResponse(['message' => 'אומת בהצלחה! כעת אתה מחובר', 'user' => $userData]);
+        }
+
+        $this->jsonResponse(['message' => 'קוד תקין']);
     }
 
     // ========================

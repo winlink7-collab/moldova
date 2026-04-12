@@ -339,15 +339,21 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
         });
         const data = await res.json();
         if (res.ok) {
-            if (data.needs_verification) {
-                closeModal('registerModal');
-                showVerificationSuccess(document.getElementById('regEmail').value);
+            closeModal('registerModal');
+            // Use WhatsApp OTP verification instead of email
+            const phone = document.getElementById('regPhone').value;
+            if (phone && typeof openWhatsappVerify === 'function') {
+                openWhatsappVerify(phone, function(result) {
+                    if (result.user) {
+                        localStorage.setItem('user', JSON.stringify(result.user));
+                        updateAuthUI();
+                    }
+                    alert(result.message || 'אומת בהצלחה!');
+                });
             } else if (data.user) {
                 localStorage.setItem('user', JSON.stringify(data.user));
-                closeModal('registerModal');
                 updateAuthUI();
             } else {
-                closeModal('registerModal');
                 showVerificationSuccess(document.getElementById('regEmail').value);
             }
         } else {
