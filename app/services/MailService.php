@@ -77,16 +77,31 @@ class MailService {
         $fromEmail = defined('SENDGRID_FROM_EMAIL') ? SENDGRID_FROM_EMAIL : $config['from_email'];
         $fromName = $config['from_name'];
 
+        // Create plain text version for better deliverability
+        $plainText = strip_tags(preg_replace('/<br\s*\/?>/i', "\n", $htmlBody));
+        $plainText = html_entity_decode(preg_replace('/\s+/', ' ', $plainText));
+
         $payload = [
             'personalizations' => [[
-                'to' => [['email' => $to]]
+                'to' => [['email' => $to]],
+                'subject' => $subject
             ]],
             'from' => ['email' => $fromEmail, 'name' => $fromName],
+            'reply_to' => ['email' => $fromEmail, 'name' => $fromName],
             'subject' => $subject,
-            'content' => [[
-                'type' => 'text/html',
-                'value' => $htmlBody
-            ]]
+            'content' => [
+                ['type' => 'text/plain', 'value' => trim($plainText)],
+                ['type' => 'text/html', 'value' => $htmlBody]
+            ],
+            'mail_settings' => [
+                'sandbox_mode' => ['enable' => false]
+            ],
+            'tracking_settings' => [
+                'click_tracking' => ['enable' => false],
+                'open_tracking' => ['enable' => false],
+                'subscription_tracking' => ['enable' => false]
+            ],
+            'categories' => ['transactional']
         ];
 
         $ch = curl_init('https://api.sendgrid.com/v3/mail/send');
