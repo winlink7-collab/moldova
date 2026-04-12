@@ -215,6 +215,80 @@ function closeModal(id) {
     m.classList.add('hidden');
     m.classList.remove('flex');
 }
+
+// Beautiful verification success modal
+function showVerificationSuccess(email) {
+    let modal = document.getElementById('verifyEmailModal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'verifyEmailModal';
+        modal.className = 'fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-md p-4';
+        modal.innerHTML = `
+            <div class="relative w-full max-w-[480px] bg-gradient-to-b from-[#1a1810] to-[#12110a] border border-primary/30 rounded-3xl shadow-2xl p-8 sm:p-10 text-center" style="box-shadow: 0 0 80px rgba(242,208,13,0.15);">
+                <button onclick="document.getElementById('verifyEmailModal').remove()" class="absolute top-4 left-4 text-slate-400 hover:text-white transition-colors p-1">
+                    <span class="material-symbols-outlined text-xl">close</span>
+                </button>
+
+                <!-- Animated checkmark icon -->
+                <div class="relative mx-auto mb-6 w-24 h-24">
+                    <div class="absolute inset-0 rounded-full bg-primary/20 animate-ping"></div>
+                    <div class="relative w-24 h-24 rounded-full bg-gradient-to-br from-primary to-[#b89b06] flex items-center justify-center shadow-[0_0_40px_rgba(242,208,13,0.4)]">
+                        <span class="material-symbols-outlined text-background-dark text-5xl font-black" style="font-variation-settings:'FILL' 1">mark_email_read</span>
+                    </div>
+                </div>
+
+                <h2 class="text-2xl sm:text-3xl font-black text-white mb-3">${T.registration_success || 'ההרשמה הצליחה! 🎉'}</h2>
+                <p class="text-slate-300 text-sm sm:text-base mb-6 leading-relaxed">
+                    ${T.verification_sent_to || 'שלחנו קישור אימות למייל'}<br>
+                    <strong class="text-primary text-lg">${email}</strong>
+                </p>
+
+                <div class="bg-primary/5 border border-primary/20 rounded-xl p-4 mb-6 text-right">
+                    <p class="text-xs sm:text-sm text-slate-300 mb-2 font-bold flex items-center gap-2 justify-end">
+                        <span>${T.next_steps || 'השלבים הבאים:'}</span>
+                        <span class="material-symbols-outlined text-primary">checklist</span>
+                    </p>
+                    <ol class="text-xs sm:text-sm text-slate-400 space-y-1.5 list-decimal pr-5">
+                        <li>${T.check_inbox || 'פתח את תיבת הדואר שלך'}</li>
+                        <li>${T.check_spam || 'בדוק גם בתיקיית ספאם / קידום מכירות'}</li>
+                        <li>${T.click_verify || 'לחץ על כפתור "אמת את המייל שלי"'}</li>
+                        <li>${T.return_login || 'חזור לאתר כדי להתחבר'}</li>
+                    </ol>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <button onclick="document.getElementById('verifyEmailModal').remove()" class="flex-1 bg-gradient-to-r from-primary to-[#b89b06] hover:brightness-110 text-background-dark font-black py-3 rounded-xl text-sm transition-all shadow-lg">
+                        ${T.got_it || 'הבנתי!'}
+                    </button>
+                    <button onclick="resendVerification('${email}')" class="flex-1 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 font-bold py-3 rounded-xl text-sm transition-all">
+                        ${T.resend_email || 'שלח שוב'}
+                    </button>
+                </div>
+
+                <p class="text-[10px] text-slate-600 mt-4">${T.didnt_receive || 'לא קיבלת? בדוק בתיקיית ספאם או לחץ "שלח שוב"'}</p>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+    modal.classList.remove('hidden');
+}
+
+async function resendVerification(email) {
+    try {
+        const res = await fetch(BASE + '/api/resend-verification', {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({email: email})
+        });
+        const d = await res.json();
+        if (res.ok) {
+            const btn = event.target;
+            btn.textContent = T.resent || '✓ נשלח';
+            btn.disabled = true;
+            setTimeout(() => { btn.textContent = T.resend_email || 'שלח שוב'; btn.disabled = false; }, 5000);
+        }
+    } catch(e) {}
+}
 // Close on background click
 document.querySelectorAll('[id$="Modal"]').forEach(m => {
     m.addEventListener('click', e => { if (e.target === m) closeModal(m.id); });
@@ -266,16 +340,15 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
         const data = await res.json();
         if (res.ok) {
             if (data.needs_verification) {
-                // Show success message with email verification notice
                 closeModal('registerModal');
-                alert(data.message || 'נשלח אליך מייל אימות. אנא אשר את כתובת המייל שלך כדי להתחבר.');
+                showVerificationSuccess(document.getElementById('regEmail').value);
             } else if (data.user) {
                 localStorage.setItem('user', JSON.stringify(data.user));
                 closeModal('registerModal');
                 updateAuthUI();
             } else {
                 closeModal('registerModal');
-                alert(data.message || 'הרשמה בוצעה בהצלחה!');
+                showVerificationSuccess(document.getElementById('regEmail').value);
             }
         } else {
             errEl.textContent = data.error || T.register_error;
