@@ -70,9 +70,14 @@ class WhatsAppService {
             return ['success' => false, 'message' => 'מספר טלפון לא תקין'];
         }
 
-        // Rate limit check - return success if recently sent (don't error)
-        if (!self::checkRateLimit($phone)) {
-            return ['success' => true, 'message' => 'קוד אימות כבר נשלח. בדוק את הוואטסאפ שלך'];
+        // Rate limit check - only block if very recent (15 sec)
+        $db = Database::getInstance();
+        $veryRecent = $db->fetchOne(
+            "SELECT id FROM whatsapp_otps WHERE phone = ? AND created_at > DATE_SUB(NOW(), INTERVAL 15 SECOND) ORDER BY id DESC LIMIT 1",
+            [$phone]
+        );
+        if ($veryRecent) {
+            return ['success' => true, 'message' => 'קוד נשלח. בדוק את הוואטסאפ שלך'];
         }
 
         $creds = self::getCredentials();
