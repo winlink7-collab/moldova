@@ -106,7 +106,7 @@ body header.sticky { top: 56px !important; }
 <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-12 mb-12 md:mb-20">
 
     <!-- Main Image -->
-    <div class="lg:col-span-7 relative group overflow-hidden rounded-3xl luxury-shadow gallery-item editable-section h-[450px] md:h-[600px] lg:h-[750px]" onclick="openLightbox(0)">
+    <div class="lg:col-span-7 relative group overflow-hidden rounded-3xl luxury-shadow gallery-item editable-section h-[380px] sm:h-[450px] md:h-[600px] lg:h-[750px]" onclick="openLightbox(0)">
         <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-80 z-10 pointer-events-none"></div>
         <img id="mainImage" alt="" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" src=""/>
         <div class="zoom-icon"><span class="material-symbols-outlined text-white text-2xl">zoom_in</span></div>

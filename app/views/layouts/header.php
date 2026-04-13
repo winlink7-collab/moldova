@@ -144,6 +144,29 @@ function navClass(string $page, string $current): string {
         color: #12110a;
     }
 
+    /* ===== Mobile UX Improvements ===== */
+    /* Prevent layout shift on image load */
+    img { content-visibility: auto; }
+
+    /* Mobile base fixes */
+    @media (max-width: 640px) {
+        /* Prevent horizontal scroll */
+        html, body { overflow-x: hidden; }
+        /* Prevent long text from breaking layout */
+        * { word-wrap: break-word; }
+        /* Smaller text sizes on very small screens */
+        h1, h2, h3, h4 { line-height: 1.2; }
+        /* Center all section headers on mobile */
+        section > div > h1, section > div > h2, section > div > h3 {
+            text-align: center;
+        }
+    }
+
+    /* Smooth transitions to prevent jumps */
+    img, .group {
+        transition: transform 0.3s ease;
+    }
+
     /* ===== Light Theme - Clean Gold & White ===== */
     html.light body {
         background: #faf9f5 !important;

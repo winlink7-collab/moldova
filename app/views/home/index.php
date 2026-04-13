@@ -19,7 +19,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
 </script>
 
 <!-- Hero Section -->
-<section class="relative min-h-[90vh] flex items-center pt-10 pb-20 overflow-hidden">
+<section class="relative min-h-[75vh] md:min-h-[90vh] flex items-center pt-8 md:pt-10 pb-12 md:pb-20 overflow-hidden">
     <div class="absolute inset-0 z-0">
         <div class="absolute inset-0 bg-gradient-to-l from-background-dark/20 via-background-dark/80 to-background-dark z-10"></div>
         <div id="homeHeroBg" class="w-full h-full bg-cover bg-center" data-alt="Beautiful elegant woman in luxury evening dress" style="background-image: url('https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');"></div>
