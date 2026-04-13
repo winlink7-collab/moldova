@@ -133,6 +133,7 @@ class ApiController {
         $email = trim($data['email'] ?? '');
         $phone = trim($data['phone'] ?? '');
         $password = $data['password'] ?? '';
+        $age = intval($data['age'] ?? 0);
 
         if (!$name || !$email || !$password) {
             return $this->jsonResponse(['error' => 'שם, אימייל וסיסמה הם שדות חובה'], 400);
@@ -140,21 +141,48 @@ class ApiController {
 
         $existing = $this->db->fetchOne('SELECT id FROM users WHERE email = ?', [$email]);
         if ($existing) {
+            // If existing whatsapp user, log them in
+            if (strpos($email, '@whatsapp.local') !== false) {
+                $userData = $this->db->fetchOne('SELECT id, name, email, phone, vip_level FROM users WHERE id = ?', [$existing['id']]);
+                $_SESSION['user_id'] = $existing['id'];
+                $_SESSION['user_name'] = $userData['name'];
+                $_SESSION['user_email'] = $userData['email'];
+                return $this->jsonResponse(['message' => 'התחברת בהצלחה', 'user' => $userData]);
+            }
             return $this->jsonResponse(['error' => 'כתובת האימייל כבר רשומה במערכת'], 400);
         }
 
         $hashedPassword = $this->hashPassword($password);
-        $verifyToken = bin2hex(random_bytes(32));
+        $isWhatsappRegistration = strpos($email, '@whatsapp.local') !== false;
 
-        $this->db->insert('users', [
+        // If WhatsApp registration - auto-verify (no email needed)
+        $userId = $this->db->insert('users', [
             'name' => $name,
             'email' => $email,
             'phone' => $phone,
             'password' => $hashedPassword,
-            'email_verified' => 0,
-            'verify_token' => $verifyToken,
+            'email_verified' => $isWhatsappRegistration ? 1 : 0,
+            'verify_token' => $isWhatsappRegistration ? null : bin2hex(random_bytes(32)),
             'created_at' => date('Y-m-d H:i:s')
         ]);
+
+        // For WhatsApp users - log them in immediately
+        if ($isWhatsappRegistration) {
+            $userData = $this->db->fetchOne('SELECT id, name, email, phone, vip_level FROM users WHERE id = ?', [$userId]);
+            $_SESSION['user_id'] = $userId;
+            $_SESSION['user_name'] = $name;
+            $_SESSION['user_email'] = $email;
+
+            // Notify admin about new WhatsApp user
+            try {
+                require_once BASE_PATH . '/app/services/MailService.php';
+                MailService::sendAdminNotification('new_user', ['name' => $name, 'email' => $email, 'phone' => $phone]);
+            } catch(\Exception $e) {}
+
+            return $this->jsonResponse(['message' => 'ההרשמה בוצעה בהצלחה', 'user' => $userData], 201);
+        }
+
+        $verifyToken = $this->db->fetchOne('SELECT verify_token FROM users WHERE id = ?', [$userId])['verify_token'] ?? '';
 
         // Send verification email
         require_once BASE_PATH . '/app/services/MailService.php';
