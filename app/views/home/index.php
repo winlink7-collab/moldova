@@ -212,7 +212,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
             <h2 id="homeReviewsLabel" class="text-primary font-bold text-sm tracking-[0.3em] uppercase mb-4"><?= t('home_reviews_label') ?></h2>
             <h3 id="homeReviewsTitle" class="text-4xl md:text-5xl font-black text-white"><?= t('home_reviews_title') ?></h3>
         </div>
-        <div id="reviewsGrid" class="grid md:grid-cols-3 gap-8">
+        <div id="reviewsGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <p class="text-slate-500 text-center col-span-full py-12"><?= t('loading') ?></p>
         </div>
     </div>
