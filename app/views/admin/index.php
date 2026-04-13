@@ -1289,22 +1289,15 @@ const API = BASE_URL;
         </div>
         <form id="userForm" onsubmit="saveUser(event)" class="p-6 space-y-4">
             <input type="hidden" id="user_id"/>
+            <input type="hidden" id="user_email"/>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm text-white/60 mb-1">שם מלא</label>
                     <input id="user_name" type="text" required class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm"/>
                 </div>
                 <div>
-                    <label class="block text-sm text-white/60 mb-1">אימייל</label>
-                    <input id="user_email" type="email" required class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm"/>
-                </div>
-                <div>
-                    <label class="block text-sm text-white/60 mb-1">טלפון</label>
-                    <input id="user_phone" type="text" class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm"/>
-                </div>
-                <div>
-                    <label class="block text-sm text-white/60 mb-1">סיסמה חדשה</label>
-                    <input id="user_new_password" type="password" class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm" placeholder="השאר ריק אם לא לשנות"/>
+                    <label class="block text-sm text-white/60 mb-1">טלפון (WhatsApp)</label>
+                    <input id="user_phone" type="tel" required class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm" dir="ltr"/>
                 </div>
                 <div>
                     <label class="block text-sm text-white/60 mb-1">רמת VIP</label>
@@ -1819,14 +1812,13 @@ function closeUserForm() {
 async function saveUser(e) {
     e.preventDefault();
     const id = document.getElementById('user_id').value;
+    const phone = document.getElementById('user_phone').value;
     const body = {
         name: document.getElementById('user_name').value,
-        email: document.getElementById('user_email').value,
-        phone: document.getElementById('user_phone').value,
+        email: document.getElementById('user_email').value || (phone.replace(/[^\d]/g, '') + '@whatsapp.local'),
+        phone: phone,
         vip_level: document.getElementById('user_vip_level').value,
     };
-    const pw = document.getElementById('user_new_password').value;
-    if (pw) body.password = pw;
     try {
         await fetch(API + '/api/admin/users/' + id, { method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
         closeUserForm();
