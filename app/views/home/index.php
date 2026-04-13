@@ -65,35 +65,35 @@ require BASE_PATH . '/app/views/layouts/header.php';
                 <div class="inline-block px-3 py-1 bg-primary/10 border border-primary/30 rounded-full mb-3">
                     <span class="text-primary text-xs font-bold tracking-widest uppercase">✨ VIP Club</span>
                 </div>
-                <h3 id="homeFormTitle" class="text-2xl md:text-3xl font-black text-white mb-2"><?= t('home_form_title') ?></h3>
-                <p class="text-slate-400 text-sm mb-6"><?= t('home_form_subtitle') ?? 'השאירו פרטים ונחזור אליכם בוואטסאפ' ?></p>
+                <h3 id="homeFormTitle" class="text-2xl md:text-3xl font-black text-white mb-2 drop-shadow-lg"><?= t('home_form_title') ?></h3>
+                <p class="text-slate-200 text-sm mb-6"><?= t('home_form_subtitle') ?? 'השאירו פרטים ונחזור אליכם בוואטסאפ' ?></p>
 
                 <form id="leadForm" class="space-y-3">
                     <div class="grid grid-cols-3 gap-3">
                         <div class="col-span-2">
-                            <label class="text-[10px] font-bold text-primary uppercase tracking-widest mb-1.5 block"><?= t('home_form_name') ?></label>
+                            <label class="text-xs font-bold text-primary uppercase tracking-wider mb-2 block"><?= t('home_form_name') ?></label>
                             <div class="relative">
                                 <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-base">person</span>
-                                <input id="fullName" class="w-full bg-white/5 border border-white/10 rounded-xl py-3 pr-10 pl-4 text-white text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none transition-all placeholder:text-slate-600" placeholder="ישראל ישראלי" type="text" required/>
+                                <input id="fullName" class="w-full bg-white/10 border-2 border-white/20 rounded-xl py-3 pr-10 pl-4 text-white text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none transition-all placeholder:text-slate-400" placeholder="ישראל ישראלי" type="text" required/>
                             </div>
                         </div>
                         <div>
-                            <label class="text-[10px] font-bold text-primary uppercase tracking-widest mb-1.5 block"><?= t('home_form_age') ?></label>
-                            <input id="age" class="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-3 text-white text-center text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none transition-all placeholder:text-slate-600" placeholder="35" type="number" min="18"/>
+                            <label class="text-xs font-bold text-primary uppercase tracking-wider mb-2 block"><?= t('home_form_age') ?></label>
+                            <input id="age" class="w-full bg-white/10 border-2 border-white/20 rounded-xl py-3 px-3 text-white text-center text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none transition-all placeholder:text-slate-400" placeholder="35" type="number" min="18"/>
                         </div>
                     </div>
                     <div>
-                        <label class="text-[10px] font-bold text-primary uppercase tracking-widest mb-1.5 block"><?= t('phone') ?? 'טלפון' ?></label>
+                        <label class="text-xs font-bold text-primary uppercase tracking-wider mb-2 block"><?= t('phone') ?? 'טלפון' ?></label>
                         <div class="relative">
                             <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[#25D366] text-base">phone</span>
-                            <input id="leadPhone" class="w-full bg-white/5 border border-white/10 rounded-xl py-3 pr-10 pl-4 text-white text-sm focus:border-[#25D366] focus:ring-2 focus:ring-[#25D366]/30 outline-none transition-all placeholder:text-slate-600" placeholder="050-1234567" type="tel" required dir="ltr"/>
+                            <input id="leadPhone" class="w-full bg-white/10 border-2 border-white/20 rounded-xl py-3 pr-10 pl-4 text-white text-sm focus:border-[#25D366] focus:ring-2 focus:ring-[#25D366]/30 outline-none transition-all placeholder:text-slate-400" placeholder="050-1234567" type="tel" required dir="ltr"/>
                         </div>
                     </div>
                     <div>
-                        <label class="text-[10px] font-bold text-primary uppercase tracking-widest mb-1.5 block"><?= t('home_form_interest') ?></label>
+                        <label class="text-xs font-bold text-primary uppercase tracking-wider mb-2 block"><?= t('home_form_interest') ?></label>
                         <div class="relative">
                             <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-base">favorite</span>
-                            <select id="interest" class="w-full bg-white/5 border border-white/10 rounded-xl py-3 pr-10 pl-4 text-white text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none transition-all appearance-none cursor-pointer">
+                            <select id="interest" class="w-full bg-white/10 border-2 border-white/20 rounded-xl py-3 pr-10 pl-4 text-white text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none transition-all appearance-none cursor-pointer">
                                 <option class="bg-background-dark"><?= t('home_form_interest1') ?></option>
                                 <option class="bg-background-dark"><?= t('home_form_interest2') ?></option>
                                 <option class="bg-background-dark"><?= t('home_form_interest3') ?></option>
@@ -123,8 +123,8 @@ require BASE_PATH . '/app/views/layouts/header.php';
                     </a>
 
                     <div id="formMessage" class="hidden text-center text-sm pt-2 font-bold"></div>
-                    <p class="text-center text-[11px] text-slate-500 pt-2 flex items-center justify-center gap-1">
-                        <span class="material-symbols-outlined text-xs">lock</span>
+                    <p class="text-center text-xs text-slate-300 pt-2 flex items-center justify-center gap-1">
+                        <span class="material-symbols-outlined text-sm text-primary">lock</span>
                         <?= t('home_form_disclaimer') ?>
                     </p>
                 </form>
