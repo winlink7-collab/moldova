@@ -22,7 +22,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
 <section class="relative min-h-[90vh] flex items-center pt-10 pb-20 overflow-hidden">
     <div class="absolute inset-0 z-0">
         <div class="absolute inset-0 bg-gradient-to-l from-background-dark/20 via-background-dark/80 to-background-dark z-10"></div>
-        <div id="homeHeroBg" class="w-full h-full bg-cover bg-center" data-alt="Stunning elegant woman in a luxury evening dress portrait" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB2pWepEAWT8Z_x8ALk_BfWs1S5xkxSy7A0IaTOU4H4_ldVUks5I_zsoUqz0vdrt3Gm7sOx7PyS6nWtjyovUv1MSFOgBCQqf5rVthtwjwBJEjSWMUYFzRt2PzfYvOzDCQ0w7Af6_rSTjbS8kMFUQrcV-m1q5vgYfWCME6mSF2T7_8-RDP787bfGAAYWdm9NA_cxP9PIpUD7tjLD0Z_2SJNSJBaA6rZYofgAWCBL9zf9FbAlYi9Uh-wUePG6vqPvR3lAaYmsfOZ9ZLQt');"></div>
+        <div id="homeHeroBg" class="w-full h-full bg-cover bg-center" data-alt="Beautiful elegant woman in luxury evening dress" style="background-image: url('https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');"></div>
     </div>
     <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
         <div class="flex flex-col gap-8 text-right">
