@@ -569,20 +569,26 @@ function tr(key) { return (T && T[key]) ? T[key] : key; }
         </div>
 
         <!-- Logged in state (hidden by default) -->
-        <div id="userMenu" class="hidden items-center gap-4">
-            <a href="<?= BASE_URL ?>/search" class="hidden sm:flex px-5 py-2.5 bg-primary hover:bg-primary/90 text-background-dark text-sm font-bold rounded-lg transition-all">
-                <?= t('search_profiles') ?>
+        <div id="userMenu" class="hidden items-center gap-3">
+            <a href="<?= BASE_URL ?>/dashboard" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-background-dark text-sm font-black rounded-lg transition-all shadow-lg">
+                <span class="material-symbols-outlined text-lg">account_circle</span>
+                <span><?= t('my_area') ?></span>
             </a>
-            <a href="<?= BASE_URL ?>/dashboard" class="hidden sm:flex items-center gap-1 text-sm text-slate-300 hover:text-primary transition-colors font-medium">
-                <span class="material-symbols-outlined text-lg">account_circle</span> <?= t('my_area') ?>
+            <a href="<?= BASE_URL ?>/search" class="hidden md:flex items-center gap-1 px-3 py-2 border border-primary/30 text-primary hover:bg-primary/10 text-sm font-bold rounded-lg transition-all">
+                <span class="material-symbols-outlined text-base">search</span>
             </a>
-            <div class="flex items-center gap-3">
-                <span id="userName" class="text-sm text-slate-300 font-medium"></span>
-                <button onclick="logout()" class="text-slate-400 hover:text-primary transition-colors">
-                    <span class="material-symbols-outlined">logout</span>
+            <div class="flex items-center gap-2">
+                <span id="userName" class="hidden lg:block text-sm text-slate-300 font-medium"></span>
+                <button onclick="logout()" class="flex items-center gap-1 px-2 py-2 text-red-400 hover:bg-red-500/10 rounded-lg transition-all" title="<?= t('logout') ?>">
+                    <span class="material-symbols-outlined text-lg">logout</span>
                 </button>
             </div>
         </div>
+
+        <!-- Mobile: Dashboard quick access (when logged in) -->
+        <a id="mobileDashboardBtn" href="<?= BASE_URL ?>/dashboard" class="hidden lg:!hidden flex items-center justify-center w-10 h-10 bg-primary text-background-dark rounded-full shadow-lg" title="<?= t('my_area') ?>">
+            <span class="material-symbols-outlined text-xl">account_circle</span>
+        </a>
 
         <!-- Mobile theme toggle -->
         <button onclick="toggleTheme()" class="lg:hidden text-slate-400 hover:text-primary transition-colors">

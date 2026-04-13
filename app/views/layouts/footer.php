@@ -299,12 +299,14 @@ function updateAuthUI() {
     const userMenu = document.getElementById('userMenu');
     const mobileAuthButtons = document.getElementById('mobileAuthButtons');
     const mobileUserMenu = document.getElementById('mobileUserMenu');
+    const mobileDashboardBtn = document.getElementById('mobileDashboardBtn');
     if (user) {
         if (authButtons) { authButtons.classList.add('hidden'); authButtons.classList.remove('flex'); }
         if (userMenu) { userMenu.classList.remove('hidden'); userMenu.classList.add('flex'); }
         const userNameEl = document.getElementById('userName');
         if (userNameEl) userNameEl.textContent = user.name;
-        // Mobile
+        // Mobile - show dashboard quick button
+        if (mobileDashboardBtn) { mobileDashboardBtn.classList.remove('hidden', 'lg:!hidden'); mobileDashboardBtn.classList.add('lg:hidden', 'flex'); }
         if (mobileAuthButtons) mobileAuthButtons.classList.add('hidden');
         if (mobileUserMenu) { mobileUserMenu.classList.remove('hidden'); mobileUserMenu.classList.add('flex'); }
         const mobileNameEl = document.getElementById('mobileUserName');
@@ -313,6 +315,7 @@ function updateAuthUI() {
         if (authButtons) { authButtons.classList.remove('hidden'); authButtons.classList.add('flex'); }
         if (userMenu) { userMenu.classList.add('hidden'); userMenu.classList.remove('flex'); }
         // Mobile
+        if (mobileDashboardBtn) { mobileDashboardBtn.classList.add('hidden'); mobileDashboardBtn.classList.remove('flex'); }
         if (mobileAuthButtons) { mobileAuthButtons.classList.remove('hidden'); mobileAuthButtons.classList.add('flex'); }
         if (mobileUserMenu) { mobileUserMenu.classList.add('hidden'); mobileUserMenu.classList.remove('flex'); }
     }
