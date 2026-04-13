@@ -427,6 +427,38 @@ function navClass(string $page, string $current): string {
         color: #1a1a1a !important;
     }
 
+    /* --- Reviews cards in light theme --- */
+    html.light main #reviewsGrid > div {
+        background: linear-gradient(135deg, #ffffff 0%, #fafaf5 100%) !important;
+        border: 1px solid rgba(184,155,6,0.2) !important;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08), 0 2px 8px rgba(184,155,6,0.05) !important;
+    }
+    html.light main #reviewsGrid > div:hover {
+        border-color: rgba(184,155,6,0.5) !important;
+        box-shadow: 0 12px 40px rgba(184,155,6,0.15), 0 4px 16px rgba(0,0,0,0.1) !important;
+    }
+    html.light main #reviewsGrid p.text-slate-200 {
+        color: #2a2a2a !important;
+    }
+    html.light main #reviewsGrid .text-white {
+        color: #1a1a1a !important;
+    }
+    html.light main #reviewsGrid .text-primary\/80 {
+        color: #9a8200 !important;
+    }
+    html.light main #reviewsGrid .text-white\/10 {
+        color: rgba(0,0,0,0.1) !important;
+    }
+    html.light main #reviewsGrid .text-primary\/10 {
+        color: rgba(184,155,6,0.15) !important;
+    }
+    html.light main #reviewsGrid .border-primary\/10 {
+        border-color: rgba(184,155,6,0.15) !important;
+    }
+    html.light main #reviewsGrid img {
+        border-color: #b89b06 !important;
+    }
+
     /* --- Modals ALWAYS dark --- */
     html.light .fixed[id*="Modal"], html.light #loginModal, html.light #registerModal,
     html.light #msgModal {
