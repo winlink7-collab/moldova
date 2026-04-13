@@ -80,22 +80,26 @@
 </section>
 
 <!-- DASHBOARD MAIN -->
-<section id="dashboardMain" class="hidden px-6 md:px-20 py-12">
+<section id="dashboardMain" class="hidden px-4 sm:px-6 md:px-20 py-6 md:py-12">
     <div class="max-w-4xl mx-auto">
 
-        <div class="flex flex-col sm:flex-row items-center gap-6 mb-8 p-6 sm:p-8 bg-gradient-to-l from-primary/5 via-surface to-surface border border-border-gold/30 rounded-2xl gold-glow">
-            <div class="relative">
-                <img id="dashAvatar" src="" alt="avatar" class="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-2 border-primary/40 shadow-lg bg-background-dark cursor-pointer" onclick="document.getElementById('avatarInput').click()" />
-                <button type="button" onclick="document.getElementById('avatarInput').click()" class="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-lg hover:scale-110 transition-transform border-2 border-background-dark">
+        <!-- Welcome Card - Centered on mobile -->
+        <div class="flex flex-col items-center text-center sm:flex-row sm:items-center sm:text-right gap-5 mb-6 sm:mb-8 p-5 sm:p-8 bg-gradient-to-l from-primary/5 via-surface to-surface border border-border-gold/30 rounded-2xl gold-glow">
+            <!-- Avatar -->
+            <div class="relative shrink-0">
+                <img id="dashAvatar" src="" alt="avatar" class="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-2 border-primary/40 shadow-lg bg-background-dark cursor-pointer mx-auto" onclick="document.getElementById('avatarInput').click()" />
+                <button type="button" onclick="document.getElementById('avatarInput').click()" class="absolute bottom-0 right-0 w-9 h-9 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-lg hover:scale-110 transition-transform border-2 border-background-dark">
                     <span class="material-symbols-outlined text-base">photo_camera</span>
                 </button>
                 <input id="avatarInput" type="file" accept="image/*" class="hidden" onchange="uploadAvatar(this)" />
             </div>
-            <div class="text-center sm:text-right flex-1">
-                <h2 class="text-3xl font-black text-white mb-1"><?= t('hello') ?> <span id="dashUserName">—</span></h2>
+            <!-- Name + greeting -->
+            <div class="flex-1">
+                <h2 class="text-2xl sm:text-3xl font-black text-white mb-1"><?= t('hello') ?> <span id="dashUserName">—</span></h2>
                 <p class="text-slate-400 text-sm"><?= t('welcome_to_area') ?></p>
             </div>
-            <button onclick="logout()" class="flex items-center gap-2 px-5 py-2.5 border border-red-500/30 text-red-400 hover:bg-red-500/10 rounded-lg transition-all text-sm font-bold">
+            <!-- Logout button -->
+            <button onclick="logout()" class="flex items-center justify-center gap-2 px-4 py-2.5 border border-red-500/30 text-red-400 hover:bg-red-500/10 rounded-lg transition-all text-sm font-bold w-full sm:w-auto">
                 <span class="material-symbols-outlined text-lg">logout</span>
                 <?= t('disconnect') ?>
             </button>
@@ -132,16 +136,16 @@
             </a>
         </div>
 
-        <div class="flex gap-2 mb-8 border-b border-border-gold/20 pb-0 overflow-x-auto">
-            <button class="dtab-btn tab-active px-6 py-3 text-sm font-bold border-b-2 transition-all hover:text-primary" onclick="switchDashTab('profile')" data-tab="profile">
+        <div class="flex gap-1 sm:gap-2 mb-6 sm:mb-8 border-b border-border-gold/20 pb-0 overflow-x-auto justify-center sm:justify-start">
+            <button class="dtab-btn tab-active px-3 sm:px-6 py-3 text-xs sm:text-sm font-bold border-b-2 transition-all hover:text-primary whitespace-nowrap" onclick="switchDashTab('profile')" data-tab="profile">
                 <span class="material-symbols-outlined text-base align-middle ml-1">person</span>
                 <?= t('personal_details') ?>
             </button>
-            <button class="dtab-btn px-6 py-3 text-sm font-bold border-b-2 border-transparent text-slate-400 transition-all hover:text-primary" onclick="switchDashTab('password')" data-tab="password">
+            <button class="dtab-btn px-3 sm:px-6 py-3 text-xs sm:text-sm font-bold border-b-2 border-transparent text-slate-400 transition-all hover:text-primary whitespace-nowrap" onclick="switchDashTab('password')" data-tab="password">
                 <span class="material-symbols-outlined text-base align-middle ml-1">lock</span>
                 <?= t('change_password') ?>
             </button>
-            <button class="dtab-btn px-6 py-3 text-sm font-bold border-b-2 border-transparent text-slate-400 transition-all hover:text-primary" onclick="switchDashTab('messages')" data-tab="messages">
+            <button class="dtab-btn px-3 sm:px-6 py-3 text-xs sm:text-sm font-bold border-b-2 border-transparent text-slate-400 transition-all hover:text-primary whitespace-nowrap" onclick="switchDashTab('messages')" data-tab="messages">
                 <span class="material-symbols-outlined text-base align-middle ml-1">chat</span>
                 <?= t('my_messages') ?>
             </button>
@@ -149,11 +153,11 @@
 
         <!-- PROFILE TAB -->
         <div id="tab-profile" class="dtab-content">
-            <div class="bg-surface border border-border-gold/30 rounded-2xl p-8 md:p-10 gold-glow">
-                <h3 class="text-xl font-black text-primary mb-6"><?= t('edit_personal_details') ?></h3>
-                <form id="profileForm" class="space-y-6">
-                    <div class="flex items-center gap-5 mb-2">
-                        <img id="profileAvatar" src="" alt="avatar" class="w-16 h-16 rounded-full object-cover border border-primary/30 bg-background-dark" />
+            <div class="bg-surface border border-border-gold/30 rounded-2xl p-5 sm:p-8 md:p-10 gold-glow">
+                <h3 class="text-xl font-black text-primary mb-6 text-center sm:text-right"><?= t('edit_personal_details') ?></h3>
+                <form id="profileForm" class="space-y-5 sm:space-y-6">
+                    <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-5 mb-2">
+                        <img id="profileAvatar" src="" alt="avatar" class="w-20 h-20 sm:w-16 sm:h-16 rounded-full object-cover border border-primary/30 bg-background-dark" />
                         <button type="button" onclick="document.getElementById('avatarInput').click()" class="px-4 py-2 border border-primary/30 text-primary text-sm font-bold rounded-lg hover:bg-primary/10 transition-all">
                             <span class="material-symbols-outlined text-sm align-middle ml-1">upload</span>
                             <?= t('upload_photo') ?>
