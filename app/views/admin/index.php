@@ -889,6 +889,16 @@ const API = BASE_URL;
         </div>
         <form id="reviewForm" onsubmit="saveReview(event)" class="p-6 space-y-4">
             <input type="hidden" id="review_id"/>
+            <input type="hidden" id="review_photo"/>
+            <div class="flex items-center gap-4">
+                <img id="review_photo_preview" src="" class="w-20 h-20 rounded-full object-cover bg-bg border-2 border-primary/30" style="display:none;"/>
+                <div class="flex-1">
+                    <label class="block text-sm text-white/60 mb-1">תמונת לקוח</label>
+                    <input id="review_photo_file" type="file" accept="image/*" onchange="uploadReviewPhoto(this)" class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-xs"/>
+                    <p class="text-xs text-white/40 mt-1">או הזן URL:</p>
+                    <input id="review_photo_url" type="url" placeholder="https://..." class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-xs mt-1" onchange="document.getElementById('review_photo').value=this.value; document.getElementById('review_photo_preview').src=this.value; document.getElementById('review_photo_preview').style.display=this.value?'block':'none';"/>
+                </div>
+            </div>
             <div>
                 <label class="block text-sm text-white/60 mb-1">שם לקוח</label>
                 <input id="review_name" type="text" required class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm" placeholder="יוסי כ."/>
@@ -2793,6 +2803,8 @@ function openReviewForm(review = null) {
     document.getElementById('reviewModal').classList.remove('hidden');
     document.getElementById('reviewForm').reset();
     document.getElementById('review_id').value = '';
+    document.getElementById('review_photo').value = '';
+    document.getElementById('review_photo_preview').style.display = 'none';
     document.getElementById('reviewModalTitle').textContent = 'הוסף ביקורת';
     if (review) {
         document.getElementById('reviewModalTitle').textContent = 'עריכת ביקורת';
@@ -2800,6 +2812,12 @@ function openReviewForm(review = null) {
         document.getElementById('review_name').value = review.client_name || '';
         document.getElementById('review_rating').value = review.rating || 5;
         document.getElementById('review_text').value = review.review_text || '';
+        if (review.client_photo) {
+            document.getElementById('review_photo').value = review.client_photo;
+            document.getElementById('review_photo_url').value = review.client_photo;
+            document.getElementById('review_photo_preview').src = review.client_photo;
+            document.getElementById('review_photo_preview').style.display = 'block';
+        }
     }
 }
 
@@ -2822,11 +2840,28 @@ async function deleteReview(id) {
     } catch(e) { console.error(e); }
 }
 
+async function uploadReviewPhoto(input) {
+    if (!input.files[0]) return;
+    const fd = new FormData();
+    fd.append('file', input.files[0]);
+    try {
+        const res = await fetch(API + '/api/upload', { method: 'POST', body: fd });
+        const data = await res.json();
+        if (data.url) {
+            document.getElementById('review_photo').value = data.url;
+            document.getElementById('review_photo_url').value = data.url;
+            document.getElementById('review_photo_preview').src = data.url;
+            document.getElementById('review_photo_preview').style.display = 'block';
+        }
+    } catch(e) { alert('שגיאה בהעלאת תמונה'); }
+}
+
 async function saveReview(e) {
     e.preventDefault();
     const id = document.getElementById('review_id').value;
     const body = {
         client_name: document.getElementById('review_name').value,
+        client_photo: document.getElementById('review_photo').value || document.getElementById('review_photo_url').value || null,
         rating: parseInt(document.getElementById('review_rating').value),
         review_text: document.getElementById('review_text').value,
     };
