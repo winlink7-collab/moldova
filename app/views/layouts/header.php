@@ -219,6 +219,27 @@ function navClass(string $page, string $current): string {
     html.light main .gallery-item .text-white {
         color: #fff !important;
     }
+
+    /* Lead form always dark with white text */
+    html.light main #leadForm,
+    html.light main #leadForm * {
+        color: #fff !important;
+    }
+    html.light main #homeFormTitle {
+        color: #fff !important;
+    }
+    html.light main #leadForm label {
+        color: #fff !important;
+    }
+    html.light main #leadForm input,
+    html.light main #leadForm select {
+        background: rgba(255,255,255,0.1) !important;
+        color: #fff !important;
+        border-color: rgba(255,255,255,0.25) !important;
+    }
+    html.light main #leadForm input::placeholder {
+        color: #94a3b8 !important;
+    }
     html.light main .text-slate-300, html.light main .text-slate-400,
     html.light main .text-slate-500, html.light main .text-gold-muted {
         color: #666 !important;
