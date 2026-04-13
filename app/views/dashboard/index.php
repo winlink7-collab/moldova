@@ -349,26 +349,34 @@ async function uploadAvatar(input) {
     if (!user) return;
 
     const formData = new FormData();
-    formData.append('avatar', file);
+    formData.append('file', file);
 
     try {
-        const res = await fetch(API + '/api/upload', {
+        const res = await fetch(BASE + '/api/upload', {
             method: 'POST',
-            headers: { 'X-User-Id': user.id },
             body: formData
         });
         const data = await res.json();
-        if (res.ok && (data.url || data.filename)) {
+        if (res.ok && data.url) {
+            const newUrl = data.url.startsWith('http') ? data.url : BASE_URL + data.url;
+
+            // Save to user profile in DB
+            await fetch(BASE + '/api/user/profile', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', 'X-User-Id': user.id },
+                body: JSON.stringify({ avatar: data.url })
+            }).catch(()=>{});
+
             user.avatar = data.url;
             localStorage.setItem('user', JSON.stringify(user));
-            const newUrl = data.path.startsWith('http') ? data.path : BASE_URL + '/' + data.path;
             document.getElementById('dashAvatar').src = newUrl;
-            document.getElementById('profileAvatar').src = newUrl;
+            const profileAvatarEl = document.getElementById('profileAvatar');
+            if (profileAvatarEl) profileAvatarEl.src = newUrl;
         } else {
-            alert(data.error || T.error_uploading_photo);
+            alert(data.error || T.error_uploading_photo || 'שגיאה בהעלאת תמונה');
         }
-    } catch {
-        alert(T.error_uploading_photo);
+    } catch(e) {
+        alert(T.error_uploading_photo || 'שגיאה בהעלאת תמונה');
     }
     input.value = '';
 }

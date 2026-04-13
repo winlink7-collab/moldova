@@ -444,6 +444,22 @@ class ApiController {
             $fields[] = 'email = ?';
             $params[] = trim($data['email']);
         }
+        if (isset($data['avatar'])) {
+            // Ensure avatar column exists (ignore errors)
+            try { $this->db->execute("ALTER TABLE users ADD COLUMN avatar VARCHAR(500) DEFAULT NULL"); } catch (\Exception $e) {}
+            $fields[] = 'avatar = ?';
+            $params[] = trim($data['avatar']);
+        }
+        if (isset($data['city'])) {
+            try { $this->db->execute("ALTER TABLE users ADD COLUMN city VARCHAR(100) DEFAULT NULL"); } catch (\Exception $e) {}
+            $fields[] = 'city = ?';
+            $params[] = trim($data['city']);
+        }
+        if (isset($data['age'])) {
+            try { $this->db->execute("ALTER TABLE users ADD COLUMN age INT DEFAULT NULL"); } catch (\Exception $e) {}
+            $fields[] = 'age = ?';
+            $params[] = intval($data['age']);
+        }
 
         if (empty($fields)) {
             return $this->jsonResponse(['error' => 'לא נשלחו שדות לעדכון'], 400);
