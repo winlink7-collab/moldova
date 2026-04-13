@@ -437,7 +437,13 @@ document.getElementById('leadForm').addEventListener('submit', async (e) => {
             grid.innerHTML = `<p class="text-slate-500 text-center col-span-full py-12">${T.no_reviews_yet}</p>`;
             return;
         }
-        grid.innerHTML = reviews.slice(0, 6).map(r => {
+        grid.innerHTML = reviews.slice(0, 6).map(rawR => {
+            // Auto-translate review content if not Hebrew
+            const r = Object.assign({}, rawR);
+            if (typeof autoTranslate === 'function' && LANG && LANG !== 'he') {
+                r.client_name = autoTranslate(r.client_name || '', LANG, true);
+                r.review_text = autoTranslate(r.review_text || '', LANG);
+            }
             const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
             const initials = r.client_name.split(' ').map(w => w[0]).join('');
             return `
