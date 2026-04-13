@@ -94,9 +94,9 @@ require BASE_PATH . '/app/views/layouts/header.php';
                         <div class="relative">
                             <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">favorite</span>
                             <select id="interest" class="w-full bg-white/10 border-2 border-white/25 rounded-xl py-3.5 pr-11 pl-4 text-white text-base focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none transition-all appearance-none cursor-pointer">
-                                <option class="bg-background-dark"><?= t('home_form_interest1') ?></option>
-                                <option class="bg-background-dark"><?= t('home_form_interest2') ?></option>
-                                <option class="bg-background-dark"><?= t('home_form_interest3') ?></option>
+                                <option style="background:#1a1810;color:#fff;padding:10px;"><?= t('home_form_interest1') ?></option>
+                                <option style="background:#1a1810;color:#fff;padding:10px;"><?= t('home_form_interest2') ?></option>
+                                <option style="background:#1a1810;color:#fff;padding:10px;"><?= t('home_form_interest3') ?></option>
                             </select>
                             <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl pointer-events-none">expand_more</span>
                         </div>
