@@ -45,7 +45,7 @@ class WhatsAppService {
     private static function checkRateLimit($phone) {
         $db = Database::getInstance();
         $recent = $db->fetchOne(
-            "SELECT id FROM whatsapp_otps WHERE phone = ? AND created_at > DATE_SUB(NOW(), INTERVAL 60 SECOND) ORDER BY id DESC LIMIT 1",
+            "SELECT id FROM whatsapp_otps WHERE phone = ? AND created_at > DATE_SUB(NOW(), INTERVAL 30 SECOND) ORDER BY id DESC LIMIT 1",
             [$phone]
         );
         return !$recent;
@@ -70,9 +70,9 @@ class WhatsAppService {
             return ['success' => false, 'message' => 'מספר טלפון לא תקין'];
         }
 
-        // Rate limit check
+        // Rate limit check - return success if recently sent (don't error)
         if (!self::checkRateLimit($phone)) {
-            return ['success' => false, 'message' => 'נשלח קוד לאחרונה. אנא המתן דקה לפני ניסיון חוזר'];
+            return ['success' => true, 'message' => 'קוד אימות כבר נשלח. בדוק את הוואטסאפ שלך'];
         }
 
         $creds = self::getCredentials();
