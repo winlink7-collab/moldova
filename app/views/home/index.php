@@ -63,34 +63,34 @@ require BASE_PATH . '/app/views/layouts/header.php';
 
             <div class="relative">
                 <div class="inline-block px-3 py-1 bg-primary/10 border border-primary/30 rounded-full mb-3">
-                    <span class="text-primary text-xs font-bold tracking-widest uppercase">✨ VIP Club</span>
+                    <span id="homeFormBadge" class="text-primary text-xs font-bold tracking-widest uppercase">✨ VIP Club</span>
                 </div>
                 <h3 id="homeFormTitle" class="text-3xl md:text-4xl font-black mb-3" style="color:#ffffff !important; text-shadow: 0 2px 10px rgba(0,0,0,0.5);"><?= t('home_form_title') ?></h3>
-                <p class="text-base md:text-lg mb-7" style="color:#e2e8f0 !important;"><?= t('home_form_subtitle') ?? 'השאירו פרטים ונחזור אליכם בוואטסאפ' ?></p>
+                <p id="homeFormSubtitle" class="text-base md:text-lg mb-7" style="color:#e2e8f0 !important;"><?= t('home_form_subtitle') ?? 'השאירו פרטים ונחזור אליכם בוואטסאפ' ?></p>
 
                 <form id="leadForm" class="space-y-4">
                     <div class="grid grid-cols-3 gap-3">
                         <div class="col-span-2">
-                            <label class="text-sm font-bold uppercase tracking-wider mb-2 block" style="color:#ffffff !important;"><?= t('home_form_name') ?></label>
+                            <label id="homeFormLabelName" class="text-sm font-bold uppercase tracking-wider mb-2 block" style="color:#ffffff !important;"><?= t('home_form_name') ?></label>
                             <div class="relative">
                                 <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">person</span>
                                 <input id="fullName" class="w-full bg-white/10 border-2 border-white/25 rounded-xl py-3.5 pr-11 pl-4 text-white text-base focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none transition-all placeholder:text-slate-400" placeholder="ישראל ישראלי" type="text" required/>
                             </div>
                         </div>
                         <div>
-                            <label class="text-sm font-bold uppercase tracking-wider mb-2 block" style="color:#ffffff !important;"><?= t('home_form_age') ?></label>
+                            <label id="homeFormLabelAge" class="text-sm font-bold uppercase tracking-wider mb-2 block" style="color:#ffffff !important;"><?= t('home_form_age') ?></label>
                             <input id="age" class="w-full bg-white/10 border-2 border-white/25 rounded-xl py-3.5 px-3 text-white text-center text-base focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none transition-all placeholder:text-slate-400" placeholder="35" type="number" min="18"/>
                         </div>
                     </div>
                     <div>
-                        <label class="text-sm font-bold uppercase tracking-wider mb-2 block" style="color:#ffffff !important;"><?= t('phone') ?? 'טלפון' ?></label>
+                        <label id="homeFormLabelPhone" class="text-sm font-bold uppercase tracking-wider mb-2 block" style="color:#ffffff !important;"><?= t('phone') ?? 'טלפון' ?></label>
                         <div class="relative">
                             <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[#25D366] text-xl">phone</span>
                             <input id="leadPhone" class="w-full bg-white/10 border-2 border-white/25 rounded-xl py-3.5 pr-11 pl-4 text-white text-base focus:border-[#25D366] focus:ring-2 focus:ring-[#25D366]/30 outline-none transition-all placeholder:text-slate-400" placeholder="050-1234567" type="tel" required dir="ltr"/>
                         </div>
                     </div>
                     <div>
-                        <label class="text-sm font-bold uppercase tracking-wider mb-2 block" style="color:#ffffff !important;"><?= t('home_form_interest') ?></label>
+                        <label id="homeFormLabelInterest" class="text-sm font-bold uppercase tracking-wider mb-2 block" style="color:#ffffff !important;"><?= t('home_form_interest') ?></label>
                         <div class="relative">
                             <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">favorite</span>
                             <select id="interest" class="w-full bg-white/10 border-2 border-white/25 rounded-xl py-3.5 pr-11 pl-4 text-white text-base focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none transition-all appearance-none cursor-pointer">
@@ -105,13 +105,13 @@ require BASE_PATH . '/app/views/layouts/header.php';
                     <!-- WhatsApp CTA - Main and only button -->
                     <button id="submitBtn" type="submit" class="relative w-full py-4 bg-gradient-to-r from-[#25D366] via-[#1ebe5a] to-[#128C7E] text-white font-black text-base md:text-lg rounded-xl shadow-[0_8px_30px_rgba(37,211,102,0.4)] hover:shadow-[0_12px_40px_rgba(37,211,102,0.6)] hover:scale-[1.02] transition-all mt-4 overflow-hidden group flex items-center justify-center gap-2">
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                        <span><?= t('home_form_submit') ?? 'שלח לי הודעה בוואטסאפ' ?></span>
+                        <span id="homeFormSubmitText"><?= t('home_form_submit') ?? 'שלח לי הודעה בוואטסאפ' ?></span>
                     </button>
 
                     <div id="formMessage" class="hidden text-center text-sm pt-2 font-bold"></div>
                     <p class="text-center text-xs text-slate-300 pt-2 flex items-center justify-center gap-1">
                         <span class="material-symbols-outlined text-sm text-primary">lock</span>
-                        <?= t('home_form_disclaimer') ?>
+                        <span id="homeFormDisclaimer"><?= t('home_form_disclaimer') ?></span>
                     </p>
                 </form>
             </div>
@@ -369,6 +369,14 @@ document.getElementById('leadForm').addEventListener('submit', async (e) => {
         if (s.home_hero_subtitle) document.getElementById('homeHeroSubtitle').textContent = s.home_hero_subtitle;
         if (s.home_hero_bg) document.getElementById('homeHeroBg').style.backgroundImage = `url('${s.home_hero_bg}')`;
         if (s.home_form_title) document.getElementById('homeFormTitle').textContent = s.home_form_title;
+        if (s.home_form_badge) document.getElementById('homeFormBadge').textContent = s.home_form_badge;
+        if (s.home_form_subtitle) document.getElementById('homeFormSubtitle').textContent = s.home_form_subtitle;
+        if (s.home_form_label_name) document.getElementById('homeFormLabelName').textContent = s.home_form_label_name;
+        if (s.home_form_label_age) document.getElementById('homeFormLabelAge').textContent = s.home_form_label_age;
+        if (s.home_form_label_phone) document.getElementById('homeFormLabelPhone').textContent = s.home_form_label_phone;
+        if (s.home_form_label_interest) document.getElementById('homeFormLabelInterest').textContent = s.home_form_label_interest;
+        if (s.home_form_submit) document.getElementById('homeFormSubmitText').textContent = s.home_form_submit;
+        if (s.home_form_disclaimer) document.getElementById('homeFormDisclaimer').textContent = s.home_form_disclaimer;
         // Why us
         if (s.home_why_label) document.getElementById('homeWhyLabel').textContent = s.home_why_label;
         if (s.home_why_title) document.getElementById('homeWhyTitle').textContent = s.home_why_title;
