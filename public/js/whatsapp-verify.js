@@ -61,6 +61,9 @@ function openWhatsappVerify(phone, onSuccess) {
     // Save callback
     window._waOnSuccess = onSuccess || function(){};
 
+    // Auto-send OTP immediately
+    setTimeout(() => waSendOtp(phone), 300);
+
     // OTP input behavior
     setTimeout(() => {
         document.querySelectorAll('.wa-otp-input').forEach((input, i, arr) => {
