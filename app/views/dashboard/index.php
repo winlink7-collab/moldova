@@ -84,11 +84,11 @@
     <div class="max-w-4xl mx-auto">
 
         <div class="flex flex-col sm:flex-row items-center gap-6 mb-8 p-6 sm:p-8 bg-gradient-to-l from-primary/5 via-surface to-surface border border-border-gold/30 rounded-2xl gold-glow">
-            <div class="relative group">
-                <img id="dashAvatar" src="" alt="avatar" class="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-2 border-primary/40 shadow-lg bg-background-dark" />
-                <div class="absolute inset-0 flex items-center justify-center rounded-full bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer" onclick="document.getElementById('avatarInput').click()">
-                    <span class="material-symbols-outlined text-white text-2xl">photo_camera</span>
-                </div>
+            <div class="relative">
+                <img id="dashAvatar" src="" alt="avatar" class="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-2 border-primary/40 shadow-lg bg-background-dark cursor-pointer" onclick="document.getElementById('avatarInput').click()" />
+                <button type="button" onclick="document.getElementById('avatarInput').click()" class="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-lg hover:scale-110 transition-transform border-2 border-background-dark">
+                    <span class="material-symbols-outlined text-base">photo_camera</span>
+                </button>
                 <input id="avatarInput" type="file" accept="image/*" class="hidden" onchange="uploadAvatar(this)" />
             </div>
             <div class="text-center sm:text-right flex-1">
