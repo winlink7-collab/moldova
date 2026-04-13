@@ -89,15 +89,6 @@ class WhatsAppService {
         $otp = self::generateOtp();
         $expiresAt = date('Y-m-d H:i:s', strtotime('+10 minutes'));
 
-        // Save OTP to DB
-        $db = Database::getInstance();
-        $otpId = $db->insert('whatsapp_otps', [
-            'phone' => $phone,
-            'code' => hash('sha256', $otp), // Store hashed
-            'expires_at' => $expiresAt,
-            'created_at' => date('Y-m-d H:i:s')
-        ]);
-
         // Build message
         $message = "🔐 קוד האימות שלך לאתר Moldova & Ukraine Luxury Brides:\n\n"
             . "*{$otp}*\n\n"
@@ -132,6 +123,13 @@ class WhatsAppService {
         if ($httpCode >= 200 && $httpCode < 300) {
             $data = json_decode($response, true);
             if (!empty($data['idMessage'])) {
+                // Save OTP to DB only on success
+                $otpId = $db->insert('whatsapp_otps', [
+                    'phone' => $phone,
+                    'code' => hash('sha256', $otp),
+                    'expires_at' => $expiresAt,
+                    'created_at' => date('Y-m-d H:i:s')
+                ]);
                 return ['success' => true, 'message' => 'קוד אימות נשלח לוואטסאפ', 'otp_id' => $otpId];
             }
         }
