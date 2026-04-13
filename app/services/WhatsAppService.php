@@ -70,15 +70,19 @@ class WhatsAppService {
             return ['success' => false, 'message' => 'מספר טלפון לא תקין'];
         }
 
-        // Rate limit check - only block if very recent (15 sec)
         $db = Database::getInstance();
-        $veryRecent = $db->fetchOne(
-            "SELECT id FROM whatsapp_otps WHERE phone = ? AND created_at > DATE_SUB(NOW(), INTERVAL 15 SECOND) ORDER BY id DESC LIMIT 1",
+
+        // Very short rate limit (5 sec) - prevents spam clicks
+        $spamCheck = $db->fetchOne(
+            "SELECT id FROM whatsapp_otps WHERE phone = ? AND created_at > DATE_SUB(NOW(), INTERVAL 5 SECOND) ORDER BY id DESC LIMIT 1",
             [$phone]
         );
-        if ($veryRecent) {
+        if ($spamCheck) {
             return ['success' => true, 'message' => 'קוד נשלח. בדוק את הוואטסאפ שלך'];
         }
+
+        // Clean up old unused OTPs for this phone (expired or > 5 min old)
+        $db->execute("DELETE FROM whatsapp_otps WHERE phone = ? AND (expires_at < NOW() OR created_at < DATE_SUB(NOW(), INTERVAL 5 MINUTE))", [$phone]);
 
         $creds = self::getCredentials();
         if (!$creds['id_instance'] || !$creds['api_token']) {
