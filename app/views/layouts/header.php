@@ -623,12 +623,28 @@ function tr(key) { return (T && T[key]) ? T[key] : key; }
                 English
             </a>
         </div>
-        <div class="flex gap-3 pt-3 border-t border-white/10">
+        <!-- Mobile auth buttons - Logged out -->
+        <div id="mobileAuthButtons" class="flex gap-3 pt-3 border-t border-white/10">
             <button onclick="openModal('loginModal')" class="flex-1 px-4 py-2.5 border border-primary/30 hover:bg-primary/10 text-primary text-sm font-bold rounded-lg transition-all text-center">
                 <?= t('login') ?>
             </button>
             <button onclick="openModal('registerModal')" class="flex-1 px-4 py-2.5 bg-primary hover:bg-primary/90 text-background-dark text-sm font-bold rounded-lg transition-all text-center">
                 <?= t('register') ?>
+            </button>
+        </div>
+        <!-- Mobile user menu - Logged in -->
+        <div id="mobileUserMenu" class="hidden flex-col gap-2 pt-3 border-t border-white/10">
+            <a href="<?= BASE_URL ?>/dashboard" class="flex items-center justify-center gap-2 px-4 py-3 bg-primary/10 border border-primary/30 text-primary text-sm font-bold rounded-lg">
+                <span class="material-symbols-outlined text-lg">account_circle</span>
+                <span id="mobileUserName"><?= t('my_area') ?></span>
+            </a>
+            <a href="<?= BASE_URL ?>/search" class="flex items-center justify-center gap-2 px-4 py-3 bg-white/5 text-slate-200 text-sm font-bold rounded-lg">
+                <span class="material-symbols-outlined text-lg">search</span>
+                <?= t('search_profiles') ?>
+            </a>
+            <button onclick="logout()" class="flex items-center justify-center gap-2 px-4 py-3 border border-red-500/30 text-red-400 hover:bg-red-500/10 text-sm font-bold rounded-lg transition-all">
+                <span class="material-symbols-outlined text-lg">logout</span>
+                <?= t('logout') ?>
             </button>
         </div>
     </nav>

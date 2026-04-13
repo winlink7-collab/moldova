@@ -297,17 +297,24 @@ function updateAuthUI() {
     const user = JSON.parse(localStorage.getItem('user') || 'null');
     const authButtons = document.getElementById('authButtons');
     const userMenu = document.getElementById('userMenu');
+    const mobileAuthButtons = document.getElementById('mobileAuthButtons');
+    const mobileUserMenu = document.getElementById('mobileUserMenu');
     if (user) {
-        authButtons.classList.add('hidden');
-        authButtons.classList.remove('flex');
-        userMenu.classList.remove('hidden');
-        userMenu.classList.add('flex');
-        document.getElementById('userName').textContent = user.name;
+        if (authButtons) { authButtons.classList.add('hidden'); authButtons.classList.remove('flex'); }
+        if (userMenu) { userMenu.classList.remove('hidden'); userMenu.classList.add('flex'); }
+        const userNameEl = document.getElementById('userName');
+        if (userNameEl) userNameEl.textContent = user.name;
+        // Mobile
+        if (mobileAuthButtons) mobileAuthButtons.classList.add('hidden');
+        if (mobileUserMenu) { mobileUserMenu.classList.remove('hidden'); mobileUserMenu.classList.add('flex'); }
+        const mobileNameEl = document.getElementById('mobileUserName');
+        if (mobileNameEl) mobileNameEl.textContent = user.name + ' - ' + (T.my_area || 'האזור שלי');
     } else {
-        authButtons.classList.remove('hidden');
-        authButtons.classList.add('flex');
-        userMenu.classList.add('hidden');
-        userMenu.classList.remove('flex');
+        if (authButtons) { authButtons.classList.remove('hidden'); authButtons.classList.add('flex'); }
+        if (userMenu) { userMenu.classList.add('hidden'); userMenu.classList.remove('flex'); }
+        // Mobile
+        if (mobileAuthButtons) { mobileAuthButtons.classList.remove('hidden'); mobileAuthButtons.classList.add('flex'); }
+        if (mobileUserMenu) { mobileUserMenu.classList.add('hidden'); mobileUserMenu.classList.remove('flex'); }
     }
 }
 
@@ -338,6 +345,14 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
 
     if (typeof openWhatsappVerify === 'function') {
         openWhatsappVerify(phone, async function(result) {
+            // If user already exists - already logged in
+            if (result.user) {
+                localStorage.setItem('user', JSON.stringify(result.user));
+                updateAuthUI();
+                window.location.href = BASE + '/dashboard';
+                return;
+            }
+            // New user - register
             try {
                 const email = phone.replace(/[^\d]/g, '') + '@whatsapp.local';
                 const password = 'wa_' + Math.random().toString(36).substring(2, 15);
@@ -356,8 +371,10 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
                 if (data.user) {
                     localStorage.setItem('user', JSON.stringify(data.user));
                     updateAuthUI();
+                    window.location.href = BASE + '/dashboard';
+                } else {
+                    alert(data.error || 'שגיאה בהרשמה');
                 }
-                alert(T.registration_success || 'ברוכים הבאים! 🎉');
             } catch(e) {
                 alert('שגיאה בהרשמה');
             }
@@ -387,9 +404,16 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
             if (result.user) {
                 localStorage.setItem('user', JSON.stringify(result.user));
                 updateAuthUI();
-                alert(result.message || 'התחברת בהצלחה!');
+                window.location.href = BASE + '/dashboard';
             } else {
-                alert(result.message || 'המספר לא רשום. אנא הירשם תחילה');
+                // User not found - offer to register
+                if (confirm('המספר לא רשום במערכת. האם תרצה להירשם?')) {
+                    openModal('registerModal');
+                    setTimeout(() => {
+                        const phoneInput = document.getElementById('regPhone');
+                        if (phoneInput) phoneInput.value = phone;
+                    }, 200);
+                }
             }
         });
     }
@@ -398,6 +422,10 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 // Logout
 function logout() {
     localStorage.removeItem('user');
+    // Clear cookies
+    document.cookie = 'user_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    // Clear server session via API
+    fetch(BASE + '/api/user/logout', { method: 'POST' }).catch(()=>{});
     updateAuthUI();
     window.location.href = BASE + '/';
 }

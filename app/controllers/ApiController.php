@@ -384,6 +384,13 @@ class ApiController {
             case 'messages':
                 $this->getUserMessages();
                 break;
+            case 'logout':
+                unset($_SESSION['user_id']);
+                unset($_SESSION['user_name']);
+                unset($_SESSION['user_email']);
+                setcookie('user_token', '', time() - 3600, '/', '', false, true);
+                $this->jsonResponse(['message' => 'התנתקת בהצלחה']);
+                break;
             default:
                 $this->jsonResponse(['error' => 'User route not found'], 404);
         }
