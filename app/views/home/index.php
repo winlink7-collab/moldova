@@ -56,39 +56,79 @@ require BASE_PATH . '/app/views/layouts/header.php';
         </div>
 
         <!-- Lead Form -->
-        <div class="bg-accent-dark/95 border border-primary/20 p-8 md:p-10 rounded-2xl shadow-2xl backdrop-blur-xl">
-            <h3 id="homeFormTitle" class="text-2xl font-bold text-white mb-6"><?= t('home_form_title') ?></h3>
-            <form id="leadForm" class="space-y-4">
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="space-y-2">
-                        <label class="text-xs font-bold text-gold-muted uppercase tracking-wider"><?= t('home_form_name') ?></label>
-                        <input id="fullName" class="w-full bg-white/5 border-white/10 rounded-lg py-3 px-4 text-white focus:ring-primary focus:border-primary" placeholder="" type="text" required/>
+        <div class="relative bg-gradient-to-br from-[#1a1810] via-[#12110a] to-[#1a1810] border border-primary/30 p-6 md:p-8 rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.5)] backdrop-blur-xl overflow-hidden">
+            <!-- Decorative gold glow -->
+            <div class="absolute -top-20 -right-20 w-60 h-60 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-[#25D366]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="relative">
+                <div class="inline-block px-3 py-1 bg-primary/10 border border-primary/30 rounded-full mb-3">
+                    <span class="text-primary text-xs font-bold tracking-widest uppercase">✨ VIP Club</span>
+                </div>
+                <h3 id="homeFormTitle" class="text-2xl md:text-3xl font-black text-white mb-2"><?= t('home_form_title') ?></h3>
+                <p class="text-slate-400 text-sm mb-6"><?= t('home_form_subtitle') ?? 'השאירו פרטים ונחזור אליכם בוואטסאפ' ?></p>
+
+                <form id="leadForm" class="space-y-3">
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="col-span-2">
+                            <label class="text-[10px] font-bold text-primary uppercase tracking-widest mb-1.5 block"><?= t('home_form_name') ?></label>
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-base">person</span>
+                                <input id="fullName" class="w-full bg-white/5 border border-white/10 rounded-xl py-3 pr-10 pl-4 text-white text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none transition-all placeholder:text-slate-600" placeholder="ישראל ישראלי" type="text" required/>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-primary uppercase tracking-widest mb-1.5 block"><?= t('home_form_age') ?></label>
+                            <input id="age" class="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-3 text-white text-center text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none transition-all placeholder:text-slate-600" placeholder="35" type="number" min="18"/>
+                        </div>
                     </div>
-                    <div class="space-y-2">
-                        <label class="text-xs font-bold text-gold-muted uppercase tracking-wider"><?= t('home_form_age') ?></label>
-                        <input id="age" class="w-full bg-white/5 border-white/10 rounded-lg py-3 px-4 text-white focus:ring-primary focus:border-primary" placeholder="35+" type="number"/>
+                    <div>
+                        <label class="text-[10px] font-bold text-primary uppercase tracking-widest mb-1.5 block"><?= t('phone') ?? 'טלפון' ?></label>
+                        <div class="relative">
+                            <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[#25D366] text-base">phone</span>
+                            <input id="leadPhone" class="w-full bg-white/5 border border-white/10 rounded-xl py-3 pr-10 pl-4 text-white text-sm focus:border-[#25D366] focus:ring-2 focus:ring-[#25D366]/30 outline-none transition-all placeholder:text-slate-600" placeholder="050-1234567" type="tel" required dir="ltr"/>
+                        </div>
                     </div>
-                </div>
-                <div class="space-y-2">
-                    <label class="text-xs font-bold text-gold-muted uppercase tracking-wider"><?= t('home_form_email') ?></label>
-                    <input id="email" class="w-full bg-white/5 border-white/10 rounded-lg py-3 px-4 text-white focus:ring-primary focus:border-primary" placeholder="email@example.com" type="email" required/>
-                </div>
-                <div class="space-y-2">
-                    <label class="text-xs font-bold text-gold-muted uppercase tracking-wider"><?= t('home_form_interest') ?></label>
-                    <select id="interest" class="w-full bg-white/5 border-white/10 rounded-lg py-3 px-4 text-white focus:ring-primary focus:border-primary appearance-none">
-                        <option><?= t('home_form_interest1') ?></option>
-                        <option><?= t('home_form_interest2') ?></option>
-                        <option><?= t('home_form_interest3') ?></option>
-                    </select>
-                </div>
-                <button id="submitBtn" class="w-full py-4 bg-primary text-background-dark font-black text-lg rounded-lg shadow-[0_4px_20px_rgba(242,208,13,0.3)] hover:translate-y-[-2px] transition-all" type="submit">
-                    <?= t('home_form_submit') ?>
-                </button>
-                <div id="formMessage" class="hidden text-center text-sm pt-2 font-bold"></div>
-                <p class="text-center text-[11px] text-gold-muted pt-2 italic">
-                    <?= t('home_form_disclaimer') ?>
-                </p>
-            </form>
+                    <div>
+                        <label class="text-[10px] font-bold text-primary uppercase tracking-widest mb-1.5 block"><?= t('home_form_interest') ?></label>
+                        <div class="relative">
+                            <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-base">favorite</span>
+                            <select id="interest" class="w-full bg-white/5 border border-white/10 rounded-xl py-3 pr-10 pl-4 text-white text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 outline-none transition-all appearance-none cursor-pointer">
+                                <option class="bg-background-dark"><?= t('home_form_interest1') ?></option>
+                                <option class="bg-background-dark"><?= t('home_form_interest2') ?></option>
+                                <option class="bg-background-dark"><?= t('home_form_interest3') ?></option>
+                            </select>
+                            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-base pointer-events-none">expand_more</span>
+                        </div>
+                    </div>
+
+                    <!-- Main CTA -->
+                    <button id="submitBtn" class="relative w-full py-4 bg-gradient-to-r from-primary via-[#f9dc12] to-[#b89b06] text-background-dark font-black text-base rounded-xl shadow-[0_8px_30px_rgba(242,208,13,0.4)] hover:shadow-[0_12px_40px_rgba(242,208,13,0.6)] hover:scale-[1.02] transition-all mt-4 overflow-hidden group" type="submit">
+                        <span class="relative z-10 flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined">send</span>
+                            <?= t('home_form_submit') ?>
+                        </span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                    </button>
+
+                    <!-- WhatsApp CTA -->
+                    <div class="relative flex items-center gap-3 my-3">
+                        <div class="flex-1 h-px bg-white/10"></div>
+                        <span class="text-xs text-slate-500"><?= t('or') ?? 'או' ?></span>
+                        <div class="flex-1 h-px bg-white/10"></div>
+                    </div>
+                    <a id="leadWhatsappBtn" href="#" class="flex items-center justify-center gap-2 w-full py-3.5 bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white font-black text-base rounded-xl shadow-[0_8px_30px_rgba(37,211,102,0.3)] hover:shadow-[0_12px_40px_rgba(37,211,102,0.5)] hover:scale-[1.02] transition-all">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        <?= t('contact_whatsapp_direct') ?? 'שלח הודעה בוואטסאפ' ?>
+                    </a>
+
+                    <div id="formMessage" class="hidden text-center text-sm pt-2 font-bold"></div>
+                    <p class="text-center text-[11px] text-slate-500 pt-2 flex items-center justify-center gap-1">
+                        <span class="material-symbols-outlined text-xs">lock</span>
+                        <?= t('home_form_disclaimer') ?>
+                    </p>
+                </form>
+            </div>
         </div>
     </div>
 </section>
@@ -294,7 +334,7 @@ document.getElementById('leadForm').addEventListener('submit', async (e) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 name: document.getElementById('fullName').value,
-                email: document.getElementById('email').value,
+                phone: document.getElementById('leadPhone').value,
                 message: (document.getElementById('interest').value || '') + (document.getElementById('age').value ? ' | ' + T.age_label_prefix + ': ' + document.getElementById('age').value : ''),
                 source: 'hero_form'
             })
@@ -315,6 +355,20 @@ document.getElementById('leadForm').addEventListener('submit', async (e) => {
     btn.disabled = false;
     btn.textContent = T.home_form_submit;
 });
+
+// Set WhatsApp button link from settings
+(async function() {
+    try {
+        const res = await fetch(BASE + '/api/admin/settings');
+        const s = await res.json();
+        if (s.whatsapp) {
+            const num = s.whatsapp.replace(/[^0-9]/g, '');
+            const msg = encodeURIComponent(T.whatsapp_message || 'שלום, אני מעוניין להכיר בחורה');
+            const btn = document.getElementById('leadWhatsappBtn');
+            if (btn) btn.href = 'https://wa.me/' + num + '?text=' + msg;
+        }
+    } catch(e) {}
+})();
 
 // Load home page settings
 (async function loadHomeSettings() {
