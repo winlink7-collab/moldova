@@ -340,20 +340,29 @@ class ApiController {
             return $this->jsonResponse(['error' => 'קוד שגוי או שפג תוקף'], 400);
         }
 
-        // Mark user as verified if exists
+        // Find user by phone (any format)
         $normalizedPhone = WhatsAppService::normalizePhone($phone);
-        $user = $this->db->fetchOne("SELECT id FROM users WHERE REPLACE(REPLACE(REPLACE(phone, '-', ''), ' ', ''), '+', '') LIKE ?", ['%' . substr($normalizedPhone, -9) . '%']);
+        $last9 = substr($normalizedPhone, -9);
+        $user = $this->db->fetchOne(
+            "SELECT id, name, email, phone, vip_level FROM users
+             WHERE REPLACE(REPLACE(REPLACE(REPLACE(phone, '-', ''), ' ', ''), '+', ''), '(', '') LIKE ?
+             ORDER BY id DESC LIMIT 1",
+            ['%' . $last9 . '%']
+        );
 
         if ($user) {
+            // Existing user - verify and log in
             $this->db->execute('UPDATE users SET email_verified = 1, verify_token = NULL WHERE id = ?', [$user['id']]);
-            $userData = $this->db->fetchOne('SELECT id, name, email, phone, vip_level FROM users WHERE id = ?', [$user['id']]);
             $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_name'] = $userData['name'];
-            $_SESSION['user_email'] = $userData['email'];
-            return $this->jsonResponse(['message' => 'אומת בהצלחה! כעת אתה מחובר', 'user' => $userData]);
+            $_SESSION['user_name'] = $user['name'];
+            $_SESSION['user_email'] = $user['email'];
+            // Set cookie token for Varnish/session compatibility
+            setcookie('user_token', hash('sha256', $user['email'] . session_id()), time() + 86400 * 30, '/', '', false, true);
+            return $this->jsonResponse(['message' => 'התחברת בהצלחה!', 'user' => $user]);
         }
 
-        $this->jsonResponse(['message' => 'קוד תקין']);
+        // User doesn't exist yet - return code valid, frontend will register
+        $this->jsonResponse(['message' => 'קוד תקין', 'verified' => true, 'phone' => $normalizedPhone]);
     }
 
     // ========================
