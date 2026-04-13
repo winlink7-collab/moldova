@@ -364,9 +364,14 @@ function navClass(string $page, string $current): string {
     html.light main .bg-zinc-900\/80,
     html.light main .bg-zinc-900\/40,
     html.light main [class*="bg-zinc-900"] {
-        background: #ffffff !important;
-        border-color: rgba(184,155,6,0.2) !important;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        background: linear-gradient(135deg, #ffffff 0%, #f8f7f0 100%) !important;
+        border: 2px solid rgba(184,155,6,0.15) !important;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.08), 0 4px 12px rgba(184,155,6,0.05) !important;
+    }
+    html.light main .bg-zinc-900\/90 {
+        background: linear-gradient(135deg, #fff8db 0%, #fffceb 50%, #ffffff 100%) !important;
+        border: 3px solid #f2d00d !important;
+        box-shadow: 0 20px 60px rgba(242,208,13,0.25), 0 8px 24px rgba(242,208,13,0.15) !important;
     }
     html.light main .bg-zinc-900\/80 h3,
     html.light main .bg-zinc-900\/80 span[id*="Price"],

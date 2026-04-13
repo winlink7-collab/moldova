@@ -55,7 +55,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
                     <span id="vipPkg1Feat4" class="text-lg"><?= t('vip_pkg1_feat4') ?></span>
                 </li>
             </ul>
-            <button id="vipPkg1Btn" onclick="openModal('registerModal')" class="w-full py-5 border-2 border-[#E5E4E2]/50 text-[#E5E4E2] rounded-xl font-black hover:bg-[#E5E4E2] hover:text-background-dark transition-all uppercase tracking-widest text-sm">
+            <button id="vipPkg1Btn" onclick="openModal('registerModal')" class="w-full py-5 bg-gradient-to-r from-[#E5E4E2] to-[#bdbdbd] text-background-dark rounded-xl font-black hover:scale-[1.02] hover:shadow-xl hover:shadow-[#E5E4E2]/30 transition-all uppercase tracking-widest text-sm shadow-lg">
                 <?= t('vip_pkg1_btn') ?>
             </button>
         </div>
@@ -137,7 +137,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
                     <span id="vipPkg3Feat5" class="text-lg"><?= t('vip_pkg3_feat5') ?></span>
                 </li>
             </ul>
-            <button id="vipPkg3Btn" onclick="openModal('registerModal')" class="w-full py-5 border-2 border-[#b9f2ff]/50 text-[#b9f2ff] rounded-xl font-black hover:bg-[#b9f2ff] hover:text-background-dark transition-all uppercase tracking-widest text-sm relative z-10">
+            <button id="vipPkg3Btn" onclick="openModal('registerModal')" class="w-full py-5 bg-gradient-to-r from-[#b9f2ff] to-[#3b82f6] text-white rounded-xl font-black hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-500/30 transition-all uppercase tracking-widest text-sm shadow-lg relative z-10">
                 <?= t('vip_pkg3_btn') ?>
             </button>
         </div>
