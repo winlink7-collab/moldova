@@ -608,19 +608,19 @@ body.aie-nav-open header.sticky { right: 300px; width: calc(100% - 300px); }
             linkHTML = `<div class="aie-section-label">קישור / וואטסאפ</div>
                 <div class="aie-field-row">
                     <label>URL</label>
-                    <input type="url" class="aie-link-input" value="${linkHref.replace(/"/g, '&quot;')}" placeholder="https://... או /page" dir="ltr" style="flex:1"/>
+                    <input type="url" class="aie-link-input" value="${linkHref.replace(/"/g, '&quot;')}" placeholder="https://... או /page" dir="ltr" style="flex:1;color:#fff !important;background:#0f0e08 !important;"/>
                 </div>
-                <div style="padding:8px;background:rgba(37,211,102,0.1);border:1px solid rgba(37,211,102,0.3);border-radius:6px;margin:6px 0;">
-                    <p style="font-size:11px;color:#25D366;font-weight:bold;margin-bottom:6px;">🟢 בנה קישור וואטסאפ:</p>
-                    <div class="aie-field-row">
-                        <label style="font-size:11px;">טלפון</label>
-                        <input type="tel" class="aie-wa-phone" value="${currentPhone}" placeholder="972501234567" dir="ltr" style="flex:1;font-size:12px;"/>
+                <div style="padding:10px;background:rgba(37,211,102,0.08);border:1px solid rgba(37,211,102,0.3);border-radius:8px;margin:8px 0;">
+                    <p style="font-size:12px;color:#25D366;font-weight:bold;margin-bottom:8px;">🟢 בנה קישור וואטסאפ:</p>
+                    <div class="aie-field-row" style="margin-bottom:6px;">
+                        <label style="font-size:12px;color:#fff;min-width:60px;">טלפון</label>
+                        <input type="tel" class="aie-wa-phone" value="${currentPhone}" placeholder="972501234567" dir="ltr" style="flex:1;font-size:13px;color:#fff !important;background:#0f0e08 !important;padding:8px;border:1px solid rgba(255,255,255,0.2);border-radius:4px;"/>
                     </div>
-                    <div class="aie-field-row">
-                        <label style="font-size:11px;">הודעה</label>
-                        <input type="text" class="aie-wa-msg" value="${currentMsg.replace(/"/g, '&quot;')}" placeholder="שלום, אני מעוניין..." style="flex:1;font-size:12px;"/>
+                    <div class="aie-field-row" style="margin-bottom:6px;">
+                        <label style="font-size:12px;color:#fff;min-width:60px;">הודעה</label>
+                        <input type="text" class="aie-wa-msg" value="${currentMsg.replace(/"/g, '&quot;')}" placeholder="שלום, אני מעוניין..." style="flex:1;font-size:13px;color:#fff !important;background:#0f0e08 !important;padding:8px;border:1px solid rgba(255,255,255,0.2);border-radius:4px;"/>
                     </div>
-                    <button type="button" class="aie-wa-build" style="margin-top:6px;background:#25D366;color:#fff;border:none;border-radius:6px;padding:6px 12px;font-size:12px;cursor:pointer;font-weight:bold;width:100%;">בנה קישור וואטסאפ</button>
+                    <button type="button" class="aie-wa-build" style="margin-top:8px;background:#25D366;color:#fff;border:none;border-radius:6px;padding:8px 12px;font-size:13px;cursor:pointer;font-weight:bold;width:100%;">בנה קישור וואטסאפ</button>
                 </div>`;
         }
 
