@@ -149,9 +149,17 @@ class WhatsAppService {
      */
     public static function verifyOtp($phone, $code) {
         $phone = self::normalizePhone($phone);
-        $hashedCode = hash('sha256', trim($code));
+        $cleanCode = preg_replace('/[^0-9]/', '', trim($code));
+        $hashedCode = hash('sha256', $cleanCode);
 
         $db = Database::getInstance();
+
+        // Debug log
+        @file_put_contents(BASE_PATH . '/uploads/whatsapp_log.txt',
+            date('Y-m-d H:i:s') . " | VERIFY | Phone:$phone | Code:$cleanCode | Hash:" . substr($hashedCode, 0, 16) . "\n",
+            FILE_APPEND);
+
+        // First, try exact match
         $otp = $db->fetchOne(
             "SELECT id FROM whatsapp_otps
              WHERE phone = ? AND code = ? AND expires_at > NOW() AND used = 0
@@ -159,7 +167,14 @@ class WhatsAppService {
             [$phone, $hashedCode]
         );
 
-        if (!$otp) return false;
+        if (!$otp) {
+            // Log the miss - what's in DB for this phone?
+            $allOtps = $db->fetchAll("SELECT id, LEFT(code,10) as code_prefix, used, expires_at FROM whatsapp_otps WHERE phone = ? ORDER BY id DESC LIMIT 3", [$phone]);
+            @file_put_contents(BASE_PATH . '/uploads/whatsapp_log.txt',
+                date('Y-m-d H:i:s') . " | VERIFY MISS | Phone:$phone | In DB: " . json_encode($allOtps) . "\n",
+                FILE_APPEND);
+            return false;
+        }
 
         // Mark as used
         $db->execute('UPDATE whatsapp_otps SET used = 1 WHERE id = ?', [$otp['id']]);
