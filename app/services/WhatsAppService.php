@@ -72,16 +72,7 @@ class WhatsAppService {
 
         $db = Database::getInstance();
 
-        // Very short rate limit (5 sec) - prevents spam clicks
-        $spamCheck = $db->fetchOne(
-            "SELECT id FROM whatsapp_otps WHERE phone = ? AND created_at > DATE_SUB(NOW(), INTERVAL 5 SECOND) ORDER BY id DESC LIMIT 1",
-            [$phone]
-        );
-        if ($spamCheck) {
-            return ['success' => true, 'message' => 'קוד נשלח. בדוק את הוואטסאפ שלך'];
-        }
-
-        // Invalidate ALL previous OTPs for this phone - ensures only newest code works
+        // Always delete previous OTPs and send fresh code
         $db->execute("DELETE FROM whatsapp_otps WHERE phone = ?", [$phone]);
 
         $creds = self::getCredentials();

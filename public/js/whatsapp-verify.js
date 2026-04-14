@@ -91,9 +91,9 @@ async function waSendOtp(phone) {
     err.classList.add('hidden');
 
     try {
-        const res = await fetch(BASE + '/api/send-whatsapp-otp', {
+        const res = await fetch(BASE + '/api/send-whatsapp-otp?t=' + Date.now(), {
             method: 'POST',
-            headers: {'Content-Type':'application/json'},
+            headers: {'Content-Type':'application/json', 'Cache-Control':'no-cache'},
             body: JSON.stringify({phone: phone})
         });
         const data = await res.json();
