@@ -570,15 +570,28 @@ function tr(key) { return (T && T[key]) ? T[key] : key; }
 
     <!-- Logo -->
     <a href="<?= BASE_URL ?>/" class="flex items-center gap-3 shrink-0">
-        <div class="relative flex items-center justify-center size-10 bg-primary rounded-full shadow-[0_0_15px_rgba(242,208,13,0.4)]">
-            <span class="material-symbols-outlined text-background-dark text-2xl font-bold">workspace_premium</span>
-            <div class="absolute -top-1 -right-1">
-                <span class="material-symbols-outlined text-primary text-lg">favorite</span>
-            </div>
+        <div class="relative flex items-center justify-center size-12 shadow-[0_0_15px_rgba(242,208,13,0.4)]">
+            <svg viewBox="0 0 100 100" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="crownGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#ffd700"/>
+                        <stop offset="50%" style="stop-color:#f2d00d"/>
+                        <stop offset="100%" style="stop-color:#b89b06"/>
+                    </linearGradient>
+                </defs>
+                <!-- Crown base -->
+                <path d="M 15 55 L 20 80 L 80 80 L 85 55 L 70 65 L 60 45 L 50 60 L 40 45 L 30 65 Z" fill="url(#crownGold)" stroke="#8a7404" stroke-width="1"/>
+                <!-- Crown peaks -->
+                <circle cx="20" cy="55" r="3" fill="#ff3366"/>
+                <circle cx="50" cy="45" r="4" fill="#b9f2ff"/>
+                <circle cx="80" cy="55" r="3" fill="#ff3366"/>
+                <!-- Heart/diamond center -->
+                <path d="M 50 52 L 45 57 L 50 65 L 55 57 Z" fill="#b9f2ff" stroke="#fff" stroke-width="0.5"/>
+            </svg>
         </div>
         <div class="flex flex-col">
-            <h1 id="headerLogoTitle" class="text-xl font-extrabold leading-none tracking-tight text-slate-100 uppercase">Moldova &amp; Ukraine</h1>
-            <span id="headerLogoTagline" class="text-[10px] tracking-[0.3em] text-primary font-bold uppercase">Luxury Brides</span>
+            <h1 id="headerLogoTitle" class="text-xl md:text-2xl font-black leading-none tracking-tight uppercase" style="background:linear-gradient(135deg,#ffd700 0%,#f2d00d 50%,#b89b06 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Royal Date</h1>
+            <span id="headerLogoTagline" class="text-[10px] tracking-[0.25em] text-primary font-bold uppercase">Premium Dating Solutions</span>
         </div>
     </a>
 
