@@ -81,8 +81,8 @@ class WhatsAppService {
             return ['success' => true, 'message' => 'קוד נשלח. בדוק את הוואטסאפ שלך'];
         }
 
-        // Clean up old unused OTPs for this phone (expired or > 5 min old)
-        $db->execute("DELETE FROM whatsapp_otps WHERE phone = ? AND (expires_at < NOW() OR created_at < DATE_SUB(NOW(), INTERVAL 5 MINUTE))", [$phone]);
+        // Invalidate ALL previous OTPs for this phone - ensures only newest code works
+        $db->execute("DELETE FROM whatsapp_otps WHERE phone = ?", [$phone]);
 
         $creds = self::getCredentials();
         if (!$creds['id_instance'] || !$creds['api_token']) {
