@@ -447,39 +447,39 @@ document.getElementById('leadForm').addEventListener('submit', async (e) => {
             const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
             const initials = r.client_name.split(' ').map(w => w[0]).join('');
             return `
-            <div class="group relative bg-gradient-to-br from-[#1a1810] to-[#12110a] border border-primary/20 rounded-3xl p-8 hover:border-primary/50 hover:-translate-y-2 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-primary/10">
+            <div class="group relative bg-gradient-to-br from-[#1a1810] to-[#12110a] border border-primary/20 rounded-3xl p-6 sm:p-8 hover:border-primary/50 hover:-translate-y-2 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-primary/10">
                 <!-- Gold accent line -->
                 <div class="absolute top-0 right-0 left-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent rounded-t-3xl opacity-50"></div>
 
                 <!-- Large quote -->
-                <svg class="absolute top-6 right-6 w-12 h-12 text-primary/10" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                <svg class="absolute top-6 right-6 w-14 h-14 text-primary/10" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
 
                 <div class="relative z-10">
                     <!-- Stars -->
-                    <div class="flex items-center gap-1 mb-4">
+                    <div class="flex items-center gap-1 mb-5">
                         ${Array(5).fill(0).map((_, i) => `
-                            <svg class="w-5 h-5 ${i < r.rating ? 'text-primary' : 'text-white/10'}" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg class="w-6 h-6 ${i < r.rating ? 'text-primary' : 'text-white/10'}" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                         `).join('')}
                     </div>
 
                     <!-- Review text -->
-                    <p class="text-slate-200 leading-relaxed mb-6 text-base font-light italic">"${r.review_text}"</p>
+                    <p class="text-slate-200 leading-relaxed mb-7 text-lg font-light italic min-h-[80px]">"${r.review_text}"</p>
 
                     <!-- Client info -->
                     <div class="flex items-center gap-4 pt-5 border-t border-primary/10">
                         ${r.client_photo
-                            ? `<div class="relative">
-                                 <img src="${r.client_photo}" class="w-14 h-14 rounded-full object-cover border-2 border-primary shadow-lg"/>
-                                 <div class="absolute -bottom-1 -left-1 w-6 h-6 rounded-full bg-gradient-to-br from-primary to-[#b89b06] flex items-center justify-center border-2 border-background-dark">
-                                     <svg class="w-3 h-3 text-background-dark" fill="currentColor" viewBox="0 0 24 24" style="font-variation-settings:'FILL' 1;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                            ? `<div class="relative shrink-0">
+                                 <img src="${r.client_photo}" class="w-20 h-20 rounded-full object-cover border-2 border-primary shadow-lg"/>
+                                 <div class="absolute -bottom-1 -left-1 w-7 h-7 rounded-full bg-gradient-to-br from-primary to-[#b89b06] flex items-center justify-center border-2 border-background-dark">
+                                     <svg class="w-4 h-4 text-background-dark" fill="currentColor" viewBox="0 0 24 24" style="font-variation-settings:'FILL' 1;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
                                  </div>
                                </div>`
-                            : `<div class="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-[#b89b06] flex items-center justify-center text-background-dark font-black text-lg shadow-lg">${initials}</div>`
+                            : `<div class="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-[#b89b06] flex items-center justify-center text-background-dark font-black text-2xl shadow-lg shrink-0">${initials}</div>`
                         }
                         <div class="flex-1">
-                            <p class="text-white font-black text-base">${r.client_name}</p>
-                            <p class="text-primary/80 text-xs font-bold flex items-center gap-1 mt-0.5">
-                                <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">verified</span>
+                            <p class="text-white font-black text-xl mb-1">${r.client_name}</p>
+                            <p class="text-primary/90 text-sm font-bold flex items-center gap-1">
+                                <span class="material-symbols-outlined text-base" style="font-variation-settings:'FILL' 1;">verified</span>
                                 ${T.verified_client}
                             </p>
                         </div>
