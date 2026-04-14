@@ -145,26 +145,67 @@ function navClass(string $page, string $current): string {
     }
 
     /* ===== Mobile UX Improvements ===== */
-    /* Prevent layout shift on image load */
-    img { content-visibility: auto; }
+    /* Prevent horizontal scroll everywhere */
+    html, body {
+        overflow-x: hidden !important;
+        max-width: 100vw;
+    }
 
-    /* Mobile base fixes */
-    @media (max-width: 640px) {
-        /* Prevent horizontal scroll */
-        html, body { overflow-x: hidden; }
-        /* Prevent long text from breaking layout */
-        * { word-wrap: break-word; }
-        /* Smaller text sizes on very small screens */
-        h1, h2, h3, h4 { line-height: 1.2; }
-        /* Center all section headers on mobile */
-        section > div > h1, section > div > h2, section > div > h3 {
-            text-align: center;
+    /* Prevent layout shift on images - CRITICAL */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+    img[src=""] {
+        visibility: hidden;
+    }
+
+    /* Prevent FOUC (Flash of Unstyled Content) */
+    body {
+        opacity: 1;
+        transition: opacity 0.15s;
+    }
+
+    /* Disable hover effects on touch devices to prevent jumps */
+    @media (hover: none) {
+        .hover\:scale-105:hover,
+        .hover\:scale-110:hover,
+        .hover\:-translate-y-2:hover,
+        .hover\:-translate-y-1:hover,
+        .group:hover,
+        .hover\:translate-y-\[-2px\]:hover {
+            transform: none !important;
         }
     }
 
-    /* Smooth transitions to prevent jumps */
-    img, .group {
-        transition: transform 0.3s ease;
+    /* Mobile base fixes */
+    @media (max-width: 640px) {
+        * { word-wrap: break-word; }
+        h1, h2, h3, h4 { line-height: 1.2; }
+
+        /* Remove any horizontal scrolling in containers */
+        section, main, header, footer { overflow-x: hidden; }
+
+        /* Smoother modal animations */
+        .fixed.inset-0 {
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Prevent button scaling jumps on tap */
+        button, a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Force images to fit */
+        img {
+            max-width: 100% !important;
+            object-fit: cover;
+        }
+    }
+
+    /* Smooth transitions globally */
+    * {
+        -webkit-font-smoothing: antialiased;
     }
 
     /* ===== Light Theme - Clean Gold & White ===== */
