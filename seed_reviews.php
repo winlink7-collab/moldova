@@ -26,41 +26,41 @@ try {
     // Delete existing
     $pdo->exec("DELETE FROM reviews");
 
-    // Insert 6 reviews with diverse clients
+    // Insert 6 reviews with Israeli/Middle-Eastern men photos
     $reviews = [
         [
             'client_name' => 'דוד כהן',
-            'client_photo' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop',
+            'client_photo' => 'https://images.unsplash.com/photo-1618077360395-f3068be8e001?w=400&h=400&fit=crop&crop=faces',
             'rating' => 5,
             'review_text' => 'השירות היה מקצועי ויוצא דופן. הכרתי את אשתי דרך הסוכנות ואנחנו נשואים כבר שנתיים. ממליץ בחום!',
         ],
         [
             'client_name' => 'אלון מזרחי',
-            'client_photo' => 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop',
+            'client_photo' => 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=faces',
             'rating' => 5,
             'review_text' => 'צוות מקצועי ואנושי. לוו אותי בכל שלב בתהליך. היום אני מאושר עם האישה הנפלאה שלי ממולדובה.',
         ],
         [
             'client_name' => 'יואב שלום',
-            'client_photo' => 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop',
+            'client_photo' => 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=400&fit=crop&crop=faces',
             'rating' => 5,
             'review_text' => 'דיסקרטיות מוחלטת, מקצועיות בלי פשרות. הכל בוצע בצורה מדויקת. תודה ענקית על הליווי!',
         ],
         [
             'client_name' => 'גיא לוי',
-            'client_photo' => 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop',
+            'client_photo' => 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=faces',
             'rating' => 5,
             'review_text' => 'הרבה מעבר למה שציפיתי. הצוות עזר לי למצוא אהבה אמיתית. ממליץ לכל גבר רציני שמחפש זוגיות.',
         ],
         [
             'client_name' => 'רן אברהם',
-            'client_photo' => 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&h=200&fit=crop',
+            'client_photo' => 'https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?w=400&h=400&fit=crop&crop=faces',
             'rating' => 5,
             'review_text' => 'טיול מאורגן למולדובה, פגישות עם נשים מדהימות, וליווי צמוד. שירות ברמה הגבוהה ביותר!',
         ],
         [
             'client_name' => 'אודי ברקוביץ',
-            'client_photo' => 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop',
+            'client_photo' => 'https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=400&h=400&fit=crop&crop=faces',
             'rating' => 5,
             'review_text' => 'אחרי 3 חודשים מצאתי את האחת. השירות שלהם איכותי, מסור ויחס אישי. תוכנית ה-VIP שווה כל שקל!',
         ],
