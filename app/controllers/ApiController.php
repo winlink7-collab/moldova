@@ -143,7 +143,7 @@ class ApiController {
         if ($existing) {
             // If existing whatsapp user, log them in
             if (strpos($email, '@whatsapp.local') !== false) {
-                $userData = $this->db->fetchOne('SELECT id, name, email, phone, vip_level FROM users WHERE id = ?', [$existing['id']]);
+                $userData = $this->db->fetchOne('SELECT * FROM users WHERE id = ?', [$existing['id']]);
                 $_SESSION['user_id'] = $existing['id'];
                 $_SESSION['user_name'] = $userData['name'];
                 $_SESSION['user_email'] = $userData['email'];
@@ -168,7 +168,7 @@ class ApiController {
 
         // For WhatsApp users - log them in immediately
         if ($isWhatsappRegistration) {
-            $userData = $this->db->fetchOne('SELECT id, name, email, phone, vip_level FROM users WHERE id = ?', [$userId]);
+            $userData = $this->db->fetchOne('SELECT * FROM users WHERE id = ?', [$userId]);
             $_SESSION['user_id'] = $userId;
             $_SESSION['user_name'] = $name;
             $_SESSION['user_email'] = $email;
@@ -204,7 +204,7 @@ class ApiController {
         }
 
         $hashedPassword = $this->hashPassword($password);
-        $user = $this->db->fetchOne('SELECT id, name, email, phone, vip_level, email_verified FROM users WHERE email = ? AND password = ?', [$email, $hashedPassword]);
+        $user = $this->db->fetchOne('SELECT * FROM users WHERE email = ? AND password = ?', [$email, $hashedPassword]);
 
         if (!$user) {
             return $this->jsonResponse(['error' => 'אימייל או סיסמה שגויים'], 401);
@@ -344,7 +344,7 @@ class ApiController {
         $normalizedPhone = WhatsAppService::normalizePhone($phone);
         $last9 = substr($normalizedPhone, -9);
         $user = $this->db->fetchOne(
-            "SELECT id, name, email, phone, vip_level FROM users
+            "SELECT * FROM users
              WHERE REPLACE(REPLACE(REPLACE(REPLACE(phone, '-', ''), ' ', ''), '+', ''), '(', '') LIKE ?
              ORDER BY id DESC LIMIT 1",
             ['%' . $last9 . '%']
@@ -414,11 +414,14 @@ class ApiController {
             return $this->jsonResponse(['error' => 'נדרש מזהה משתמש'], 400);
         }
 
-        $user = $this->db->fetchOne('SELECT id, name, email, phone, vip_level, created_at FROM users WHERE id = ?', [$userId]);
+        $user = $this->db->fetchOne('SELECT * FROM users WHERE id = ?', [$userId]);
         if (!$user) {
             return $this->jsonResponse(['error' => 'משתמש לא נמצא'], 404);
         }
-
+        // Don't expose password
+        unset($user['password']);
+        unset($user['reset_token']);
+        unset($user['verify_token']);
         $this->jsonResponse($user);
     }
 

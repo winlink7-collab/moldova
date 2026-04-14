@@ -336,8 +336,20 @@ function switchDashTab(tab) {
 }
 
 async function loadUserProfile() {
-    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    let user = JSON.parse(localStorage.getItem('user') || 'null');
     if (!user) return;
+
+    // Refresh user data from server (includes latest avatar, etc)
+    try {
+        const freshRes = await fetch(BASE + '/api/user/profile?user_id=' + user.id);
+        if (freshRes.ok) {
+            const freshUser = await freshRes.json();
+            if (freshUser && freshUser.id) {
+                user = Object.assign({}, user, freshUser);
+                localStorage.setItem('user', JSON.stringify(user));
+            }
+        }
+    } catch(e) {}
 
     document.getElementById('dashUserName').textContent = user.name || '—';
     const avatarUrl = user.avatar
