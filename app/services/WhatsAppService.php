@@ -89,14 +89,14 @@ class WhatsAppService {
             return ['success' => false, 'message' => 'שירות WhatsApp לא מוגדר'];
         }
 
-        // Generate OTP
+        // Generate OTP - valid for 5 minutes
         $otp = self::generateOtp();
-        $expiresAt = date('Y-m-d H:i:s', strtotime('+10 minutes'));
+        $expiresAt = date('Y-m-d H:i:s', strtotime('+5 minutes'));
 
         // Build message
         $message = "🔐 קוד האימות שלך לאתר Moldova & Ukraine Luxury Brides:\n\n"
             . "*{$otp}*\n\n"
-            . "הקוד תקף ל-10 דקות בלבד.\n"
+            . "הקוד תקף ל-5 דקות בלבד.\n"
             . "אם לא ביקשת קוד זה - התעלם מהודעה זו.";
 
         // Check WhatsApp exists and get correct chatId
