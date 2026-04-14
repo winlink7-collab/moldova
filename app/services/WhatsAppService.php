@@ -99,20 +99,8 @@ class WhatsAppService {
             . "הקוד תקף ל-5 דקות בלבד.\n"
             . "אם לא ביקשת קוד זה - התעלם מהודעה זו.";
 
-        // Check WhatsApp exists and get correct chatId
-        $checkUrl = "https://api.green-api.com/waInstance{$creds['id_instance']}/checkWhatsapp/{$creds['api_token']}";
-        $checkCh = curl_init($checkUrl);
-        curl_setopt($checkCh, CURLOPT_POST, true);
-        curl_setopt($checkCh, CURLOPT_POSTFIELDS, json_encode(['phoneNumber' => $phone]));
-        curl_setopt($checkCh, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-        curl_setopt($checkCh, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($checkCh, CURLOPT_TIMEOUT, 10);
-        $checkResp = curl_exec($checkCh);
-        curl_close($checkCh);
-        $checkData = json_decode($checkResp, true);
-
-        // Use the correct chatId from the check
-        $chatId = !empty($checkData['chatId']) ? $checkData['chatId'] : ($phone . '@c.us');
+        // Always use @c.us - standard WhatsApp format
+        $chatId = $phone . '@c.us';
 
         // Send via Green-API
         $url = "https://api.green-api.com/waInstance{$creds['id_instance']}/sendMessage/{$creds['api_token']}";
