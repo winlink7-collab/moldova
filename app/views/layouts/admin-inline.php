@@ -598,10 +598,29 @@ body.aie-nav-open header.sticky { right: 300px; width: calc(100% - 300px); }
         // Build link field HTML
         let linkHTML = '';
         if (isLink) {
-            linkHTML = `<div class="aie-section-label">קישור</div>
+            // Detect if current href is a WhatsApp link and extract phone/message
+            let currentPhone = '', currentMsg = '';
+            const waMatch = linkHref.match(/^https?:\/\/wa\.me\/(\d+)(?:\?text=(.*))?$/);
+            if (waMatch) {
+                currentPhone = waMatch[1];
+                currentMsg = waMatch[2] ? decodeURIComponent(waMatch[2].replace(/\+/g, ' ')) : '';
+            }
+            linkHTML = `<div class="aie-section-label">קישור / וואטסאפ</div>
                 <div class="aie-field-row">
                     <label>URL</label>
-                    <input type="url" class="aie-link-input" value="${linkHref.replace(/"/g, '&quot;')}" placeholder="https://... או /moldova/page" dir="ltr" style="flex:1"/>
+                    <input type="url" class="aie-link-input" value="${linkHref.replace(/"/g, '&quot;')}" placeholder="https://... או /page" dir="ltr" style="flex:1"/>
+                </div>
+                <div style="padding:8px;background:rgba(37,211,102,0.1);border:1px solid rgba(37,211,102,0.3);border-radius:6px;margin:6px 0;">
+                    <p style="font-size:11px;color:#25D366;font-weight:bold;margin-bottom:6px;">🟢 בנה קישור וואטסאפ:</p>
+                    <div class="aie-field-row">
+                        <label style="font-size:11px;">טלפון</label>
+                        <input type="tel" class="aie-wa-phone" value="${currentPhone}" placeholder="972501234567" dir="ltr" style="flex:1;font-size:12px;"/>
+                    </div>
+                    <div class="aie-field-row">
+                        <label style="font-size:11px;">הודעה</label>
+                        <input type="text" class="aie-wa-msg" value="${currentMsg.replace(/"/g, '&quot;')}" placeholder="שלום, אני מעוניין..." style="flex:1;font-size:12px;"/>
+                    </div>
+                    <button type="button" class="aie-wa-build" style="margin-top:6px;background:#25D366;color:#fff;border:none;border-radius:6px;padding:6px 12px;font-size:12px;cursor:pointer;font-weight:bold;width:100%;">בנה קישור וואטסאפ</button>
                 </div>`;
         }
 
@@ -688,6 +707,24 @@ body.aie-nav-open header.sticky { right: 300px; width: calc(100% - 300px); }
             el.style.backgroundColor = origBg;
             aieClosePopup();
         };
+        // WhatsApp link builder
+        const waPhone = popup.querySelector('.aie-wa-phone');
+        const waMsg = popup.querySelector('.aie-wa-msg');
+        const waBuild = popup.querySelector('.aie-wa-build');
+        if (waBuild) {
+            waBuild.onclick = () => {
+                let phone = (waPhone.value || '').replace(/[^0-9]/g, '');
+                if (!phone) return;
+                // Convert Israeli 05 to 9725
+                if (phone.startsWith('0')) phone = '972' + phone.substring(1);
+                const msg = (waMsg.value || '').trim();
+                const url = 'https://wa.me/' + phone + (msg ? '?text=' + encodeURIComponent(msg) : '');
+                popup.querySelector('.aie-link-input').value = url;
+                waBuild.textContent = '✓ נבנה!';
+                setTimeout(() => { waBuild.textContent = 'בנה קישור וואטסאפ'; }, 1500);
+            };
+        }
+
         popup.querySelector('.aie-save').onclick = doSave;
         popup.querySelector('.aie-cancel').onclick = doCancel;
         input.addEventListener('keydown', e => { if (e.key === 'Escape') { e.preventDefault(); doCancel(); } if (e.key === 'Enter' && !isMultiline) { e.preventDefault(); doSave(); } if (e.key === 'Enter' && e.ctrlKey && isMultiline) { e.preventDefault(); doSave(); } });
