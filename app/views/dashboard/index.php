@@ -83,6 +83,16 @@
 <section id="dashboardMain" class="hidden px-4 sm:px-6 md:px-20 py-6 md:py-12">
     <div class="max-w-4xl mx-auto">
 
+        <!-- Page Title -->
+        <div class="text-center mb-6 sm:mb-8">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 border border-primary/30 rounded-full mb-3">
+                <span class="material-symbols-outlined text-primary text-base">account_circle</span>
+                <span class="text-primary text-xs font-bold tracking-widest uppercase"><?= t('my_area') ?></span>
+            </div>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-2"><?= t('my_personal_area') ?? 'האזור האישי שלי' ?></h1>
+            <p class="text-slate-400 text-sm"><?= t('manage_your_profile') ?? 'נהל את הפרטים והפעילות שלך' ?></p>
+        </div>
+
         <!-- Welcome Card - Centered mobile / Row desktop -->
         <div class="bg-gradient-to-l from-primary/5 via-surface to-surface border border-border-gold/30 rounded-2xl gold-glow p-6 sm:p-8 mb-6 sm:mb-8">
             <!-- Mobile: vertical centered / Desktop: horizontal row -->
