@@ -180,6 +180,9 @@ class WhatsAppService {
 
         // Mark as used
         $db->execute('UPDATE whatsapp_otps SET used = 1 WHERE id = ?', [$otp['id']]);
+        @file_put_contents(BASE_PATH . '/uploads/whatsapp_log.txt',
+            date('Y-m-d H:i:s') . " | VERIFY SUCCESS | Phone:$phone | OTP ID:" . $otp['id'] . "\n",
+            FILE_APPEND);
         return true;
     }
 }
