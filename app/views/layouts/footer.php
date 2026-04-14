@@ -490,12 +490,14 @@ if (new URLSearchParams(window.location.search).get('login') === '1') {
 }
 </script>
 
-<!-- Admin Float Button (hidden when admin inline bar is active) -->
+<!-- Admin Float Button - only visible to admins -->
+<?php if (!empty($isAdmin)): ?>
 <a id="adminFloatBtn" href="<?= BASE_URL ?>/admin" class="fixed bottom-6 left-6 z-50 flex items-center gap-2 bg-card/90 border border-white/10 hover:border-primary/50 text-slate-400 hover:text-primary px-4 py-3 rounded-xl shadow-2xl backdrop-blur-sm transition-all hover:scale-105 group">
     <span class="material-symbols-outlined text-xl">admin_panel_settings</span>
     <span class="text-sm font-bold"><?= t('admin_panel') ?></span>
     <span class="material-symbols-outlined text-sm text-slate-600">lock</span>
 </a>
+<?php endif; ?>
 
 <!-- Dynamic Page Blocks Renderer -->
 <script>
