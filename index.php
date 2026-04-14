@@ -133,6 +133,9 @@ switch ($page) {
     case 'check-whatsapp':
         require BASE_PATH . '/check_whatsapp.php';
         break;
+    case 'check-whatsapp-detailed':
+        require BASE_PATH . '/check_whatsapp_detailed.php';
+        break;
     case 'check-mail':
         require BASE_PATH . '/check_mail.php';
         break;
