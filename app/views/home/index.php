@@ -315,21 +315,7 @@ function submitLeadForm(e) {
     const age = document.getElementById('age').value;
     const interest = document.getElementById('interest').value;
 
-    // If button has custom href (from inline editor) - use it
-    const customHref = btn.getAttribute('href');
-    if (customHref && customHref !== '#' && customHref !== '') {
-        // Save lead in background
-        fetch(BASE + '/api/leads', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, phone, message: (interest || '') + (age ? ' | גיל: ' + age : ''), source: 'hero_form' })
-        }).catch(()=>{});
-        // Open the custom link
-        window.open(customHref, '_blank');
-        return false;
-    }
-
-    // Default: save lead + open WhatsApp
+    // Save lead in background
     fetch(BASE + '/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -341,14 +327,31 @@ function submitLeadForm(e) {
         })
     }).catch(()=>{});
 
-    const businessPhone = window._businessWhatsapp || '972504040042';
-    const messageText = `שלום! אני מעוניין/ת להכיר אישה.\n\n` +
-        `📝 שם: ${name}\n` +
-        (age ? `🎂 גיל: ${age}\n` : '') +
-        (phone ? `📞 טלפון: ${phone}\n` : '') +
-        (interest ? `💭 מעוניין ב: ${interest}\n` : '');
+    // Determine WhatsApp URL
+    let whatsappUrl;
+    const customHref = btn.getAttribute('href');
 
-    window.open('https://wa.me/' + businessPhone + '?text=' + encodeURIComponent(messageText), '_blank');
+    if (customHref && customHref !== '#' && customHref.includes('wa.me')) {
+        // Use custom link from inline editor
+        whatsappUrl = customHref;
+    } else {
+        // Default: build with form data
+        const businessPhone = window._businessWhatsapp || '972504040042';
+        const messageText = `שלום! אני מעוניין/ת להכיר אישה.\n\n` +
+            `📝 שם: ${name}\n` +
+            (age ? `🎂 גיל: ${age}\n` : '') +
+            (phone ? `📞 טלפון: ${phone}\n` : '') +
+            (interest ? `💭 מעוניין ב: ${interest}\n` : '');
+        whatsappUrl = 'https://wa.me/' + businessPhone + '?text=' + encodeURIComponent(messageText);
+    }
+
+    // Mobile-friendly: use location.href instead of window.open
+    const isMobile = /Android|iPhone|iPad|iPod|webOS|BlackBerry/i.test(navigator.userAgent);
+    if (isMobile) {
+        window.location.href = whatsappUrl;
+    } else {
+        window.open(whatsappUrl, '_blank');
+    }
 
     if (msg) {
         msg.textContent = T.home_form_success || 'נפתח וואטסאפ - שלח את ההודעה כדי להתחיל';
