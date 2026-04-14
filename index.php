@@ -127,6 +127,9 @@ switch ($page) {
     case 'setup-whatsapp':
         require BASE_PATH . '/setup_whatsapp.php';
         break;
+    case 'upload-logo':
+        require BASE_PATH . '/upload_logo.php';
+        break;
     case 'seed-reviews':
         require BASE_PATH . '/seed_reviews.php';
         break;
