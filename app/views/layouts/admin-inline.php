@@ -402,7 +402,7 @@ body.aie-nav-open header.sticky { right: 300px; width: calc(100% - 300px); }
 </style>
 
 <!-- Admin Bar -->
-<div class="aie-bar" id="aieBar">
+<div class="aie-bar" id="aieBar" style="<?= isset($_COOKIE['aie_bar_hidden']) && $_COOKIE['aie_bar_hidden'] === '1' ? 'display:none;' : '' ?>">
     <div class="aie-label">
         <span class="material-symbols-outlined" style="font-size:20px">admin_panel_settings</span>
         <span>מצב ניהול</span>
@@ -416,8 +416,17 @@ body.aie-nav-open header.sticky { right: 300px; width: calc(100% - 300px); }
             <span class="material-symbols-outlined" style="font-size:16px">dashboard</span>
             פאנל ניהול
         </a>
+        <button onclick="document.cookie='aie_bar_hidden=1; path=/; max-age=86400'; document.getElementById('aieBar').style.display='none';" class="aie-btn" style="background:rgba(255,255,255,0.1);color:#fff;" title="הסתר סרגל (יחזור מחר)">
+            <span class="material-symbols-outlined" style="font-size:18px">close</span>
+        </button>
     </div>
 </div>
+<!-- Small restore button when bar is hidden -->
+<?php if (isset($_COOKIE['aie_bar_hidden']) && $_COOKIE['aie_bar_hidden'] === '1'): ?>
+<button onclick="document.cookie='aie_bar_hidden=0; path=/; max-age=0'; location.reload();" style="position:fixed;top:8px;left:8px;z-index:9998;background:#f2d00d;color:#12110a;border:none;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.3);cursor:pointer;" title="הצג סרגל אדמין">
+    <span class="material-symbols-outlined" style="font-size:18px">admin_panel_settings</span>
+</button>
+<?php endif; ?>
 
 <!-- Navigator Sidebar -->
 <div class="aie-navigator" id="aieNavigator">
