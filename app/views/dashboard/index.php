@@ -83,26 +83,34 @@
 <section id="dashboardMain" class="hidden px-4 sm:px-6 md:px-20 py-6 md:py-12">
     <div class="max-w-4xl mx-auto">
 
-        <!-- Welcome Card - Centered on mobile -->
-        <div class="flex flex-col items-center text-center sm:flex-row sm:items-center sm:text-right gap-5 mb-6 sm:mb-8 p-5 sm:p-8 bg-gradient-to-l from-primary/5 via-surface to-surface border border-border-gold/30 rounded-2xl gold-glow">
-            <!-- Avatar -->
-            <div class="relative shrink-0">
-                <img id="dashAvatar" src="" alt="avatar" class="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-2 border-primary/40 shadow-lg bg-background-dark cursor-pointer mx-auto" onclick="document.getElementById('avatarInput').click()" />
-                <button type="button" onclick="document.getElementById('avatarInput').click()" class="absolute bottom-0 right-0 w-9 h-9 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-lg hover:scale-110 transition-transform border-2 border-background-dark">
-                    <span class="material-symbols-outlined text-base">photo_camera</span>
+        <!-- Welcome Card - Centered mobile / Row desktop -->
+        <div class="bg-gradient-to-l from-primary/5 via-surface to-surface border border-border-gold/30 rounded-2xl gold-glow p-6 sm:p-8 mb-6 sm:mb-8">
+            <!-- Mobile: vertical centered / Desktop: horizontal row -->
+            <div class="flex flex-col items-center text-center sm:flex-row sm:text-right sm:gap-6">
+                <!-- Avatar with change button below -->
+                <div class="flex flex-col items-center gap-3 sm:gap-2 shrink-0 mb-4 sm:mb-0">
+                    <div class="relative">
+                        <img id="dashAvatar" src="" alt="avatar" class="w-28 h-28 sm:w-24 sm:h-24 rounded-full object-cover border-2 border-primary/40 shadow-lg bg-background-dark" />
+                    </div>
+                    <button type="button" onclick="document.getElementById('avatarInput').click()" class="flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 hover:bg-primary/20 text-primary text-xs font-bold rounded-lg transition-all border border-primary/30">
+                        <span class="material-symbols-outlined text-sm">photo_camera</span>
+                        <?= t('change_photo') ?? 'החלף תמונה' ?>
+                    </button>
+                    <input id="avatarInput" type="file" accept="image/*" class="hidden" onchange="uploadAvatar(this)" />
+                </div>
+
+                <!-- Name + greeting -->
+                <div class="flex-1 w-full">
+                    <h2 class="text-2xl sm:text-3xl font-black text-white mb-2"><?= t('hello') ?> <span id="dashUserName">—</span></h2>
+                    <p class="text-slate-400 text-sm mb-4 sm:mb-0"><?= t('welcome_to_area') ?></p>
+                </div>
+
+                <!-- Logout button -->
+                <button onclick="logout()" class="flex items-center justify-center gap-2 px-5 py-3 sm:py-2.5 border border-red-500/30 text-red-400 hover:bg-red-500/10 rounded-xl transition-all text-sm font-bold w-full sm:w-auto">
+                    <span class="material-symbols-outlined text-lg">logout</span>
+                    <?= t('disconnect') ?>
                 </button>
-                <input id="avatarInput" type="file" accept="image/*" class="hidden" onchange="uploadAvatar(this)" />
             </div>
-            <!-- Name + greeting -->
-            <div class="flex-1">
-                <h2 class="text-2xl sm:text-3xl font-black text-white mb-1"><?= t('hello') ?> <span id="dashUserName">—</span></h2>
-                <p class="text-slate-400 text-sm"><?= t('welcome_to_area') ?></p>
-            </div>
-            <!-- Logout button -->
-            <button onclick="logout()" class="flex items-center justify-center gap-2 px-4 py-2.5 border border-red-500/30 text-red-400 hover:bg-red-500/10 rounded-lg transition-all text-sm font-bold w-full sm:w-auto">
-                <span class="material-symbols-outlined text-lg">logout</span>
-                <?= t('disconnect') ?>
-            </button>
         </div>
 
         <!-- Quick Actions -->
@@ -323,8 +331,8 @@ async function loadUserProfile() {
 
     document.getElementById('dashUserName').textContent = user.name || '—';
     const avatarUrl = user.avatar
-        ? (user.avatar.startsWith('http') ? user.avatar : BASE_URL + '/' + user.avatar)
-        : BASE_URL + '/public/images/default-avatar.png';
+        ? (user.avatar.startsWith('http') || user.avatar.startsWith('/') ? (user.avatar.startsWith('http') ? user.avatar : BASE_URL + user.avatar) : BASE_URL + '/' + user.avatar)
+        : BASE_URL + '/public/images/default-avatar.svg';
     document.getElementById('dashAvatar').src = avatarUrl;
     document.getElementById('profileAvatar').src = avatarUrl;
 
