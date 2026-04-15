@@ -14,15 +14,22 @@ $currentPage     = $currentPage ?? 'home';
 
 $canonicalUrl = 'https://' . ($_SERVER['HTTP_HOST'] ?? 'moldova-ukraine-brides.com') . ($_SERVER['REQUEST_URI'] ?? '/');
 
-// Load logo setting server-side to prevent async SVG→image swap flash
+// Load logo setting server-side (cached to disk to avoid per-request DB round-trip)
 $__logoUrl = ''; $__logoHideText = false;
-try {
-    $__db = Database::getInstance();
-    $__r1 = $__db->fetchOne("SELECT setting_value FROM settings WHERE setting_key = ?", ['site_logo_image']);
-    $__logoUrl = $__r1['setting_value'] ?? '';
-    $__r2 = $__db->fetchOne("SELECT setting_value FROM settings WHERE setting_key = ?", ['site_logo_hide_text']);
-    $__logoHideText = (($__r2['setting_value'] ?? '0') === '1');
-} catch (Throwable $e) {}
+$__cacheFile = BASE_PATH . '/uploads/.logo_cache.json';
+if (is_file($__cacheFile) && (time() - filemtime($__cacheFile) < 300)) {
+    $__c = json_decode(@file_get_contents($__cacheFile), true);
+    if (is_array($__c)) { $__logoUrl = $__c['url'] ?? ''; $__logoHideText = !empty($__c['hide']); }
+} else {
+    try {
+        $__db = Database::getInstance();
+        $__r1 = $__db->fetchOne("SELECT setting_value FROM settings WHERE setting_key = ?", ['site_logo_image']);
+        $__logoUrl = $__r1['setting_value'] ?? '';
+        $__r2 = $__db->fetchOne("SELECT setting_value FROM settings WHERE setting_key = ?", ['site_logo_hide_text']);
+        $__logoHideText = (($__r2['setting_value'] ?? '0') === '1');
+        @file_put_contents($__cacheFile, json_encode(['url' => $__logoUrl, 'hide' => $__logoHideText]));
+    } catch (Throwable $e) {}
+}
 
 /** Helper: returns active nav class */
 function navClass(string $page, string $current): string {
@@ -44,9 +51,14 @@ function navClass(string $page, string $current): string {
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin/>
 <link rel="preconnect" href="https://lh3.googleusercontent.com" crossorigin/>
 
-<!-- Preload hero background image for faster LCP -->
+<!-- Preload hero image with responsive srcset (matches <img> below) -->
 <?php if (($currentPage ?? '') === 'home'): ?>
-<link rel="preload" as="image" href="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=70" fetchpriority="high"/>
+<link rel="preload" as="image"
+      imagesrcset="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=65 600w,
+                   https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=65 1000w,
+                   https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=65 1400w"
+      imagesizes="100vw"
+      fetchpriority="high"/>
 <?php endif; ?>
 
 <!-- SEO Meta -->
@@ -87,11 +99,11 @@ function navClass(string $page, string $current): string {
 }
 </script>
 
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind CSS (no plugins - not used) -->
+<script src="https://cdn.tailwindcss.com"></script>
 
 <!-- Google Fonts - Heebo only (other families loaded on demand by admin font picker) -->
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0..1&display=swap" rel="stylesheet" media="print" onload="this.media='all'"/>
 <script>
 // Load saved font preference
@@ -182,9 +194,6 @@ function navClass(string $page, string $current): string {
         visibility: hidden;
     }
 
-    /* Smooth fade-in on navigation (non-blocking) */
-    body { animation: fadeInBody 0.2s ease-out; }
-    @keyframes fadeInBody { from { opacity: 0.85; } to { opacity: 1; } }
 
     /* Disable hover effects on touch devices to prevent jumps */
     @media (hover: none) {

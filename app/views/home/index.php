@@ -22,7 +22,14 @@ require BASE_PATH . '/app/views/layouts/header.php';
 <section class="relative min-h-[75vh] md:min-h-[90vh] flex items-center pt-8 md:pt-10 pb-12 md:pb-20 overflow-hidden">
     <div class="absolute inset-0 z-0">
         <div class="absolute inset-0 bg-gradient-to-l from-background-dark/20 via-background-dark/80 to-background-dark z-10"></div>
-        <div id="homeHeroBg" class="w-full h-full bg-cover bg-center" data-alt="Beautiful elegant woman in luxury evening dress" style="background-image: url('https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=70');"></div>
+        <img id="homeHeroBg" class="w-full h-full object-cover"
+             alt="Beautiful elegant woman in luxury evening dress"
+             src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=65"
+             srcset="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=65 600w,
+                     https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=65 1000w,
+                     https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=65 1400w"
+             sizes="100vw"
+             fetchpriority="high" decoding="async"/>
     </div>
     <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
         <div class="flex flex-col gap-8 text-right">
