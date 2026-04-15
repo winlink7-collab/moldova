@@ -14,6 +14,16 @@ $currentPage     = $currentPage ?? 'home';
 
 $canonicalUrl = 'https://' . ($_SERVER['HTTP_HOST'] ?? 'moldova-ukraine-brides.com') . ($_SERVER['REQUEST_URI'] ?? '/');
 
+// Load logo setting server-side to prevent async SVG→image swap flash
+$__logoUrl = ''; $__logoHideText = false;
+try {
+    $__db = Database::getInstance();
+    $__r1 = $__db->fetchOne("SELECT setting_value FROM settings WHERE setting_key = ?", ['site_logo_image']);
+    $__logoUrl = $__r1['setting_value'] ?? '';
+    $__r2 = $__db->fetchOne("SELECT setting_value FROM settings WHERE setting_key = ?", ['site_logo_hide_text']);
+    $__logoHideText = (($__r2['setting_value'] ?? '0') === '1');
+} catch (Throwable $e) {}
+
 /** Helper: returns active nav class */
 function navClass(string $page, string $current): string {
     return $page === $current
@@ -26,6 +36,14 @@ function navClass(string $page, string $current): string {
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+
+<!-- Prevent FOUC on first load: hide until CSS + fonts ready -->
+<style id="fouc-guard">html:not(.ready) body{opacity:0 !important;visibility:hidden !important}</style>
+
+<!-- Preconnect to font + CDN servers to reduce first-load delay -->
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin/>
 
 <!-- SEO Meta -->
 <title><?= htmlspecialchars($pageTitle) ?></title>
@@ -160,10 +178,11 @@ function navClass(string $page, string $current): string {
         visibility: hidden;
     }
 
-    /* Prevent FOUC (Flash of Unstyled Content) */
-    body {
+    /* Prevent FOUC (Flash of Unstyled Content) - fade in when html.ready */
+    html.ready body {
         opacity: 1;
-        transition: opacity 0.15s;
+        visibility: visible;
+        transition: opacity 0.25s ease-out;
     }
 
     /* Disable hover effects on touch devices to prevent jumps */
@@ -545,6 +564,21 @@ function navClass(string $page, string $current): string {
         document.documentElement.classList.add('light');
     }
 })();
+// Reveal page only after fonts + CSS loaded (prevents FOUC jumping)
+(function() {
+    var shown = false;
+    function reveal() {
+        if (shown) return; shown = true;
+        document.documentElement.classList.add('ready');
+    }
+    // Prefer document.fonts.ready when available
+    if (document.fonts && document.fonts.ready && document.fonts.ready.then) {
+        document.fonts.ready.then(reveal);
+    }
+    window.addEventListener('load', reveal);
+    // Safety fallback: never hide longer than 1.2s even if a resource hangs
+    setTimeout(reveal, 1200);
+})();
 </script>
 </head>
 
@@ -570,7 +604,9 @@ function tr(key) { return (T && T[key]) ? T[key] : key; }
 
     <!-- Logo -->
     <a href="<?= BASE_URL ?>/" class="flex items-center gap-3 shrink-0">
-        <img id="headerLogoImage" src="" alt="Royal Date" class="h-14 md:h-16 w-auto hidden" style="object-fit:contain;"/>
+        <?php if ($__logoUrl): ?>
+        <img id="headerLogoImage" src="<?= htmlspecialchars($__logoUrl) ?>" alt="Royal Date" class="h-14 md:h-16 w-auto" width="64" height="64" style="object-fit:contain;"/>
+        <?php else: ?>
         <div id="headerLogoSvgBox" class="relative flex items-center justify-center size-12 shadow-[0_0_15px_rgba(242,208,13,0.4)]">
             <svg viewBox="0 0 100 100" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                 <defs>
@@ -587,31 +623,14 @@ function tr(key) { return (T && T[key]) ? T[key] : key; }
                 <path d="M 50 52 L 45 57 L 50 65 L 55 57 Z" fill="#b9f2ff" stroke="#fff" stroke-width="0.5"/>
             </svg>
         </div>
+        <?php endif; ?>
+        <?php if (!($__logoUrl && $__logoHideText)): ?>
         <div id="headerLogoTextBox" class="flex flex-col">
             <h1 id="headerLogoTitle" class="text-xl md:text-2xl font-black leading-none tracking-tight uppercase" style="background:linear-gradient(135deg,#ffd700 0%,#f2d00d 50%,#b89b06 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Royal Date</h1>
             <span id="headerLogoTagline" class="text-[10px] tracking-[0.25em] text-primary font-bold uppercase">Premium Dating Solutions</span>
         </div>
+        <?php endif; ?>
     </a>
-    <script>
-    // Load custom logo image from settings
-    (async function() {
-        try {
-            const res = await fetch('<?= BASE_URL ?>/api/admin/settings');
-            const s = await res.json();
-            if (s.site_logo_image) {
-                const img = document.getElementById('headerLogoImage');
-                const svgBox = document.getElementById('headerLogoSvgBox');
-                const textBox = document.getElementById('headerLogoTextBox');
-                if (img) {
-                    img.src = s.site_logo_image;
-                    img.classList.remove('hidden');
-                    if (svgBox) svgBox.classList.add('hidden');
-                    if (s.site_logo_hide_text === '1' && textBox) textBox.classList.add('hidden');
-                }
-            }
-        } catch(e) {}
-    })();
-    </script>
 
     <!-- Desktop Navigation -->
     <nav class="hidden lg:flex items-center gap-3 xl:gap-5 2xl:gap-8 flex-shrink min-w-0">
