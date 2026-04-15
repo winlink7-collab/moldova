@@ -44,6 +44,44 @@ function navClass(string $page, string $current): string {
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 
+<!-- Critical CSS: enough to paint above-fold before Tailwind CDN loads (improves FCP) -->
+<style id="critical-css">
+*,::before,::after{box-sizing:border-box;border:0 solid}
+html{line-height:1.5;-webkit-text-size-adjust:100%;tab-size:4;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Heebo,Arial,sans-serif}
+body{margin:0;line-height:inherit;background:#12110a;color:#f1f5f9;min-height:100vh;overflow-x:hidden}
+img,svg{display:block;vertical-align:middle;max-width:100%;height:auto}
+h1,h2,h3,h4,p{margin:0;font-size:inherit;font-weight:inherit}
+a{color:inherit;text-decoration:inherit}
+button,input,select{font:inherit;margin:0}
+.sticky{position:sticky;top:0;z-index:50}
+.relative{position:relative}.absolute{position:absolute}.fixed{position:fixed}
+.inset-0{inset:0}.z-0{z-index:0}.z-10{z-index:10}.z-20{z-index:20}.z-50{z-index:50}
+.flex{display:flex}.grid{display:grid}.hidden{display:none}.block{display:block}.inline-flex{display:inline-flex}.inline-block{display:inline-block}
+.flex-col{flex-direction:column}.items-center{align-items:center}.justify-between{justify-content:space-between}.justify-center{justify-content:center}
+.gap-2{gap:.5rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-8{gap:2rem}
+.w-full{width:100%}.h-full{height:100%}.h-20{height:5rem}.h-14{height:3.5rem}.max-w-7xl{max-width:80rem}.mx-auto{margin-left:auto;margin-right:auto}
+.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.p-3{padding:.75rem}.p-6{padding:1.5rem}
+.pt-8{padding-top:2rem}.pb-12{padding-bottom:3rem}
+.text-right{text-align:right}.text-center{text-align:center}
+.text-xs{font-size:.75rem;line-height:1rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}
+.font-bold{font-weight:700}.font-black{font-weight:900}
+.uppercase{text-transform:uppercase}.italic{font-style:italic}.tracking-widest{letter-spacing:.1em}.leading-tight{line-height:1.25}.leading-relaxed{line-height:1.625}
+.text-white{color:#fff}.text-primary{color:#f2d00d}.text-slate-100{color:#f1f5f9}.text-slate-300{color:#cbd5e1}.text-slate-400{color:#94a3b8}.text-gold-muted{color:#bab59c}
+.bg-primary{background:#f2d00d}.bg-background-dark{background:#12110a}.bg-white\/5{background:rgba(255,255,255,.05)}
+.rounded-full{border-radius:9999px}.rounded-xl{border-radius:.75rem}.rounded-3xl{border-radius:1.5rem}.rounded-sm{border-radius:.125rem}
+.border{border-width:1px}.border-white\/10{border-color:rgba(255,255,255,.1)}.border-primary\/30{border-color:rgba(242,208,13,.3)}
+.bg-primary\/10{background:rgba(242,208,13,.1)}.size-2{width:.5rem;height:.5rem}
+.min-h-\[75vh\]{min-height:75vh}.overflow-hidden{overflow:hidden}.object-cover{object-fit:cover}
+.glass-effect{background:rgba(34,31,16,.8);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.shrink-0{flex-shrink:0}.w-fit{width:fit-content}.w-auto{width:auto}
+@media (min-width:768px){.md\:text-5xl{font-size:3rem;line-height:1}.md\:min-h-\[90vh\]{min-height:90vh}.md\:pt-10{padding-top:2.5rem}.md\:pb-20{padding-bottom:5rem}.md\:h-16{height:4rem}}
+@media (min-width:1024px){.lg\:text-7xl{font-size:4.5rem;line-height:1}.lg\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.lg\:px-8{padding-left:2rem;padding-right:2rem}.lg\:flex{display:flex}}
+.bg-gradient-to-l{background-image:linear-gradient(to left,var(--tw-gradient-stops))}
+.from-background-dark\/20{--tw-gradient-from:rgba(18,17,10,.2);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to,rgba(18,17,10,0))}
+.via-background-dark\/80{--tw-gradient-stops:var(--tw-gradient-from),rgba(18,17,10,.8),var(--tw-gradient-to,rgba(18,17,10,0))}
+.to-background-dark{--tw-gradient-to:#12110a}
+</style>
+
 <!-- Preconnect to font + CDN servers to reduce first-load delay -->
 <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -102,8 +140,9 @@ function navClass(string $page, string $current): string {
 <!-- Tailwind CSS (no plugins - not used) -->
 <script src="https://cdn.tailwindcss.com"></script>
 
-<!-- Google Fonts - Heebo only (other families loaded on demand by admin font picker) -->
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap" rel="stylesheet"/>
+<!-- Google Fonts - Heebo only, loaded non-blocking (fonts swap in when ready) -->
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'"/>
+<noscript><link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap" rel="stylesheet"/></noscript>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0..1&display=swap" rel="stylesheet" media="print" onload="this.media='all'"/>
 <script>
 // Load saved font preference
