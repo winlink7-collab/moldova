@@ -23,9 +23,9 @@
             <span class="material-symbols-outlined text-primary text-lg">person_search</span> <?= t('age_range') ?>
         </div>
         <div class="flex items-center gap-3">
-            <input id="ageMin" class="w-full bg-background-dark border border-white/10 rounded-lg py-2.5 px-3 text-white text-center focus:border-primary outline-none" type="number" value="18" min="18" max="60"/>
+            <input id="ageMin" class="w-full bg-background-dark border border-white/10 rounded-lg py-2.5 px-3 text-white text-center focus:border-primary outline-none" type="number" value="18" min="18" max="75"/>
             <span class="text-slate-500 font-bold">-</span>
-            <input id="ageMax" class="w-full bg-background-dark border border-white/10 rounded-lg py-2.5 px-3 text-white text-center focus:border-primary outline-none" type="number" value="45" min="18" max="60"/>
+            <input id="ageMax" class="w-full bg-background-dark border border-white/10 rounded-lg py-2.5 px-3 text-white text-center focus:border-primary outline-none" type="number" value="65" min="18" max="75"/>
         </div>
     </div>
 
@@ -110,7 +110,7 @@ function applyFilters() {
 
 function resetFilters() {
     document.getElementById('ageMin').value = '18';
-    document.getElementById('ageMax').value = '45';
+    document.getElementById('ageMax').value = '65';
     document.getElementById('countryFilter').value = '';
     document.getElementById('maritalFilter').value = '';
     currentCountry = '';
