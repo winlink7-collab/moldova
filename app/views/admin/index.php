@@ -115,6 +115,10 @@ const API = BASE_URL;
             <span class="material-symbols-outlined text-lg">settings</span>
             הגדרות אתר
         </button>
+        <button id="btn-translations" onclick="switchTab('translations')" class="tab-btn flex items-center gap-1.5 px-4 py-3 text-sm border-b-2 border-transparent text-white/60 hover:text-primary transition whitespace-nowrap">
+            <span class="material-symbols-outlined text-lg">translate</span>
+            תרגומים
+        </button>
     </div>
 </nav>
 
@@ -1067,6 +1071,70 @@ const API = BASE_URL;
     </form>
 </div>
 
+<!-- ==================== TRANSLATIONS TAB ==================== -->
+<div id="tab-translations" class="tab-content hidden">
+    <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
+        <div>
+            <h2 class="text-2xl font-bold">🌐 מילון תרגומים</h2>
+            <p class="text-sm text-white/50 mt-1">כל הטקסטים באתר שתורגמו אוטומטית. ערוך תרגום כדי לתקן איכות - השינוי נשמר לנצח.</p>
+        </div>
+        <div class="flex gap-2 flex-wrap">
+            <select id="trFilterLang" onchange="loadTranslations()" class="bg-card border border-white/10 rounded px-3 py-2 text-white text-sm">
+                <option value="">כל השפות</option>
+                <option value="ru">🇷🇺 רוסית</option>
+                <option value="en">🇬🇧 אנגלית</option>
+            </select>
+            <input id="trSearch" oninput="loadTranslationsDebounced()" placeholder="חפש..." class="bg-card border border-white/10 rounded px-3 py-2 text-white text-sm"/>
+            <button onclick="openTranslationForm()" class="bg-primary text-bg px-3 py-2 rounded font-semibold text-sm flex items-center gap-1"><span class="material-symbols-outlined text-base">add</span>הוסף ידני</button>
+        </div>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+            <thead class="text-white/60 border-b border-white/10">
+                <tr>
+                    <th class="text-right p-3 font-normal">עברית (מקור)</th>
+                    <th class="text-right p-3 font-normal w-24">שפה</th>
+                    <th class="text-right p-3 font-normal">תרגום</th>
+                    <th class="text-right p-3 font-normal w-16">סטטוס</th>
+                    <th class="text-right p-3 font-normal w-28">פעולות</th>
+                </tr>
+            </thead>
+            <tbody id="translationsBody"><tr><td colspan="5" class="p-6 text-center text-white/40">טוען...</td></tr></tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Translation Edit Modal -->
+<div id="trModal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/70 backdrop-blur-sm">
+    <div class="bg-card border border-primary/30 rounded-xl p-6 w-full max-w-lg mx-4">
+        <h3 class="text-lg font-bold text-primary mb-4">עריכת תרגום</h3>
+        <input type="hidden" id="trModalId"/>
+        <div class="space-y-3">
+            <div>
+                <label class="block text-xs text-white/60 mb-1">טקסט מקור (עברית)</label>
+                <input id="trModalSource" class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm" readonly/>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-xs text-white/60 mb-1">שפה</label>
+                    <select id="trModalLang" class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm">
+                        <option value="ru">🇷🇺 רוסית</option>
+                        <option value="en">🇬🇧 אנגלית</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <label class="block text-xs text-white/60 mb-1">תרגום</label>
+                <textarea id="trModalTranslation" rows="3" class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm" style="color:#fff !important;"></textarea>
+            </div>
+        </div>
+        <div class="flex gap-2 mt-4">
+            <button onclick="saveTranslation()" class="bg-primary text-bg px-4 py-2 rounded font-bold">שמור</button>
+            <button onclick="closeTranslationModal()" class="bg-white/5 text-white px-4 py-2 rounded">ביטול</button>
+        </div>
+    </div>
+</div>
+
 </main>
 
 <!-- ==================== PROFILE MODAL ==================== -->
@@ -1418,7 +1486,104 @@ function switchTab(tab) {
         case 'contact': loadContactSettings(); break;
         case 'reviews': loadReviews(); break;
         case 'site': loadSiteSettings(); break;
+        case 'translations': loadTranslations(); break;
     }
+}
+
+// ============ TRANSLATIONS ============
+let trLoadTimer = null;
+function loadTranslationsDebounced() {
+    clearTimeout(trLoadTimer);
+    trLoadTimer = setTimeout(loadTranslations, 300);
+}
+
+async function loadTranslations() {
+    const body = document.getElementById('translationsBody');
+    const lang = document.getElementById('trFilterLang').value;
+    const q = document.getElementById('trSearch').value.trim();
+    body.innerHTML = '<tr><td colspan="5" class="p-6 text-center text-white/40">טוען...</td></tr>';
+    try {
+        const url = API + '/api/admin/translations?lang=' + encodeURIComponent(lang) + '&q=' + encodeURIComponent(q);
+        const res = await fetch(url);
+        const data = await res.json();
+        const items = data.items || [];
+        if (!items.length) {
+            body.innerHTML = '<tr><td colspan="5" class="p-6 text-center text-white/40">אין תרגומים עדיין. הכנס לאתר בשפה רוסית/אנגלית כדי שהמערכת תתחיל לתרגם אוטומטית.</td></tr>';
+            return;
+        }
+        const esc = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+        const flag = l => l === 'ru' ? '🇷🇺' : (l === 'en' ? '🇬🇧' : l);
+        body.innerHTML = items.map(it => `
+            <tr class="border-b border-white/5 hover:bg-white/5">
+                <td class="p-3 text-white/90" dir="rtl">${esc(it.source_text)}</td>
+                <td class="p-3 text-white/70">${flag(it.lang)} ${it.lang.toUpperCase()}</td>
+                <td class="p-3 text-white" dir="ltr">${esc(it.translation)}</td>
+                <td class="p-3">${it.is_manual == 1 ? '<span class="text-[10px] bg-primary/20 text-primary px-2 py-0.5 rounded-full font-bold">ידני</span>' : '<span class="text-[10px] bg-white/10 text-white/50 px-2 py-0.5 rounded-full">אוטומטי</span>'}</td>
+                <td class="p-3">
+                    <button onclick="editTranslation(${it.id}, ${JSON.stringify(it.source_text).replace(/"/g,'&quot;')}, '${it.lang}', ${JSON.stringify(it.translation).replace(/"/g,'&quot;')})" class="text-primary hover:text-white px-2" title="ערוך"><span class="material-symbols-outlined text-base">edit</span></button>
+                    <button onclick="deleteTranslation(${it.id})" class="text-red-400 hover:text-red-300 px-2" title="מחק"><span class="material-symbols-outlined text-base">delete</span></button>
+                </td>
+            </tr>`).join('');
+    } catch (e) {
+        body.innerHTML = '<tr><td colspan="5" class="p-6 text-center text-red-400">שגיאה בטעינה</td></tr>';
+    }
+}
+
+function openTranslationForm() {
+    document.getElementById('trModalId').value = '';
+    document.getElementById('trModalSource').value = '';
+    document.getElementById('trModalSource').readOnly = false;
+    document.getElementById('trModalLang').value = 'ru';
+    document.getElementById('trModalTranslation').value = '';
+    document.getElementById('trModal').classList.remove('hidden');
+    document.getElementById('trModal').classList.add('flex');
+}
+
+function editTranslation(id, source, lang, translation) {
+    document.getElementById('trModalId').value = id;
+    document.getElementById('trModalSource').value = source;
+    document.getElementById('trModalSource').readOnly = true;
+    document.getElementById('trModalLang').value = lang;
+    document.getElementById('trModalTranslation').value = translation;
+    document.getElementById('trModal').classList.remove('hidden');
+    document.getElementById('trModal').classList.add('flex');
+}
+
+function closeTranslationModal() {
+    document.getElementById('trModal').classList.add('hidden');
+    document.getElementById('trModal').classList.remove('flex');
+}
+
+async function saveTranslation() {
+    const id = document.getElementById('trModalId').value;
+    const source = document.getElementById('trModalSource').value.trim();
+    const lang = document.getElementById('trModalLang').value;
+    const translation = document.getElementById('trModalTranslation').value.trim();
+    if (!translation) { alert('תרגום חובה'); return; }
+    try {
+        if (id) {
+            await fetch(API + '/api/admin/translations/' + id, {
+                method: 'PUT', headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({ translation })
+            });
+        } else {
+            if (!source) { alert('טקסט מקור חובה'); return; }
+            await fetch(API + '/api/admin/translations', {
+                method: 'POST', headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({ source_text: source, lang, translation })
+            });
+        }
+        closeTranslationModal();
+        loadTranslations();
+    } catch (e) { alert('שגיאה בשמירה'); }
+}
+
+async function deleteTranslation(id) {
+    if (!confirm('למחוק את התרגום? הוא יתורגם מחדש אוטומטית בביקור הבא.')) return;
+    try {
+        await fetch(API + '/api/admin/translations/' + id, { method: 'DELETE' });
+        loadTranslations();
+    } catch (e) { alert('שגיאה במחיקה'); }
 }
 
 // ============ PROFILES ============

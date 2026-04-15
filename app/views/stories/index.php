@@ -44,13 +44,14 @@ async function loadStories() {
                 </div>
                 <div class="p-8">
                     <div class="flex items-center gap-3 mb-3">
-                        <h3 class="text-2xl font-bold text-primary">${s.couple_names}</h3>
-                        ${s.badge ? `<span class="text-[10px] bg-primary/20 text-primary px-2 py-0.5 rounded-full font-bold">${s.badge}</span>` : ''}
+                        <h3 class="text-2xl font-bold text-primary" data-translate data-translate-src="${(s.couple_names||'').replace(/"/g,'&quot;')}">${s.couple_names}</h3>
+                        ${s.badge ? `<span class="text-[10px] bg-primary/20 text-primary px-2 py-0.5 rounded-full font-bold" data-translate data-translate-src="${(s.badge||'').replace(/"/g,'&quot;')}">${s.badge}</span>` : ''}
                     </div>
-                    <p class="text-slate-300 leading-relaxed italic mb-6">"${s.story}"</p>
+                    <p class="text-slate-300 leading-relaxed italic mb-6" data-translate data-translate-src="${(s.story||'').replace(/"/g,'&quot;')}">"${s.story}"</p>
                 </div>
             </div>
         `).join('');
+        if (typeof applyRemoteTranslations === 'function') applyRemoteTranslations(grid);
     } catch (err) {
         grid.innerHTML = `<p class="text-red-400 text-center col-span-full py-12">${T.error_loading_stories}</p>`;
     }
@@ -144,9 +145,9 @@ loadStories = async function() {
                     </div>
                     <div class="p-8">
                         <div class="flex items-center gap-3 mb-3">
-                            <h3 class="text-2xl font-bold text-primary">${s.couple_names}</h3>
+                            <h3 class="text-2xl font-bold text-primary" data-translate data-translate-src="${(s.couple_names||'').replace(/"/g,'&quot;')}">${s.couple_names}</h3>
                         </div>
-                        <p class="text-slate-300 leading-relaxed italic mb-6">"${s.story}"</p>
+                        <p class="text-slate-300 leading-relaxed italic mb-6" data-translate data-translate-src="${(s.story||'').replace(/"/g,'&quot;')}">"${s.story}"</p>
                     </div>
                 </div>
             `).join('');
@@ -157,6 +158,7 @@ loadStories = async function() {
         addCard.innerHTML = `<div class="text-center"><span class="material-symbols-outlined text-primary text-5xl mb-3">add_circle</span><p class="text-primary font-bold text-lg">${T.add_new_story}</p></div>`;
         addCard.onclick = () => openStoryModal();
         grid.appendChild(addCard);
+        if (typeof applyRemoteTranslations === 'function') applyRemoteTranslations(grid);
 
         toggleStoryEditUI();
     } catch (err) {

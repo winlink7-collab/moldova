@@ -42,6 +42,7 @@ spl_autoload_register(function ($class) {
     $paths = [
         BASE_PATH . '/app/controllers/' . $class . '.php',
         BASE_PATH . '/app/models/' . $class . '.php',
+        BASE_PATH . '/app/services/' . $class . '.php',
     ];
     foreach ($paths as $path) {
         if (file_exists($path)) {

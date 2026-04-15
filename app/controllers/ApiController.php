@@ -100,10 +100,36 @@ class ApiController {
             case 'admin':
                 $this->handleAdmin($subAction, $id, $method);
                 break;
+            case 'translate':
+                $this->handleTranslate();
+                break;
             default:
                 http_response_code(404);
                 echo json_encode(['error' => 'API route not found']);
         }
+    }
+
+    // ========================
+    // Translation (public read, admin write via /api/admin/translations)
+    // ========================
+    private function handleTranslate() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            return $this->jsonResponse(['error' => 'POST only'], 405);
+        }
+        $data = $this->getJson();
+        $lang = $data['lang'] ?? '';
+        if (!in_array($lang, ['ru', 'en'], true)) {
+            return $this->jsonResponse(['error' => 'invalid lang'], 400);
+        }
+        $svc = new TranslationService();
+        if (!empty($data['texts']) && is_array($data['texts'])) {
+            $texts = array_slice(array_filter(array_map('strval', $data['texts']), 'strlen'), 0, 50);
+            return $this->jsonResponse(['translations' => $svc->translateMany($texts, $lang)]);
+        }
+        if (isset($data['text']) && is_string($data['text'])) {
+            return $this->jsonResponse(['translation' => $svc->translate($data['text'], $lang)]);
+        }
+        return $this->jsonResponse(['error' => 'text or texts required'], 400);
     }
 
     // ========================
@@ -874,9 +900,61 @@ class ApiController {
             case 'blocks-reorder':
                 $this->adminBlocksReorder();
                 break;
+            case 'translations':
+                $this->adminTranslations($id, $method);
+                break;
             default:
                 $this->jsonResponse(['error' => 'Admin route not found'], 404);
         }
+    }
+
+    // ========================
+    // Admin: Translations CRUD
+    // ========================
+    private function adminTranslations($id, $method) {
+        if ($method === 'GET') {
+            $lang = $_GET['lang'] ?? '';
+            $q = trim($_GET['q'] ?? '');
+            $where = []; $params = [];
+            if ($lang && in_array($lang, ['ru', 'en'], true)) { $where[] = 'lang = ?'; $params[] = $lang; }
+            if ($q !== '') { $where[] = '(source_text LIKE ? OR translation LIKE ?)'; $params[] = "%$q%"; $params[] = "%$q%"; }
+            $sql = "SELECT id, source_text, lang, translation, is_manual, updated_at FROM translations_cache";
+            if ($where) $sql .= ' WHERE ' . implode(' AND ', $where);
+            $sql .= ' ORDER BY updated_at DESC LIMIT 500';
+            return $this->jsonResponse(['items' => $this->db->fetchAll($sql, $params)]);
+        }
+        if ($method === 'PUT' && $id) {
+            $data = $this->getJson();
+            $translation = trim($data['translation'] ?? '');
+            if ($translation === '') return $this->jsonResponse(['error' => 'translation required'], 400);
+            $this->db->execute(
+                "UPDATE translations_cache SET translation = ?, is_manual = 1 WHERE id = ?",
+                [$translation, (int)$id]
+            );
+            return $this->jsonResponse(['message' => 'saved']);
+        }
+        if ($method === 'DELETE' && $id) {
+            $this->db->execute("DELETE FROM translations_cache WHERE id = ?", [(int)$id]);
+            return $this->jsonResponse(['message' => 'deleted']);
+        }
+        if ($method === 'POST') {
+            $data = $this->getJson();
+            $text = trim($data['source_text'] ?? '');
+            $lang = $data['lang'] ?? '';
+            $translation = trim($data['translation'] ?? '');
+            if ($text === '' || $translation === '' || !in_array($lang, ['ru', 'en'], true)) {
+                return $this->jsonResponse(['error' => 'source_text, lang (ru|en), translation required'], 400);
+            }
+            $hash = sha1($text);
+            $this->db->execute(
+                "INSERT INTO translations_cache (source_text, source_hash, lang, translation, is_manual)
+                 VALUES (?, ?, ?, ?, 1)
+                 ON DUPLICATE KEY UPDATE translation = VALUES(translation), is_manual = 1",
+                [mb_substr($text, 0, 1000), $hash, $lang, $translation]
+            );
+            return $this->jsonResponse(['message' => 'saved']);
+        }
+        return $this->jsonResponse(['error' => 'invalid method'], 405);
     }
 
     // ========================

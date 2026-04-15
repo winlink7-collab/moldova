@@ -278,3 +278,124 @@ function translateProfile(p, lang) {
     }
     return copy;
 }
+
+/* =========================================================================
+ * Server-backed auto-translation (MyMemory API via /api/translate, DB cached)
+ * -------------------------------------------------------------------------
+ * Strategy:
+ *   1. DICT lookup (instant, hand-written)
+ *   2. localStorage cache (instant, persists across sessions)
+ *   3. Server /api/translate (async, caches in DB)
+ *   4. Re-render DOM nodes whose text was translated
+ *
+ * Usage on a page after rendering dynamic content:
+ *   applyRemoteTranslations(rootElement);
+ * It scans [data-translate] attributes and fills each with the live language.
+ * ======================================================================= */
+
+var REMOTE_MEM = {};       // session cache: { "he|ru": { "שלום": "Привет" } }
+var REMOTE_PENDING = {};   // inflight promises per key
+var REMOTE_STORAGE_KEY = 'rd_tr_cache_v1';
+
+(function loadRemoteStorage() {
+    try {
+        var raw = localStorage.getItem(REMOTE_STORAGE_KEY);
+        if (raw) REMOTE_MEM = JSON.parse(raw) || {};
+    } catch (e) { REMOTE_MEM = {}; }
+})();
+
+function saveRemoteStorage() {
+    try { localStorage.setItem(REMOTE_STORAGE_KEY, JSON.stringify(REMOTE_MEM)); } catch (e) {}
+}
+
+function getRemoteCached(text, lang) {
+    var bucket = REMOTE_MEM[lang];
+    if (bucket && typeof bucket[text] === 'string') return bucket[text];
+    return null;
+}
+
+function setRemoteCached(text, lang, value) {
+    if (!REMOTE_MEM[lang]) REMOTE_MEM[lang] = {};
+    REMOTE_MEM[lang][text] = value;
+}
+
+/** Translate multiple texts in a single API call; returns a Promise<{text: translation}> */
+function remoteTranslateBatch(texts, lang) {
+    texts = texts.filter(function (t) { return t && /[\u0590-\u05FF]/.test(t); });
+    if (!texts.length || lang === 'he') return Promise.resolve({});
+    var missing = [];
+    var result = {};
+    texts.forEach(function (t) {
+        var cached = getRemoteCached(t, lang);
+        if (cached !== null) result[t] = cached;
+        else missing.push(t);
+    });
+    if (!missing.length) return Promise.resolve(result);
+    var key = lang + '|' + missing.join('\u0001');
+    if (REMOTE_PENDING[key]) return REMOTE_PENDING[key];
+    REMOTE_PENDING[key] = fetch((window.BASE_URL || '') + '/api/translate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ texts: missing, lang: lang })
+    }).then(function (r) { return r.json(); }).then(function (data) {
+        var tr = (data && data.translations) || {};
+        Object.keys(tr).forEach(function (t) {
+            setRemoteCached(t, lang, tr[t]);
+            result[t] = tr[t];
+        });
+        saveRemoteStorage();
+        delete REMOTE_PENDING[key];
+        return result;
+    }).catch(function () { delete REMOTE_PENDING[key]; return result; });
+    return REMOTE_PENDING[key];
+}
+
+/**
+ * Scan root for [data-translate] elements, translate them to current LANG,
+ * and update their textContent. Cheap: batches all unknown strings in one call.
+ */
+function applyRemoteTranslations(root) {
+    var lang = (typeof LANG !== 'undefined') ? LANG : 'he';
+    if (lang === 'he') return;
+    root = root || document.body;
+    var nodes = root.querySelectorAll('[data-translate]');
+    if (!nodes.length) return;
+    var texts = [];
+    nodes.forEach(function (n) {
+        var src = n.getAttribute('data-translate-src') || n.textContent.trim();
+        if (!n.getAttribute('data-translate-src')) n.setAttribute('data-translate-src', src);
+        // Try dict first
+        var dictRes = autoTranslate(src, lang);
+        if (dictRes && dictRes !== src && !/[\u0590-\u05FF]/.test(dictRes)) {
+            n.textContent = dictRes;
+            return;
+        }
+        // Try localStorage
+        var cached = getRemoteCached(src, lang);
+        if (cached) { n.textContent = cached; return; }
+        texts.push(src);
+    });
+    if (!texts.length) return;
+    remoteTranslateBatch(texts, lang).then(function (map) {
+        nodes.forEach(function (n) {
+            var src = n.getAttribute('data-translate-src');
+            if (src && map[src]) n.textContent = map[src];
+        });
+    });
+}
+
+/** Translate a single string with dict → cache → API fallback. Returns a Promise. */
+function smartTranslate(text, lang, isName) {
+    if (!text || lang === 'he') return Promise.resolve(text);
+    var dictRes = autoTranslate(text, lang, isName);
+    if (dictRes && dictRes !== text && !/[\u0590-\u05FF]/.test(dictRes)) return Promise.resolve(dictRes);
+    var cached = getRemoteCached(text, lang);
+    if (cached !== null) return Promise.resolve(cached);
+    return remoteTranslateBatch([text], lang).then(function (map) {
+        return map[text] || dictRes || text;
+    });
+}
+
+window.applyRemoteTranslations = applyRemoteTranslations;
+window.smartTranslate = smartTranslate;
+window.remoteTranslateBatch = remoteTranslateBatch;

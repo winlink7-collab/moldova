@@ -465,11 +465,13 @@ document.getElementById('leadForm').addEventListener('submit', submitLeadForm);
             return;
         }
         grid.innerHTML = reviews.slice(0, 6).map(rawR => {
-            // Auto-translate review content if not Hebrew
+            // Synchronous dict pass; remote translation kicks in after render via applyRemoteTranslations()
             const r = Object.assign({}, rawR);
+            const srcName = r.client_name || '';
+            const srcText = r.review_text || '';
             if (typeof autoTranslate === 'function' && LANG && LANG !== 'he') {
-                r.client_name = autoTranslate(r.client_name || '', LANG, true);
-                r.review_text = autoTranslate(r.review_text || '', LANG);
+                r.client_name = autoTranslate(srcName, LANG, true);
+                r.review_text = autoTranslate(srcText, LANG);
             }
             const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
             const initials = r.client_name.split(' ').map(w => w[0]).join('');
@@ -490,7 +492,7 @@ document.getElementById('leadForm').addEventListener('submit', submitLeadForm);
                     </div>
 
                     <!-- Review text -->
-                    <p class="text-slate-200 leading-relaxed mb-7 text-lg font-light italic min-h-[80px]">"${r.review_text}"</p>
+                    <p class="text-slate-200 leading-relaxed mb-7 text-lg font-light italic min-h-[80px]" data-translate data-translate-src="${(srcText || '').replace(/"/g,'&quot;')}">"${r.review_text}"</p>
 
                     <!-- Client info -->
                     <div class="flex items-center gap-4 pt-5 border-t border-primary/10">
@@ -504,7 +506,7 @@ document.getElementById('leadForm').addEventListener('submit', submitLeadForm);
                             : `<div class="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-[#b89b06] flex items-center justify-center text-background-dark font-black text-2xl shadow-lg shrink-0">${initials}</div>`
                         }
                         <div class="flex-1">
-                            <p class="text-white font-black text-xl mb-1">${r.client_name}</p>
+                            <p class="text-white font-black text-xl mb-1" data-translate data-translate-src="${(srcName || '').replace(/"/g,'&quot;')}">${r.client_name}</p>
                             <p class="text-primary/90 text-sm font-bold flex items-center gap-1">
                                 <span class="material-symbols-outlined text-base" style="font-variation-settings:'FILL' 1;">verified</span>
                                 ${T.verified_client}
@@ -514,6 +516,7 @@ document.getElementById('leadForm').addEventListener('submit', submitLeadForm);
                 </div>
             </div>`;
         }).join('');
+        if (typeof applyRemoteTranslations === 'function') applyRemoteTranslations(grid);
     } catch {
         document.getElementById('reviewsGrid').innerHTML = '';
     }
@@ -532,25 +535,28 @@ document.getElementById('leadForm').addEventListener('submit', submitLeadForm);
         }
         grid.innerHTML = profiles.map(rawP => {
             const p = (typeof translateProfile === 'function') ? translateProfile(rawP, LANG) : rawP;
+            const srcName = rawP.name || '';
+            const srcCity = rawP.city || '';
             const countryName = p.country === 'moldova' ? T.moldova_country : T.ukraine;
             const flag = p.country === 'moldova' ? '🇲🇩' : '🇺🇦';
-            const cityT = (typeof autoTranslate === 'function') ? autoTranslate(p.city || '', LANG) : (p.city || '');
+            const cityT = (typeof autoTranslate === 'function') ? autoTranslate(srcCity, LANG) : srcCity;
             return `
             <a href="${BASE}/profile/${p.id}" class="group relative rounded-2xl overflow-hidden border border-white/5 hover:border-primary/40 transition-all duration-500 block">
                 <div class="aspect-[3/4] relative overflow-hidden">
                     <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="${p.primary_photo || ''}" alt="${p.name}" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 400%22><rect fill=%22%231a1810%22 width=%22300%22 height=%22400%22/><text x=%22150%22 y=%22210%22 text-anchor=%22middle%22 fill=%22%23f2d00d%22 font-size=%2260%22>${p.name[0]}</text></svg>'"/>
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                     <div class="absolute bottom-0 right-0 left-0 p-4 z-10">
-                        <h4 class="text-lg font-extrabold text-white drop-shadow-lg">${p.name}, ${p.age}</h4>
+                        <h4 class="text-lg font-extrabold text-white drop-shadow-lg"><span data-translate data-translate-src="${srcName.replace(/"/g,'&quot;')}">${p.name}</span>, ${p.age}</h4>
                         <p class="text-xs text-white/70 flex items-center gap-1 mt-1">
                             <span class="material-symbols-outlined text-primary" style="font-size:14px;">location_on</span>
-                            ${cityT}, ${countryName} ${flag}
+                            <span data-translate data-translate-src="${srcCity.replace(/"/g,'&quot;')}">${cityT}</span>, ${countryName} ${flag}
                         </p>
                     </div>
                     <div class="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </div>
             </a>`;
         }).join('');
+        if (typeof applyRemoteTranslations === 'function') applyRemoteTranslations(grid);
     } catch {
         document.getElementById('homeProfilesGrid').innerHTML = `<p class="text-red-400 text-center col-span-full py-8">${T.error_loading}</p>`;
     }

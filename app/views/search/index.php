@@ -161,9 +161,12 @@ function renderProfiles(profiles) {
     }
     grid.innerHTML = profiles.map(rawP => {
         const p = (typeof translateProfile === 'function') ? translateProfile(rawP, LANG) : rawP;
+        const srcName = rawP.name || '';
+        const srcCity = rawP.city || '';
+        const srcOccupation = rawP.occupation || '';
         const flag = p.country === 'moldova' ? '🇲🇩' : '🇺🇦';
         const countryName = p.country === 'moldova' ? T.moldova_country : T.ukraine;
-        const cityT = (typeof autoTranslate === 'function') ? autoTranslate(p.city || '', LANG) : (p.city || '');
+        const cityT = (typeof autoTranslate === 'function') ? autoTranslate(srcCity, LANG) : srcCity;
         return `
         <a href="${BASE}/profile/${p.id}" class="profile-card group relative rounded-2xl overflow-hidden border border-white/5 cursor-pointer transition-all duration-500 block">
             <div class="aspect-[3/4] relative overflow-hidden">
@@ -190,12 +193,12 @@ function renderProfiles(profiles) {
 
                 <!-- Info overlay on image -->
                 <div class="absolute bottom-0 right-0 left-0 p-5 z-10">
-                    <h3 class="text-2xl font-extrabold text-white mb-1 drop-shadow-lg">${p.name}, ${p.age}</h3>
+                    <h3 class="text-2xl font-extrabold text-white mb-1 drop-shadow-lg"><span data-translate data-translate-src="${srcName.replace(/"/g,'&quot;')}">${p.name}</span>, ${p.age}</h3>
                     <p class="text-sm text-white/70 flex items-center gap-1.5 font-medium">
                         <span class="material-symbols-outlined text-primary text-base">location_on</span>
-                        ${cityT}, ${countryName} ${flag}
+                        <span data-translate data-translate-src="${srcCity.replace(/"/g,'&quot;')}">${cityT}</span>, ${countryName} ${flag}
                     </p>
-                    ${p.occupation ? `<p class="text-xs text-white/50 mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-xs">work</span> ${p.occupation}</p>` : ''}
+                    ${p.occupation ? `<p class="text-xs text-white/50 mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-xs">work</span> <span data-translate data-translate-src="${srcOccupation.replace(/"/g,'&quot;')}">${p.occupation}</span></p>` : ''}
                 </div>
 
                 <!-- Hover overlay -->
@@ -203,6 +206,7 @@ function renderProfiles(profiles) {
             </div>
         </a>`;
     }).join('');
+    if (typeof applyRemoteTranslations === 'function') applyRemoteTranslations(grid);
 }
 
 function renderPagination(page, pages) {
