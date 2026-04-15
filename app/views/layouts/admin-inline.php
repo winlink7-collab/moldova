@@ -412,6 +412,10 @@ body.aie-nav-open header.sticky { right: 300px; width: calc(100% - 300px); }
             <span class="material-symbols-outlined" style="font-size:18px">edit</span>
             <span id="aieToggleText">הפעל עריכה</span>
         </button>
+        <button class="aie-btn" id="aieWaBtn" onclick="aieOpenWhatsAppSettings()" style="background:#25D366;color:#fff;" title="הגדרות WhatsApp">
+            <span class="material-symbols-outlined" style="font-size:18px">chat</span>
+            <span>וואטסאפ</span>
+        </button>
         <a href="<?= BASE_URL ?>/admin" class="aie-btn aie-btn-link">
             <span class="material-symbols-outlined" style="font-size:16px">dashboard</span>
             פאנל ניהול
@@ -735,6 +739,81 @@ body.aie-nav-open header.sticky { right: 300px; width: calc(100% - 300px); }
         input.onchange = async function() { if (!input.files[0]) return; aieToast('מעלה תמונה...', 'success'); const url = await aieUploadImage(input.files[0]); if (url) { const ok = await aieSaveSetting(key, url); if (ok) { if (el.tagName === 'IMG') el.src = url; else el.style.backgroundImage = `url('${url}')`; aieToast('תמונה עודכנה בהצלחה!'); } } };
         input.click();
     }
+
+    // ---- WhatsApp Contact Settings (global phone + message template) ----
+    window.aieOpenWhatsAppSettings = async function() {
+        aieClosePopup();
+        let cur = { phone: '', tmpl: '' };
+        try {
+            const r = await fetch(BASE + '/api/admin/settings');
+            const s = await r.json();
+            cur.phone = s.contact_whatsapp_phone || '';
+            cur.tmpl = s.contact_whatsapp_template || 'שלום, אני מעוניין בפרופיל של {name}, גיל {age}, מ-{city}. אשמח לפרטים נוספים.';
+        } catch {}
+        const backdrop = document.createElement('div');
+        backdrop.style.cssText = 'position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);';
+        const popup = document.createElement('div');
+        popup.className = 'aie-popup';
+        popup.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);min-width:420px;max-width:520px;';
+        popup.innerHTML = `
+            <div class="aie-popup-title" style="font-size:16px;margin-bottom:14px;">
+                <span class="material-symbols-outlined" style="font-size:20px;color:#25D366;">chat</span>
+                הגדרות WhatsApp לכפתורי "צור קשר"
+            </div>
+            <div style="background:rgba(37,211,102,0.08);border:1px solid rgba(37,211,102,0.3);border-radius:8px;padding:10px;margin-bottom:12px;font-size:12px;color:#cbd5e1;line-height:1.6;">
+                כאשר מבקר לוחץ על כפתור "שלח הודעה" בעמוד פרופיל, הוא יופנה לוואטסאפ עם המספר שלך וההודעה תכלול אוטומטית את פרטי הפרופיל.
+            </div>
+            <div class="aie-section-label">מספר טלפון WhatsApp שלך</div>
+            <input type="tel" id="aieWaPhone" value="${cur.phone.replace(/"/g,'&quot;')}" placeholder="972501234567" dir="ltr" style="font-size:15px;letter-spacing:1px;"/>
+            <div style="font-size:11px;color:#777;margin-top:4px;">פורמט: 972501234567 (ללא + או 0 בהתחלה). או הכנס 0501234567 והמערכת תמיר.</div>
+
+            <div class="aie-section-label" style="margin-top:14px;">תבנית הודעה</div>
+            <textarea id="aieWaTmpl" rows="4" style="font-family:Heebo,sans-serif;">${cur.tmpl.replace(/</g,'&lt;')}</textarea>
+            <div style="font-size:11px;color:#777;margin-top:4px;line-height:1.6;">
+                משתנים זמינים: <code style="color:#f2d00d;background:#0f0e08;padding:1px 5px;border-radius:3px;">{name}</code>
+                <code style="color:#f2d00d;background:#0f0e08;padding:1px 5px;border-radius:3px;">{age}</code>
+                <code style="color:#f2d00d;background:#0f0e08;padding:1px 5px;border-radius:3px;">{city}</code>
+                <code style="color:#f2d00d;background:#0f0e08;padding:1px 5px;border-radius:3px;">{country}</code>
+                <code style="color:#f2d00d;background:#0f0e08;padding:1px 5px;border-radius:3px;">{url}</code>
+            </div>
+
+            <div id="aieWaPreview" style="margin-top:12px;padding:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;font-size:12px;color:#aaa;line-height:1.5;">
+                <div style="font-weight:700;color:#bab59c;margin-bottom:4px;">תצוגה מקדימה (לדוגמה: אלנה, 28, קישינב):</div>
+                <div id="aieWaPreviewText" style="color:#cbd5e1;"></div>
+            </div>
+
+            <div class="aie-popup-actions" style="margin-top:14px;">
+                <button class="aie-save" id="aieWaSaveBtn">שמור</button>
+                <button class="aie-cancel" id="aieWaCancelBtn">ביטול</button>
+            </div>
+        `;
+        document.body.appendChild(backdrop);
+        document.body.appendChild(popup);
+        currentPopup = popup;
+
+        const phoneEl = popup.querySelector('#aieWaPhone');
+        const tmplEl = popup.querySelector('#aieWaTmpl');
+        const previewEl = popup.querySelector('#aieWaPreviewText');
+        function renderPreview() {
+            const sample = { name: 'אלנה', age: '28', city: 'קישינב', country: 'מולדובה', url: location.origin + '/profile/1' };
+            const msg = (tmplEl.value || '').replace(/\{(\w+)\}/g, (_, k) => sample[k] || '');
+            previewEl.textContent = msg;
+        }
+        renderPreview();
+        tmplEl.oninput = renderPreview;
+
+        const close = () => { backdrop.remove(); popup.remove(); currentPopup = null; };
+        backdrop.onclick = close;
+        popup.querySelector('#aieWaCancelBtn').onclick = close;
+        popup.querySelector('#aieWaSaveBtn').onclick = async () => {
+            let phone = (phoneEl.value || '').replace(/[^0-9]/g, '');
+            if (phone.startsWith('0')) phone = '972' + phone.substring(1);
+            await aieSaveSetting('contact_whatsapp_phone', phone);
+            await aieSaveSetting('contact_whatsapp_template', tmplEl.value || '');
+            aieToast('הגדרות WhatsApp נשמרו!');
+            close();
+        };
+    };
 
     // ---- GLOBAL SCAN ----
     function aieGlobalScan() {

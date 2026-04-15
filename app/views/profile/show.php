@@ -376,6 +376,9 @@ async function loadProfile() {
         document.getElementById('heroAge').textContent = p.age;
         document.title = `${p.name}, ${p.age} - Moldova & Ukraine`;
 
+        // Build WhatsApp contact link from global settings (auto-fills profile name/age/city)
+        if (typeof applyWhatsAppContactLink === 'function') applyWhatsAppContactLink();
+
         // Location
         document.getElementById('location').innerHTML = `${cityTranslated}, <span class="font-semibold">${countryName}</span>`;
 
@@ -509,6 +512,7 @@ document.getElementById('msgForm').addEventListener('submit', async (e) => {
 
 // Load editable button texts + links from settings (for all visitors)
 let profileBtnLinks = { msg: '', video: '', gift: '' };
+let siteWaSettings = { phone: '', tmpl: '' };
 (async function loadProfileBtnSettings() {
     try {
         const res = await fetch(BASE + '/api/admin/settings');
@@ -519,8 +523,31 @@ let profileBtnLinks = { msg: '', video: '', gift: '' };
         if (s.profile_msg_link) { profileBtnLinks.msg = s.profile_msg_link; setExternalLink('profileMsgLink', s.profile_msg_link); }
         if (s.profile_video_link) { profileBtnLinks.video = s.profile_video_link; setExternalLink('profileVideoLink', s.profile_video_link); }
         if (s.profile_gift_link) { profileBtnLinks.gift = s.profile_gift_link; setExternalLink('profileGiftLink', s.profile_gift_link); }
+        siteWaSettings.phone = s.contact_whatsapp_phone || '';
+        siteWaSettings.tmpl = s.contact_whatsapp_template || 'שלום, אני מעוניין בפרופיל של {name}, גיל {age}, מ-{city}. אשמח לפרטים נוספים.';
+        applyWhatsAppContactLink();
     } catch {}
 })();
+
+// Build WhatsApp link for the message button using global phone + template + current profile data.
+// Per-button custom link (profile_msg_link) takes priority for backward compatibility.
+function applyWhatsAppContactLink() {
+    if (profileBtnLinks.msg) return; // admin set a custom link explicitly - respect it
+    if (!siteWaSettings.phone) return;
+    const p = (typeof currentProfile !== 'undefined' && currentProfile) ? currentProfile : null;
+    if (!p) { setTimeout(applyWhatsAppContactLink, 300); return; }
+    const country = p.country === 'moldova' ? 'מולדובה' : (p.country === 'ukraine' ? 'אוקראינה' : (p.country || ''));
+    const vars = {
+        name: p.name || '',
+        age: p.age || '',
+        city: p.city || '',
+        country: country,
+        url: location.origin + location.pathname
+    };
+    const msg = (siteWaSettings.tmpl || '').replace(/\{(\w+)\}/g, (_, k) => vars[k] || '');
+    const url = 'https://wa.me/' + siteWaSettings.phone + '?text=' + encodeURIComponent(msg);
+    setExternalLink('profileMsgLink', url);
+}
 
 function setExternalLink(elId, url) {
     const el = document.getElementById(elId);

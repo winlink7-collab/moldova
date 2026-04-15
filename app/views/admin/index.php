@@ -1018,6 +1018,24 @@ const API = BASE_URL;
             </div>
         </div>
 
+        <!-- WhatsApp Contact (auto-fills profile data into wa.me link) -->
+        <div class="bg-card rounded-lg p-6 border border-white/10" style="border-color:rgba(37,211,102,0.3);">
+            <h3 class="text-lg font-bold mb-1" style="color:#25D366;">📱 צור קשר WhatsApp</h3>
+            <p class="text-xs text-white/50 mb-4">כשמבקר לוחץ "שלח הודעה" בעמוד פרופיל - הוא יופנה לוואטסאפ שלך עם הודעה אוטומטית הכוללת את שם הפרופיל, גיל ועיר.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm text-white/60 mb-1">מספר WhatsApp שלך</label>
+                    <input id="contact_whatsapp_phone" type="tel" dir="ltr" class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm" placeholder="972501234567"/>
+                    <div class="text-xs text-white/40 mt-1">פורמט: 972501234567 (או 0501234567 והמערכת תמיר)</div>
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm text-white/60 mb-1">תבנית הודעה</label>
+                    <textarea id="contact_whatsapp_template" rows="3" class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm" placeholder="שלום, אני מעוניין בפרופיל של {name}, גיל {age}, מ-{city}. אשמח לפרטים נוספים."></textarea>
+                    <div class="text-xs text-white/40 mt-1">משתנים: <code style="color:#f2d00d;">{name}</code> <code style="color:#f2d00d;">{age}</code> <code style="color:#f2d00d;">{city}</code> <code style="color:#f2d00d;">{country}</code> <code style="color:#f2d00d;">{url}</code></div>
+                </div>
+            </div>
+        </div>
+
         <!-- SMTP -->
         <div class="bg-card rounded-lg p-6 border border-white/10">
             <h3 class="text-lg font-bold text-primary mb-4">הגדרות SMTP</h3>
@@ -2901,6 +2919,8 @@ async function loadSiteSettings() {
         document.getElementById('site_smtp_user').value = s.site_smtp_user || '';
         document.getElementById('site_smtp_password').value = s.site_smtp_password || '';
         document.getElementById('site_smtp_from_name').value = s.site_smtp_from_name || '';
+        document.getElementById('contact_whatsapp_phone').value = s.contact_whatsapp_phone || '';
+        document.getElementById('contact_whatsapp_template').value = s.contact_whatsapp_template || '';
     } catch(e) {
         console.error('Error loading site settings:', e);
     }
@@ -2929,6 +2949,8 @@ async function saveSiteSettings(e) {
         site_smtp_user: document.getElementById('site_smtp_user').value,
         site_smtp_password: document.getElementById('site_smtp_password').value,
         site_smtp_from_name: document.getElementById('site_smtp_from_name').value,
+        contact_whatsapp_phone: (document.getElementById('contact_whatsapp_phone').value || '').replace(/[^0-9]/g, '').replace(/^0/, '972'),
+        contact_whatsapp_template: document.getElementById('contact_whatsapp_template').value,
     };
     try {
         await fetch(API + '/api/admin/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
