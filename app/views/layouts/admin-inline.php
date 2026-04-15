@@ -764,11 +764,11 @@ body.aie-nav-open header.sticky { right: 300px; width: calc(100% - 300px); }
                 כאשר מבקר לוחץ על כפתור "שלח הודעה" בעמוד פרופיל, הוא יופנה לוואטסאפ עם המספר שלך וההודעה תכלול אוטומטית את פרטי הפרופיל.
             </div>
             <div class="aie-section-label">מספר טלפון WhatsApp שלך</div>
-            <input type="tel" id="aieWaPhone" value="${cur.phone.replace(/"/g,'&quot;')}" placeholder="972501234567" dir="ltr" style="font-size:15px;letter-spacing:1px;"/>
+            <input type="tel" id="aieWaPhone" value="${cur.phone.replace(/"/g,'&quot;')}" placeholder="972501234567" dir="ltr" style="font-size:16px;letter-spacing:1px;background:#ffffff !important;color:#000000 !important;font-weight:700;"/>
             <div style="font-size:11px;color:#777;margin-top:4px;">פורמט: 972501234567 (ללא + או 0 בהתחלה). או הכנס 0501234567 והמערכת תמיר.</div>
 
             <div class="aie-section-label" style="margin-top:14px;">תבנית הודעה</div>
-            <textarea id="aieWaTmpl" rows="4" style="font-family:Heebo,sans-serif;">${cur.tmpl.replace(/</g,'&lt;')}</textarea>
+            <textarea id="aieWaTmpl" rows="4" style="font-family:Heebo,sans-serif;background:#ffffff !important;color:#000000 !important;font-weight:500;">${cur.tmpl.replace(/</g,'&lt;')}</textarea>
             <div style="font-size:11px;color:#777;margin-top:4px;line-height:1.6;">
                 משתנים זמינים: <code style="color:#f2d00d;background:#0f0e08;padding:1px 5px;border-radius:3px;">{name}</code>
                 <code style="color:#f2d00d;background:#0f0e08;padding:1px 5px;border-radius:3px;">{age}</code>
