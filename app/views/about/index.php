@@ -28,7 +28,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
         <div class="order-1 md:order-2">
             <div class="relative">
                 <div class="absolute -inset-4 border-2 border-primary/30 rounded-xl"></div>
-                <img id="aboutWhoImage" alt="Our Team" class="relative rounded-xl shadow-2xl z-10 w-full aspect-[4/3] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxgoX3C_Hhmbfv176C4wD7e8jbwG4eavuanBVUPa4uH2lsS2QiWLqiogT_W9IK9EyziRjwo6_op_l_6UhEM01qXLwIkCIt8KBDQWC1cLN4iClYOSiuIDyi83GOavRErmgH9Gz2Qa0zMhjfnI7ajShe4YyDM_oHka8f0KlInijIfXJqIKyvzl1LMhEPg7dFe3vSbg02iOwuyYoxvUf5s8-9q8ZcFkpjFQD2P77MRYmUs0iliS2V51lQNKwqqEX-SsdKWjkJnbWAeL98"/>
+                <img id="aboutWhoImage" loading="lazy" decoding="async" alt="Our Team" class="relative rounded-xl shadow-2xl z-10 w-full aspect-[4/3] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxgoX3C_Hhmbfv176C4wD7e8jbwG4eavuanBVUPa4uH2lsS2QiWLqiogT_W9IK9EyziRjwo6_op_l_6UhEM01qXLwIkCIt8KBDQWC1cLN4iClYOSiuIDyi83GOavRErmgH9Gz2Qa0zMhjfnI7ajShe4YyDM_oHka8f0KlInijIfXJqIKyvzl1LMhEPg7dFe3vSbg02iOwuyYoxvUf5s8-9q8ZcFkpjFQD2P77MRYmUs0iliS2V51lQNKwqqEX-SsdKWjkJnbWAeL98"/>
             </div>
         </div>
     </div>
@@ -116,7 +116,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
                 </div>
             </div>
             <div class="flex-1 min-w-0 md:min-w-[300px]">
-                <img id="aboutWhyImage" alt="Why Choose Us" class="rounded-xl shadow-2xl w-full aspect-[4/3] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCm6jtPi3mVhqoVkuZhpmggeOtBBFXFdgeUVxX9oZv8KYSKA41m2mvsQ3SS5znKJUsvQFNbgxhVKhMkWDeDLrLJ4fPD_Taawd2PLgKoubEBQc2YUoIvlBoulRLW76WqHTO8qDhtHNv2CcIJm5p2ogjR2nEOqASTK2UV8R6s9Wi4TljGhWtjjPumXh1jNZHfxZw_hugz75clGm02va_GcXfMI36tDPGvRRpRCaT6bt4tfmPnus9JJpBSJ2fPF458IZemcMnXZZ1L-dJR"/>
+                <img id="aboutWhyImage" loading="lazy" decoding="async" alt="Why Choose Us" class="rounded-xl shadow-2xl w-full aspect-[4/3] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCm6jtPi3mVhqoVkuZhpmggeOtBBFXFdgeUVxX9oZv8KYSKA41m2mvsQ3SS5znKJUsvQFNbgxhVKhMkWDeDLrLJ4fPD_Taawd2PLgKoubEBQc2YUoIvlBoulRLW76WqHTO8qDhtHNv2CcIJm5p2ogjR2nEOqASTK2UV8R6s9Wi4TljGhWtjjPumXh1jNZHfxZw_hugz75clGm02va_GcXfMI36tDPGvRRpRCaT6bt4tfmPnus9JJpBSJ2fPF458IZemcMnXZZ1L-dJR"/>
             </div>
         </div>
     </div>

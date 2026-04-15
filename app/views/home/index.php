@@ -22,7 +22,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
 <section class="relative min-h-[75vh] md:min-h-[90vh] flex items-center pt-8 md:pt-10 pb-12 md:pb-20 overflow-hidden">
     <div class="absolute inset-0 z-0">
         <div class="absolute inset-0 bg-gradient-to-l from-background-dark/20 via-background-dark/80 to-background-dark z-10"></div>
-        <div id="homeHeroBg" class="w-full h-full bg-cover bg-center" data-alt="Beautiful elegant woman in luxury evening dress" style="background-image: url('https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');"></div>
+        <div id="homeHeroBg" class="w-full h-full bg-cover bg-center" data-alt="Beautiful elegant woman in luxury evening dress" style="background-image: url('https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=70');"></div>
     </div>
     <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
         <div class="flex flex-col gap-8 text-right">
@@ -235,7 +235,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
             <!-- Story 1 -->
             <a href="<?= BASE_URL ?>/stories" class="flex flex-col gap-6 group cursor-pointer">
                 <div class="relative aspect-[3/4] overflow-hidden rounded-2xl border border-white/10">
-                    <img id="homeStory1Img" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Happy elegant couple on their wedding day" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRl8m3xCKcuaz8TUFEUX-F4g-FdiHONlkHeT5NQzGfQBp_qxKdKhhjG8pJR_a88IFki41XCwxiCYVlHa6IJp2SnY75wn7l_IjJjKA8Mf2kMMcKqU4NfxDivHvkarldQd028psN1yMyVDEunPp-g7dZe_cPWzS5MjE72nPTDIvphnhYc_pk_LuS-Kk0_mNrEUQx-LICl7fOVQzX0yuVwEdD-DAjDTD5yQB7eh8HFBv2sQhrAsk1_Om6SkvRGnJ9jTF4glctIa7dRi5Q"/>
+                    <img id="homeStory1Img" loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Happy elegant couple on their wedding day" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRl8m3xCKcuaz8TUFEUX-F4g-FdiHONlkHeT5NQzGfQBp_qxKdKhhjG8pJR_a88IFki41XCwxiCYVlHa6IJp2SnY75wn7l_IjJjKA8Mf2kMMcKqU4NfxDivHvkarldQd028psN1yMyVDEunPp-g7dZe_cPWzS5MjE72nPTDIvphnhYc_pk_LuS-Kk0_mNrEUQx-LICl7fOVQzX0yuVwEdD-DAjDTD5yQB7eh8HFBv2sQhrAsk1_Om6SkvRGnJ9jTF4glctIa7dRi5Q"/>
                     <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-60"></div>
                     <div class="absolute bottom-6 right-6">
                         <div id="homeStory1Badge" class="bg-primary px-3 py-1 rounded text-background-dark text-xs font-black uppercase"><?= t('home_story1_badge') ?></div>
@@ -251,7 +251,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
             <!-- Story 2 -->
             <a href="<?= BASE_URL ?>/stories" class="flex flex-col gap-6 group cursor-pointer">
                 <div class="relative aspect-[3/4] overflow-hidden rounded-2xl border border-white/10">
-                    <img id="homeStory2Img" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Elegant couple holding hands at luxury event" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXlo-gZ5PCyhKp9FmvV-ztLSrQDD5dujR-Veyk50aI8GhpQn_fZt32SM4ZZsxA7nrGPaHqzBs0N7SB6QpTF7fHY30T2h9mp7CdEuEF-lw5c-4gkUSYz0wevvP_8fs8S4dDtdGPn4-StpFsqRCTXYCKx2wevd2pYAy7dLMX7LlqgOniKjbpitcW_CRoEjuVtsmCMV9MzGgKP9Vp6sbXxOKcXQ_b3TQMb6VCUuAlgIDmaQ6bA8UwvwGSb2y6nPHqVsjB0kfX8yiI6pLh"/>
+                    <img id="homeStory2Img" loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Elegant couple holding hands at luxury event" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXlo-gZ5PCyhKp9FmvV-ztLSrQDD5dujR-Veyk50aI8GhpQn_fZt32SM4ZZsxA7nrGPaHqzBs0N7SB6QpTF7fHY30T2h9mp7CdEuEF-lw5c-4gkUSYz0wevvP_8fs8S4dDtdGPn4-StpFsqRCTXYCKx2wevd2pYAy7dLMX7LlqgOniKjbpitcW_CRoEjuVtsmCMV9MzGgKP9Vp6sbXxOKcXQ_b3TQMb6VCUuAlgIDmaQ6bA8UwvwGSb2y6nPHqVsjB0kfX8yiI6pLh"/>
                     <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-60"></div>
                     <div class="absolute bottom-6 right-6">
                         <div id="homeStory2Badge" class="bg-primary px-3 py-1 rounded text-background-dark text-xs font-black uppercase"><?= t('home_story2_badge') ?></div>
@@ -267,7 +267,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
             <!-- Story 3 -->
             <a href="<?= BASE_URL ?>/stories" class="flex flex-col gap-6 group cursor-pointer">
                 <div class="relative aspect-[3/4] overflow-hidden rounded-2xl border border-white/10">
-                    <img id="homeStory3Img" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Beautiful couple on vacation in Europe" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRauqP-EVXn2W_0PWxvqQvHWwly8zTFQTZcLyJ2XCeYP7qaaRWmDjQLdMljqJntd2VaDYYpRJReZ7pZX5MemNFi7apgdsYdg2aw79djeh745CjlSzPYbPXhbFJL2bdx8vNiCmg1Gd9UKSpG7WL9UCQEkKhxCIIEHJTGUeSJkvFn-jns2tERas1Qtpgq75vHW03U1fQoRPgtAn5We9i58zavtQB1dsTkJ-zHZ38T4BNKyLhsQS-XdrTmPJiisprls1_d88wm10aUanj"/>
+                    <img id="homeStory3Img" loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Beautiful couple on vacation in Europe" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRauqP-EVXn2W_0PWxvqQvHWwly8zTFQTZcLyJ2XCeYP7qaaRWmDjQLdMljqJntd2VaDYYpRJReZ7pZX5MemNFi7apgdsYdg2aw79djeh745CjlSzPYbPXhbFJL2bdx8vNiCmg1Gd9UKSpG7WL9UCQEkKhxCIIEHJTGUeSJkvFn-jns2tERas1Qtpgq75vHW03U1fQoRPgtAn5We9i58zavtQB1dsTkJ-zHZ38T4BNKyLhsQS-XdrTmPJiisprls1_d88wm10aUanj"/>
                     <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-60"></div>
                     <div class="absolute bottom-6 right-6">
                         <div id="homeStory3Badge" class="bg-primary px-3 py-1 rounded text-background-dark text-xs font-black uppercase"><?= t('home_story3_badge') ?></div>

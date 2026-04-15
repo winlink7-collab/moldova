@@ -37,13 +37,17 @@ function navClass(string $page, string $current): string {
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 
-<!-- Prevent FOUC on first load: hide until CSS + fonts ready -->
-<style id="fouc-guard">html:not(.ready) body{opacity:0 !important;visibility:hidden !important}</style>
-
 <!-- Preconnect to font + CDN servers to reduce first-load delay -->
 <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin/>
+<link rel="preconnect" href="https://images.unsplash.com" crossorigin/>
+<link rel="preconnect" href="https://lh3.googleusercontent.com" crossorigin/>
+
+<!-- Preload hero background image for faster LCP -->
+<?php if (($currentPage ?? '') === 'home'): ?>
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=70" fetchpriority="high"/>
+<?php endif; ?>
 
 <!-- SEO Meta -->
 <title><?= htmlspecialchars($pageTitle) ?></title>
@@ -86,9 +90,9 @@ function navClass(string $page, string $current): string {
 <!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Assistant:wght@300;400;500;600;700;800&family=Rubik:wght@300;400;500;600;700;800;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<!-- Google Fonts - Heebo only (other families loaded on demand by admin font picker) -->
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0..1&display=swap" rel="stylesheet" media="print" onload="this.media='all'"/>
 <script>
 // Load saved font preference
 (function() {
@@ -178,12 +182,9 @@ function navClass(string $page, string $current): string {
         visibility: hidden;
     }
 
-    /* Prevent FOUC (Flash of Unstyled Content) - fade in when html.ready */
-    html.ready body {
-        opacity: 1;
-        visibility: visible;
-        transition: opacity 0.25s ease-out;
-    }
+    /* Smooth fade-in on navigation (non-blocking) */
+    body { animation: fadeInBody 0.2s ease-out; }
+    @keyframes fadeInBody { from { opacity: 0.85; } to { opacity: 1; } }
 
     /* Disable hover effects on touch devices to prevent jumps */
     @media (hover: none) {
@@ -564,21 +565,6 @@ function navClass(string $page, string $current): string {
         document.documentElement.classList.add('light');
     }
 })();
-// Reveal page only after fonts + CSS loaded (prevents FOUC jumping)
-(function() {
-    var shown = false;
-    function reveal() {
-        if (shown) return; shown = true;
-        document.documentElement.classList.add('ready');
-    }
-    // Prefer document.fonts.ready when available
-    if (document.fonts && document.fonts.ready && document.fonts.ready.then) {
-        document.fonts.ready.then(reveal);
-    }
-    window.addEventListener('load', reveal);
-    // Safety fallback: never hide longer than 1.2s even if a resource hangs
-    setTimeout(reveal, 1200);
-})();
 </script>
 </head>
 
@@ -593,8 +579,8 @@ var LANG = '<?= $CURRENT_LANG ?? "he" ?>';
 var T = JSON.parse(document.getElementById('__translations').textContent);
 function tr(key) { return (T && T[key]) ? T[key] : key; }
 </script>
-<script src="<?= BASE_URL ?>/public/js/auto-translate.js?v=<?= time() ?>"></script>
-<script src="<?= BASE_URL ?>/public/js/whatsapp-verify.js?v=<?= time() ?>"></script>
+<script src="<?= BASE_URL ?>/public/js/auto-translate.js?v=<?= time() ?>" defer></script>
+<script src="<?= BASE_URL ?>/public/js/whatsapp-verify.js?v=<?= time() ?>" defer></script>
 <div class="relative flex min-h-screen w-full flex-col">
 
 <!-- Navigation -->
