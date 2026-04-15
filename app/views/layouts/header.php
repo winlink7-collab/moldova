@@ -618,10 +618,17 @@ body.loaded #pageLoader{opacity:0;visibility:hidden;pointer-events:none}
 </style>
 <script>
 (function(){
-    function hideLoader(){document.body.classList.add('loaded');setTimeout(function(){var l=document.getElementById('pageLoader');if(l)l.remove();},600);}
+    var startTs=Date.now(), MIN_MS=1200; // hold loader at least 1.2s for smooth brand moment
+    function hideLoader(){
+        var remaining=Math.max(0,MIN_MS-(Date.now()-startTs));
+        setTimeout(function(){
+            document.body.classList.add('loaded');
+            setTimeout(function(){var l=document.getElementById('pageLoader');if(l)l.remove();},600);
+        },remaining);
+    }
     if(document.readyState==='complete')hideLoader();
     else window.addEventListener('load',hideLoader);
-    setTimeout(hideLoader,3500); // hard cap so a stuck resource never blocks user
+    setTimeout(hideLoader,4500); // hard cap so a stuck resource never blocks user
 })();
 </script>
 
