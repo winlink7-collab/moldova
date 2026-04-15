@@ -590,6 +590,41 @@ button,input,select{font:inherit;margin:0}
 </head>
 
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden">
+
+<!-- Page Loader (shows during initial load, fades out when page is ready) -->
+<div id="pageLoader" style="position:fixed;inset:0;z-index:99999;background:radial-gradient(ellipse at center,#1a1810 0%,#12110a 70%,#0a0906 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity .5s ease-out,visibility .5s ease-out;">
+    <svg width="88" height="88" viewBox="0 0 100 100" style="animation:pl-bounce 1.2s ease-in-out infinite;filter:drop-shadow(0 0 24px rgba(242,208,13,.5));">
+        <defs>
+            <linearGradient id="plGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ffd700"/>
+                <stop offset="50%" stop-color="#f2d00d"/>
+                <stop offset="100%" stop-color="#b89b06"/>
+            </linearGradient>
+        </defs>
+        <path d="M 15 55 L 20 80 L 80 80 L 85 55 L 70 65 L 60 45 L 50 60 L 40 45 L 30 65 Z" fill="url(#plGold)" stroke="#8a7404" stroke-width="1"/>
+        <circle cx="20" cy="55" r="3" fill="#ff3366"/>
+        <circle cx="50" cy="45" r="4" fill="#b9f2ff"/>
+        <circle cx="80" cy="55" r="3" fill="#ff3366"/>
+    </svg>
+    <div style="font-family:Heebo,-apple-system,sans-serif;font-weight:900;font-size:22px;letter-spacing:.15em;text-transform:uppercase;background:linear-gradient(135deg,#ffd700 0%,#f2d00d 50%,#b89b06 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Royal Date</div>
+    <div style="width:180px;height:3px;background:rgba(242,208,13,.12);border-radius:2px;overflow:hidden;position:relative;">
+        <div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent,#f2d00d,transparent);animation:pl-slide 1.4s ease-in-out infinite;"></div>
+    </div>
+</div>
+<style>
+@keyframes pl-bounce{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-6px) scale(1.04)}}
+@keyframes pl-slide{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+body.loaded #pageLoader{opacity:0;visibility:hidden;pointer-events:none}
+</style>
+<script>
+(function(){
+    function hideLoader(){document.body.classList.add('loaded');setTimeout(function(){var l=document.getElementById('pageLoader');if(l)l.remove();},600);}
+    if(document.readyState==='complete')hideLoader();
+    else window.addEventListener('load',hideLoader);
+    setTimeout(hideLoader,3500); // hard cap so a stuck resource never blocks user
+})();
+</script>
+
 <?php global $T, $CURRENT_LANG, $LANG_DIR, $TRANSLATIONS; if (empty($T) && !empty($TRANSLATIONS)) { $T = $TRANSLATIONS[$CURRENT_LANG ?? 'he'] ?? $TRANSLATIONS['he']; } ?>
 <script id="__translations" type="application/json"><?= json_encode($T ?? [], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP) ?></script>
 <script>
