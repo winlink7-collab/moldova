@@ -15,9 +15,9 @@ class MailService {
                 $s = [];
                 foreach ($settings as $row) $s[$row['setting_key']] = $row['setting_value'];
                 self::$config = [
-                    'from_email' => $s['site_email'] ?? 'noreply@moldova-ukraine-brides.com',
-                    'from_name' => $s['site_name'] ?? 'Moldova & Ukraine Luxury Brides',
-                    'site_url' => 'https://' . ($_SERVER['HTTP_HOST'] ?? 'phpstack-679104-6338346.cloudwaysapps.com'),
+                    'from_email' => $s['site_email'] ?? 'noreply@royaldate.co.il',
+                    'from_name' => $s['site_name'] ?? 'Royal Date - Premium Dating Solutions',
+                    'site_url' => 'https://' . ($_SERVER['HTTP_HOST'] ?? 'royaldate.co.il'),
                     'site_phone' => $s['site_phone'] ?? '',
                 ];
             } catch (Exception $e) {
