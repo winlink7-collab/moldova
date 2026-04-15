@@ -4,3 +4,6 @@ __pycache__/
 public.zip
 config/mail.local.php
 config/whatsapp.local.php
+node_modules/
+package-lock.json
+uploads/.logo_cache.json

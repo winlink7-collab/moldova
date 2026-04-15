@@ -44,6 +44,9 @@ function navClass(string $page, string $current): string {
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="<?= BASE_URL ?>/favicon.svg"/>
+
 <!-- Critical CSS: enough to paint above-fold before Tailwind CDN loads (improves FCP) -->
 <style id="critical-css">
 *,::before,::after{box-sizing:border-box;border:0 solid}
@@ -85,7 +88,6 @@ button,input,select{font:inherit;margin:0}
 <!-- Preconnect to font + CDN servers to reduce first-load delay -->
 <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin/>
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin/>
 <link rel="preconnect" href="https://lh3.googleusercontent.com" crossorigin/>
 
@@ -137,8 +139,8 @@ button,input,select{font:inherit;margin:0}
 }
 </script>
 
-<!-- Tailwind CSS (no plugins - not used) -->
-<script src="https://cdn.tailwindcss.com"></script>
+<!-- Tailwind CSS - precompiled static file (~52KB vs 300KB CDN script) -->
+<link rel="stylesheet" href="<?= BASE_URL ?>/public/css/tailwind.min.css?v=<?= @filemtime(BASE_PATH . '/public/css/tailwind.min.css') ?: '1' ?>"/>
 
 <!-- Google Fonts - Heebo only, loaded non-blocking (fonts swap in when ready) -->
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'"/>
@@ -154,35 +156,6 @@ button,input,select{font:inherit;margin:0}
 })();
 </script>
 
-<!-- Tailwind Config -->
-<script id="tailwind-config">
-    tailwind.config = {
-        darkMode: "class",
-        theme: {
-            extend: {
-                colors: {
-                    "primary": "#f2d00d",
-                    "background-light": "#f8f8f5",
-                    "background-dark": "#12110a",
-                    "accent-dark": "#221f10",
-                    "gold-muted": "#bab59c",
-                    "surface": "#1c1a0e",
-                    "card": "#1a1810",
-                    "border-gold": "#393728"
-                },
-                fontFamily: {
-                    "display": ["Heebo", "sans-serif"]
-                },
-                borderRadius: {
-                    "DEFAULT": "0.25rem",
-                    "lg": "0.5rem",
-                    "xl": "0.75rem",
-                    "full": "9999px"
-                }
-            }
-        }
-    }
-</script>
 
 <!-- Common Styles -->
 <style>
