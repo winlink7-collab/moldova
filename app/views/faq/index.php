@@ -42,7 +42,7 @@
 async function loadFaqs() {
     const el = document.getElementById('faqList');
     try {
-        const res = await fetch(BASE + '/api/faqs');
+        const res = await fetch(BASE + '/api/faqs?lang=' + LANG);
         const faqs = await res.json();
         if (!faqs.length) {
             el.innerHTML = `<p class="text-gold-muted text-center py-8">${T.no_faqs_yet}</p>`;
@@ -115,7 +115,7 @@ const origLoadFaqs = loadFaqs;
 loadFaqs = async function() {
     const el = document.getElementById('faqList');
     try {
-        const res = await fetch(BASE + '/api/faqs');
+        const res = await fetch(BASE + '/api/faqs?lang=' + LANG);
         allFaqs = await res.json();
         if (!allFaqs.length) {
             el.innerHTML = `<p class="text-gold-muted text-center py-8">${T.no_faqs_yet}</p>`;

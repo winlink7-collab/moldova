@@ -140,6 +140,21 @@ class ApiController {
         return json_decode(file_get_contents('php://input'), true) ?: [];
     }
 
+    private function getTranslationService(): ?TranslationService {
+        $lang = $_GET['lang'] ?? '';
+        if (!in_array($lang, ['ru', 'en'], true)) return null;
+        try { return new TranslationService(); } catch (Throwable $e) { return null; }
+    }
+
+    private function translateRow(array $row, TranslationService $svc, string $lang, array $fields): array {
+        foreach ($fields as $f) {
+            if (!empty($row[$f]) && is_string($row[$f]) && preg_match('/[\x{0590}-\x{05FF}]/u', $row[$f])) {
+                $row[$f] = $svc->translate($row[$f], $lang);
+            }
+        }
+        return $row;
+    }
+
     private function hashPassword($password) {
         return hash('sha256', $password);
     }
@@ -710,6 +725,13 @@ class ApiController {
             $params
         );
 
+        $lang = $_GET['lang'] ?? '';
+        $svc = $this->getTranslationService();
+        if ($svc && $lang) {
+            $pFields = ['name','city','occupation','education','languages','hobbies','about','looking_for'];
+            $profiles = array_map(fn($p) => $this->translateRow($p, $svc, $lang, $pFields), $profiles);
+        }
+
         $this->jsonResponse([
             'profiles' => $profiles,
             'total' => intval($total),
@@ -731,8 +753,13 @@ class ApiController {
         $videos = $this->db->fetchAll('SELECT * FROM profile_videos WHERE profile_id = ? ORDER BY id ASC', [$id]);
         $profile['videos'] = $videos;
 
-        // Increment view count
         $this->db->execute('UPDATE profiles SET views = COALESCE(views, 0) + 1 WHERE id = ?', [$id]);
+
+        $lang = $_GET['lang'] ?? '';
+        $svc = $this->getTranslationService();
+        if ($svc && $lang) {
+            $profile = $this->translateRow($profile, $svc, $lang, ['name','city','occupation','education','languages','hobbies','about','looking_for']);
+        }
 
         $this->jsonResponse($profile);
     }
@@ -743,6 +770,11 @@ class ApiController {
 
     private function getStories() {
         $stories = $this->db->fetchAll('SELECT * FROM success_stories WHERE is_active = TRUE ORDER BY created_at DESC');
+        $lang = $_GET['lang'] ?? '';
+        $svc = $this->getTranslationService();
+        if ($svc && $lang) {
+            $stories = array_map(fn($s) => $this->translateRow($s, $svc, $lang, ['title','couple_names','story']), $stories);
+        }
         $this->jsonResponse($stories);
     }
 
@@ -781,6 +813,11 @@ class ApiController {
 
     private function getProcessSteps() {
         $steps = $this->db->fetchAll('SELECT * FROM process_steps ORDER BY step_number ASC');
+        $lang = $_GET['lang'] ?? '';
+        $svc = $this->getTranslationService();
+        if ($svc && $lang) {
+            $steps = array_map(fn($s) => $this->translateRow($s, $svc, $lang, ['title','description']), $steps);
+        }
         $this->jsonResponse($steps);
     }
 
@@ -790,11 +827,21 @@ class ApiController {
 
     private function getFaqs() {
         $faqs = $this->db->fetchAll('SELECT * FROM faqs WHERE is_active = TRUE ORDER BY sort_order ASC, id ASC');
+        $lang = $_GET['lang'] ?? '';
+        $svc = $this->getTranslationService();
+        if ($svc && $lang) {
+            $faqs = array_map(fn($f) => $this->translateRow($f, $svc, $lang, ['question','answer']), $faqs);
+        }
         $this->jsonResponse($faqs);
     }
 
     private function getReviews() {
         $reviews = $this->db->fetchAll('SELECT * FROM reviews WHERE is_active = TRUE ORDER BY id DESC');
+        $lang = $_GET['lang'] ?? '';
+        $svc = $this->getTranslationService();
+        if ($svc && $lang) {
+            $reviews = array_map(fn($r) => $this->translateRow($r, $svc, $lang, ['client_name','review_text']), $reviews);
+        }
         $this->jsonResponse($reviews);
     }
 

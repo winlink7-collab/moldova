@@ -457,7 +457,7 @@ document.getElementById('leadForm').addEventListener('submit', submitLeadForm);
 // Load client reviews
 (async function loadHomeReviews() {
     try {
-        const res = await fetch(BASE + '/api/reviews');
+        const res = await fetch(BASE + '/api/reviews?lang=' + LANG);
         const reviews = await res.json();
         const grid = document.getElementById('reviewsGrid');
         if (!reviews.length) {
@@ -525,7 +525,7 @@ document.getElementById('leadForm').addEventListener('submit', submitLeadForm);
 // Load latest 6 profiles
 (async function loadHomeProfiles() {
     try {
-        const res = await fetch(BASE + '/api/profiles?page=1&per_page=6');
+        const res = await fetch(BASE + '/api/profiles?page=1&per_page=6&lang=' + LANG);
         const data = await res.json();
         const profiles = data.profiles || [];
         const grid = document.getElementById('homeProfilesGrid');

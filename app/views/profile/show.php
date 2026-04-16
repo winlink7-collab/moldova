@@ -355,7 +355,7 @@ document.addEventListener('keydown', (e) => {
 
 async function loadProfile() {
     try {
-        const res = await fetch(BASE + '/api/profiles/' + profileId);
+        const res = await fetch(BASE + '/api/profiles/' + profileId + '?lang=' + LANG);
         if (!res.ok) {
             document.getElementById('loading').innerHTML = `<p class="text-red-400 text-xl">${T.profile_not_found}</p>`;
             return;
@@ -939,7 +939,7 @@ async function ieDeletePhoto(photoId) {
         document.querySelector(`.ie-photo-item[data-id="${photoId}"]`)?.remove();
         showToast(T.photo_deleted);
         // Refresh profile data
-        const res = await fetch(BASE + '/api/profiles/' + profileId);
+        const res = await fetch(BASE + '/api/profiles/' + profileId + '?lang=' + LANG);
         currentProfile = await res.json();
         loadProfile();
     } catch { showToast(T.delete_error_general, 'error'); }
@@ -1020,7 +1020,7 @@ async function ieUploadPhotos(input) {
     input.value = '';
 
     // Refresh profile data and re-render editor
-    const res = await fetch(BASE + '/api/profiles/' + profileId);
+    const res = await fetch(BASE + '/api/profiles/' + profileId + '?lang=' + LANG);
     currentProfile = await res.json();
     loadProfile();
     // Re-open photos editor to show updated photos
@@ -1035,7 +1035,7 @@ async function ieSetPrimary(photoId) {
             body: JSON.stringify({ is_primary: true })
         });
         showToast(T.primary_updated);
-        const res = await fetch(BASE + '/api/profiles/' + profileId);
+        const res = await fetch(BASE + '/api/profiles/' + profileId + '?lang=' + LANG);
         currentProfile = await res.json();
         openEditor('photos');
         loadProfile();
@@ -1089,7 +1089,7 @@ async function ieUploadVideo(input) {
             }
             showToast(T.video_uploaded);
             prog.textContent = T.video_upload_done;
-            const res = await fetch(BASE + '/api/profiles/' + profileId);
+            const res = await fetch(BASE + '/api/profiles/' + profileId + '?lang=' + LANG);
             currentProfile = await res.json();
             loadProfile();
             openEditor('videos');
@@ -1123,7 +1123,7 @@ async function ieAddVideoUrl() {
         }
         showToast(T.video_added);
         urlInput.value = '';
-        const res = await fetch(BASE + '/api/profiles/' + profileId);
+        const res = await fetch(BASE + '/api/profiles/' + profileId + '?lang=' + LANG);
         currentProfile = await res.json();
         loadProfile();
         openEditor('videos');
@@ -1138,7 +1138,7 @@ async function ieDeleteVideo(videoId) {
     try {
         await fetch(BASE + '/api/admin/videos/' + videoId, { method: 'DELETE' });
         showToast(T.video_deleted);
-        const res = await fetch(BASE + '/api/profiles/' + profileId);
+        const res = await fetch(BASE + '/api/profiles/' + profileId + '?lang=' + LANG);
         currentProfile = await res.json();
         loadProfile();
         openEditor('videos');

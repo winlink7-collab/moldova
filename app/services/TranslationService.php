@@ -23,10 +23,12 @@ class TranslationService {
         $memKey = $hash . '|' . $lang;
         if (isset(self::$memCache[$memKey])) return self::$memCache[$memKey];
 
-        $row = $this->db->fetchOne(
-            "SELECT translation FROM translations_cache WHERE source_hash = ? AND lang = ? LIMIT 1",
-            [$hash, $lang]
-        );
+        try {
+            $row = $this->db->fetchOne(
+                "SELECT translation FROM translations_cache WHERE source_hash = ? AND lang = ? LIMIT 1",
+                [$hash, $lang]
+            );
+        } catch (Throwable $e) { $row = null; } // table may not exist yet
         if ($row && !empty($row['translation'])) {
             self::$memCache[$memKey] = $row['translation'];
             return $row['translation'];

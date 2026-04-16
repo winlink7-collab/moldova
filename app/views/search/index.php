@@ -136,7 +136,7 @@ async function loadProfiles(page = 1) {
     const ageMin = document.getElementById('ageMin').value;
     const ageMax = document.getElementById('ageMax').value;
 
-    let url = BASE + `/api/profiles?page=${page}&per_page=9`;
+    let url = BASE + `/api/profiles?page=${page}&per_page=9&lang=${LANG}`;
     if (currentCountry) url += `&country=${currentCountry}`;
     if (ageMin) url += `&age_min=${ageMin}`;
     if (ageMax) url += `&age_max=${ageMax}`;

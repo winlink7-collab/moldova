@@ -31,7 +31,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
 async function loadStories() {
     const grid = document.getElementById('storiesGrid');
     try {
-        const res = await fetch(BASE + '/api/stories');
+        const res = await fetch(BASE + '/api/stories?lang=' + LANG);
         const stories = await res.json();
         if (!stories.length) {
             grid.innerHTML = `<p class="text-slate-500 text-center col-span-full py-12">${T.no_stories_yet}</p>`;
@@ -129,7 +129,7 @@ const origLoadStories = loadStories;
 loadStories = async function() {
     const grid = document.getElementById('storiesGrid');
     try {
-        const res = await fetch(BASE + '/api/stories');
+        const res = await fetch(BASE + '/api/stories?lang=' + LANG);
         const stories = await res.json();
         if (!stories.length) {
             grid.innerHTML = `<p class="text-slate-500 text-center col-span-full py-12">${T.no_stories_yet}</p>`;
@@ -176,7 +176,7 @@ new MutationObserver(toggleStoryEditUI).observe(document.body, { attributes: tru
 
 let allStories = [];
 async function fetchStories() {
-    const res = await fetch(BASE + '/api/stories');
+    const res = await fetch(BASE + '/api/stories?lang=' + LANG);
     allStories = await res.json();
     return allStories;
 }

@@ -884,7 +884,7 @@ document.addEventListener('DOMContentLoaded', function() {
         results.innerHTML = '<div class="px-4 py-3 text-sm text-slate-500 text-center">' + (T.searching || 'Searching...') + '</div>';
         headerSearchTimeout = setTimeout(async () => {
             try {
-                const res = await fetch(BASE + '/api/profiles?q=' + encodeURIComponent(q) + '&per_page=5');
+                const res = await fetch(BASE + '/api/profiles?q=' + encodeURIComponent(q) + '&per_page=5&lang=' + LANG);
                 const data = await res.json();
                 const profiles = data.profiles || [];
                 if (!profiles.length) {

@@ -38,7 +38,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
 async function loadSteps() {
     const el = document.getElementById('stepsContainer');
     try {
-        const res = await fetch(BASE + '/api/process-steps');
+        const res = await fetch(BASE + '/api/process-steps?lang=' + LANG);
         const steps = await res.json();
         if (!steps.length) { el.innerHTML = `<p class="text-slate-500 text-center py-12">${T.no_steps}</p>`; return; }
 
