@@ -34,7 +34,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
              fetchpriority="high" decoding="async"/>
     </div>
     <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
-        <div class="flex flex-col gap-8 text-right" style="text-shadow: 0 2px 20px rgba(0,0,0,0.9), 0 0 60px rgba(0,0,0,0.7);">
+        <div class="flex flex-col gap-8 text-right" style="background:rgba(0,0,0,0.45);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:24px;padding:32px;border:1px solid rgba(255,255,255,0.08);text-shadow:0 2px 8px rgba(0,0,0,0.5);">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/10 w-fit">
                 <span class="size-2 rounded-full bg-primary animate-pulse"></span>
                 <span id="homeHeroBadge" class="text-primary text-xs font-bold tracking-widest uppercase"><?= t('hero_badge') ?></span>
