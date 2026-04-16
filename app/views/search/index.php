@@ -193,7 +193,7 @@ function renderProfiles(profiles) {
 
                 <!-- Info overlay on image -->
                 <div class="absolute bottom-0 right-0 left-0 p-5 z-10">
-                    <h3 class="text-2xl font-extrabold text-white mb-1 drop-shadow-lg"><span data-translate data-translate-src="${srcName.replace(/"/g,'&quot;')}">${p.name}</span>, ${p.age}</h3>
+                    <h3 class="text-2xl font-extrabold text-white mb-1 drop-shadow-lg"><span data-translate data-translate-src="${srcName.replace(/"/g,'&quot;')}">${p.name}</span> ${p.age}</h3>
                     <p class="text-sm text-white/70 flex items-center gap-1.5 font-medium">
                         <span class="material-symbols-outlined text-primary text-base">location_on</span>
                         <span data-translate data-translate-src="${srcCity.replace(/"/g,'&quot;')}">${cityT}</span>, ${countryName} ${flag}

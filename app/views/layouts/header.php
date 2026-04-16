@@ -922,7 +922,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     return `<a href="${BASE}/profile/${p.id}" class="flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors border-b border-white/5">
                         <img src="${p.primary_photo || ''}" class="w-10 h-10 rounded-full object-cover bg-white/10 flex-shrink-0" onerror="this.style.display='none'"/>
                         <div class="flex-1 min-w-0">
-                            <div class="text-sm font-bold text-white">${p.name}, ${p.age}</div>
+                            <div class="text-sm font-bold text-white">${p.name} ${p.age}</div>
                             <div class="text-xs text-slate-500">${p.city || ''}, ${country}</div>
                         </div>
                         <span class="material-symbols-outlined text-slate-600 text-lg">arrow_back</span>

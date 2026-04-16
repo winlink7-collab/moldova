@@ -115,7 +115,7 @@ body header.sticky { top: 56px !important; }
                 <span class="material-symbols-outlined text-base">verified</span> <span id="badgeText"></span>
             </div>
             <h2 class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-white drop-shadow-2xl leading-[0.85]">
-                <span id="heroName">...</span>, <span id="heroAge" class="font-light"></span>
+                <span id="heroName">...</span> <span id="heroAge" class="font-light"></span>
             </h2>
         </div>
         <?php if (!empty($isAdmin)): ?>
@@ -374,7 +374,7 @@ async function loadProfile() {
         document.getElementById('mainImage').alt = p.name;
         document.getElementById('heroName').textContent = p.name;
         document.getElementById('heroAge').textContent = p.age;
-        document.title = `${p.name}, ${p.age} - Moldova & Ukraine`;
+        document.title = `${p.name} ${p.age} - Royal Date`;
 
         // Build WhatsApp contact link from global settings (auto-fills profile name/age/city)
         if (typeof applyWhatsAppContactLink === 'function') applyWhatsAppContactLink();

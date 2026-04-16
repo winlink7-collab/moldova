@@ -546,7 +546,7 @@ document.getElementById('leadForm').addEventListener('submit', submitLeadForm);
                     <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="${p.primary_photo || ''}" alt="${p.name}" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 400%22><rect fill=%22%231a1810%22 width=%22300%22 height=%22400%22/><text x=%22150%22 y=%22210%22 text-anchor=%22middle%22 fill=%22%23f2d00d%22 font-size=%2260%22>${p.name[0]}</text></svg>'"/>
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                     <div class="absolute bottom-0 right-0 left-0 p-4 z-10">
-                        <h4 class="text-lg font-extrabold text-white drop-shadow-lg"><span data-translate data-translate-src="${srcName.replace(/"/g,'&quot;')}">${p.name}</span>, ${p.age}</h4>
+                        <h4 class="text-lg font-extrabold text-white drop-shadow-lg"><span data-translate data-translate-src="${srcName.replace(/"/g,'&quot;')}">${p.name}</span> ${p.age}</h4>
                         <p class="text-xs text-white/70 flex items-center gap-1 mt-1">
                             <span class="material-symbols-outlined text-primary" style="font-size:14px;">location_on</span>
                             <span data-translate data-translate-src="${srcCity.replace(/"/g,'&quot;')}">${cityT}</span>, ${countryName} ${flag}
