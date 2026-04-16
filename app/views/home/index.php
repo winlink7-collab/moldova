@@ -21,13 +21,15 @@ require BASE_PATH . '/app/views/layouts/header.php';
 <!-- Hero Section -->
 <section class="relative min-h-[75vh] md:min-h-[90vh] flex items-center pt-8 md:pt-10 pb-12 md:pb-20 overflow-hidden">
     <div class="absolute inset-0 z-0">
-        <div class="absolute inset-0 bg-gradient-to-l from-background-dark/20 via-background-dark/80 to-background-dark z-10"></div>
-        <img id="homeHeroBg" class="w-full h-full object-cover"
-             alt="Beautiful elegant woman in luxury evening dress"
-             src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=65"
-             srcset="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=65 600w,
-                     https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=65 1000w,
-                     https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=65 1400w"
+        <!-- Smooth gradient overlay: dark on form side (right in RTL), clear on image side (left) -->
+        <div class="absolute inset-0 z-10" style="background:linear-gradient(to left, #12110a 0%, #12110aee 25%, #12110aaa 45%, #12110a55 65%, #12110a22 80%, transparent 100%);"></div>
+        <div class="absolute inset-0 z-[9]" style="background:linear-gradient(to top, #12110a 0%, transparent 30%);"></div>
+        <img id="homeHeroBg" class="w-full h-full object-cover object-[70%_center]"
+             alt="Romantic elegant couple together"
+             src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=70"
+             srcset="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=65 600w,
+                     https://images.unsplash.com/photo-1522673607200-164d1b6ce486?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=70 1000w,
+                     https://images.unsplash.com/photo-1522673607200-164d1b6ce486?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=70 1600w"
              sizes="100vw"
              fetchpriority="high" decoding="async"/>
     </div>
