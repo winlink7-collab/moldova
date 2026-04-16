@@ -114,9 +114,9 @@ button,input,select{font:inherit;margin:0}
 <!-- Preload hero image with responsive srcset (matches <img> below) -->
 <?php if (($currentPage ?? '') === 'home'): ?>
 <link rel="preload" as="image"
-      imagesrcset="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=65 600w,
-                   https://images.unsplash.com/photo-1606216794074-735e91aa2c92?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=75 1000w,
-                   https://images.unsplash.com/photo-1606216794074-735e91aa2c92?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=75 1600w"
+      imagesrcset="https://images.unsplash.com/photo-1529636798458-92182e662485?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=65 600w,
+                   https://images.unsplash.com/photo-1529636798458-92182e662485?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=75 1000w,
+                   https://images.unsplash.com/photo-1529636798458-92182e662485?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=75 1600w"
       imagesizes="100vw"
       fetchpriority="high"/>
 <?php endif; ?>
