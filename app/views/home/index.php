@@ -43,7 +43,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
                 <?= t('hero_title_1') ?> <span class="text-white italic"><?= t('hero_title_2') ?></span><br/>
                 <?= t('hero_title_3') ?>
             </h1>
-            <p id="homeHeroSubtitle" class="text-lg text-slate-300 max-w-xl leading-relaxed">
+            <p id="homeHeroSubtitle" class="text-lg text-white max-w-xl leading-relaxed">
                 <?= t('hero_subtitle') ?>
             </p>
             <div class="flex flex-wrap gap-4 mt-4">
