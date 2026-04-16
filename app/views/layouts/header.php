@@ -825,16 +825,27 @@ function tr(key) { return (T && T[key]) ? T[key] : key; }
 </div>
 
 <!-- Mobile Navigation Menu -->
-<div id="mobileMenu" class="hidden lg:hidden border-t border-white/10 bg-background-dark/95 backdrop-blur-xl">
-    <nav class="flex flex-col px-6 py-4 space-y-3">
-        <a class="<?= navClass('home', $currentPage) ?> block py-2" href="<?= BASE_URL ?>/"><?= t('nav_home') ?></a>
-        <a class="<?= navClass('about', $currentPage) ?> block py-2" href="<?= BASE_URL ?>/about"><?= t('nav_about') ?></a>
-        <a class="<?= navClass('search', $currentPage) ?> block py-2" href="<?= BASE_URL ?>/search"><?= t('nav_search') ?></a>
-        <a class="<?= navClass('process', $currentPage) ?> block py-2" href="<?= BASE_URL ?>/process"><?= t('nav_process') ?></a>
-        <a class="<?= navClass('vip', $currentPage) ?> block py-2" href="<?= BASE_URL ?>/vip"><?= t('nav_vip') ?></a>
-        <a class="<?= navClass('stories', $currentPage) ?> block py-2" href="<?= BASE_URL ?>/stories"><?= t('nav_stories') ?></a>
-        <a class="<?= navClass('faq', $currentPage) ?> block py-2" href="<?= BASE_URL ?>/faq"><?= t('nav_faq') ?></a>
-        <a class="<?= navClass('contact', $currentPage) ?> block py-2" href="<?= BASE_URL ?>/contact"><?= t('nav_contact') ?></a>
+<div id="mobileMenu" class="hidden lg:hidden border-t border-primary/30" style="background:#12110a;">
+    <nav class="flex flex-col px-6 py-4 space-y-1">
+        <?php
+        $mobilePages = [
+            'home' => ['nav_home', '/', 'home'],
+            'about' => ['nav_about', '/about', 'info'],
+            'search' => ['nav_search', '/search', 'search'],
+            'process' => ['nav_process', '/process', 'route'],
+            'vip' => ['nav_vip', '/vip', 'diamond'],
+            'stories' => ['nav_stories', '/stories', 'favorite'],
+            'faq' => ['nav_faq', '/faq', 'help'],
+            'contact' => ['nav_contact', '/contact', 'call'],
+        ];
+        foreach ($mobilePages as $key => [$label, $url, $icon]):
+            $isActive = $currentPage === $key;
+        ?>
+        <a class="flex items-center gap-3 py-3 px-3 rounded-lg text-base font-bold transition-all <?= $isActive ? 'bg-primary/15 text-primary' : 'text-white hover:bg-white/5' ?>" href="<?= BASE_URL . $url ?>">
+            <span class="material-symbols-outlined text-lg <?= $isActive ? 'text-primary' : 'text-white/60' ?>"><?= $icon ?></span>
+            <?= t($label) ?>
+        </a>
+        <?php endforeach; ?>
         <!-- Mobile Language Switcher -->
         <div class="flex gap-2 pt-3 border-t border-white/10">
             <a href="?lang=he" onclick="switchLang('he')" class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'he' ? 'bg-primary text-background-dark' : 'border border-white/10 text-slate-300 hover:border-primary/30' ?>">
