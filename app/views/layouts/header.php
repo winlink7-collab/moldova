@@ -8,11 +8,31 @@
  *   $currentPage     - Current page identifier (home, about, search, stories, process, faq, contact, vip, dashboard, login, admin)
  */
 
-$pageTitle       = $pageTitle ?? ('Moldova & Ukraine Luxury Brides - ' . t('hero_badge'));
-$pageDescription = $pageDescription ?? t('hero_subtitle');
 $currentPage     = $currentPage ?? 'home';
 
-$canonicalUrl = 'https://' . ($_SERVER['HTTP_HOST'] ?? 'moldova-ukraine-brides.com') . ($_SERVER['REQUEST_URI'] ?? '/');
+// Load SEO settings from DB (cached to disk for 5 min)
+$__seoCacheFile = BASE_PATH . '/uploads/.seo_cache.json';
+$__seo = [];
+if (is_file($__seoCacheFile) && (time() - filemtime($__seoCacheFile) < 300)) {
+    $__seo = json_decode(@file_get_contents($__seoCacheFile), true) ?: [];
+} else {
+    try {
+        $__db2 = Database::getInstance();
+        $__rows = $__db2->fetchAll("SELECT setting_key, setting_value FROM settings WHERE setting_key LIKE 'seo_%'");
+        foreach ($__rows as $r) { $__seo[$r['setting_key']] = $r['setting_value']; }
+        @file_put_contents($__seoCacheFile, json_encode($__seo));
+    } catch (Throwable $e) {}
+}
+
+// Apply SEO title/description from admin settings (fallback to page defaults)
+$__seoTitle = $__seo['seo_' . $currentPage . '_title'] ?? '';
+$__seoDesc  = $__seo['seo_' . $currentPage . '_description'] ?? '';
+$__ogImage  = $__seo['seo_og_image'] ?? '';
+
+$pageTitle       = $__seoTitle ?: ($pageTitle ?? ('Royal Date - ' . t('hero_badge')));
+$pageDescription = $__seoDesc  ?: ($pageDescription ?? t('hero_subtitle'));
+
+$canonicalUrl = 'https://' . ($_SERVER['HTTP_HOST'] ?? 'royaldate.co.il') . ($_SERVER['REQUEST_URI'] ?? '/');
 
 // Load logo setting server-side (cached to disk to avoid per-request DB round-trip)
 $__logoUrl = ''; $__logoHideText = false;
@@ -113,7 +133,13 @@ button,input,select{font:inherit;margin:0}
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="<?= htmlspecialchars($canonicalUrl) ?>"/>
 <meta property="og:locale" content="he_IL"/>
-<meta property="og:site_name" content="Moldova & Ukraine Luxury Brides"/>
+<meta property="og:site_name" content="Royal Date - Premium Dating Solutions"/>
+<?php if ($__ogImage): ?><meta property="og:image" content="<?= htmlspecialchars($__ogImage) ?>"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="<?= htmlspecialchars($__ogImage) ?>"/>
+<?php endif; ?>
 
 <!-- Hreflang -->
 <link rel="alternate" hreflang="he" href="<?= htmlspecialchars($canonicalUrl) ?>"/>

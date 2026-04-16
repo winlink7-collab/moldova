@@ -935,6 +935,101 @@ const API = BASE_URL;
         <h2 class="text-2xl font-bold">הגדרות אתר</h2>
     </div>
     <form id="siteForm" onsubmit="saveSiteSettings(event)" class="space-y-6">
+
+        <!-- SEO - Title & Description per page -->
+        <div class="bg-card rounded-lg p-6 border border-white/10" style="border-color:rgba(59,130,246,.3);">
+            <h3 class="text-lg font-bold mb-1" style="color:#3b82f6;">🔍 SEO — כותרות ותיאורים (Google / WhatsApp / Yandex)</h3>
+            <p class="text-xs text-white/50 mb-4">מה שמופיע בתוצאות חיפוש ובקישורי שיתוף. כותרת עד 60 תווים, תיאור עד 160 תווים.</p>
+            <div class="space-y-4">
+                <!-- Global / Home -->
+                <div class="p-4 bg-white/5 rounded-lg">
+                    <h4 class="text-sm font-bold text-primary mb-3">🏠 דף הבית (ראשי)</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs text-white/60 mb-1">כותרת (Title)</label>
+                            <input id="seo_home_title" type="text" maxlength="70" class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm" placeholder="Royal Date - שירות שידוכי יוקרה"/>
+                        </div>
+                        <div>
+                            <label class="block text-xs text-white/60 mb-1">תיאור (Description)</label>
+                            <input id="seo_home_description" type="text" maxlength="200" class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm" placeholder="שירות שידוכי יוקרה לגברים מצליחים..."/>
+                        </div>
+                    </div>
+                    <div class="mt-3 p-3 bg-white/5 rounded border border-white/5">
+                        <div class="text-xs text-blue-400 font-bold">תצוגה מקדימה בגוגל:</div>
+                        <div class="text-sm text-blue-300 mt-1" id="seoPreviewTitle">Royal Date</div>
+                        <div class="text-xs text-green-400">www.royaldate.co.il</div>
+                        <div class="text-xs text-white/60 mt-0.5" id="seoPreviewDesc">תיאור האתר יופיע כאן...</div>
+                    </div>
+                </div>
+                <!-- About -->
+                <div class="p-4 bg-white/5 rounded-lg">
+                    <h4 class="text-sm font-bold text-primary mb-3">📋 אודות</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div><label class="block text-xs text-white/60 mb-1">כותרת</label><input id="seo_about_title" type="text" maxlength="70" class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm"/></div>
+                        <div><label class="block text-xs text-white/60 mb-1">תיאור</label><input id="seo_about_description" type="text" maxlength="200" class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm"/></div>
+                    </div>
+                </div>
+                <!-- Search -->
+                <div class="p-4 bg-white/5 rounded-lg">
+                    <h4 class="text-sm font-bold text-primary mb-3">🔎 חיפוש פרופילים</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div><label class="block text-xs text-white/60 mb-1">כותרת</label><input id="seo_search_title" type="text" maxlength="70" class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm"/></div>
+                        <div><label class="block text-xs text-white/60 mb-1">תיאור</label><input id="seo_search_description" type="text" maxlength="200" class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm"/></div>
+                    </div>
+                </div>
+                <!-- VIP -->
+                <div class="p-4 bg-white/5 rounded-lg">
+                    <h4 class="text-sm font-bold text-primary mb-3">💎 חבילות VIP</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div><label class="block text-xs text-white/60 mb-1">כותרת</label><input id="seo_vip_title" type="text" maxlength="70" class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm"/></div>
+                        <div><label class="block text-xs text-white/60 mb-1">תיאור</label><input id="seo_vip_description" type="text" maxlength="200" class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm"/></div>
+                    </div>
+                </div>
+                <!-- Stories -->
+                <div class="p-4 bg-white/5 rounded-lg">
+                    <h4 class="text-sm font-bold text-primary mb-3">💑 סיפורי הצלחה</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div><label class="block text-xs text-white/60 mb-1">כותרת</label><input id="seo_stories_title" type="text" maxlength="70" class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm"/></div>
+                        <div><label class="block text-xs text-white/60 mb-1">תיאור</label><input id="seo_stories_description" type="text" maxlength="200" class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm"/></div>
+                    </div>
+                </div>
+                <!-- FAQ -->
+                <div class="p-4 bg-white/5 rounded-lg">
+                    <h4 class="text-sm font-bold text-primary mb-3">❓ שאלות נפוצות</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div><label class="block text-xs text-white/60 mb-1">כותרת</label><input id="seo_faq_title" type="text" maxlength="70" class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm"/></div>
+                        <div><label class="block text-xs text-white/60 mb-1">תיאור</label><input id="seo_faq_description" type="text" maxlength="200" class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm"/></div>
+                    </div>
+                </div>
+                <!-- Contact -->
+                <div class="p-4 bg-white/5 rounded-lg">
+                    <h4 class="text-sm font-bold text-primary mb-3">📞 צור קשר</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div><label class="block text-xs text-white/60 mb-1">כותרת</label><input id="seo_contact_title" type="text" maxlength="70" class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm"/></div>
+                        <div><label class="block text-xs text-white/60 mb-1">תיאור</label><input id="seo_contact_description" type="text" maxlength="200" class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm"/></div>
+                    </div>
+                </div>
+                <!-- Process -->
+                <div class="p-4 bg-white/5 rounded-lg">
+                    <h4 class="text-sm font-bold text-primary mb-3">📝 תהליך השידוך</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div><label class="block text-xs text-white/60 mb-1">כותרת</label><input id="seo_process_title" type="text" maxlength="70" class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm"/></div>
+                        <div><label class="block text-xs text-white/60 mb-1">תיאור</label><input id="seo_process_description" type="text" maxlength="200" class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm"/></div>
+                    </div>
+                </div>
+                <!-- OG Image -->
+                <div class="p-4 bg-white/5 rounded-lg">
+                    <h4 class="text-sm font-bold text-primary mb-3">🖼️ תמונת שיתוף (OG Image) — מופיעה בוואטסאפ, פייסבוק, טלגרם</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div class="md:col-span-2">
+                            <label class="block text-xs text-white/60 mb-1">URL תמונה (1200x630 מומלץ)</label>
+                            <input id="seo_og_image" type="url" class="w-full bg-bg border border-white/10 rounded px-3 py-2 text-white text-sm" placeholder="https://royaldate.co.il/public/uploads/og-image.jpg" dir="ltr"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Header -->
         <div class="bg-card rounded-lg p-6 border border-white/10">
             <h3 class="text-lg font-bold text-primary mb-4">Header</h3>
@@ -3086,6 +3181,22 @@ async function loadSiteSettings() {
         document.getElementById('site_smtp_from_name').value = s.site_smtp_from_name || '';
         document.getElementById('contact_whatsapp_phone').value = s.contact_whatsapp_phone || '';
         document.getElementById('contact_whatsapp_template').value = s.contact_whatsapp_template || '';
+        // SEO fields
+        var pages = ['home','about','search','vip','stories','faq','contact','process'];
+        pages.forEach(function(p) {
+            var t = document.getElementById('seo_'+p+'_title');
+            var d = document.getElementById('seo_'+p+'_description');
+            if (t) t.value = s['seo_'+p+'_title'] || '';
+            if (d) d.value = s['seo_'+p+'_description'] || '';
+        });
+        document.getElementById('seo_og_image').value = s.seo_og_image || '';
+        // live preview
+        var pt = document.getElementById('seoPreviewTitle');
+        var pd = document.getElementById('seoPreviewDesc');
+        if (pt) pt.textContent = s.seo_home_title || 'Royal Date - שירות שידוכי יוקרה';
+        if (pd) pd.textContent = s.seo_home_description || 'תיאור האתר יופיע כאן...';
+        document.getElementById('seo_home_title').oninput = function() { pt.textContent = this.value || 'Royal Date'; };
+        document.getElementById('seo_home_description').oninput = function() { pd.textContent = this.value || '...'; };
     } catch(e) {
         console.error('Error loading site settings:', e);
     }
@@ -3114,6 +3225,23 @@ async function saveSiteSettings(e) {
         site_smtp_user: document.getElementById('site_smtp_user').value,
         site_smtp_password: document.getElementById('site_smtp_password').value,
         site_smtp_from_name: document.getElementById('site_smtp_from_name').value,
+        seo_home_title: document.getElementById('seo_home_title').value,
+        seo_home_description: document.getElementById('seo_home_description').value,
+        seo_about_title: document.getElementById('seo_about_title').value,
+        seo_about_description: document.getElementById('seo_about_description').value,
+        seo_search_title: document.getElementById('seo_search_title').value,
+        seo_search_description: document.getElementById('seo_search_description').value,
+        seo_vip_title: document.getElementById('seo_vip_title').value,
+        seo_vip_description: document.getElementById('seo_vip_description').value,
+        seo_stories_title: document.getElementById('seo_stories_title').value,
+        seo_stories_description: document.getElementById('seo_stories_description').value,
+        seo_faq_title: document.getElementById('seo_faq_title').value,
+        seo_faq_description: document.getElementById('seo_faq_description').value,
+        seo_contact_title: document.getElementById('seo_contact_title').value,
+        seo_contact_description: document.getElementById('seo_contact_description').value,
+        seo_process_title: document.getElementById('seo_process_title').value,
+        seo_process_description: document.getElementById('seo_process_description').value,
+        seo_og_image: document.getElementById('seo_og_image').value,
         contact_whatsapp_phone: (document.getElementById('contact_whatsapp_phone').value || '').replace(/[^0-9]/g, '').replace(/^0/, '972'),
         contact_whatsapp_template: document.getElementById('contact_whatsapp_template').value,
     };
