@@ -21,9 +21,9 @@ require BASE_PATH . '/app/views/layouts/header.php';
 <!-- Hero Section -->
 <section class="relative min-h-[75vh] md:min-h-[90vh] flex items-center pt-8 md:pt-10 pb-12 md:pb-20 overflow-hidden">
     <div class="absolute inset-0 z-0">
-        <!-- Gradient: dark only on right (form), image bright on left -->
-        <div class="absolute inset-0 z-10" style="background:linear-gradient(to left, #12110af0 0%, #12110abb 30%, #12110a44 55%, transparent 75%);"></div>
-        <div class="absolute inset-0 z-[9]" style="background:linear-gradient(to top, #12110acc 0%, transparent 25%);"></div>
+        <!-- Gradient: strong dark on right (text+form), couple visible on left -->
+        <div class="absolute inset-0 z-10" style="background:linear-gradient(to left, #12110a 0%, #12110af5 15%, #12110add 30%, #12110a99 45%, #12110a44 60%, transparent 80%);"></div>
+        <div class="absolute inset-0 z-[9]" style="background:linear-gradient(to top, #12110add 0%, #12110a55 15%, transparent 35%);"></div>
         <img id="homeHeroBg" class="w-full h-full object-cover object-[20%_25%]"
              alt="Beautiful couple in love"
              src="https://images.unsplash.com/photo-1494955870715-979ca4f13bf0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
@@ -34,7 +34,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
              fetchpriority="high" decoding="async"/>
     </div>
     <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
-        <div class="flex flex-col gap-8 text-right">
+        <div class="flex flex-col gap-8 text-right" style="text-shadow: 0 2px 20px rgba(0,0,0,0.9), 0 0 60px rgba(0,0,0,0.7);">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/10 w-fit">
                 <span class="size-2 rounded-full bg-primary animate-pulse"></span>
                 <span id="homeHeroBadge" class="text-primary text-xs font-bold tracking-widest uppercase"><?= t('hero_badge') ?></span>
