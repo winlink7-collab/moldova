@@ -39,11 +39,11 @@ require BASE_PATH . '/app/views/layouts/header.php';
                 <span class="size-2 rounded-full bg-primary animate-pulse"></span>
                 <span id="homeHeroBadge" class="text-primary text-xs font-bold tracking-widest uppercase"><?= t('hero_badge') ?></span>
             </div>
-            <h1 id="homeHeroTitle" class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black text-white leading-tight">
-                <?= t('hero_title_1') ?> <span class="text-white italic"><?= t('hero_title_2') ?></span><br/>
+            <h1 id="homeHeroTitle" class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black leading-tight" style="color:#ffffff !important;">
+                <?= t('hero_title_1') ?> <span style="color:#ffffff !important;" class="italic"><?= t('hero_title_2') ?></span><br/>
                 <?= t('hero_title_3') ?>
             </h1>
-            <p id="homeHeroSubtitle" class="text-lg text-white max-w-xl leading-relaxed">
+            <p id="homeHeroSubtitle" class="text-lg max-w-xl leading-relaxed" style="color:#ffffff !important;">
                 <?= t('hero_subtitle') ?>
             </p>
             <div class="flex flex-wrap gap-4 mt-4">
@@ -51,7 +51,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
                     <div class="w-10 h-7 bg-blue-600 rounded-sm relative overflow-hidden shadow-lg border border-white/20">
                         <div class="absolute bottom-0 w-full h-1/2 bg-yellow-400"></div>
                     </div>
-                    <span class="text-white text-sm font-medium"><?= t('ukraine') ?></span>
+                    <span class="text-sm font-medium" style="color:#fff !important;"><?= t('ukraine') ?></span>
                 </div>
                 <div class="flex items-center gap-3 bg-white/5 border border-white/10 p-3 rounded-xl">
                     <div class="w-10 h-7 flex shadow-lg border border-white/20 overflow-hidden">
@@ -59,7 +59,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
                         <div class="w-1/3 bg-yellow-400 h-full"></div>
                         <div class="w-1/3 bg-red-600 h-full"></div>
                     </div>
-                    <span class="text-white text-sm font-medium"><?= t('moldova_country') ?></span>
+                    <span class="text-sm font-medium" style="color:#fff !important;"><?= t('moldova_country') ?></span>
                 </div>
             </div>
         </div>
