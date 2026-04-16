@@ -24,12 +24,12 @@ require BASE_PATH . '/app/views/layouts/header.php';
         <!-- Smooth gradient overlay: dark on form side (right in RTL), clear on image side (left) -->
         <div class="absolute inset-0 z-10" style="background:linear-gradient(to left, #12110a 0%, #12110aee 25%, #12110aaa 45%, #12110a55 65%, #12110a22 80%, transparent 100%);"></div>
         <div class="absolute inset-0 z-[9]" style="background:linear-gradient(to top, #12110a 0%, transparent 30%);"></div>
-        <img id="homeHeroBg" class="w-full h-full object-cover object-[70%_center]"
-             alt="Romantic elegant couple together"
-             src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=70"
-             srcset="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=65 600w,
-                     https://images.unsplash.com/photo-1522673607200-164d1b6ce486?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=70 1000w,
-                     https://images.unsplash.com/photo-1522673607200-164d1b6ce486?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=70 1600w"
+        <img id="homeHeroBg" class="w-full h-full object-cover object-[75%_20%]"
+             alt="Elegant couple in romantic setting"
+             src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=75"
+             srcset="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=65 600w,
+                     https://images.unsplash.com/photo-1606216794074-735e91aa2c92?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=75 1000w,
+                     https://images.unsplash.com/photo-1606216794074-735e91aa2c92?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=75 1600w"
              sizes="100vw"
              fetchpriority="high" decoding="async"/>
     </div>
