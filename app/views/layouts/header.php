@@ -195,6 +195,9 @@ button,input,select{font:inherit;margin:0}
         background: rgba(34, 31, 16, 0.8);
         backdrop-filter: blur(12px);
     }
+    @media (max-width: 1023px) {
+        .glass-effect { background: #12110a !important; }
+    }
     .serif-text {
         font-family: var(--site-font) !important;
         font-weight: 800;
@@ -825,7 +828,7 @@ function tr(key) { return (T && T[key]) ? T[key] : key; }
 </div>
 
 <!-- Mobile Navigation Menu -->
-<div id="mobileMenu" class="hidden lg:hidden border-t border-primary/30" style="background:#12110a;">
+<div id="mobileMenu" class="hidden lg:hidden border-t border-primary/30" style="background:#0a0906 !important;position:relative;z-index:999;">
     <nav class="flex flex-col px-6 py-4 space-y-1">
         <?php
         $mobilePages = [
