@@ -21,15 +21,15 @@ require BASE_PATH . '/app/views/layouts/header.php';
 <!-- Hero Section -->
 <section class="relative min-h-[75vh] md:min-h-[90vh] flex items-center pt-8 md:pt-10 pb-12 md:pb-20 overflow-hidden">
     <div class="absolute inset-0 z-0">
-        <!-- Smooth gradient overlay: dark on form side (right in RTL), clear on image side (left) -->
-        <div class="absolute inset-0 z-10" style="background:linear-gradient(to left, #12110a 0%, #12110af5 20%, #12110acc 40%, #12110a77 60%, #12110a33 80%, transparent 100%);"></div>
-        <div class="absolute inset-0 z-[9]" style="background:linear-gradient(to top, #12110a 0%, #12110a88 20%, transparent 50%);"></div>
-        <img id="homeHeroBg" class="w-full h-full object-cover object-[80%_30%]"
-             alt="Elegant couple walking together"
-             src="https://images.unsplash.com/photo-1529636798458-92182e662485?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=75"
-             srcset="https://images.unsplash.com/photo-1529636798458-92182e662485?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=65 600w,
-                     https://images.unsplash.com/photo-1529636798458-92182e662485?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=75 1000w,
-                     https://images.unsplash.com/photo-1529636798458-92182e662485?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=75 1600w"
+        <!-- Gradient: dark only on right (form), image bright on left -->
+        <div class="absolute inset-0 z-10" style="background:linear-gradient(to left, #12110af0 0%, #12110abb 30%, #12110a44 55%, transparent 75%);"></div>
+        <div class="absolute inset-0 z-[9]" style="background:linear-gradient(to top, #12110acc 0%, transparent 25%);"></div>
+        <img id="homeHeroBg" class="w-full h-full object-cover object-[20%_25%]"
+             alt="Beautiful couple in love"
+             src="https://images.unsplash.com/photo-1494955870715-979ca4f13bf0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+             srcset="https://images.unsplash.com/photo-1494955870715-979ca4f13bf0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=70 600w,
+                     https://images.unsplash.com/photo-1494955870715-979ca4f13bf0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80 1000w,
+                     https://images.unsplash.com/photo-1494955870715-979ca4f13bf0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80 1600w"
              sizes="100vw"
              fetchpriority="high" decoding="async"/>
     </div>
