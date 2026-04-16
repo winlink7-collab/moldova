@@ -844,22 +844,22 @@ function tr(key) { return (T && T[key]) ? T[key] : key; }
         foreach ($mobilePages as $key => [$label, $url, $icon]):
             $isActive = $currentPage === $key;
         ?>
-        <a class="flex items-center gap-3 py-3 px-3 rounded-lg text-base font-bold transition-all <?= $isActive ? 'bg-primary/15 text-primary' : 'text-white hover:bg-white/5' ?>" href="<?= BASE_URL . $url ?>">
-            <span class="material-symbols-outlined text-lg <?= $isActive ? 'text-primary' : 'text-white/60' ?>"><?= $icon ?></span>
+        <a class="flex items-center gap-3 py-3 px-3 rounded-lg text-base font-bold transition-all" style="color:<?= $isActive ? '#f2d00d' : '#ffffff' ?> !important;<?= $isActive ? 'background:rgba(242,208,13,0.12);' : '' ?>" href="<?= BASE_URL . $url ?>">
+            <span class="material-symbols-outlined text-lg" style="color:<?= $isActive ? '#f2d00d' : 'rgba(255,255,255,0.7)' ?> !important;"><?= $icon ?></span>
             <?= t($label) ?>
         </a>
         <?php endforeach; ?>
         <!-- Mobile Language Switcher -->
         <div class="flex gap-2 pt-3 border-t border-white/10">
-            <a href="?lang=he" onclick="switchLang('he')" class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'he' ? 'bg-primary text-background-dark' : 'border border-white/10 text-slate-300 hover:border-primary/30' ?>">
+            <a href="?lang=he" onclick="switchLang('he')" class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'he' ? 'bg-primary' : 'border border-white/10 hover:border-primary/30' ?>" style="color:<?= ($CURRENT_LANG ?? 'he') === 'he' ? '#12110a' : '#ffffff' ?> !important;">
                 <span style="display:inline-block;width:22px;height:15px;background:linear-gradient(to bottom,#fff 15%,#0038b8 15%,#0038b8 30%,#fff 30%,#fff 70%,#0038b8 70%,#0038b8 85%,#fff 85%);border-radius:2px;border:1px solid rgba(255,255,255,0.2);position:relative;overflow:hidden;"><span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:10px;color:#0038b8;">✡</span></span>
                 עברית
             </a>
-            <a href="?lang=ru" onclick="switchLang('ru')" class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'ru' ? 'bg-primary text-background-dark' : 'border border-white/10 text-slate-300 hover:border-primary/30' ?>">
+            <a href="?lang=ru" onclick="switchLang('ru')" class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'ru' ? 'bg-primary' : 'border border-white/10 hover:border-primary/30' ?>" style="color:<?= ($CURRENT_LANG ?? 'he') === 'ru' ? '#12110a' : '#ffffff' ?> !important;">
                 <span style="display:inline-block;width:22px;height:15px;border-radius:2px;border:1px solid rgba(255,255,255,0.2);background:linear-gradient(to bottom,#fff 33%,#0039a6 33%,#0039a6 66%,#d52b1e 66%);"></span>
                 Русский
             </a>
-            <a href="?lang=en" onclick="switchLang('en')" class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'en' ? 'bg-primary text-background-dark' : 'border border-white/10 text-slate-300 hover:border-primary/30' ?>">
+            <a href="?lang=en" onclick="switchLang('en')" class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'en' ? 'bg-primary' : 'border border-white/10 hover:border-primary/30' ?>" style="color:<?= ($CURRENT_LANG ?? 'he') === 'en' ? '#12110a' : '#ffffff' ?> !important;">
                 <span style="display:inline-block;width:22px;height:15px;border-radius:2px;border:1px solid rgba(255,255,255,0.2);background:#00247d;position:relative;overflow:hidden;"><span style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 35%,#fff 35%,#fff 42%,#cf142b 42%,#cf142b 58%,#fff 58%,#fff 65%,transparent 65%);"></span><span style="position:absolute;inset:0;background:linear-gradient(to right,transparent 40%,#fff 40%,#fff 47%,#cf142b 47%,#cf142b 53%,#fff 53%,#fff 60%,transparent 60%);"></span></span>
                 English
             </a>
