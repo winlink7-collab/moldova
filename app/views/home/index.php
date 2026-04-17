@@ -498,15 +498,6 @@ document.getElementById('leadForm').addEventListener('submit', submitLeadForm);
 
                     <!-- Client info -->
                     <div class="flex items-center gap-4 pt-5 border-t border-primary/10">
-                        ${r.client_photo
-                            ? `<div class="relative shrink-0">
-                                 <img src="${r.client_photo}" class="w-20 h-20 rounded-full object-cover border-2 border-primary shadow-lg"/>
-                                 <div class="absolute -bottom-1 -left-1 w-7 h-7 rounded-full bg-gradient-to-br from-primary to-[#b89b06] flex items-center justify-center border-2 border-background-dark">
-                                     <svg class="w-4 h-4 text-background-dark" fill="currentColor" viewBox="0 0 24 24" style="font-variation-settings:'FILL' 1;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
-                                 </div>
-                               </div>`
-                            : `<div class="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-[#b89b06] flex items-center justify-center text-background-dark font-black text-2xl shadow-lg shrink-0">${initials}</div>`
-                        }
                         <div class="flex-1">
                             <p class="text-white font-black text-xl mb-1" data-translate data-translate-src="${(srcName || '').replace(/"/g,'&quot;')}">${r.client_name}</p>
                             <p class="text-primary/90 text-sm font-bold flex items-center gap-1">
