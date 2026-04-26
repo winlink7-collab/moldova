@@ -193,8 +193,11 @@ require BASE_PATH . '/app/views/layouts/header.php';
 <script>
 (async function loadVipPage() {
     try {
-        const res = await fetch(BASE + '/api/admin/settings');
+        const res = await fetch(BASE + '/api/admin/settings?t=' + Date.now());
         const s = await res.json();
+        console.log('[VIP] Settings loaded, total keys:', Object.keys(s).length,
+            'pkg1_price:', JSON.stringify(s.vip_pkg1_price),
+            'pkg1_name:', JSON.stringify(s.vip_pkg1_name));
         if (s.vip_hero_badge) document.getElementById('vipHeroBadge').textContent = s.vip_hero_badge;
         if (s.vip_hero_title) document.getElementById('vipHeroTitle').textContent = s.vip_hero_title;
         if (s.vip_hero_subtitle) document.getElementById('vipHeroSubtitle').textContent = s.vip_hero_subtitle;
@@ -260,7 +263,10 @@ require BASE_PATH . '/app/views/layouts/header.php';
         if (s.vip_cta_title) document.getElementById('vipCtaTitle').textContent = s.vip_cta_title;
         if (s.vip_cta_subtitle) document.getElementById('vipCtaSubtitle').textContent = s.vip_cta_subtitle;
         if (s.vip_cta_btn) document.getElementById('vipCtaBtn').textContent = s.vip_cta_btn;
-    } catch {}
+        console.log('[VIP] Settings applied OK');
+    } catch(err) {
+        console.error('[VIP] Settings load FAILED:', err);
+    }
 })();
 </script>
 
