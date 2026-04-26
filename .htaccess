@@ -66,6 +66,9 @@ RewriteRule ^(.*)/$ $1 [L,R=301]
     <FilesMatch "\.(css|js)$">
         Header set Cache-Control "public, max-age=2592000"
     </FilesMatch>
+    <FilesMatch "(sitemap\.xml|robots\.txt)$">
+        Header set Cache-Control "public, max-age=86400"
+    </FilesMatch>
 </IfModule>
 
 # Don't rewrite existing files/dirs and specific paths
