@@ -138,7 +138,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
 <script>
 (async function loadAboutSettings() {
     try {
-        const res = await fetch(BASE + '/api/admin/settings');
+        const res = await fetch(BASE + '/api/panel/settings');
         const s = await res.json();
         if (s.about_hero_title) document.getElementById('aboutHeroTitle').textContent = s.about_hero_title;
         if (s.about_hero_subtitle) document.getElementById('aboutHeroSubtitle').textContent = s.about_hero_subtitle;

@@ -193,7 +193,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
 <script>
 (async function loadVipPage() {
     try {
-        const res = await fetch(BASE + '/api/admin/settings?t=' + Date.now());
+        const res = await fetch(BASE + '/api/panel/settings?t=' + Date.now());
         const s = await res.json();
         console.log('[VIP] Settings loaded, total keys:', Object.keys(s).length,
             'pkg1_price:', JSON.stringify(s.vip_pkg1_price),

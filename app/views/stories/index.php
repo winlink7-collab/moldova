@@ -60,7 +60,7 @@ loadStories();
 
 (async function loadStoriesSettings() {
     try {
-        const res = await fetch(BASE + '/api/admin/settings');
+        const res = await fetch(BASE + '/api/panel/settings');
         const s = await res.json();
         if (s.stories_hero_title) document.getElementById('storiesHeroTitle').textContent = s.stories_hero_title;
         if (s.stories_hero_subtitle) document.getElementById('storiesHeroSubtitle').textContent = s.stories_hero_subtitle;
@@ -207,7 +207,7 @@ async function editStory(id) {
 async function deleteStory(id) {
     if (!confirm(T.delete_story_confirm)) return;
     try {
-        const res = await fetch(BASE + '/api/admin/stories/' + id, { method: 'DELETE' });
+        const res = await fetch(BASE + '/api/panel/stories/' + id, { method: 'DELETE' });
         if (res.ok) { aieToast(T.story_deleted); loadStories(); }
         else { aieToast(T.delete_error, 'error'); }
     } catch(e) { aieToast(T.error, 'error'); }
@@ -239,7 +239,7 @@ document.getElementById('storyEditForm').addEventListener('submit', async (e) =>
         wedding_date: document.getElementById('storyEditDate').value || null
     };
     try {
-        const url = id ? BASE + '/api/admin/stories/' + id : BASE + '/api/admin/stories';
+        const url = id ? BASE + '/api/panel/stories/' + id : BASE + '/api/panel/stories';
         const method = id ? 'PUT' : 'POST';
         const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
         if (res.ok) {

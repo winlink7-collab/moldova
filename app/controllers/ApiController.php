@@ -17,7 +17,7 @@ class ApiController {
 
         // Check admin auth for admin routes (except GET settings and POST login)
         // Note: Using cookie-based auth token since Varnish strips PHP sessions
-        if ($action === 'admin' && $subAction !== 'login' && $subAction !== 'settings') {
+        if (($action === 'admin' || $action === 'panel') && $subAction !== 'login' && $subAction !== 'settings') {
             $isAdmin = !empty($_SESSION['admin_logged_in']) || !empty($_COOKIE['admin_token']);
             if (!$isAdmin) {
                 http_response_code(401);
@@ -25,7 +25,7 @@ class ApiController {
                 return;
             }
         }
-        if ($action === 'admin' && $subAction === 'settings' && $method === 'POST') {
+        if (($action === 'admin' || $action === 'panel') && $subAction === 'settings' && $method === 'POST') {
             $isAdmin = !empty($_SESSION['admin_logged_in']) || !empty($_COOKIE['admin_token']);
             if (!$isAdmin) {
                 http_response_code(401);
@@ -98,6 +98,7 @@ class ApiController {
                 $this->upload();
                 break;
             case 'admin':
+            case 'panel':
                 $this->handleAdmin($subAction, $id, $method);
                 break;
             case 'translate':

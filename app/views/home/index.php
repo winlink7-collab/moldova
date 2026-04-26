@@ -374,7 +374,7 @@ document.getElementById('leadForm').addEventListener('submit', submitLeadForm);
 // Load business WhatsApp number from settings and set button href
 (async function() {
     try {
-        const res = await fetch(BASE + '/api/admin/settings');
+        const res = await fetch(BASE + '/api/panel/settings');
         const s = await res.json();
         if (s.whatsapp) {
             window._businessWhatsapp = s.whatsapp.replace(/[^0-9]/g, '');
@@ -391,7 +391,7 @@ document.getElementById('leadForm').addEventListener('submit', submitLeadForm);
 // Load home page settings
 (async function loadHomeSettings() {
     try {
-        const res = await fetch(BASE + '/api/admin/settings');
+        const res = await fetch(BASE + '/api/panel/settings');
         const s = await res.json();
         if (s.home_hero_badge) document.getElementById('homeHeroBadge').textContent = s.home_hero_badge;
         if (s.home_hero_title) document.getElementById('homeHeroTitle').innerHTML = s.home_hero_title;

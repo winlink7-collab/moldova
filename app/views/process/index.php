@@ -85,7 +85,7 @@ async function loadSteps() {
 
 async function loadPageSettings() {
     try {
-        const res = await fetch(BASE + '/api/admin/settings');
+        const res = await fetch(BASE + '/api/panel/settings');
         const s = await res.json();
         if (s.process_hero_title) document.getElementById('processHeroTitle').textContent = s.process_hero_title;
         if (s.process_hero_subtitle) document.getElementById('processHeroSubtitle').textContent = s.process_hero_subtitle;
@@ -147,7 +147,7 @@ window.aieAddStep = async function() {
     const desc = prompt(T.step_desc_prompt);
     const icon = prompt(T.step_icon_prompt, 'star');
     try {
-        const res = await fetch(BASE + '/api/admin/process-steps', {
+        const res = await fetch(BASE + '/api/panel/process-steps', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ title, description: desc || '', icon: icon || 'star' })

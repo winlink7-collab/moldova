@@ -112,7 +112,7 @@
 <script>
 (async function loadContactSettings() {
     try {
-        const res = await fetch(BASE + '/api/admin/settings');
+        const res = await fetch(BASE + '/api/panel/settings');
         const s = await res.json();
         if (s.contact_hero_title) document.getElementById('contactHeroTitle').textContent = s.contact_hero_title;
         if (s.contact_hero_subtitle) document.getElementById('contactHeroSubtitle').textContent = s.contact_hero_subtitle;

@@ -515,7 +515,7 @@ let profileBtnLinks = { msg: '', video: '', gift: '' };
 let siteWaSettings = { phone: '', tmpl: '' };
 (async function loadProfileBtnSettings() {
     try {
-        const res = await fetch(BASE + '/api/admin/settings');
+        const res = await fetch(BASE + '/api/panel/settings');
         const s = await res.json();
         if (s.profile_msg_btn) document.getElementById('profileMsgBtn').textContent = s.profile_msg_btn;
         if (s.profile_video_btn) document.getElementById('profileVideoBtn').textContent = s.profile_video_btn;
@@ -625,7 +625,7 @@ function showToast(msg, type = 'success') {
 // Inline editing for profile page buttons
 async function profileSaveSetting(key, value) {
     try {
-        const res = await fetch(BASE + '/api/admin/settings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ [key]: value }) });
+        const res = await fetch(BASE + '/api/panel/settings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ [key]: value }) });
         return res.ok;
     } catch { return false; }
 }
@@ -866,7 +866,7 @@ function openEditor(section) {
 function esc(v) { return (v || '').replace(/"/g, '&quot;').replace(/</g, '&lt;'); }
 
 async function saveToApi(data) {
-    const res = await fetch(BASE + '/api/admin/profiles/' + profileId, {
+    const res = await fetch(BASE + '/api/panel/profiles/' + profileId, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -935,7 +935,7 @@ async function savePreferences() {
 async function ieDeletePhoto(photoId) {
     if (!confirm(T.delete_photo_confirm)) return;
     try {
-        await fetch(BASE + '/api/admin/photos/' + photoId, { method: 'DELETE' });
+        await fetch(BASE + '/api/panel/photos/' + photoId, { method: 'DELETE' });
         document.querySelector(`.ie-photo-item[data-id="${photoId}"]`)?.remove();
         showToast(T.photo_deleted);
         // Refresh profile data
@@ -975,7 +975,7 @@ async function ieUploadPhotos(input) {
             }
             const url = upData.url || upData.path;
             if (url) {
-                const photoRes = await fetch(BASE + '/api/admin/photos', {
+                const photoRes = await fetch(BASE + '/api/panel/photos', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ profile_id: parseInt(profileId), photo_url: url, is_primary: false })
@@ -1029,7 +1029,7 @@ async function ieUploadPhotos(input) {
 
 async function ieSetPrimary(photoId) {
     try {
-        await fetch(BASE + '/api/admin/photos/' + photoId, {
+        await fetch(BASE + '/api/panel/photos/' + photoId, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ is_primary: true })
@@ -1075,7 +1075,7 @@ async function ieUploadVideo(input) {
         }
         const url = upData.url || upData.path;
         if (url) {
-            const videoRes = await fetch(BASE + '/api/admin/videos', {
+            const videoRes = await fetch(BASE + '/api/panel/videos', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ profile_id: profileId, video_url: url, title: file.name.replace(/\.[^.]+$/, '') })
@@ -1110,7 +1110,7 @@ async function ieAddVideoUrl() {
     errEl.classList.add('hidden');
 
     try {
-        const videoRes = await fetch(BASE + '/api/admin/videos', {
+        const videoRes = await fetch(BASE + '/api/panel/videos', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ profile_id: profileId, video_url: url, title: '' })
@@ -1136,7 +1136,7 @@ async function ieAddVideoUrl() {
 async function ieDeleteVideo(videoId) {
     if (!confirm(T.delete_video_confirm)) return;
     try {
-        await fetch(BASE + '/api/admin/videos/' + videoId, { method: 'DELETE' });
+        await fetch(BASE + '/api/panel/videos/' + videoId, { method: 'DELETE' });
         showToast(T.video_deleted);
         const res = await fetch(BASE + '/api/profiles/' + profileId + '?lang=' + LANG);
         currentProfile = await res.json();

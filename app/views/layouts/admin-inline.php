@@ -555,7 +555,7 @@ body.aie-nav-open header.sticky { right: 300px; width: calc(100% - 300px); }
 
     async function aieSaveSetting(key, value) {
         try {
-            const res = await fetch(BASE + '/api/admin/settings', {
+            const res = await fetch(BASE + '/api/panel/settings', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ [key]: value }),
@@ -567,7 +567,7 @@ body.aie-nav-open header.sticky { right: 300px; width: calc(100% - 300px); }
                 return false;
             }
             // Verify the save actually persisted
-            const verifyRes = await fetch(BASE + '/api/admin/settings?verify=' + Date.now(), { credentials: 'include' });
+            const verifyRes = await fetch(BASE + '/api/panel/settings?verify=' + Date.now(), { credentials: 'include' });
             const verifyData = await verifyRes.json();
             const savedVal = verifyData[key];
             if (savedVal !== value) {
@@ -766,7 +766,7 @@ body.aie-nav-open header.sticky { right: 300px; width: calc(100% - 300px); }
         aieClosePopup();
         let cur = { phone: '', tmpl: '' };
         try {
-            const r = await fetch(BASE + '/api/admin/settings');
+            const r = await fetch(BASE + '/api/panel/settings');
             const s = await r.json();
             cur.phone = s.contact_whatsapp_phone || '';
             cur.tmpl = s.contact_whatsapp_template || 'שלום, אני מעוניין בפרופיל של {name}, גיל {age}, מ-{city}. אשמח לפרטים נוספים.';
@@ -958,7 +958,7 @@ body.aie-nav-open header.sticky { right: 300px; width: calc(100% - 300px); }
         const orders = []; let sIdx = -1;
         children.forEach(el => { if (el.classList.contains('aie-dynamic-block')) { const bid = el.getAttribute('data-block-id'); if (bid) orders.push({ id: parseInt(bid), sort_order: orders.length, insert_after: sIdx }); } else sIdx++; });
         if (orders.length > 0) {
-            try { await fetch(BASE + '/api/admin/blocks-reorder', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ orders }) }); } catch (e) { aieToast('שגיאה בעדכון סדר', 'error'); }
+            try { await fetch(BASE + '/api/panel/blocks-reorder', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ orders }) }); } catch (e) { aieToast('שגיאה בעדכון סדר', 'error'); }
         }
     }
 
@@ -1018,10 +1018,10 @@ body.aie-nav-open header.sticky { right: 300px; width: calc(100% - 300px); }
         const btn = document.getElementById('aieBlockSaveBtn'); btn.disabled = true; btn.textContent = 'שומר...';
         try {
             if (currentBlockEdit) {
-                const res = await fetch(BASE + '/api/admin/blocks/' + currentBlockEdit.id, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ block_data: blockData, block_type: type }) });
+                const res = await fetch(BASE + '/api/panel/blocks/' + currentBlockEdit.id, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ block_data: blockData, block_type: type }) });
                 if (res.ok) { aieToast('בלוק עודכן!'); aieCloseBlockModal(); await reloadPageBlocks(); } else { const d = await res.json(); aieToast(d.error || 'שגיאה', 'error'); }
             } else {
-                const res = await fetch(BASE + '/api/admin/blocks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ page_slug: CURRENT_PAGE, block_type: type, block_data: blockData, insert_after: blockPanelInsertAfter }) });
+                const res = await fetch(BASE + '/api/panel/blocks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ page_slug: CURRENT_PAGE, block_type: type, block_data: blockData, insert_after: blockPanelInsertAfter }) });
                 if (res.ok) { aieToast('בלוק נוסף!'); aieCloseBlockModal(); await reloadPageBlocks(); } else { const d = await res.json(); aieToast(d.error || 'שגיאה', 'error'); }
             }
         } catch (e) { aieToast('שגיאה: ' + e.message, 'error'); }
@@ -1029,11 +1029,11 @@ body.aie-nav-open header.sticky { right: 300px; width: calc(100% - 300px); }
     }
 
     window.aieEditBlock = async function(blockId) {
-        try { const res = await fetch(BASE + '/api/admin/blocks/' + blockId); const block = await res.json(); currentBlockEdit = block; showBlockForm(block.block_type, block.block_data); } catch (e) { aieToast('שגיאה', 'error'); }
+        try { const res = await fetch(BASE + '/api/panel/blocks/' + blockId); const block = await res.json(); currentBlockEdit = block; showBlockForm(block.block_type, block.block_data); } catch (e) { aieToast('שגיאה', 'error'); }
     };
     window.aieDeleteBlock = async function(blockId) {
         if (!confirm('למחוק בלוק זה?')) return;
-        try { const res = await fetch(BASE + '/api/admin/blocks/' + blockId, { method: 'DELETE' }); if (res.ok) { aieToast('בלוק נמחק'); await reloadPageBlocks(); } else aieToast('שגיאה', 'error'); } catch (e) { aieToast('שגיאה', 'error'); }
+        try { const res = await fetch(BASE + '/api/panel/blocks/' + blockId, { method: 'DELETE' }); if (res.ok) { aieToast('בלוק נמחק'); await reloadPageBlocks(); } else aieToast('שגיאה', 'error'); } catch (e) { aieToast('שגיאה', 'error'); }
     };
     window.aieToggleSection = async function(btn, sectionIdx) {
         const key = CURRENT_PAGE + '_section_' + sectionIdx + '_hidden';

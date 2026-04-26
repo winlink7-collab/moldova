@@ -113,7 +113,7 @@
             submitBtn.textContent = '...מתחבר';
 
             try {
-                const response = await fetch(`${BASE_URL}/api/admin/login`, {
+                const response = await fetch(`${BASE_URL}/api/panel/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password })

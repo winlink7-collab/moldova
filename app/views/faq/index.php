@@ -68,7 +68,7 @@ loadFaqs();
 // Load CTA button settings
 (async function() {
     try {
-        const res = await fetch(BASE + '/api/admin/settings');
+        const res = await fetch(BASE + '/api/panel/settings');
         const s = await res.json();
         if (s.faq_cta_btn1_text) document.getElementById('faqCtaBtn1Text').textContent = s.faq_cta_btn1_text;
         if (s.faq_cta_btn1_link) document.getElementById('faqCtaBtn1').href = s.faq_cta_btn1_link;
@@ -180,7 +180,7 @@ function editFaq(id) {
 async function deleteFaq(id) {
     if (!confirm(T.delete_question_confirm)) return;
     try {
-        const res = await fetch(BASE + '/api/admin/faqs/' + id, { method: 'DELETE' });
+        const res = await fetch(BASE + '/api/panel/faqs/' + id, { method: 'DELETE' });
         if (res.ok) { aieToast(T.question_deleted); loadFaqs(); }
         else { aieToast(T.delete_error, 'error'); }
     } catch(e) { aieToast(T.error, 'error'); }
@@ -195,7 +195,7 @@ document.getElementById('faqEditForm').addEventListener('submit', async (e) => {
         sort_order: parseInt(document.getElementById('faqEditOrder').value) || 0
     };
     try {
-        const url = id ? BASE + '/api/admin/faqs/' + id : BASE + '/api/admin/faqs';
+        const url = id ? BASE + '/api/panel/faqs/' + id : BASE + '/api/panel/faqs';
         const method = id ? 'PUT' : 'POST';
         const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
         if (res.ok) {

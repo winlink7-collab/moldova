@@ -454,7 +454,7 @@ updateAuthUI();
 // Load header + footer settings from API
 (async function loadLayoutSettings() {
     try {
-        const res = await fetch(BASE + '/api/admin/settings');
+        const res = await fetch(BASE + '/api/panel/settings');
         const s = await res.json();
 
         // Header
@@ -627,7 +627,7 @@ if (new URLSearchParams(window.location.search).get('login') === '1') {
 
             // Also check for hidden sections from settings
             try {
-                const sRes = await fetch(BASE + '/api/admin/settings');
+                const sRes = await fetch(BASE + '/api/panel/settings');
                 const settings = await sRes.json();
                 sections.forEach((sec, i) => {
                     const hideKey = CURRENT_PAGE + '_section_' + i + '_hidden';
@@ -652,7 +652,7 @@ if (new URLSearchParams(window.location.search).get('login') === '1') {
 <script>
 setTimeout(async function aieApplyStyleSettings() {
     try {
-        const res = await fetch((typeof BASE !== 'undefined' ? BASE : '/moldova') + '/api/admin/settings');
+        const res = await fetch((typeof BASE !== 'undefined' ? BASE : '/moldova') + '/api/panel/settings');
         const s = await res.json();
         Object.keys(s).forEach(k => {
             let baseKey, elId, el;
@@ -724,7 +724,7 @@ function setFont(fontName) {
     localStorage.setItem('site_font', "'" + fontName + "', sans-serif");
     // Save to server settings too
     if (typeof BASE !== 'undefined') {
-        fetch(BASE + '/api/admin/settings', {
+        fetch(BASE + '/api/panel/settings', {
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({site_font: fontName})

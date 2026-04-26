@@ -366,7 +366,7 @@ async function loadUserProfile() {
 
     // Load WhatsApp link from settings
     try {
-        const sRes = await fetch(BASE + '/api/admin/settings');
+        const sRes = await fetch(BASE + '/api/panel/settings');
         const s = await sRes.json();
         if (s.whatsapp) {
             var waNum = s.whatsapp.replace(/[^0-9]/g, '');

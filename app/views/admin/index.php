@@ -1598,7 +1598,7 @@ async function loadTranslations() {
     const q = document.getElementById('trSearch').value.trim();
     body.innerHTML = '<tr><td colspan="5" class="p-6 text-center text-white/40">טוען...</td></tr>';
     try {
-        const url = API + '/api/admin/translations?lang=' + encodeURIComponent(lang) + '&q=' + encodeURIComponent(q);
+        const url = API + '/api/panel/translations?lang=' + encodeURIComponent(lang) + '&q=' + encodeURIComponent(q);
         const res = await fetch(url);
         const data = await res.json();
         const items = data.items || [];
@@ -1657,13 +1657,13 @@ async function saveTranslation() {
     if (!translation) { alert('תרגום חובה'); return; }
     try {
         if (id) {
-            await fetch(API + '/api/admin/translations/' + id, {
+            await fetch(API + '/api/panel/translations/' + id, {
                 method: 'PUT', headers: {'Content-Type':'application/json'},
                 body: JSON.stringify({ translation })
             });
         } else {
             if (!source) { alert('טקסט מקור חובה'); return; }
-            await fetch(API + '/api/admin/translations', {
+            await fetch(API + '/api/panel/translations', {
                 method: 'POST', headers: {'Content-Type':'application/json'},
                 body: JSON.stringify({ source_text: source, lang, translation })
             });
@@ -1676,7 +1676,7 @@ async function saveTranslation() {
 async function deleteTranslation(id) {
     if (!confirm('למחוק את התרגום? הוא יתורגם מחדש אוטומטית בביקור הבא.')) return;
     try {
-        await fetch(API + '/api/admin/translations/' + id, { method: 'DELETE' });
+        await fetch(API + '/api/panel/translations/' + id, { method: 'DELETE' });
         loadTranslations();
     } catch (e) { alert('שגיאה במחיקה'); }
 }
@@ -1684,7 +1684,7 @@ async function deleteTranslation(id) {
 // ============ PROFILES ============
 async function loadProfiles() {
     try {
-        const res = await fetch(API + '/api/admin/profiles?page=1&per_page=100');
+        const res = await fetch(API + '/api/panel/profiles?page=1&per_page=100');
         const data = await res.json();
         const profiles = data.data || data.profiles || data || [];
         const list = document.getElementById('profilesList');
@@ -1774,7 +1774,7 @@ function closeProfileForm() {
 
 async function editProfile(id) {
     try {
-        const res = await fetch(API + '/api/admin/profiles/' + id);
+        const res = await fetch(API + '/api/panel/profiles/' + id);
         const profile = await res.json();
         openProfileForm(profile.data || profile);
     } catch(e) {
@@ -1785,7 +1785,7 @@ async function editProfile(id) {
 async function deleteProfile(id) {
     if (!confirm('האם למחוק את הפרופיל?')) return;
     try {
-        await fetch(API + '/api/admin/profiles/' + id, { method: 'DELETE' });
+        await fetch(API + '/api/panel/profiles/' + id, { method: 'DELETE' });
         loadProfiles();
     } catch(e) {
         console.error('Error deleting profile:', e);
@@ -1814,7 +1814,7 @@ async function saveProfile(e) {
         is_active: true,
     };
     try {
-        const url = id ? API + '/api/admin/profiles/' + id : API + '/api/admin/profiles';
+        const url = id ? API + '/api/panel/profiles/' + id : API + '/api/panel/profiles';
         const method = id ? 'PUT' : 'POST';
         const res = await fetch(url, { method, headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
         const result = await res.json();
@@ -1824,13 +1824,13 @@ async function saveProfile(e) {
         if (profileId) {
             // Delete existing photos if editing
             if (id) {
-                const delRes = await fetch(API + '/api/admin/photos?profile_id=' + profileId, { method: 'DELETE' });
+                const delRes = await fetch(API + '/api/panel/photos?profile_id=' + profileId, { method: 'DELETE' });
                 console.log('Delete photos:', await delRes.json());
             }
             // Add main photo
             const mainPhotoUrl = document.getElementById('profile_main_photo').value;
             if (mainPhotoUrl) {
-                const mainRes = await fetch(API + '/api/admin/photos', {
+                const mainRes = await fetch(API + '/api/panel/photos', {
                     method: 'POST',
                     headers: {'Content-Type':'application/json'},
                     body: JSON.stringify({ profile_id: parseInt(profileId), photo_url: mainPhotoUrl, is_primary: true })
@@ -1843,7 +1843,7 @@ async function saveProfile(e) {
             console.log('Gallery photos to save:', galleryPhotos);
             for (const photoUrl of galleryPhotos) {
                 if (photoUrl && photoUrl !== mainPhotoUrl) {
-                    const galRes = await fetch(API + '/api/admin/photos', {
+                    const galRes = await fetch(API + '/api/panel/photos', {
                         method: 'POST',
                         headers: {'Content-Type':'application/json'},
                         body: JSON.stringify({ profile_id: parseInt(profileId), photo_url: photoUrl, is_primary: false })
@@ -1861,7 +1861,7 @@ async function saveProfile(e) {
                     const existingProfile = await existingRes.json();
                     if (existingProfile.videos) {
                         for (const v of existingProfile.videos) {
-                            await fetch(API + '/api/admin/videos/' + v.id, { method: 'DELETE' });
+                            await fetch(API + '/api/panel/videos/' + v.id, { method: 'DELETE' });
                         }
                     }
                 } catch(ve) { console.error('Video delete error:', ve); }
@@ -1869,7 +1869,7 @@ async function saveProfile(e) {
             // Add videos
             console.log('Videos to save:', profileVideos);
             for (const v of profileVideos) {
-                const vidRes = await fetch(API + '/api/admin/videos', {
+                const vidRes = await fetch(API + '/api/panel/videos', {
                     method: 'POST',
                     headers: {'Content-Type':'application/json'},
                     body: JSON.stringify({ profile_id: parseInt(profileId), video_url: v.url, title: v.title || '' })
@@ -2039,7 +2039,7 @@ async function uploadStoryImage(input) {
 // ============ USERS ============
 async function loadUsers() {
     try {
-        const res = await fetch(API + '/api/admin/users');
+        const res = await fetch(API + '/api/panel/users');
         const data = await res.json();
         const users = data.data || data.users || data || [];
         const list = document.getElementById('usersList');
@@ -2078,7 +2078,7 @@ async function loadUsers() {
 
 async function editUser(id) {
     try {
-        const res = await fetch(API + '/api/admin/users/' + id);
+        const res = await fetch(API + '/api/panel/users/' + id);
         const user = await res.json();
         const u = user.data || user;
         document.getElementById('userModal').classList.remove('hidden');
@@ -2108,7 +2108,7 @@ async function saveUser(e) {
         vip_level: document.getElementById('user_vip_level').value,
     };
     try {
-        await fetch(API + '/api/admin/users/' + id, { method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+        await fetch(API + '/api/panel/users/' + id, { method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
         closeUserForm();
         loadUsers();
     } catch(e) {
@@ -2119,7 +2119,7 @@ async function saveUser(e) {
 async function deleteUser(id) {
     if (!confirm('האם למחוק את המשתמש?')) return;
     try {
-        await fetch(API + '/api/admin/users/' + id, { method: 'DELETE' });
+        await fetch(API + '/api/panel/users/' + id, { method: 'DELETE' });
         loadUsers();
     } catch(e) {
         console.error('Error deleting user:', e);
@@ -2133,7 +2133,7 @@ async function viewUserMessages(userId) {
 // ============ MESSAGES ============
 async function loadMessages() {
     try {
-        const res = await fetch(API + '/api/admin/messages');
+        const res = await fetch(API + '/api/panel/messages');
         const data = await res.json();
         const messages = data.data || data.messages || data || [];
         const list = document.getElementById('messagesList');
@@ -2161,7 +2161,7 @@ async function loadMessages() {
 async function deleteMessage(id) {
     if (!confirm('האם למחוק את ההודעה?')) return;
     try {
-        await fetch(API + '/api/admin/messages/' + id, { method: 'DELETE' });
+        await fetch(API + '/api/panel/messages/' + id, { method: 'DELETE' });
         loadMessages();
     } catch(e) {
         console.error('Error deleting message:', e);
@@ -2171,7 +2171,7 @@ async function deleteMessage(id) {
 // ============ LEADS ============
 async function loadLeads() {
     try {
-        const res = await fetch(API + '/api/admin/leads');
+        const res = await fetch(API + '/api/panel/leads');
         const data = await res.json();
         const leads = data.data || data.leads || data || [];
         const list = document.getElementById('leadsList');
@@ -2205,7 +2205,7 @@ async function loadLeads() {
 async function deleteLead(id) {
     if (!confirm('האם למחוק את הליד?')) return;
     try {
-        await fetch(API + '/api/admin/leads/' + id, { method: 'DELETE' });
+        await fetch(API + '/api/panel/leads/' + id, { method: 'DELETE' });
         loadLeads();
     } catch(e) {
         console.error('Error deleting lead:', e);
@@ -2215,7 +2215,7 @@ async function deleteLead(id) {
 // ============ PAGES ============
 async function loadPages() {
     try {
-        const res = await fetch(API + '/api/admin/pages');
+        const res = await fetch(API + '/api/panel/pages');
         const data = await res.json();
         const pages = data.data || data.pages || data || [];
         const list = document.getElementById('pagesList');
@@ -2273,7 +2273,7 @@ function closePageForm() {
 
 async function editPage(id) {
     try {
-        const res = await fetch(API + '/api/admin/pages/' + id);
+        const res = await fetch(API + '/api/panel/pages/' + id);
         const page = await res.json();
         openPageForm(page.data || page);
     } catch(e) {
@@ -2284,7 +2284,7 @@ async function editPage(id) {
 async function deletePage(id) {
     if (!confirm('האם למחוק את הדף?')) return;
     try {
-        await fetch(API + '/api/admin/pages/' + id, { method: 'DELETE' });
+        await fetch(API + '/api/panel/pages/' + id, { method: 'DELETE' });
         loadPages();
     } catch(e) {
         console.error('Error deleting page:', e);
@@ -2301,7 +2301,7 @@ async function savePage(e) {
         content: document.getElementById('page_content').value,
     };
     try {
-        const url = id ? API + '/api/admin/pages/' + id : API + '/api/admin/pages';
+        const url = id ? API + '/api/panel/pages/' + id : API + '/api/panel/pages';
         const method = id ? 'PUT' : 'POST';
         await fetch(url, { method, headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
         closePageForm();
@@ -2314,7 +2314,7 @@ async function savePage(e) {
 // ============ STORIES PAGE SETTINGS ============
 async function loadStoriesPageSettings() {
     try {
-        const res = await fetch(API + '/api/admin/settings');
+        const res = await fetch(API + '/api/panel/settings');
         const s = await res.json();
         document.getElementById('adm_stories_hero_title').value = s.stories_hero_title || '';
         document.getElementById('adm_stories_hero_subtitle').value = s.stories_hero_subtitle || '';
@@ -2333,7 +2333,7 @@ async function saveStoriesSettings() {
         stories_cta_btn: document.getElementById('adm_stories_cta_btn').value,
     };
     try {
-        const res = await fetch(API + '/api/admin/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+        const res = await fetch(API + '/api/panel/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
         if (!res.ok) { alert('שגיאה בשמירה: ' + res.status); return; }
         showToast('הגדרות דף סיפורים נשמרו!');
     } catch(e) { showToast('שגיאה בשמירה', 'error'); }
@@ -2342,7 +2342,7 @@ async function saveStoriesSettings() {
 // ============ STORIES ============
 async function loadStories() {
     try {
-        const res = await fetch(API + '/api/admin/stories');
+        const res = await fetch(API + '/api/panel/stories');
         const data = await res.json();
         const stories = data.data || data.stories || data || [];
         const list = document.getElementById('storiesList');
@@ -2407,7 +2407,7 @@ function closeStoryForm() {
 
 async function editStory(id) {
     try {
-        const res = await fetch(API + '/api/admin/stories/' + id);
+        const res = await fetch(API + '/api/panel/stories/' + id);
         const story = await res.json();
         openStoryForm(story.data || story);
     } catch(e) {
@@ -2418,7 +2418,7 @@ async function editStory(id) {
 async function deleteStory(id) {
     if (!confirm('האם למחוק את הסיפור?')) return;
     try {
-        await fetch(API + '/api/admin/stories/' + id, { method: 'DELETE' });
+        await fetch(API + '/api/panel/stories/' + id, { method: 'DELETE' });
         loadStories();
     } catch(e) {
         console.error('Error deleting story:', e);
@@ -2437,7 +2437,7 @@ async function saveStory(e) {
         is_active: document.getElementById('story_is_active').checked ? 1 : 0,
     };
     try {
-        const url = id ? API + '/api/admin/stories/' + id : API + '/api/admin/stories';
+        const url = id ? API + '/api/panel/stories/' + id : API + '/api/panel/stories';
         const method = id ? 'PUT' : 'POST';
         await fetch(url, { method, headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
         closeStoryForm();
@@ -2450,7 +2450,7 @@ async function saveStory(e) {
 // ============ FAQS ============
 async function loadFaqs() {
     try {
-        const res = await fetch(API + '/api/admin/faqs');
+        const res = await fetch(API + '/api/panel/faqs');
         const data = await res.json();
         const faqs = data.data || data.faqs || data || [];
         const list = document.getElementById('faqsList');
@@ -2505,7 +2505,7 @@ function closeFaqForm() {
 
 async function editFaq(id) {
     try {
-        const res = await fetch(API + '/api/admin/faqs/' + id);
+        const res = await fetch(API + '/api/panel/faqs/' + id);
         const faq = await res.json();
         openFaqForm(faq.data || faq);
     } catch(e) {
@@ -2516,7 +2516,7 @@ async function editFaq(id) {
 async function deleteFaq(id) {
     if (!confirm('האם למחוק את השאלה?')) return;
     try {
-        await fetch(API + '/api/admin/faqs/' + id, { method: 'DELETE' });
+        await fetch(API + '/api/panel/faqs/' + id, { method: 'DELETE' });
         loadFaqs();
     } catch(e) {
         console.error('Error deleting FAQ:', e);
@@ -2533,7 +2533,7 @@ async function saveFaq(e) {
         is_active: document.getElementById('faq_is_active').checked ? 1 : 0,
     };
     try {
-        const url = id ? API + '/api/admin/faqs/' + id : API + '/api/admin/faqs';
+        const url = id ? API + '/api/panel/faqs/' + id : API + '/api/panel/faqs';
         const method = id ? 'PUT' : 'POST';
         await fetch(url, { method, headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
         closeFaqForm();
@@ -2547,7 +2547,7 @@ async function saveFaq(e) {
 async function loadProcessSteps() {
     try {
         // Load steps
-        const res = await fetch(API + '/api/admin/process-steps');
+        const res = await fetch(API + '/api/panel/process-steps');
         const data = await res.json();
         const steps = data.data || data.steps || data || [];
         const list = document.getElementById('stepsList');
@@ -2579,7 +2579,7 @@ async function loadProcessSteps() {
         }
 
         // Load process text settings
-        const settingsRes = await fetch(API + '/api/admin/settings');
+        const settingsRes = await fetch(API + '/api/panel/settings');
         const settingsData = await settingsRes.json();
         const settings = settingsData.data || settingsData.settings || settingsData || {};
         document.getElementById('process_hero_title').value = settings.process_hero_title || '';
@@ -2623,7 +2623,7 @@ function closeStepForm() {
 
 async function editStep(id) {
     try {
-        const res = await fetch(API + '/api/admin/process-steps/' + id);
+        const res = await fetch(API + '/api/panel/process-steps/' + id);
         const step = await res.json();
         openStepForm(step.data || step);
     } catch(e) {
@@ -2634,7 +2634,7 @@ async function editStep(id) {
 async function deleteStep(id) {
     if (!confirm('האם למחוק את השלב?')) return;
     try {
-        await fetch(API + '/api/admin/process-steps/' + id, { method: 'DELETE' });
+        await fetch(API + '/api/panel/process-steps/' + id, { method: 'DELETE' });
         loadProcessSteps();
     } catch(e) {
         console.error('Error deleting step:', e);
@@ -2653,7 +2653,7 @@ async function saveStep(e) {
         image_url: document.getElementById('step_image').value,
     };
     try {
-        const url = id ? API + '/api/admin/process-steps/' + id : API + '/api/admin/process-steps';
+        const url = id ? API + '/api/panel/process-steps/' + id : API + '/api/panel/process-steps';
         const method = id ? 'PUT' : 'POST';
         await fetch(url, { method, headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
         closeStepForm();
@@ -2672,7 +2672,7 @@ async function saveProcessTexts() {
         process_cta_subtitle: document.getElementById('process_cta_subtitle').value,
     };
     try {
-        const res = await fetch(API + '/api/admin/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+        const res = await fetch(API + '/api/panel/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
         if (!res.ok) { alert('שגיאה בשמירה: ' + res.status); return; }
         alert('הגדרות טקסט נשמרו בהצלחה');
     } catch(e) {
@@ -2697,7 +2697,7 @@ async function uploadHomeImage(key, input) {
 
 async function loadHomeSettings() {
     try {
-        const res = await fetch(API + '/api/admin/settings');
+        const res = await fetch(API + '/api/panel/settings');
         const data = await res.json();
         const s = data.data || data.settings || data || {};
         document.getElementById('adm_home_hero_badge').value = s.home_hero_badge || '';
@@ -2764,7 +2764,7 @@ async function saveHomeSettings(e) {
         home_cta_subtitle: document.getElementById('adm_home_cta_subtitle').value,
     };
     try {
-        const res = await fetch(API + '/api/admin/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+        const res = await fetch(API + '/api/panel/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
         if (!res.ok) { alert('שגיאה בשמירה: ' + res.status); return; }
         alert('הגדרות דף הבית נשמרו בהצלחה');
     } catch(e) {
@@ -2775,7 +2775,7 @@ async function saveHomeSettings(e) {
 // ============ VIP SETTINGS ============
 async function loadVipSettings() {
     try {
-        const res = await fetch(API + '/api/admin/settings');
+        const res = await fetch(API + '/api/panel/settings');
         const data = await res.json();
         const s = data.data || data.settings || data || {};
         document.getElementById('vip_hero_title').value = s.vip_hero_title || '';
@@ -2855,12 +2855,12 @@ async function saveVipSettings(e) {
         // Count non-empty values
         const filled = Object.entries(body).filter(([k,v]) => v && v.trim()).length;
         const total = Object.keys(body).length;
-        const res = await fetch(API + '/api/admin/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body), credentials: 'same-origin' });
+        const res = await fetch(API + '/api/panel/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body), credentials: 'same-origin' });
         const txt = await res.text();
         if (!res.ok) { alert('❌ שגיאה בשמירה (קוד ' + res.status + '):\n' + txt + '\n\nנסה להתנתק ולהתחבר מחדש.'); return; }
         alert('✅ הגדרות VIP נשמרו!\n\nנשלחו ' + total + ' שדות, מתוכם ' + filled + ' עם תוכן.');
         // Verify by re-reading
-        const verify = await fetch(API + '/api/admin/settings?t=' + Date.now());
+        const verify = await fetch(API + '/api/panel/settings?t=' + Date.now());
         const check = await verify.json();
         console.log('VIP verify - pkg1_name:', check.vip_pkg1_name, '| pkg2_name:', check.vip_pkg2_name, '| pkg3_name:', check.vip_pkg3_name);
     } catch(e) {
@@ -2872,7 +2872,7 @@ async function saveVipSettings(e) {
 // ============ ABOUT SETTINGS ============
 async function loadAboutSettings() {
     try {
-        const res = await fetch(API + '/api/admin/settings');
+        const res = await fetch(API + '/api/panel/settings');
         const data = await res.json();
         const s = data.data || data.settings || data || {};
         document.getElementById('about_hero_title').value = s.about_hero_title || '';
@@ -2959,7 +2959,7 @@ async function saveAboutSettings(e) {
         about_cta_subtitle: document.getElementById('about_cta_subtitle').value,
     };
     try {
-        const res = await fetch(API + '/api/admin/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+        const res = await fetch(API + '/api/panel/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
         if (!res.ok) { alert('שגיאה בשמירה: ' + res.status); return; }
         alert('הגדרות אודות נשמרו בהצלחה');
     } catch(e) {
@@ -2984,7 +2984,7 @@ async function uploadContactImage(input) {
 
 async function loadContactSettings() {
     try {
-        const res = await fetch(API + '/api/admin/settings');
+        const res = await fetch(API + '/api/panel/settings');
         const data = await res.json();
         const s = data.data || data.settings || data || {};
         document.getElementById('contact_hero_title').value = s.contact_hero_title || '';
@@ -3035,7 +3035,7 @@ async function saveContactSettings(e) {
         contact_disclaimer: document.getElementById('adm_contact_disclaimer').value,
     };
     try {
-        const res = await fetch(API + '/api/admin/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+        const res = await fetch(API + '/api/panel/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
         if (!res.ok) { alert('שגיאה בשמירה: ' + res.status); return; }
         alert('הגדרות צור קשר נשמרו בהצלחה');
     } catch(e) {
@@ -3046,7 +3046,7 @@ async function saveContactSettings(e) {
 // ============ REVIEWS ============
 async function loadReviews() {
     try {
-        const res = await fetch(API + '/api/admin/reviews');
+        const res = await fetch(API + '/api/panel/reviews');
         const reviews = await res.json();
         const list = document.getElementById('reviewsList');
         if (!Array.isArray(reviews) || reviews.length === 0) {
@@ -3082,7 +3082,7 @@ async function loadReviews() {
 
 let allReviews = [];
 async function fetchAllReviews() {
-    const res = await fetch(API + '/api/admin/reviews');
+    const res = await fetch(API + '/api/panel/reviews');
     allReviews = await res.json();
 }
 
@@ -3121,7 +3121,7 @@ async function editReview(id) {
 async function deleteReview(id) {
     if (!confirm('למחוק ביקורת זו?')) return;
     try {
-        await fetch(API + '/api/admin/reviews/' + id, { method: 'DELETE' });
+        await fetch(API + '/api/panel/reviews/' + id, { method: 'DELETE' });
         loadReviews();
         fetchAllReviews();
     } catch(e) { console.error(e); }
@@ -3153,7 +3153,7 @@ async function saveReview(e) {
         review_text: document.getElementById('review_text').value,
     };
     try {
-        const url = id ? API + '/api/admin/reviews/' + id : API + '/api/admin/reviews';
+        const url = id ? API + '/api/panel/reviews/' + id : API + '/api/panel/reviews';
         const method = id ? 'PUT' : 'POST';
         await fetch(url, { method, headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
         closeReviewForm();
@@ -3165,7 +3165,7 @@ async function saveReview(e) {
 // ============ SITE SETTINGS ============
 async function loadSiteSettings() {
     try {
-        const res = await fetch(API + '/api/admin/settings');
+        const res = await fetch(API + '/api/panel/settings');
         const data = await res.json();
         const s = data.data || data.settings || data || {};
         document.getElementById('site_name').value = s.site_name || '';
@@ -3255,7 +3255,7 @@ async function saveSiteSettings(e) {
         contact_whatsapp_template: document.getElementById('contact_whatsapp_template').value,
     };
     try {
-        const res = await fetch(API + '/api/admin/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+        const res = await fetch(API + '/api/panel/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
         if (!res.ok) { alert('שגיאה בשמירה: ' + res.status); return; }
         alert('הגדרות אתר נשמרו בהצלחה');
     } catch(e) {
@@ -3266,7 +3266,7 @@ async function saveSiteSettings(e) {
 // ============ LOGOUT ============
 async function adminLogout() {
     try {
-        await fetch(API + '/api/admin/logout', { method: 'POST' });
+        await fetch(API + '/api/panel/logout', { method: 'POST' });
     } catch(e) {
         // ignore
     }

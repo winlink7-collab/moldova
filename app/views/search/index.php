@@ -480,7 +480,7 @@ async function submitNewProfile(e) {
 
     try {
         // Create profile
-        const res = await fetch(BASE + '/api/admin/profiles', {
+        const res = await fetch(BASE + '/api/panel/profiles', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body)
@@ -493,7 +493,7 @@ async function submitNewProfile(e) {
         // Upload main photo
         const mainUrl = document.getElementById('ap_main_url').value;
         if (mainUrl) {
-            await fetch(BASE + '/api/admin/photos', {
+            await fetch(BASE + '/api/panel/photos', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ profile_id: profileId, photo_url: mainUrl, is_primary: true })
@@ -503,7 +503,7 @@ async function submitNewProfile(e) {
         // Upload gallery photos
         for (const url of apGallery) {
             if (url !== mainUrl) {
-                await fetch(BASE + '/api/admin/photos', {
+                await fetch(BASE + '/api/panel/photos', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ profile_id: profileId, photo_url: url, is_primary: false })
@@ -513,7 +513,7 @@ async function submitNewProfile(e) {
 
         // Upload videos
         for (const v of apVideos) {
-            await fetch(BASE + '/api/admin/videos', {
+            await fetch(BASE + '/api/panel/videos', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ profile_id: profileId, video_url: v.url, title: v.title })
