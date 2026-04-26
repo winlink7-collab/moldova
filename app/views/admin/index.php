@@ -2325,7 +2325,7 @@ async function loadStoriesPageSettings() {
 }
 
 async function saveStoriesSettings() {
-    const fields = {
+    const body = {
         stories_hero_title: document.getElementById('adm_stories_hero_title').value,
         stories_hero_subtitle: document.getElementById('adm_stories_hero_subtitle').value,
         stories_cta_title: document.getElementById('adm_stories_cta_title').value,
@@ -2333,13 +2333,8 @@ async function saveStoriesSettings() {
         stories_cta_btn: document.getElementById('adm_stories_cta_btn').value,
     };
     try {
-        for (const [key, value] of Object.entries(fields)) {
-            await fetch(API + '/api/admin/settings', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ key, value })
-            });
-        }
+        const res = await fetch(API + '/api/admin/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+        if (!res.ok) { alert('שגיאה בשמירה: ' + res.status); return; }
         showToast('הגדרות דף סיפורים נשמרו!');
     } catch(e) { showToast('שגיאה בשמירה', 'error'); }
 }
@@ -2677,7 +2672,8 @@ async function saveProcessTexts() {
         process_cta_subtitle: document.getElementById('process_cta_subtitle').value,
     };
     try {
-        await fetch(API + '/api/admin/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+        const res = await fetch(API + '/api/admin/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+        if (!res.ok) { alert('שגיאה בשמירה: ' + res.status); return; }
         alert('הגדרות טקסט נשמרו בהצלחה');
     } catch(e) {
         console.error('Error saving process texts:', e);
@@ -2768,7 +2764,8 @@ async function saveHomeSettings(e) {
         home_cta_subtitle: document.getElementById('adm_home_cta_subtitle').value,
     };
     try {
-        await fetch(API + '/api/admin/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+        const res = await fetch(API + '/api/admin/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+        if (!res.ok) { alert('שגיאה בשמירה: ' + res.status); return; }
         alert('הגדרות דף הבית נשמרו בהצלחה');
     } catch(e) {
         console.error('Error saving home settings:', e);
@@ -2855,9 +2852,11 @@ async function saveVipSettings(e) {
         vip_cta_btn: document.getElementById('adm_vip_cta_btn').value,
     };
     try {
-        await fetch(API + '/api/admin/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+        const res = await fetch(API + '/api/admin/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+        if (!res.ok) { const err = await res.json().catch(()=>({})); alert('שגיאה בשמירה: ' + (err.error || res.status)); return; }
         alert('הגדרות VIP נשמרו בהצלחה');
     } catch(e) {
+        alert('שגיאת רשת - בדוק חיבור אינטרנט');
         console.error('Error saving VIP settings:', e);
     }
 }
@@ -2952,7 +2951,8 @@ async function saveAboutSettings(e) {
         about_cta_subtitle: document.getElementById('about_cta_subtitle').value,
     };
     try {
-        await fetch(API + '/api/admin/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+        const res = await fetch(API + '/api/admin/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+        if (!res.ok) { alert('שגיאה בשמירה: ' + res.status); return; }
         alert('הגדרות אודות נשמרו בהצלחה');
     } catch(e) {
         console.error('Error saving about settings:', e);
@@ -3027,7 +3027,8 @@ async function saveContactSettings(e) {
         contact_disclaimer: document.getElementById('adm_contact_disclaimer').value,
     };
     try {
-        await fetch(API + '/api/admin/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+        const res = await fetch(API + '/api/admin/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+        if (!res.ok) { alert('שגיאה בשמירה: ' + res.status); return; }
         alert('הגדרות צור קשר נשמרו בהצלחה');
     } catch(e) {
         console.error('Error saving contact settings:', e);
@@ -3246,7 +3247,8 @@ async function saveSiteSettings(e) {
         contact_whatsapp_template: document.getElementById('contact_whatsapp_template').value,
     };
     try {
-        await fetch(API + '/api/admin/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+        const res = await fetch(API + '/api/admin/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+        if (!res.ok) { alert('שגיאה בשמירה: ' + res.status); return; }
         alert('הגדרות אתר נשמרו בהצלחה');
     } catch(e) {
         console.error('Error saving site settings:', e);
