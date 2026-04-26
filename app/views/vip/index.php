@@ -26,120 +26,66 @@ require BASE_PATH . '/app/views/layouts/header.php';
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
 
         <!-- Silver -->
-        <div class="bg-zinc-900/80 border border-[#E5E4E2]/20 rounded-2xl p-10 flex flex-col transition-all hover:-translate-y-2 hover:shadow-[0_0_40px_rgba(229,228,226,0.1)] group">
-            <div class="mb-10">
-                <div class="w-12 h-12 rounded-full silver-gradient flex items-center justify-center mb-4 shadow-lg">
-                    <span class="material-symbols-outlined text-background-dark font-bold">workspace_premium</span>
-                </div>
-                <h3 id="vipPkg1Name" class="text-3xl font-black text-[#E5E4E2] mb-2 uppercase tracking-wide">Silver VIP</h3>
-                <div id="vipPkg1PriceRow" class="flex items-baseline gap-1">
-                    <span id="vipPkg1Price" class="text-4xl font-black text-[#E5E4E2]">&#8362;2,900</span>
-                    <span id="vipPkg1Period" class="text-slate-400 text-sm"><?= t('vip_per_month') ?></span>
-                </div>
+        <div class="rounded-2xl overflow-hidden flex flex-col transition-all hover:-translate-y-2 shadow-2xl" style="background:#f8f8f5;border:2px solid #c0c0c0;">
+            <div class="py-6 px-8 text-center" style="background:linear-gradient(135deg,#c0c0c0 0%,#8a8a8a 100%);">
+                <span class="material-symbols-outlined text-white text-4xl mb-2 block">workspace_premium</span>
+                <h3 id="vipPkg1Name" class="text-2xl font-black text-white uppercase tracking-wide">חבילת Silver</h3>
             </div>
-            <ul id="vipPkg1Features" class="flex-1 space-y-5 mb-12">
-                <li class="flex items-start gap-3 text-slate-300">
-                    <span class="material-symbols-outlined text-[#E5E4E2] text-xl">verified_user</span>
-                    <span id="vipPkg1Feat1" class="text-lg"><?= t('vip_pkg1_feat1') ?></span>
-                </li>
-                <li class="flex items-start gap-3 text-slate-300">
-                    <span class="material-symbols-outlined text-[#E5E4E2] text-xl">database</span>
-                    <span id="vipPkg1Feat2" class="text-lg"><?= t('vip_pkg1_feat2') ?></span>
-                </li>
-                <li class="flex items-start gap-3 text-slate-300">
-                    <span class="material-symbols-outlined text-[#E5E4E2] text-xl">chat</span>
-                    <span id="vipPkg1Feat3" class="text-lg"><?= t('vip_pkg1_feat3') ?></span>
-                </li>
-                <li class="flex items-start gap-3 text-slate-300">
-                    <span class="material-symbols-outlined text-[#E5E4E2] text-xl">filter_list</span>
-                    <span id="vipPkg1Feat4" class="text-lg"><?= t('vip_pkg1_feat4') ?></span>
-                </li>
-            </ul>
-            <button id="vipPkg1Btn" onclick="openModal('registerModal')" class="w-full py-5 bg-gradient-to-r from-[#E5E4E2] to-[#bdbdbd] text-background-dark rounded-xl font-black hover:scale-[1.02] hover:shadow-xl hover:shadow-[#E5E4E2]/30 transition-all uppercase tracking-widest text-sm shadow-lg">
-                <?= t('vip_pkg1_btn') ?>
-            </button>
+            <div class="flex-1 p-8 flex flex-col">
+                <p id="vipPkg1Desc" class="text-gray-700 text-base leading-relaxed mb-6" style="color:#333 !important;">4 מפגשים, 2 דייטים, 14 פרופילים מומלצים בחו"ל, הכנה אישית למפגשים, ליווי אישי צמוד בתקופת המפגשים.</p>
+                <div class="flex-1"></div>
+                <div id="vipPkg1PriceRow" class="border-t border-gray-200 pt-6 mt-4 text-center">
+                    <span class="text-gray-500 text-sm" style="color:#666 !important;">מחיר:</span>
+                    <span id="vipPkg1Price" class="text-3xl font-black mr-2" style="color:#333 !important;">₪5,900</span>
+                    <span id="vipPkg1Period" class="text-gray-400 text-sm" style="color:#999 !important;">(4 מפגשים)</span>
+                </div>
+                <button id="vipPkg1Btn" onclick="openModal('registerModal')" class="w-full mt-6 py-4 rounded-xl font-black text-white text-sm uppercase tracking-widest shadow-lg hover:scale-[1.02] transition-all" style="background:linear-gradient(135deg,#c0c0c0 0%,#8a8a8a 100%);">
+                    <?= t('vip_pkg1_btn') ?>
+                </button>
+            </div>
         </div>
 
         <!-- Gold -->
-        <div class="bg-zinc-900/90 border-2 border-primary/40 rounded-2xl p-10 flex flex-col relative scale-105 z-10 shadow-2xl shadow-primary/20 transition-all hover:shadow-primary/30">
-            <div id="vipPkg2Badge" class="absolute -top-5 left-1/2 -translate-x-1/2 px-6 py-1.5 rounded-full text-sm font-black uppercase tracking-widest shadow-xl" style="background:linear-gradient(135deg,#f2d00d 0%,#b59b09 100%);color:#12110a;">
+        <div class="rounded-2xl overflow-hidden flex flex-col relative transition-all hover:-translate-y-2 shadow-2xl scale-105 z-10" style="background:#f8f8f5;border:3px solid #f2d00d;">
+            <div id="vipPkg2Badge" class="absolute -top-0 left-1/2 -translate-x-1/2 px-6 py-1 rounded-b-lg text-xs font-black uppercase tracking-widest shadow-md z-20" style="background:#f2d00d;color:#12110a;">
                 <?= t('vip_most_popular') ?>
             </div>
-            <div class="mb-10">
-                <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4 shadow-lg" style="background:linear-gradient(135deg,#f2d00d 0%,#b59b09 100%);">
-                    <span class="material-symbols-outlined text-background-dark font-bold">star</span>
-                </div>
-                <h3 id="vipPkg2Name" class="text-3xl font-black text-primary mb-2 uppercase tracking-wide">Gold VIP</h3>
-                <div id="vipPkg2PriceRow" class="flex items-baseline gap-1">
-                    <span id="vipPkg2Price" class="text-5xl font-black text-primary drop-shadow-md">&#8362;5,500</span>
-                    <span id="vipPkg2Period" class="text-slate-400 text-sm"><?= t('vip_per_month') ?></span>
-                </div>
+            <div class="py-6 px-8 text-center" style="background:linear-gradient(135deg,#f2d00d 0%,#b59b09 100%);">
+                <span class="material-symbols-outlined text-4xl mb-2 block" style="color:#12110a;">star</span>
+                <h3 id="vipPkg2Name" class="text-2xl font-black uppercase tracking-wide" style="color:#12110a;">חבילת Gold</h3>
             </div>
-            <ul id="vipPkg2Features" class="flex-1 space-y-5 mb-12">
-                <li class="flex items-start gap-3 text-slate-200">
-                    <span class="material-symbols-outlined text-primary text-xl">video_call</span>
-                    <span id="vipPkg2Feat1" class="text-lg font-bold"><?= t('vip_pkg2_feat1') ?></span>
-                </li>
-                <li class="flex items-start gap-3 text-slate-200">
-                    <span class="material-symbols-outlined text-primary text-xl">person_pin</span>
-                    <span id="vipPkg2Feat2" class="text-lg"><?= t('vip_pkg2_feat2') ?></span>
-                </li>
-                <li class="flex items-start gap-3 text-slate-200">
-                    <span class="material-symbols-outlined text-primary text-xl">ads_click</span>
-                    <span id="vipPkg2Feat3" class="text-lg"><?= t('vip_pkg2_feat3') ?></span>
-                </li>
-                <li class="flex items-start gap-3 text-slate-200">
-                    <span class="material-symbols-outlined text-primary text-xl">translate</span>
-                    <span id="vipPkg2Feat4" class="text-lg"><?= t('vip_pkg2_feat4') ?></span>
-                </li>
-                <li class="flex items-start gap-3 text-slate-200">
-                    <span class="material-symbols-outlined text-primary text-xl">add_circle</span>
-                    <span id="vipPkg2Feat5" class="text-lg"><?= t('vip_pkg2_feat5') ?></span>
-                </li>
-            </ul>
-            <button id="vipPkg2Btn" onclick="openModal('registerModal')" class="w-full py-5 rounded-xl font-black hover:scale-[1.02] transition-transform uppercase tracking-widest text-sm shadow-lg shadow-primary/20" style="background:linear-gradient(135deg,#f2d00d 0%,#b59b09 100%);color:#12110a;">
-                <?= t('vip_pkg2_btn') ?>
-            </button>
+            <div class="flex-1 p-8 flex flex-col">
+                <p id="vipPkg2Desc" class="text-gray-700 text-base leading-relaxed mb-6" style="color:#333 !important;">4 מפגשים, 3 דייטים, ביקור מותאם אישית של 3-4 ימים, הכנה והכוונה למפגשים אישיים, ליווי צמוד בכל שלב כולל תרגום.</p>
+                <div class="flex-1"></div>
+                <div id="vipPkg2PriceRow" class="border-t border-gray-200 pt-6 mt-4 text-center">
+                    <span class="text-gray-500 text-sm" style="color:#666 !important;">מחיר:</span>
+                    <span id="vipPkg2Price" class="text-3xl font-black mr-2" style="color:#b59b09 !important;">₪7,500</span>
+                    <span id="vipPkg2Period" class="text-gray-400 text-sm" style="color:#999 !important;">(4 מפגשים)</span>
+                </div>
+                <button id="vipPkg2Btn" onclick="openModal('registerModal')" class="w-full mt-6 py-4 rounded-xl font-black text-sm uppercase tracking-widest shadow-lg hover:scale-[1.02] transition-all" style="background:linear-gradient(135deg,#f2d00d 0%,#b59b09 100%);color:#12110a;">
+                    <?= t('vip_pkg2_btn') ?>
+                </button>
+            </div>
         </div>
 
-        <!-- Diamond -->
-        <div class="bg-zinc-900/80 border-2 border-blue-400/20 rounded-2xl p-10 flex flex-col transition-all hover:-translate-y-2 hover:shadow-[0_0_50px_rgba(59,130,246,0.2)] group relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-3xl rounded-full"></div>
-            <div class="mb-10 relative z-10">
-                <div class="w-12 h-12 rounded-full diamond-gradient flex items-center justify-center mb-4 shadow-lg shadow-blue-500/40">
-                    <span class="material-symbols-outlined text-white font-bold">diamond</span>
-                </div>
-                <h3 id="vipPkg3Name" class="text-3xl font-black text-[#b9f2ff] mb-2 uppercase tracking-wide">Diamond VIP</h3>
-                <div id="vipPkg3PriceRow" class="flex items-baseline gap-1">
-                    <span id="vipPkg3Price" class="text-4xl font-black text-[#b9f2ff]">&#8362;9,900</span>
-                    <span id="vipPkg3Period" class="text-slate-400 text-sm"><?= t('vip_per_month') ?></span>
-                </div>
+        <!-- VIP -->
+        <div class="rounded-2xl overflow-hidden flex flex-col transition-all hover:-translate-y-2 shadow-2xl" style="background:#f8f8f5;border:2px solid #2563eb;">
+            <div class="py-6 px-8 text-center" style="background:linear-gradient(135deg,#3b82f6 0%,#1d4ed8 100%);">
+                <span class="material-symbols-outlined text-white text-4xl mb-2 block">diamond</span>
+                <h3 id="vipPkg3Name" class="text-2xl font-black text-white uppercase tracking-wide">חבילת VIP</h3>
             </div>
-            <ul id="vipPkg3Features" class="flex-1 space-y-5 mb-12 relative z-10">
-                <li class="flex items-start gap-3 text-slate-100">
-                    <span class="material-symbols-outlined text-[#b9f2ff] text-xl">flight_takeoff</span>
-                    <span id="vipPkg3Feat1" class="text-lg font-bold"><?= t('vip_pkg3_feat1') ?></span>
-                </li>
-                <li class="flex items-start gap-3 text-slate-200">
-                    <span class="material-symbols-outlined text-[#b9f2ff] text-xl">concierge</span>
-                    <span id="vipPkg3Feat2" class="text-lg"><?= t('vip_pkg3_feat2') ?></span>
-                </li>
-                <li class="flex items-start gap-3 text-slate-200">
-                    <span class="material-symbols-outlined text-[#b9f2ff] text-xl">all_inclusive</span>
-                    <span id="vipPkg3Feat3" class="text-lg"><?= t('vip_pkg3_feat3') ?></span>
-                </li>
-                <li class="flex items-start gap-3 text-slate-200">
-                    <span class="material-symbols-outlined text-[#b9f2ff] text-xl">airport_shuttle</span>
-                    <span id="vipPkg3Feat4" class="text-lg"><?= t('vip_pkg3_feat4') ?></span>
-                </li>
-                <li class="flex items-start gap-3 text-slate-200">
-                    <span class="material-symbols-outlined text-[#b9f2ff] text-xl">lock</span>
-                    <span id="vipPkg3Feat5" class="text-lg"><?= t('vip_pkg3_feat5') ?></span>
-                </li>
-            </ul>
-            <button id="vipPkg3Btn" onclick="openModal('registerModal')" class="w-full py-5 bg-gradient-to-r from-[#b9f2ff] to-[#3b82f6] text-white rounded-xl font-black hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-500/30 transition-all uppercase tracking-widest text-sm shadow-lg relative z-10">
-                <?= t('vip_pkg3_btn') ?>
-            </button>
+            <div class="flex-1 p-8 flex flex-col">
+                <p id="vipPkg3Desc" class="text-gray-700 text-base leading-relaxed mb-6" style="color:#333 !important;">4 מפגשים מעמיקים, 4-5 דייטים, 5 פרופילים מותאמים אישית ובלעדי, מסלולים בנויים בהתאמה אישית, ליווי VIP אישי מלא כולל תרגום, אפשרות למפגשים נוספים.</p>
+                <div class="flex-1"></div>
+                <div id="vipPkg3PriceRow" class="border-t border-gray-200 pt-6 mt-4 text-center">
+                    <span class="text-gray-500 text-sm" style="color:#666 !important;">מחיר:</span>
+                    <span id="vipPkg3Price" class="text-3xl font-black mr-2" style="color:#1d4ed8 !important;">₪10,000</span>
+                    <span id="vipPkg3Period" class="text-gray-400 text-sm" style="color:#999 !important;">(4 מפגשים)</span>
+                </div>
+                <button id="vipPkg3Btn" onclick="openModal('registerModal')" class="w-full mt-6 py-4 rounded-xl font-black text-white text-sm uppercase tracking-widest shadow-lg hover:scale-[1.02] transition-all" style="background:linear-gradient(135deg,#3b82f6 0%,#1d4ed8 100%);">
+                    <?= t('vip_pkg3_btn') ?>
+                </button>
+            </div>
         </div>
 
     </div>
@@ -205,50 +151,18 @@ require BASE_PATH . '/app/views/layouts/header.php';
         if (s.vip_pkg1_price) { if (s.vip_pkg1_price === 'hide' || s.vip_pkg1_price === 'הסתר') { document.getElementById('vipPkg1PriceRow').style.display = 'none'; } else { document.getElementById('vipPkg1Price').textContent = s.vip_pkg1_price; } }
         if (s.vip_pkg1_period !== undefined) { if (!s.vip_pkg1_period || s.vip_pkg1_period === 'hide' || s.vip_pkg1_period === 'הסתר') { document.getElementById('vipPkg1Period').style.display = 'none'; } else { document.getElementById('vipPkg1Period').textContent = s.vip_pkg1_period; } }
         if (s.vip_pkg1_btn) document.getElementById('vipPkg1Btn').textContent = s.vip_pkg1_btn;
-        if (s.vip_pkg1_feat1) document.getElementById('vipPkg1Feat1').textContent = s.vip_pkg1_feat1;
-        if (s.vip_pkg1_feat2) document.getElementById('vipPkg1Feat2').textContent = s.vip_pkg1_feat2;
-        if (s.vip_pkg1_feat3) document.getElementById('vipPkg1Feat3').textContent = s.vip_pkg1_feat3;
-        if (s.vip_pkg1_feat4) document.getElementById('vipPkg1Feat4').textContent = s.vip_pkg1_feat4;
-        if (s.vip_pkg1_features) {
-            const lines = s.vip_pkg1_features.split('\n').filter(l => l.trim());
-            document.getElementById('vipPkg1Features').innerHTML = lines.map(l => {
-                const [icon, text] = l.includes('|') ? l.split('|').map(x=>x.trim()) : ['check_circle', l.trim()];
-                return `<li class="flex items-start gap-3 text-slate-300"><span class="material-symbols-outlined text-[#E5E4E2] text-xl">${icon}</span><span class="text-lg">${text}</span></li>`;
-            }).join('');
-        }
+        if (s.vip_pkg1_desc) document.getElementById('vipPkg1Desc').textContent = s.vip_pkg1_desc;
         if (s.vip_pkg2_name) document.getElementById('vipPkg2Name').textContent = s.vip_pkg2_name;
         if (s.vip_pkg2_price) { if (s.vip_pkg2_price === 'hide' || s.vip_pkg2_price === 'הסתר') { document.getElementById('vipPkg2PriceRow').style.display = 'none'; } else { document.getElementById('vipPkg2Price').textContent = s.vip_pkg2_price; } }
         if (s.vip_pkg2_period !== undefined) { if (!s.vip_pkg2_period || s.vip_pkg2_period === 'hide' || s.vip_pkg2_period === 'הסתר') { document.getElementById('vipPkg2Period').style.display = 'none'; } else { document.getElementById('vipPkg2Period').textContent = s.vip_pkg2_period; } }
         if (s.vip_pkg2_btn) document.getElementById('vipPkg2Btn').textContent = s.vip_pkg2_btn;
         if (s.vip_pkg2_badge) document.getElementById('vipPkg2Badge').textContent = s.vip_pkg2_badge;
-        if (s.vip_pkg2_feat1) document.getElementById('vipPkg2Feat1').textContent = s.vip_pkg2_feat1;
-        if (s.vip_pkg2_feat2) document.getElementById('vipPkg2Feat2').textContent = s.vip_pkg2_feat2;
-        if (s.vip_pkg2_feat3) document.getElementById('vipPkg2Feat3').textContent = s.vip_pkg2_feat3;
-        if (s.vip_pkg2_feat4) document.getElementById('vipPkg2Feat4').textContent = s.vip_pkg2_feat4;
-        if (s.vip_pkg2_feat5) document.getElementById('vipPkg2Feat5').textContent = s.vip_pkg2_feat5;
-        if (s.vip_pkg2_features) {
-            const lines = s.vip_pkg2_features.split('\n').filter(l => l.trim());
-            document.getElementById('vipPkg2Features').innerHTML = lines.map(l => {
-                const [icon, text] = l.includes('|') ? l.split('|').map(x=>x.trim()) : ['check_circle', l.trim()];
-                return `<li class="flex items-start gap-3 text-slate-200"><span class="material-symbols-outlined text-primary text-xl">${icon}</span><span class="text-lg">${text}</span></li>`;
-            }).join('');
-        }
+        if (s.vip_pkg2_desc) document.getElementById('vipPkg2Desc').textContent = s.vip_pkg2_desc;
         if (s.vip_pkg3_name) document.getElementById('vipPkg3Name').textContent = s.vip_pkg3_name;
         if (s.vip_pkg3_price) { if (s.vip_pkg3_price === 'hide' || s.vip_pkg3_price === 'הסתר') { document.getElementById('vipPkg3PriceRow').style.display = 'none'; } else { document.getElementById('vipPkg3Price').textContent = s.vip_pkg3_price; } }
         if (s.vip_pkg3_period !== undefined) { if (!s.vip_pkg3_period || s.vip_pkg3_period === 'hide' || s.vip_pkg3_period === 'הסתר') { document.getElementById('vipPkg3Period').style.display = 'none'; } else { document.getElementById('vipPkg3Period').textContent = s.vip_pkg3_period; } }
         if (s.vip_pkg3_btn) document.getElementById('vipPkg3Btn').textContent = s.vip_pkg3_btn;
-        if (s.vip_pkg3_feat1) document.getElementById('vipPkg3Feat1').textContent = s.vip_pkg3_feat1;
-        if (s.vip_pkg3_feat2) document.getElementById('vipPkg3Feat2').textContent = s.vip_pkg3_feat2;
-        if (s.vip_pkg3_feat3) document.getElementById('vipPkg3Feat3').textContent = s.vip_pkg3_feat3;
-        if (s.vip_pkg3_feat4) document.getElementById('vipPkg3Feat4').textContent = s.vip_pkg3_feat4;
-        if (s.vip_pkg3_feat5) document.getElementById('vipPkg3Feat5').textContent = s.vip_pkg3_feat5;
-        if (s.vip_pkg3_features) {
-            const lines = s.vip_pkg3_features.split('\n').filter(l => l.trim());
-            document.getElementById('vipPkg3Features').innerHTML = lines.map(l => {
-                const [icon, text] = l.includes('|') ? l.split('|').map(x=>x.trim()) : ['check_circle', l.trim()];
-                return `<li class="flex items-start gap-3 text-slate-200"><span class="material-symbols-outlined text-[#b9f2ff] text-xl">${icon}</span><span class="text-lg">${text}</span></li>`;
-            }).join('');
-        }
+        if (s.vip_pkg3_desc) document.getElementById('vipPkg3Desc').textContent = s.vip_pkg3_desc;
         if (s.vip_why_title) document.getElementById('vipWhyTitle').textContent = s.vip_why_title;
         if (s.vip_why_subtitle) document.getElementById('vipWhySubtitle').textContent = s.vip_why_subtitle;
         if (s.vip_feat1_icon) document.getElementById('vipFeat1Icon').textContent = s.vip_feat1_icon;
