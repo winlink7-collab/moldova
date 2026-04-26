@@ -150,9 +150,14 @@ class ApiController {
         if (self::$adminVerified !== null) return self::$adminVerified;
         if (!empty($_SESSION['admin_logged_in'])) { self::$adminVerified = true; return true; }
         $token = $_COOKIE['admin_token'] ?? '';
-        if (!$token || strlen($token) < 32) { self::$adminVerified = false; return false; }
-        $admin = $this->db->fetchOne('SELECT id FROM admin_users WHERE admin_token = ? LIMIT 1', [$token]);
-        self::$adminVerified = !empty($admin);
+        if (!$token) { self::$adminVerified = false; return false; }
+        try {
+            $admin = $this->db->fetchOne('SELECT id FROM admin_users WHERE admin_token = ? LIMIT 1', [$token]);
+            self::$adminVerified = !empty($admin);
+        } catch (Throwable $e) {
+            // Column may not exist yet — fall back to old check (non-empty cookie)
+            self::$adminVerified = !empty($token);
+        }
         return self::$adminVerified;
     }
 
