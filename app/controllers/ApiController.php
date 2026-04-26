@@ -67,6 +67,9 @@ class ApiController {
                 if ($method === 'POST') {
                     $this->createLead();
                 } else {
+                    // GET leads requires admin auth
+                    $isAdmin = !empty($_SESSION['admin_logged_in']) || !empty($_COOKIE['admin_token']);
+                    if (!$isAdmin) { http_response_code(401); echo json_encode(['error' => 'unauthorized']); return; }
                     $this->getLeads();
                 }
                 break;
@@ -139,6 +142,28 @@ class ApiController {
 
     private function getJson() {
         return json_decode(file_get_contents('php://input'), true) ?: [];
+    }
+
+    /**
+     * Simple file-based rate limiter. Returns true if allowed, false if blocked.
+     */
+    private function rateLimit(string $key, int $maxRequests = 30, int $windowSeconds = 60): bool {
+        $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+        $file = BASE_PATH . '/uploads/.ratelimit_' . md5($key . $ip) . '.json';
+        $now = time();
+        $data = [];
+        if (is_file($file)) {
+            $data = json_decode(@file_get_contents($file), true) ?: [];
+            $data = array_filter($data, fn($t) => $t > $now - $windowSeconds);
+        }
+        if (count($data) >= $maxRequests) {
+            http_response_code(429);
+            echo json_encode(['error' => 'Too many requests. Try again later.']);
+            return false;
+        }
+        $data[] = $now;
+        @file_put_contents($file, json_encode($data));
+        return true;
     }
 
     private function getTranslationService(): ?TranslationService {
@@ -676,6 +701,7 @@ class ApiController {
     }
 
     private function getProfiles() {
+        if (!$this->rateLimit('profiles', 30, 60)) return; // 30 req/min per IP
         $page = max(1, intval($_GET['page'] ?? 1));
         $perPage = max(1, min(50, intval($_GET['per_page'] ?? 12)));
         $offset = ($page - 1) * $perPage;
@@ -1010,6 +1036,9 @@ class ApiController {
     // ========================
 
     private function adminLogin() {
+        // Brute-force protection: max 5 login attempts per IP per 15 minutes
+        if (!$this->rateLimit('admin_login', 5, 900)) return;
+
         $data = $this->getJson();
         $email = trim($data['email'] ?? '');
         $password = $data['password'] ?? '';

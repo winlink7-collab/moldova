@@ -4,5 +4,14 @@ Disallow: /admin
 Disallow: /dashboard
 Disallow: /api/
 Disallow: /uploads/
+Disallow: /login
+Disallow: /setup-mail
+Disallow: /setup-whatsapp
+Disallow: /check-whatsapp
+Disallow: /check-mail
+Disallow: /fix-hebrew
+Disallow: /fix-permissions
+Disallow: /upload-logo
+Disallow: /seed-reviews
 
-Sitemap: http://localhost/moldova/sitemap.xml
+Sitemap: https://www.royaldate.co.il/sitemap.xml
