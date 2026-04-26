@@ -701,7 +701,7 @@ class ApiController {
     }
 
     // Public-safe profile fields (no DB internals, no created_at, no views, no email)
-    private static $PUBLIC_PROFILE_FIELDS = ['id','name','age','country','city','occupation','education','languages','hobbies','marital_status','about','looking_for','primary_photo','is_vip','is_verified','is_online'];
+    private static $PUBLIC_PROFILE_FIELDS = ['id','name','age','country','city','occupation','education','languages','hobbies','marital_status','about','looking_for','primary_photo'];
 
     private function stripProfile(array $p): array {
         $out = [];
@@ -753,7 +753,6 @@ class ApiController {
         $profiles = $this->db->fetchAll(
             "SELECT p.id, p.name, p.age, p.country, p.city, p.occupation, p.education,
                     p.languages, p.hobbies, p.marital_status, p.about, p.looking_for,
-                    p.is_vip, p.is_verified, p.is_online,
                     COALESCE(
                         (SELECT pp.photo_url FROM profile_photos pp WHERE pp.profile_id = p.id AND pp.is_primary = TRUE LIMIT 1),
                         (SELECT pp.photo_url FROM profile_photos pp WHERE pp.profile_id = p.id ORDER BY pp.id ASC LIMIT 1)
