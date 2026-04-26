@@ -722,20 +722,27 @@ function tr(key) { return (T && T[key]) ? T[key] : key; }
         <a id="navContact" class="<?= navClass('contact', $currentPage) ?>" href="<?= BASE_URL ?>/contact"><?= t('nav_contact') ?></a>
     </nav>
 
-    <!-- Language Switcher -->
-    <div class="hidden lg:flex items-center gap-1.5">
-        <a href="?lang=he" onclick="switchLang('he')" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'he' ? 'bg-primary text-background-dark' : 'text-slate-400 hover:text-primary hover:bg-white/5 border border-white/10' ?>">
-            <span style="display:inline-block;width:20px;height:14px;background:linear-gradient(to bottom,#fff 15%,#0038b8 15%,#0038b8 30%,#fff 30%,#fff 70%,#0038b8 70%,#0038b8 85%,#fff 85%);border-radius:2px;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.2);"><span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:10px;color:#0038b8;">✡</span></span>
-            עב
-        </a>
-        <a href="?lang=ru" onclick="switchLang('ru')" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'ru' ? 'bg-primary text-background-dark' : 'text-slate-400 hover:text-primary hover:bg-white/5 border border-white/10' ?>">
-            <span style="display:inline-block;width:20px;height:14px;border-radius:2px;overflow:hidden;border:1px solid rgba(255,255,255,0.2);background:linear-gradient(to bottom,#fff 33%,#0039a6 33%,#0039a6 66%,#d52b1e 66%);"></span>
-            RU
-        </a>
-        <a href="?lang=en" onclick="switchLang('en')" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'en' ? 'bg-primary text-background-dark' : 'text-slate-400 hover:text-primary hover:bg-white/5 border border-white/10' ?>">
-            <span style="display:inline-block;width:20px;height:14px;border-radius:2px;overflow:hidden;border:1px solid rgba(255,255,255,0.2);background:#00247d;position:relative;"><span style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 35%,#fff 35%,#fff 42%,#cf142b 42%,#cf142b 58%,#fff 58%,#fff 65%,transparent 65%);"></span><span style="position:absolute;inset:0;background:linear-gradient(to right,transparent 40%,#fff 40%,#fff 47%,#cf142b 47%,#cf142b 53%,#fff 53%,#fff 60%,transparent 60%);"></span></span>
-            EN
-        </a>
+    <!-- Language Switcher - Globe Dropdown -->
+    <div class="hidden lg:flex items-center relative">
+        <button onclick="document.getElementById('langDropdown').classList.toggle('hidden')" class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-bold transition-all text-slate-300 hover:text-primary hover:bg-white/5 border border-white/10">
+            <span class="material-symbols-outlined text-lg">language</span>
+            <span><?= ($CURRENT_LANG ?? 'he') === 'he' ? 'עברית' : (($CURRENT_LANG ?? 'he') === 'ru' ? 'Русский' : 'English') ?></span>
+            <span class="material-symbols-outlined text-sm">expand_more</span>
+        </button>
+        <div id="langDropdown" class="hidden absolute top-full right-0 mt-2 w-48 rounded-xl overflow-hidden border border-white/10 shadow-2xl z-50" style="background:#1a1810;">
+            <a href="?lang=he" onclick="switchLang('he')" class="flex items-center gap-3 px-4 py-3 text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'he' ? 'bg-primary/15' : 'hover:bg-white/5' ?>" style="color:<?= ($CURRENT_LANG ?? 'he') === 'he' ? '#f2d00d' : '#fff' ?> !important;">
+                <svg width="24" height="16" viewBox="0 0 24 16" style="border-radius:2px;border:1px solid rgba(255,255,255,0.15);"><rect width="24" height="16" fill="#fff"/><rect y="2" width="24" height="3" fill="#0038b8"/><rect y="11" width="24" height="3" fill="#0038b8"/><polygon points="12,4 13.5,7 10.5,7" fill="#0038b8"/><polygon points="12,10 13.5,7 10.5,7" fill="#0038b8"/></svg>
+                עברית
+            </a>
+            <a href="?lang=ru" onclick="switchLang('ru')" class="flex items-center gap-3 px-4 py-3 text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'ru' ? 'bg-primary/15' : 'hover:bg-white/5' ?>" style="color:<?= ($CURRENT_LANG ?? 'he') === 'ru' ? '#f2d00d' : '#fff' ?> !important;">
+                <svg width="24" height="16" viewBox="0 0 24 16" style="border-radius:2px;border:1px solid rgba(255,255,255,0.15);"><rect width="24" height="5.33" fill="#fff"/><rect y="5.33" width="24" height="5.33" fill="#0039a6"/><rect y="10.67" width="24" height="5.33" fill="#d52b1e"/></svg>
+                Русский
+            </a>
+            <a href="?lang=en" onclick="switchLang('en')" class="flex items-center gap-3 px-4 py-3 text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'en' ? 'bg-primary/15' : 'hover:bg-white/5' ?>" style="color:<?= ($CURRENT_LANG ?? 'he') === 'en' ? '#f2d00d' : '#fff' ?> !important;">
+                <svg width="24" height="16" viewBox="0 0 24 16" style="border-radius:2px;border:1px solid rgba(255,255,255,0.15);"><rect width="24" height="16" fill="#00247d"/><path d="M0,0 L24,16 M24,0 L0,16" stroke="#fff" stroke-width="2.5"/><path d="M0,0 L24,16 M24,0 L0,16" stroke="#cf142b" stroke-width="1.5"/><rect x="9.5" width="5" height="16" fill="#fff"/><rect y="5.5" width="24" height="5" fill="#fff"/><rect x="10.5" width="3" height="16" fill="#cf142b"/><rect y="6.5" width="24" height="3" fill="#cf142b"/></svg>
+                English
+            </a>
+        </div>
     </div>
 
     <!-- Font Picker (Admin only) -->
@@ -849,18 +856,18 @@ function tr(key) { return (T && T[key]) ? T[key] : key; }
             <?= t($label) ?>
         </a>
         <?php endforeach; ?>
-        <!-- Mobile Language Switcher -->
-        <div class="flex gap-2 pt-3 border-t border-white/10">
-            <a href="?lang=he" onclick="switchLang('he')" class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'he' ? 'bg-primary' : 'border border-white/10 hover:border-primary/30' ?>" style="color:<?= ($CURRENT_LANG ?? 'he') === 'he' ? '#12110a' : '#ffffff' ?> !important;">
-                <span style="display:inline-block;width:22px;height:15px;background:linear-gradient(to bottom,#fff 15%,#0038b8 15%,#0038b8 30%,#fff 30%,#fff 70%,#0038b8 70%,#0038b8 85%,#fff 85%);border-radius:2px;border:1px solid rgba(255,255,255,0.2);position:relative;overflow:hidden;"><span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:10px;color:#0038b8;">✡</span></span>
+        <!-- Mobile Language Switcher (SVG flags) -->
+        <div class="grid grid-cols-3 gap-2 pt-3 border-t border-white/10">
+            <a href="?lang=he" onclick="switchLang('he')" class="flex flex-col items-center gap-1.5 py-3 rounded-lg text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'he' ? 'bg-primary/15 border border-primary/30' : 'border border-white/10' ?>" style="color:<?= ($CURRENT_LANG ?? 'he') === 'he' ? '#f2d00d' : '#ffffff' ?> !important;">
+                <svg width="28" height="18" viewBox="0 0 24 16" style="border-radius:3px;border:1px solid rgba(255,255,255,0.15);"><rect width="24" height="16" fill="#fff"/><rect y="2" width="24" height="3" fill="#0038b8"/><rect y="11" width="24" height="3" fill="#0038b8"/><polygon points="12,4 13.5,7 10.5,7" fill="#0038b8"/><polygon points="12,10 13.5,7 10.5,7" fill="#0038b8"/></svg>
                 עברית
             </a>
-            <a href="?lang=ru" onclick="switchLang('ru')" class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'ru' ? 'bg-primary' : 'border border-white/10 hover:border-primary/30' ?>" style="color:<?= ($CURRENT_LANG ?? 'he') === 'ru' ? '#12110a' : '#ffffff' ?> !important;">
-                <span style="display:inline-block;width:22px;height:15px;border-radius:2px;border:1px solid rgba(255,255,255,0.2);background:linear-gradient(to bottom,#fff 33%,#0039a6 33%,#0039a6 66%,#d52b1e 66%);"></span>
+            <a href="?lang=ru" onclick="switchLang('ru')" class="flex flex-col items-center gap-1.5 py-3 rounded-lg text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'ru' ? 'bg-primary/15 border border-primary/30' : 'border border-white/10' ?>" style="color:<?= ($CURRENT_LANG ?? 'he') === 'ru' ? '#f2d00d' : '#ffffff' ?> !important;">
+                <svg width="28" height="18" viewBox="0 0 24 16" style="border-radius:3px;border:1px solid rgba(255,255,255,0.15);"><rect width="24" height="5.33" fill="#fff"/><rect y="5.33" width="24" height="5.33" fill="#0039a6"/><rect y="10.67" width="24" height="5.33" fill="#d52b1e"/></svg>
                 Русский
             </a>
-            <a href="?lang=en" onclick="switchLang('en')" class="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'en' ? 'bg-primary' : 'border border-white/10 hover:border-primary/30' ?>" style="color:<?= ($CURRENT_LANG ?? 'he') === 'en' ? '#12110a' : '#ffffff' ?> !important;">
-                <span style="display:inline-block;width:22px;height:15px;border-radius:2px;border:1px solid rgba(255,255,255,0.2);background:#00247d;position:relative;overflow:hidden;"><span style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 35%,#fff 35%,#fff 42%,#cf142b 42%,#cf142b 58%,#fff 58%,#fff 65%,transparent 65%);"></span><span style="position:absolute;inset:0;background:linear-gradient(to right,transparent 40%,#fff 40%,#fff 47%,#cf142b 47%,#cf142b 53%,#fff 53%,#fff 60%,transparent 60%);"></span></span>
+            <a href="?lang=en" onclick="switchLang('en')" class="flex flex-col items-center gap-1.5 py-3 rounded-lg text-sm font-bold transition-all <?= ($CURRENT_LANG ?? 'he') === 'en' ? 'bg-primary/15 border border-primary/30' : 'border border-white/10' ?>" style="color:<?= ($CURRENT_LANG ?? 'he') === 'en' ? '#f2d00d' : '#ffffff' ?> !important;">
+                <svg width="28" height="18" viewBox="0 0 24 16" style="border-radius:3px;border:1px solid rgba(255,255,255,0.15);"><rect width="24" height="16" fill="#00247d"/><path d="M0,0 L24,16 M24,0 L0,16" stroke="#fff" stroke-width="2.5"/><path d="M0,0 L24,16 M24,0 L0,16" stroke="#cf142b" stroke-width="1.5"/><rect x="9.5" width="5" height="16" fill="#fff"/><rect y="5.5" width="24" height="5" fill="#fff"/><rect x="10.5" width="3" height="16" fill="#cf142b"/><rect y="6.5" width="24" height="3" fill="#cf142b"/></svg>
                 English
             </a>
         </div>

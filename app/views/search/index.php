@@ -164,7 +164,7 @@ function renderProfiles(profiles) {
         const srcName = rawP.name || '';
         const srcCity = rawP.city || '';
         const srcOccupation = rawP.occupation || '';
-        const flag = p.country === 'moldova' ? '🇲🇩' : '🇺🇦';
+        const flag = '';
         const countryName = p.country === 'moldova' ? T.moldova_country : T.ukraine;
         const cityT = (typeof autoTranslate === 'function') ? autoTranslate(srcCity, LANG) : srcCity;
         return `

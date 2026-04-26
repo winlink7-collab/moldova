@@ -1352,14 +1352,30 @@ $TRANSLATIONS = [
 
 // Detect current language
 function detectLanguage() {
+    // 1. Explicit ?lang= parameter (user clicked language button)
     if (!empty($_GET['lang']) && in_array($_GET['lang'], ['he', 'ru', 'en'])) {
         $lang = $_GET['lang'];
         setcookie('site_lang', $lang, time() + 86400 * 365, '/');
         return $lang;
     }
+    // 2. Saved cookie (user previously chose a language)
     if (!empty($_COOKIE['site_lang']) && in_array($_COOKIE['site_lang'], ['he', 'ru', 'en'])) {
         return $_COOKIE['site_lang'];
     }
+    // 3. Auto-detect from browser Accept-Language header (first visit only)
+    $accept = $_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '';
+    if ($accept) {
+        $accept = strtolower($accept);
+        if (strpos($accept, 'ru') !== false) {
+            setcookie('site_lang', 'ru', time() + 86400 * 365, '/');
+            return 'ru';
+        }
+        if (strpos($accept, 'en') !== false && strpos($accept, 'he') === false) {
+            setcookie('site_lang', 'en', time() + 86400 * 365, '/');
+            return 'en';
+        }
+    }
+    // 4. Default: Hebrew
     return 'he';
 }
 

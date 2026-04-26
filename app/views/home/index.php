@@ -531,7 +531,7 @@ document.getElementById('leadForm').addEventListener('submit', submitLeadForm);
             const srcName = rawP.name || '';
             const srcCity = rawP.city || '';
             const countryName = p.country === 'moldova' ? T.moldova_country : T.ukraine;
-            const flag = p.country === 'moldova' ? '🇲🇩' : '🇺🇦';
+            const flag = '';
             const cityT = (typeof autoTranslate === 'function') ? autoTranslate(srcCity, LANG) : srcCity;
             return `
             <a href="${BASE}/profile/${p.id}" class="group relative rounded-2xl overflow-hidden border border-white/5 hover:border-primary/40 transition-all duration-500 block">

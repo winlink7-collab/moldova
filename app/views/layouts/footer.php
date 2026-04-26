@@ -717,6 +717,13 @@ function switchLang(lang) {
     url.searchParams.set('lang', lang);
     window.location.href = url.toString();
 }
+// Close language dropdown on click outside
+document.addEventListener('click', function(e) {
+    var dd = document.getElementById('langDropdown');
+    if (dd && !dd.classList.contains('hidden') && !e.target.closest('#langDropdown') && !e.target.closest('[onclick*="langDropdown"]')) {
+        dd.classList.add('hidden');
+    }
+});
 
 function setFont(fontName) {
     document.documentElement.style.setProperty('--site-font', "'" + fontName + "', sans-serif");
