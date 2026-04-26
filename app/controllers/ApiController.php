@@ -700,12 +700,13 @@ class ApiController {
         }
     }
 
-    // Public-safe profile fields (no DB internals, no created_at, no views, no email)
-    private static $PUBLIC_PROFILE_FIELDS = ['id','name','age','country','city','occupation','education','languages','hobbies','marital_status','about','looking_for','primary_photo'];
+    // Minimal public fields for profile listing (guests see less)
+    // Guest profile listing: minimal fields only (no bio, no personal details)
+    private static $PUBLIC_LIST_FIELDS = ['id','name','age','country','city','occupation','marital_status','primary_photo'];
 
     private function stripProfile(array $p): array {
         $out = [];
-        foreach (self::$PUBLIC_PROFILE_FIELDS as $f) {
+        foreach (self::$PUBLIC_LIST_FIELDS as $f) {
             if (array_key_exists($f, $p)) $out[$f] = $p[$f];
         }
         return $out;
@@ -811,7 +812,9 @@ class ApiController {
         // Strip internal fields for non-admin
         $isAdmin = !empty($_SESSION['admin_logged_in']) || !empty($_COOKIE['admin_token']);
         if (!$isAdmin) {
-            unset($profile['created_at'], $profile['updated_at'], $profile['views'], $profile['weight'], $profile['height'], $profile['children'], $profile['zodiac']);
+            unset($profile['created_at'], $profile['updated_at'], $profile['views'],
+                  $profile['weight'], $profile['height'], $profile['children'],
+                  $profile['zodiac'], $profile['is_active']);
         }
 
         $this->jsonResponse($profile);
