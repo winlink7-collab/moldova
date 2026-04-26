@@ -2852,16 +2852,20 @@ async function saveVipSettings(e) {
         vip_cta_btn: document.getElementById('adm_vip_cta_btn').value,
     };
     try {
-        const jsonStr = JSON.stringify(body);
-        console.log('VIP save payload:', jsonStr.length, 'bytes,', Object.keys(body).length, 'keys');
-        const res = await fetch(API + '/api/admin/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: jsonStr, credentials: 'same-origin' });
+        // Count non-empty values
+        const filled = Object.entries(body).filter(([k,v]) => v && v.trim()).length;
+        const total = Object.keys(body).length;
+        const res = await fetch(API + '/api/admin/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body), credentials: 'same-origin' });
         const txt = await res.text();
-        console.log('VIP save response:', res.status, txt);
-        if (!res.ok) { alert('שגיאה בשמירה (קוד ' + res.status + '): ' + txt + '\n\nנסה להתנתק ולהתחבר מחדש לפאנל.'); return; }
-        alert('הגדרות VIP נשמרו בהצלחה ✓');
+        if (!res.ok) { alert('❌ שגיאה בשמירה (קוד ' + res.status + '):\n' + txt + '\n\nנסה להתנתק ולהתחבר מחדש.'); return; }
+        alert('✅ הגדרות VIP נשמרו!\n\nנשלחו ' + total + ' שדות, מתוכם ' + filled + ' עם תוכן.');
+        // Verify by re-reading
+        const verify = await fetch(API + '/api/admin/settings?t=' + Date.now());
+        const check = await verify.json();
+        console.log('VIP verify - pkg1_name:', check.vip_pkg1_name, '| pkg2_name:', check.vip_pkg2_name, '| pkg3_name:', check.vip_pkg3_name);
     } catch(e) {
-        alert('שגיאת רשת: ' + e.message + '\n\nבדוק חיבור אינטרנט.');
-        console.error('Error saving VIP settings:', e);
+        alert('❌ שגיאת רשת: ' + e.message);
+        console.error('VIP save error:', e);
     }
 }
 
