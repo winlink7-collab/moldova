@@ -15,9 +15,9 @@ require BASE_PATH . '/app/views/layouts/header.php';
 <section class="relative py-24 md:py-32 px-6 text-center overflow-hidden">
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-primary/5 rounded-full blur-[150px] hidden md:block"></div>
     <div class="relative z-10 max-w-4xl mx-auto">
-        <span id="vipHeroBadge" class="text-primary font-bold tracking-[0.2em] uppercase text-sm mb-4 block"><?= t('vip_hero_badge') ?></span>
-        <h2 id="vipHeroTitle" class="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight leading-tight"><?= t('vip_hero_title') ?></h2>
-        <p id="vipHeroSubtitle" class="text-slate-400 text-lg md:text-xl mb-10 max-w-2xl mx-auto"><?= t('vip_hero_subtitle') ?></p>
+        <span id="vipHeroBadge" class="text-primary font-bold tracking-[0.2em] uppercase text-sm mb-4 block" data-translate><?= t('vip_hero_badge') ?></span>
+        <h2 id="vipHeroTitle" class="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight leading-tight" data-translate><?= t('vip_hero_title') ?></h2>
+        <p id="vipHeroSubtitle" class="text-slate-400 text-lg md:text-xl mb-10 max-w-2xl mx-auto" data-translate><?= t('vip_hero_subtitle') ?></p>
     </div>
 </section>
 
@@ -29,17 +29,17 @@ require BASE_PATH . '/app/views/layouts/header.php';
         <div class="rounded-3xl overflow-hidden flex flex-col transition-all hover:-translate-y-3 hover:shadow-[0_20px_60px_rgba(192,192,192,0.3)]" style="background:#fafafa;border:2px solid #c0c0c0;box-shadow:0 10px 40px rgba(0,0,0,0.15);">
             <div class="py-10 px-8 text-center" style="background:linear-gradient(135deg,#d4d4d4 0%,#9a9a9a 50%,#6b6b6b 100%);">
                 <span class="material-symbols-outlined text-white mb-3 block" style="font-size:56px;">workspace_premium</span>
-                <h3 id="vipPkg1Name" class="text-3xl font-black text-white uppercase tracking-wider">חבילת Silver</h3>
+                <h3 id="vipPkg1Name" data-translate class="text-3xl font-black text-white uppercase tracking-wider">חבילת Silver</h3>
             </div>
             <div class="flex-1 p-10 flex flex-col">
-                <p id="vipPkg1Desc" class="text-lg leading-loose text-right" style="color:#444 !important;min-height:180px;">4 מפגשים, 2 דייטים, 14 פרופילים מומלצים בחו"ל, הכנה אישית למפגשים, ליווי אישי צמוד בתקופת המפגשים.</p>
+                <p id="vipPkg1Desc" data-translate class="text-lg leading-loose text-right" style="color:#444 !important;min-height:180px;">4 מפגשים, 2 דייטים, 14 פרופילים מומלצים בחו"ל, הכנה אישית למפגשים, ליווי אישי צמוד בתקופת המפגשים.</p>
                 <div class="flex-1"></div>
                 <div id="vipPkg1PriceRow" class="border-t-2 border-gray-200 pt-8 mt-6 text-center" style="display:none;">
                     <span style="color:#666 !important;font-size:14px;">מחיר:</span>
                     <span id="vipPkg1Price" class="text-4xl font-black mr-2" style="color:#333 !important;">₪5,900</span>
                     <span id="vipPkg1Period" class="text-sm" style="color:#999 !important;">(4 מפגשים)</span>
                 </div>
-                <button id="vipPkg1Btn" onclick="openModal('registerModal')" class="w-full mt-8 py-5 rounded-2xl font-black text-white text-base uppercase tracking-widest shadow-xl hover:scale-[1.03] transition-all" style="background:linear-gradient(135deg,#b0b0b0 0%,#7a7a7a 100%);letter-spacing:0.15em;">
+                <button id="vipPkg1Btn" data-translate onclick="openModal('registerModal')" class="w-full mt-8 py-5 rounded-2xl font-black text-white text-base uppercase tracking-widest shadow-xl hover:scale-[1.03] transition-all" style="background:linear-gradient(135deg,#b0b0b0 0%,#7a7a7a 100%);letter-spacing:0.15em;">
                     <?= t('vip_pkg1_btn') ?>
                 </button>
             </div>
@@ -47,22 +47,22 @@ require BASE_PATH . '/app/views/layouts/header.php';
 
         <!-- Gold -->
         <div class="rounded-3xl overflow-hidden flex flex-col relative transition-all hover:-translate-y-3 scale-105 z-10" style="background:#fffdf0;border:3px solid #f2d00d;box-shadow:0 20px 60px rgba(242,208,13,0.25);">
-            <div id="vipPkg2Badge" class="absolute top-0 left-1/2 -translate-x-1/2 px-8 py-2 rounded-b-xl text-sm font-black uppercase tracking-widest shadow-lg z-20" style="background:#f2d00d;color:#12110a;">
+            <div id="vipPkg2Badge" data-translate class="absolute top-0 left-1/2 -translate-x-1/2 px-8 py-2 rounded-b-xl text-sm font-black uppercase tracking-widest shadow-lg z-20" style="background:#f2d00d;color:#12110a;">
                 <?= t('vip_most_popular') ?>
             </div>
             <div class="py-10 px-8 text-center" style="background:linear-gradient(135deg,#f2d00d 0%,#d4a500 50%,#b59b09 100%);">
                 <span class="material-symbols-outlined mb-3 block" style="font-size:56px;color:#12110a;">star</span>
-                <h3 id="vipPkg2Name" class="text-3xl font-black uppercase tracking-wider" style="color:#12110a;">חבילת Gold</h3>
+                <h3 id="vipPkg2Name" data-translate class="text-3xl font-black uppercase tracking-wider" style="color:#12110a;">חבילת Gold</h3>
             </div>
             <div class="flex-1 p-10 flex flex-col">
-                <p id="vipPkg2Desc" class="text-lg leading-loose text-right" style="color:#444 !important;min-height:180px;">4 מפגשים, 3 דייטים, ביקור מותאם אישית של 3-4 ימים, הכנה והכוונה למפגשים אישיים, ליווי צמוד בכל שלב כולל תרגום.</p>
+                <p id="vipPkg2Desc" data-translate class="text-lg leading-loose text-right" style="color:#444 !important;min-height:180px;">4 מפגשים, 3 דייטים, ביקור מותאם אישית של 3-4 ימים, הכנה והכוונה למפגשים אישיים, ליווי צמוד בכל שלב כולל תרגום.</p>
                 <div class="flex-1"></div>
                 <div id="vipPkg2PriceRow" class="border-t-2 border-yellow-200 pt-8 mt-6 text-center" style="display:none;">
                     <span style="color:#666 !important;font-size:14px;">מחיר:</span>
                     <span id="vipPkg2Price" class="text-4xl font-black mr-2" style="color:#b59b09 !important;">₪7,500</span>
                     <span id="vipPkg2Period" class="text-sm" style="color:#999 !important;">(4 מפגשים)</span>
                 </div>
-                <button id="vipPkg2Btn" onclick="openModal('registerModal')" class="w-full mt-8 py-5 rounded-2xl font-black text-base uppercase tracking-widest shadow-xl hover:scale-[1.03] transition-all" style="background:linear-gradient(135deg,#f2d00d 0%,#b59b09 100%);color:#12110a;letter-spacing:0.15em;">
+                <button id="vipPkg2Btn" data-translate onclick="openModal('registerModal')" class="w-full mt-8 py-5 rounded-2xl font-black text-base uppercase tracking-widest shadow-xl hover:scale-[1.03] transition-all" style="background:linear-gradient(135deg,#f2d00d 0%,#b59b09 100%);color:#12110a;letter-spacing:0.15em;">
                     <?= t('vip_pkg2_btn') ?>
                 </button>
             </div>
@@ -72,17 +72,17 @@ require BASE_PATH . '/app/views/layouts/header.php';
         <div class="rounded-3xl overflow-hidden flex flex-col transition-all hover:-translate-y-3 hover:shadow-[0_20px_60px_rgba(59,130,246,0.3)]" style="background:#f0f4ff;border:2px solid #3b82f6;box-shadow:0 10px 40px rgba(59,130,246,0.15);">
             <div class="py-10 px-8 text-center" style="background:linear-gradient(135deg,#60a5fa 0%,#3b82f6 50%,#1d4ed8 100%);">
                 <span class="material-symbols-outlined text-white mb-3 block" style="font-size:56px;">diamond</span>
-                <h3 id="vipPkg3Name" class="text-3xl font-black text-white uppercase tracking-wider">חבילת VIP</h3>
+                <h3 id="vipPkg3Name" data-translate class="text-3xl font-black text-white uppercase tracking-wider">חבילת VIP</h3>
             </div>
             <div class="flex-1 p-10 flex flex-col">
-                <p id="vipPkg3Desc" class="text-lg leading-loose text-right" style="color:#444 !important;min-height:180px;">4 מפגשים מעמיקים, 4-5 דייטים, 5 פרופילים מותאמים אישית ובלעדי, מסלולים בנויים בהתאמה אישית, ליווי VIP אישי מלא כולל תרגום, אפשרות למפגשים נוספים.</p>
+                <p id="vipPkg3Desc" data-translate class="text-lg leading-loose text-right" style="color:#444 !important;min-height:180px;">4 מפגשים מעמיקים, 4-5 דייטים, 5 פרופילים מותאמים אישית ובלעדי, מסלולים בנויים בהתאמה אישית, ליווי VIP אישי מלא כולל תרגום, אפשרות למפגשים נוספים.</p>
                 <div class="flex-1"></div>
                 <div id="vipPkg3PriceRow" class="border-t-2 border-blue-200 pt-8 mt-6 text-center" style="display:none;">
                     <span style="color:#666 !important;font-size:14px;">מחיר:</span>
                     <span id="vipPkg3Price" class="text-4xl font-black mr-2" style="color:#1d4ed8 !important;">₪10,000</span>
                     <span id="vipPkg3Period" class="text-sm" style="color:#999 !important;">(4 מפגשים)</span>
                 </div>
-                <button id="vipPkg3Btn" onclick="openModal('registerModal')" class="w-full mt-8 py-5 rounded-2xl font-black text-white text-base uppercase tracking-widest shadow-xl hover:scale-[1.03] transition-all" style="background:linear-gradient(135deg,#3b82f6 0%,#1d4ed8 100%);letter-spacing:0.15em;">
+                <button id="vipPkg3Btn" data-translate onclick="openModal('registerModal')" class="w-full mt-8 py-5 rounded-2xl font-black text-white text-base uppercase tracking-widest shadow-xl hover:scale-[1.03] transition-all" style="background:linear-gradient(135deg,#3b82f6 0%,#1d4ed8 100%);letter-spacing:0.15em;">
                     <?= t('vip_pkg3_btn') ?>
                 </button>
             </div>
@@ -94,31 +94,31 @@ require BASE_PATH . '/app/views/layouts/header.php';
 <!-- Why Choose Us -->
 <section class="max-w-7xl mx-auto px-6 py-24 bg-zinc-900/40 rounded-[3rem] mb-20 border border-primary/10 backdrop-blur-sm">
     <div class="text-center mb-20">
-        <h2 id="vipWhyTitle" class="text-4xl md:text-5xl font-black text-white mb-6"><?= t('vip_why_title') ?></h2>
+        <h2 id="vipWhyTitle" data-translate class="text-4xl md:text-5xl font-black text-white mb-6"><?= t('vip_why_title') ?></h2>
         <div class="w-24 h-1 gold-gradient mx-auto mb-6 rounded-full"></div>
-        <p id="vipWhySubtitle" class="text-xl text-slate-400 max-w-2xl mx-auto font-light"><?= t('vip_why_subtitle') ?></p>
+        <p id="vipWhySubtitle" data-translate class="text-xl text-slate-400 max-w-2xl mx-auto font-light"><?= t('vip_why_subtitle') ?></p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-16">
         <div class="text-center flex flex-col items-center group">
             <div class="w-20 h-20 rounded-full border border-primary/20 flex items-center justify-center mb-8 transition-all group-hover:border-primary/60 group-hover:shadow-[0_0_20px_rgba(242,208,13,0.2)]">
                 <span id="vipFeat1Icon" class="material-symbols-outlined text-primary text-4xl">shield_person</span>
             </div>
-            <h4 id="vipFeat1Title" class="text-2xl font-bold text-white mb-4"><?= t('vip_feat1_title') ?></h4>
-            <p id="vipFeat1Text" class="text-slate-400 text-lg leading-relaxed font-light"><?= t('vip_feat1_text') ?></p>
+            <h4 id="vipFeat1Title" data-translate class="text-2xl font-bold text-white mb-4"><?= t('vip_feat1_title') ?></h4>
+            <p id="vipFeat1Text" data-translate class="text-slate-400 text-lg leading-relaxed font-light"><?= t('vip_feat1_text') ?></p>
         </div>
         <div class="text-center flex flex-col items-center group">
             <div class="w-20 h-20 rounded-full border border-primary/20 flex items-center justify-center mb-8 transition-all group-hover:border-primary/60 group-hover:shadow-[0_0_20px_rgba(242,208,13,0.2)]">
                 <span id="vipFeat2Icon" class="material-symbols-outlined text-primary text-4xl">handshake</span>
             </div>
-            <h4 id="vipFeat2Title" class="text-2xl font-bold text-white mb-4"><?= t('vip_feat2_title') ?></h4>
-            <p id="vipFeat2Text" class="text-slate-400 text-lg leading-relaxed font-light"><?= t('vip_feat2_text') ?></p>
+            <h4 id="vipFeat2Title" data-translate class="text-2xl font-bold text-white mb-4"><?= t('vip_feat2_title') ?></h4>
+            <p id="vipFeat2Text" data-translate class="text-slate-400 text-lg leading-relaxed font-light"><?= t('vip_feat2_text') ?></p>
         </div>
         <div class="text-center flex flex-col items-center group">
             <div class="w-20 h-20 rounded-full border border-primary/20 flex items-center justify-center mb-8 transition-all group-hover:border-primary/60 group-hover:shadow-[0_0_20px_rgba(242,208,13,0.2)]">
                 <span id="vipFeat3Icon" class="material-symbols-outlined text-primary text-4xl">encrypted</span>
             </div>
-            <h4 id="vipFeat3Title" class="text-2xl font-bold text-white mb-4"><?= t('vip_feat3_title') ?></h4>
-            <p id="vipFeat3Text" class="text-slate-400 text-lg leading-relaxed font-light"><?= t('vip_feat3_text') ?></p>
+            <h4 id="vipFeat3Title" data-translate class="text-2xl font-bold text-white mb-4"><?= t('vip_feat3_title') ?></h4>
+            <p id="vipFeat3Text" data-translate class="text-slate-400 text-lg leading-relaxed font-light"><?= t('vip_feat3_text') ?></p>
         </div>
     </div>
 </section>
@@ -128,9 +128,9 @@ require BASE_PATH . '/app/views/layouts/header.php';
     <div class="absolute top-0 left-0 w-64 h-64 bg-primary/10 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2"></div>
     <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
         <span class="material-symbols-outlined text-primary text-6xl mb-6">workspace_premium</span>
-        <h2 id="vipCtaTitle" class="text-4xl md:text-5xl font-black text-white mb-8"><?= t('vip_cta_title') ?></h2>
-        <p id="vipCtaSubtitle" class="text-xl text-gold-muted mb-10 leading-relaxed"><?= t('vip_cta_subtitle') ?></p>
-        <button id="vipCtaBtn" onclick="openModal('registerModal')" class="px-12 py-5 gold-gradient rounded-2xl font-black text-xl hover:scale-105 transition-all shadow-2xl shadow-primary/30 active:scale-95">
+        <h2 id="vipCtaTitle" data-translate class="text-4xl md:text-5xl font-black text-white mb-8"><?= t('vip_cta_title') ?></h2>
+        <p id="vipCtaSubtitle" data-translate class="text-xl text-gold-muted mb-10 leading-relaxed"><?= t('vip_cta_subtitle') ?></p>
+        <button id="vipCtaBtn" data-translate onclick="openModal('registerModal')" class="px-12 py-5 gold-gradient rounded-2xl font-black text-xl hover:scale-105 transition-all shadow-2xl shadow-primary/30 active:scale-95">
             <?= t('vip_cta_btn') ?>
         </button>
     </div>
@@ -174,6 +174,11 @@ require BASE_PATH . '/app/views/layouts/header.php';
         if (s.vip_cta_title) document.getElementById('vipCtaTitle').textContent = s.vip_cta_title;
         if (s.vip_cta_subtitle) document.getElementById('vipCtaSubtitle').textContent = s.vip_cta_subtitle;
         if (s.vip_cta_btn) document.getElementById('vipCtaBtn').textContent = s.vip_cta_btn;
+
+        // Auto-translate all [data-translate] elements on VIP page
+        if (typeof applyRemoteTranslations === 'function' && LANG !== 'he') {
+            applyRemoteTranslations(document.body);
+        }
     } catch(err) {
         console.error('[VIP] Settings load FAILED:', err);
     }
