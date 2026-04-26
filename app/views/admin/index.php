@@ -2852,11 +2852,15 @@ async function saveVipSettings(e) {
         vip_cta_btn: document.getElementById('adm_vip_cta_btn').value,
     };
     try {
-        const res = await fetch(API + '/api/admin/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
-        if (!res.ok) { const err = await res.json().catch(()=>({})); alert('שגיאה בשמירה: ' + (err.error || res.status)); return; }
-        alert('הגדרות VIP נשמרו בהצלחה');
+        const jsonStr = JSON.stringify(body);
+        console.log('VIP save payload:', jsonStr.length, 'bytes,', Object.keys(body).length, 'keys');
+        const res = await fetch(API + '/api/admin/settings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: jsonStr, credentials: 'same-origin' });
+        const txt = await res.text();
+        console.log('VIP save response:', res.status, txt);
+        if (!res.ok) { alert('שגיאה בשמירה (קוד ' + res.status + '): ' + txt + '\n\nנסה להתנתק ולהתחבר מחדש לפאנל.'); return; }
+        alert('הגדרות VIP נשמרו בהצלחה ✓');
     } catch(e) {
-        alert('שגיאת רשת - בדוק חיבור אינטרנט');
+        alert('שגיאת רשת: ' + e.message + '\n\nבדוק חיבור אינטרנט.');
         console.error('Error saving VIP settings:', e);
     }
 }
