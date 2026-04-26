@@ -555,9 +555,25 @@ body.aie-nav-open header.sticky { right: 300px; width: calc(100% - 300px); }
 
     async function aieSaveSetting(key, value) {
         try {
-            const res = await fetch(BASE + '/api/admin/settings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ [key]: value }) });
-            if (!res.ok) throw new Error('Save failed'); return true;
-        } catch (e) { aieToast('שגיאה בשמירה: ' + e.message, 'error'); return false; }
+            const res = await fetch(BASE + '/api/admin/settings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ [key]: value }),
+                credentials: 'include'
+            });
+            const txt = await res.text();
+            if (!res.ok) {
+                console.error('aieSaveSetting FAILED:', res.status, txt, 'key:', key);
+                aieToast('שגיאה בשמירה (' + res.status + '): ' + (txt || 'unknown'), 'error');
+                return false;
+            }
+            console.log('aieSaveSetting OK:', key, '=', value?.substring?.(0,30) || value);
+            return true;
+        } catch (e) {
+            console.error('aieSaveSetting ERROR:', e);
+            aieToast('שגיאת רשת: ' + e.message, 'error');
+            return false;
+        }
     }
 
     async function aieUploadImage(file) {
