@@ -812,10 +812,10 @@ class ApiController {
             return $this->jsonResponse(['error' => 'פרופיל לא נמצא'], 404);
         }
 
-        $photos = $this->db->fetchAll('SELECT photo_url, is_primary FROM profile_photos WHERE profile_id = ? ORDER BY is_primary DESC, id ASC', [$id]);
+        $photos = $this->db->fetchAll('SELECT * FROM profile_photos WHERE profile_id = ? ORDER BY is_primary DESC, id ASC', [$id]);
         $profile['photos'] = $photos;
 
-        $videos = $this->db->fetchAll('SELECT video_url, title FROM profile_videos WHERE profile_id = ? ORDER BY id ASC', [$id]);
+        $videos = $this->db->fetchAll('SELECT * FROM profile_videos WHERE profile_id = ? ORDER BY id ASC', [$id]);
         $profile['videos'] = $videos;
 
         $this->db->execute('UPDATE profiles SET views = COALESCE(views, 0) + 1 WHERE id = ?', [$id]);
