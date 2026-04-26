@@ -22,67 +22,67 @@ require BASE_PATH . '/app/views/layouts/header.php';
 </section>
 
 <!-- Packages -->
-<section class="max-w-7xl mx-auto px-6 pb-20 -mt-10 relative z-30">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+<section class="max-w-7xl mx-auto px-6 pb-24 -mt-10 relative z-30">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 items-stretch">
 
         <!-- Silver -->
-        <div class="rounded-2xl overflow-hidden flex flex-col transition-all hover:-translate-y-2 shadow-2xl" style="background:#f8f8f5;border:2px solid #c0c0c0;">
-            <div class="py-6 px-8 text-center" style="background:linear-gradient(135deg,#c0c0c0 0%,#8a8a8a 100%);">
-                <span class="material-symbols-outlined text-white text-4xl mb-2 block">workspace_premium</span>
-                <h3 id="vipPkg1Name" class="text-2xl font-black text-white uppercase tracking-wide">חבילת Silver</h3>
+        <div class="rounded-3xl overflow-hidden flex flex-col transition-all hover:-translate-y-3 hover:shadow-[0_20px_60px_rgba(192,192,192,0.3)]" style="background:#fafafa;border:2px solid #c0c0c0;box-shadow:0 10px 40px rgba(0,0,0,0.15);">
+            <div class="py-10 px-8 text-center" style="background:linear-gradient(135deg,#d4d4d4 0%,#9a9a9a 50%,#6b6b6b 100%);">
+                <span class="material-symbols-outlined text-white mb-3 block" style="font-size:56px;">workspace_premium</span>
+                <h3 id="vipPkg1Name" class="text-3xl font-black text-white uppercase tracking-wider">חבילת Silver</h3>
             </div>
-            <div class="flex-1 p-8 flex flex-col">
-                <p id="vipPkg1Desc" class="text-gray-700 text-base leading-relaxed mb-6" style="color:#333 !important;">4 מפגשים, 2 דייטים, 14 פרופילים מומלצים בחו"ל, הכנה אישית למפגשים, ליווי אישי צמוד בתקופת המפגשים.</p>
+            <div class="flex-1 p-10 flex flex-col">
+                <p id="vipPkg1Desc" class="text-lg leading-loose" style="color:#444 !important;min-height:180px;">4 מפגשים, 2 דייטים, 14 פרופילים מומלצים בחו"ל, הכנה אישית למפגשים, ליווי אישי צמוד בתקופת המפגשים.</p>
                 <div class="flex-1"></div>
-                <div id="vipPkg1PriceRow" class="border-t border-gray-200 pt-6 mt-4 text-center">
-                    <span class="text-gray-500 text-sm" style="color:#666 !important;">מחיר:</span>
-                    <span id="vipPkg1Price" class="text-3xl font-black mr-2" style="color:#333 !important;">₪5,900</span>
-                    <span id="vipPkg1Period" class="text-gray-400 text-sm" style="color:#999 !important;">(4 מפגשים)</span>
+                <div id="vipPkg1PriceRow" class="border-t-2 border-gray-200 pt-8 mt-6 text-center" style="display:none;">
+                    <span style="color:#666 !important;font-size:14px;">מחיר:</span>
+                    <span id="vipPkg1Price" class="text-4xl font-black mr-2" style="color:#333 !important;">₪5,900</span>
+                    <span id="vipPkg1Period" class="text-sm" style="color:#999 !important;">(4 מפגשים)</span>
                 </div>
-                <button id="vipPkg1Btn" onclick="openModal('registerModal')" class="w-full mt-6 py-4 rounded-xl font-black text-white text-sm uppercase tracking-widest shadow-lg hover:scale-[1.02] transition-all" style="background:linear-gradient(135deg,#c0c0c0 0%,#8a8a8a 100%);">
+                <button id="vipPkg1Btn" onclick="openModal('registerModal')" class="w-full mt-8 py-5 rounded-2xl font-black text-white text-base uppercase tracking-widest shadow-xl hover:scale-[1.03] transition-all" style="background:linear-gradient(135deg,#b0b0b0 0%,#7a7a7a 100%);letter-spacing:0.15em;">
                     <?= t('vip_pkg1_btn') ?>
                 </button>
             </div>
         </div>
 
         <!-- Gold -->
-        <div class="rounded-2xl overflow-hidden flex flex-col relative transition-all hover:-translate-y-2 shadow-2xl scale-105 z-10" style="background:#f8f8f5;border:3px solid #f2d00d;">
-            <div id="vipPkg2Badge" class="absolute -top-0 left-1/2 -translate-x-1/2 px-6 py-1 rounded-b-lg text-xs font-black uppercase tracking-widest shadow-md z-20" style="background:#f2d00d;color:#12110a;">
+        <div class="rounded-3xl overflow-hidden flex flex-col relative transition-all hover:-translate-y-3 scale-105 z-10" style="background:#fffdf0;border:3px solid #f2d00d;box-shadow:0 20px 60px rgba(242,208,13,0.25);">
+            <div id="vipPkg2Badge" class="absolute top-0 left-1/2 -translate-x-1/2 px-8 py-2 rounded-b-xl text-sm font-black uppercase tracking-widest shadow-lg z-20" style="background:#f2d00d;color:#12110a;">
                 <?= t('vip_most_popular') ?>
             </div>
-            <div class="py-6 px-8 text-center" style="background:linear-gradient(135deg,#f2d00d 0%,#b59b09 100%);">
-                <span class="material-symbols-outlined text-4xl mb-2 block" style="color:#12110a;">star</span>
-                <h3 id="vipPkg2Name" class="text-2xl font-black uppercase tracking-wide" style="color:#12110a;">חבילת Gold</h3>
+            <div class="py-10 px-8 text-center" style="background:linear-gradient(135deg,#f2d00d 0%,#d4a500 50%,#b59b09 100%);">
+                <span class="material-symbols-outlined mb-3 block" style="font-size:56px;color:#12110a;">star</span>
+                <h3 id="vipPkg2Name" class="text-3xl font-black uppercase tracking-wider" style="color:#12110a;">חבילת Gold</h3>
             </div>
-            <div class="flex-1 p-8 flex flex-col">
-                <p id="vipPkg2Desc" class="text-gray-700 text-base leading-relaxed mb-6" style="color:#333 !important;">4 מפגשים, 3 דייטים, ביקור מותאם אישית של 3-4 ימים, הכנה והכוונה למפגשים אישיים, ליווי צמוד בכל שלב כולל תרגום.</p>
+            <div class="flex-1 p-10 flex flex-col">
+                <p id="vipPkg2Desc" class="text-lg leading-loose" style="color:#444 !important;min-height:180px;">4 מפגשים, 3 דייטים, ביקור מותאם אישית של 3-4 ימים, הכנה והכוונה למפגשים אישיים, ליווי צמוד בכל שלב כולל תרגום.</p>
                 <div class="flex-1"></div>
-                <div id="vipPkg2PriceRow" class="border-t border-gray-200 pt-6 mt-4 text-center">
-                    <span class="text-gray-500 text-sm" style="color:#666 !important;">מחיר:</span>
-                    <span id="vipPkg2Price" class="text-3xl font-black mr-2" style="color:#b59b09 !important;">₪7,500</span>
-                    <span id="vipPkg2Period" class="text-gray-400 text-sm" style="color:#999 !important;">(4 מפגשים)</span>
+                <div id="vipPkg2PriceRow" class="border-t-2 border-yellow-200 pt-8 mt-6 text-center" style="display:none;">
+                    <span style="color:#666 !important;font-size:14px;">מחיר:</span>
+                    <span id="vipPkg2Price" class="text-4xl font-black mr-2" style="color:#b59b09 !important;">₪7,500</span>
+                    <span id="vipPkg2Period" class="text-sm" style="color:#999 !important;">(4 מפגשים)</span>
                 </div>
-                <button id="vipPkg2Btn" onclick="openModal('registerModal')" class="w-full mt-6 py-4 rounded-xl font-black text-sm uppercase tracking-widest shadow-lg hover:scale-[1.02] transition-all" style="background:linear-gradient(135deg,#f2d00d 0%,#b59b09 100%);color:#12110a;">
+                <button id="vipPkg2Btn" onclick="openModal('registerModal')" class="w-full mt-8 py-5 rounded-2xl font-black text-base uppercase tracking-widest shadow-xl hover:scale-[1.03] transition-all" style="background:linear-gradient(135deg,#f2d00d 0%,#b59b09 100%);color:#12110a;letter-spacing:0.15em;">
                     <?= t('vip_pkg2_btn') ?>
                 </button>
             </div>
         </div>
 
         <!-- VIP -->
-        <div class="rounded-2xl overflow-hidden flex flex-col transition-all hover:-translate-y-2 shadow-2xl" style="background:#f8f8f5;border:2px solid #2563eb;">
-            <div class="py-6 px-8 text-center" style="background:linear-gradient(135deg,#3b82f6 0%,#1d4ed8 100%);">
-                <span class="material-symbols-outlined text-white text-4xl mb-2 block">diamond</span>
-                <h3 id="vipPkg3Name" class="text-2xl font-black text-white uppercase tracking-wide">חבילת VIP</h3>
+        <div class="rounded-3xl overflow-hidden flex flex-col transition-all hover:-translate-y-3 hover:shadow-[0_20px_60px_rgba(59,130,246,0.3)]" style="background:#f0f4ff;border:2px solid #3b82f6;box-shadow:0 10px 40px rgba(59,130,246,0.15);">
+            <div class="py-10 px-8 text-center" style="background:linear-gradient(135deg,#60a5fa 0%,#3b82f6 50%,#1d4ed8 100%);">
+                <span class="material-symbols-outlined text-white mb-3 block" style="font-size:56px;">diamond</span>
+                <h3 id="vipPkg3Name" class="text-3xl font-black text-white uppercase tracking-wider">חבילת VIP</h3>
             </div>
-            <div class="flex-1 p-8 flex flex-col">
-                <p id="vipPkg3Desc" class="text-gray-700 text-base leading-relaxed mb-6" style="color:#333 !important;">4 מפגשים מעמיקים, 4-5 דייטים, 5 פרופילים מותאמים אישית ובלעדי, מסלולים בנויים בהתאמה אישית, ליווי VIP אישי מלא כולל תרגום, אפשרות למפגשים נוספים.</p>
+            <div class="flex-1 p-10 flex flex-col">
+                <p id="vipPkg3Desc" class="text-lg leading-loose" style="color:#444 !important;min-height:180px;">4 מפגשים מעמיקים, 4-5 דייטים, 5 פרופילים מותאמים אישית ובלעדי, מסלולים בנויים בהתאמה אישית, ליווי VIP אישי מלא כולל תרגום, אפשרות למפגשים נוספים.</p>
                 <div class="flex-1"></div>
-                <div id="vipPkg3PriceRow" class="border-t border-gray-200 pt-6 mt-4 text-center">
-                    <span class="text-gray-500 text-sm" style="color:#666 !important;">מחיר:</span>
-                    <span id="vipPkg3Price" class="text-3xl font-black mr-2" style="color:#1d4ed8 !important;">₪10,000</span>
-                    <span id="vipPkg3Period" class="text-gray-400 text-sm" style="color:#999 !important;">(4 מפגשים)</span>
+                <div id="vipPkg3PriceRow" class="border-t-2 border-blue-200 pt-8 mt-6 text-center" style="display:none;">
+                    <span style="color:#666 !important;font-size:14px;">מחיר:</span>
+                    <span id="vipPkg3Price" class="text-4xl font-black mr-2" style="color:#1d4ed8 !important;">₪10,000</span>
+                    <span id="vipPkg3Period" class="text-sm" style="color:#999 !important;">(4 מפגשים)</span>
                 </div>
-                <button id="vipPkg3Btn" onclick="openModal('registerModal')" class="w-full mt-6 py-4 rounded-xl font-black text-white text-sm uppercase tracking-widest shadow-lg hover:scale-[1.02] transition-all" style="background:linear-gradient(135deg,#3b82f6 0%,#1d4ed8 100%);">
+                <button id="vipPkg3Btn" onclick="openModal('registerModal')" class="w-full mt-8 py-5 rounded-2xl font-black text-white text-base uppercase tracking-widest shadow-xl hover:scale-[1.03] transition-all" style="background:linear-gradient(135deg,#3b82f6 0%,#1d4ed8 100%);letter-spacing:0.15em;">
                     <?= t('vip_pkg3_btn') ?>
                 </button>
             </div>
