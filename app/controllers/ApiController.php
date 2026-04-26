@@ -1061,15 +1061,21 @@ class ApiController {
 
     private function updateSettings() {
         $raw = file_get_contents('php://input');
-        $data = json_decode($raw, true) ?: [];
-
-        // Debug log
-        @file_put_contents(BASE_PATH . '/uploads/settings_debug.txt',
-            date('Y-m-d H:i:s') . " | RAW:" . strlen($raw) . " bytes | KEYS:" . implode(',', array_keys($data)) . " | SAMPLE:" . substr($raw, 0, 200) . "\n",
-            FILE_APPEND);
-
-        if (empty($data)) {
-            return $this->jsonResponse(['error' => 'No data received', 'raw_length' => strlen($raw)], 400);
+        // Ensure UTF-8 encoding
+        if (!mb_check_encoding($raw, 'UTF-8')) {
+            $raw = mb_convert_encoding($raw, 'UTF-8', 'auto');
+        }
+        $data = json_decode($raw, true);
+        if ($data === null && json_last_error() !== JSON_ERROR_NONE) {
+            // Try cleaning BOM and control characters
+            $raw = preg_replace('/[\x00-\x1F\x80-\x9F]/u', '', $raw);
+            $data = json_decode($raw, true);
+        }
+        if (!is_array($data) || empty($data)) {
+            @file_put_contents(BASE_PATH . '/uploads/settings_debug.txt',
+                date('Y-m-d H:i:s') . " | DECODE FAIL | raw_len:" . strlen($raw) . " | error:" . json_last_error_msg() . " | raw:" . bin2hex(substr($raw, 0, 100)) . "\n",
+                FILE_APPEND);
+            return $this->jsonResponse(['error' => 'JSON decode failed: ' . json_last_error_msg(), 'raw_length' => strlen($raw)], 400);
         }
 
         $saved = 0;
