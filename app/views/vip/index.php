@@ -203,7 +203,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
         if (s.vip_hero_subtitle) document.getElementById('vipHeroSubtitle').textContent = s.vip_hero_subtitle;
         if (s.vip_pkg1_name) document.getElementById('vipPkg1Name').textContent = s.vip_pkg1_name;
         if (s.vip_pkg1_price) { if (s.vip_pkg1_price === 'hide' || s.vip_pkg1_price === 'הסתר') { document.getElementById('vipPkg1PriceRow').style.display = 'none'; } else { document.getElementById('vipPkg1Price').textContent = s.vip_pkg1_price; } }
-        if (s.vip_pkg1_period) document.getElementById('vipPkg1Period').textContent = s.vip_pkg1_period;
+        if (s.vip_pkg1_period !== undefined) { if (!s.vip_pkg1_period || s.vip_pkg1_period === 'hide' || s.vip_pkg1_period === 'הסתר') { document.getElementById('vipPkg1Period').style.display = 'none'; } else { document.getElementById('vipPkg1Period').textContent = s.vip_pkg1_period; } }
         if (s.vip_pkg1_btn) document.getElementById('vipPkg1Btn').textContent = s.vip_pkg1_btn;
         if (s.vip_pkg1_feat1) document.getElementById('vipPkg1Feat1').textContent = s.vip_pkg1_feat1;
         if (s.vip_pkg1_feat2) document.getElementById('vipPkg1Feat2').textContent = s.vip_pkg1_feat2;
@@ -218,7 +218,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
         }
         if (s.vip_pkg2_name) document.getElementById('vipPkg2Name').textContent = s.vip_pkg2_name;
         if (s.vip_pkg2_price) { if (s.vip_pkg2_price === 'hide' || s.vip_pkg2_price === 'הסתר') { document.getElementById('vipPkg2PriceRow').style.display = 'none'; } else { document.getElementById('vipPkg2Price').textContent = s.vip_pkg2_price; } }
-        if (s.vip_pkg2_period) document.getElementById('vipPkg2Period').textContent = s.vip_pkg2_period;
+        if (s.vip_pkg2_period !== undefined) { if (!s.vip_pkg2_period || s.vip_pkg2_period === 'hide' || s.vip_pkg2_period === 'הסתר') { document.getElementById('vipPkg2Period').style.display = 'none'; } else { document.getElementById('vipPkg2Period').textContent = s.vip_pkg2_period; } }
         if (s.vip_pkg2_btn) document.getElementById('vipPkg2Btn').textContent = s.vip_pkg2_btn;
         if (s.vip_pkg2_badge) document.getElementById('vipPkg2Badge').textContent = s.vip_pkg2_badge;
         if (s.vip_pkg2_feat1) document.getElementById('vipPkg2Feat1').textContent = s.vip_pkg2_feat1;
@@ -235,7 +235,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
         }
         if (s.vip_pkg3_name) document.getElementById('vipPkg3Name').textContent = s.vip_pkg3_name;
         if (s.vip_pkg3_price) { if (s.vip_pkg3_price === 'hide' || s.vip_pkg3_price === 'הסתר') { document.getElementById('vipPkg3PriceRow').style.display = 'none'; } else { document.getElementById('vipPkg3Price').textContent = s.vip_pkg3_price; } }
-        if (s.vip_pkg3_period) document.getElementById('vipPkg3Period').textContent = s.vip_pkg3_period;
+        if (s.vip_pkg3_period !== undefined) { if (!s.vip_pkg3_period || s.vip_pkg3_period === 'hide' || s.vip_pkg3_period === 'הסתר') { document.getElementById('vipPkg3Period').style.display = 'none'; } else { document.getElementById('vipPkg3Period').textContent = s.vip_pkg3_period; } }
         if (s.vip_pkg3_btn) document.getElementById('vipPkg3Btn').textContent = s.vip_pkg3_btn;
         if (s.vip_pkg3_feat1) document.getElementById('vipPkg3Feat1').textContent = s.vip_pkg3_feat1;
         if (s.vip_pkg3_feat2) document.getElementById('vipPkg3Feat2').textContent = s.vip_pkg3_feat2;
