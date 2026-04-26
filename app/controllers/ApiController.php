@@ -1060,21 +1060,34 @@ class ApiController {
     }
 
     private function updateSettings() {
-        $data = $this->getJson();
+        $raw = file_get_contents('php://input');
+        $data = json_decode($raw, true) ?: [];
 
+        // Debug log
+        @file_put_contents(BASE_PATH . '/uploads/settings_debug.txt',
+            date('Y-m-d H:i:s') . " | RAW:" . strlen($raw) . " bytes | KEYS:" . implode(',', array_keys($data)) . " | SAMPLE:" . substr($raw, 0, 200) . "\n",
+            FILE_APPEND);
+
+        if (empty($data)) {
+            return $this->jsonResponse(['error' => 'No data received', 'raw_length' => strlen($raw)], 400);
+        }
+
+        $saved = 0;
         foreach ($data as $key => $value) {
+            if (!is_string($key) || $key === '') continue;
             $existing = $this->db->fetchOne('SELECT id FROM settings WHERE setting_key = ?', [$key]);
             if ($existing) {
-                $this->db->execute('UPDATE settings SET setting_value = ? WHERE setting_key = ?', [$value, $key]);
+                $this->db->execute('UPDATE settings SET setting_value = ? WHERE setting_key = ?', [(string)$value, $key]);
             } else {
                 $this->db->insert('settings', [
                     'setting_key' => $key,
-                    'setting_value' => $value
+                    'setting_value' => (string)$value
                 ]);
             }
+            $saved++;
         }
 
-        $this->jsonResponse(['message' => 'ההגדרות עודכנו בהצלחה']);
+        $this->jsonResponse(['message' => 'ההגדרות עודכנו בהצלחה', 'saved' => $saved]);
     }
 
     // ========================
