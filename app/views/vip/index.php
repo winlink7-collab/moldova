@@ -32,7 +32,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
                 <h3 id="vipPkg1Name" class="text-3xl font-black text-white uppercase tracking-wider">חבילת Silver</h3>
             </div>
             <div class="flex-1 p-10 flex flex-col">
-                <p id="vipPkg1Desc" class="text-lg leading-loose" style="color:#444 !important;min-height:180px;">4 מפגשים, 2 דייטים, 14 פרופילים מומלצים בחו"ל, הכנה אישית למפגשים, ליווי אישי צמוד בתקופת המפגשים.</p>
+                <p id="vipPkg1Desc" class="text-lg leading-loose text-right" style="color:#444 !important;min-height:180px;">4 מפגשים, 2 דייטים, 14 פרופילים מומלצים בחו"ל, הכנה אישית למפגשים, ליווי אישי צמוד בתקופת המפגשים.</p>
                 <div class="flex-1"></div>
                 <div id="vipPkg1PriceRow" class="border-t-2 border-gray-200 pt-8 mt-6 text-center" style="display:none;">
                     <span style="color:#666 !important;font-size:14px;">מחיר:</span>
@@ -55,7 +55,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
                 <h3 id="vipPkg2Name" class="text-3xl font-black uppercase tracking-wider" style="color:#12110a;">חבילת Gold</h3>
             </div>
             <div class="flex-1 p-10 flex flex-col">
-                <p id="vipPkg2Desc" class="text-lg leading-loose" style="color:#444 !important;min-height:180px;">4 מפגשים, 3 דייטים, ביקור מותאם אישית של 3-4 ימים, הכנה והכוונה למפגשים אישיים, ליווי צמוד בכל שלב כולל תרגום.</p>
+                <p id="vipPkg2Desc" class="text-lg leading-loose text-right" style="color:#444 !important;min-height:180px;">4 מפגשים, 3 דייטים, ביקור מותאם אישית של 3-4 ימים, הכנה והכוונה למפגשים אישיים, ליווי צמוד בכל שלב כולל תרגום.</p>
                 <div class="flex-1"></div>
                 <div id="vipPkg2PriceRow" class="border-t-2 border-yellow-200 pt-8 mt-6 text-center" style="display:none;">
                     <span style="color:#666 !important;font-size:14px;">מחיר:</span>
@@ -75,7 +75,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
                 <h3 id="vipPkg3Name" class="text-3xl font-black text-white uppercase tracking-wider">חבילת VIP</h3>
             </div>
             <div class="flex-1 p-10 flex flex-col">
-                <p id="vipPkg3Desc" class="text-lg leading-loose" style="color:#444 !important;min-height:180px;">4 מפגשים מעמיקים, 4-5 דייטים, 5 פרופילים מותאמים אישית ובלעדי, מסלולים בנויים בהתאמה אישית, ליווי VIP אישי מלא כולל תרגום, אפשרות למפגשים נוספים.</p>
+                <p id="vipPkg3Desc" class="text-lg leading-loose text-right" style="color:#444 !important;min-height:180px;">4 מפגשים מעמיקים, 4-5 דייטים, 5 פרופילים מותאמים אישית ובלעדי, מסלולים בנויים בהתאמה אישית, ליווי VIP אישי מלא כולל תרגום, אפשרות למפגשים נוספים.</p>
                 <div class="flex-1"></div>
                 <div id="vipPkg3PriceRow" class="border-t-2 border-blue-200 pt-8 mt-6 text-center" style="display:none;">
                     <span style="color:#666 !important;font-size:14px;">מחיר:</span>
