@@ -18,7 +18,7 @@ class ApiController {
         // Check admin auth for admin routes (except GET settings and POST login)
         // Note: Using cookie-based auth token since Varnish strips PHP sessions
         if (($action === 'admin' || $action === 'panel') && $subAction !== 'login' && $subAction !== 'settings') {
-            $isAdmin = !empty($_SESSION['admin_logged_in']) || !empty($_COOKIE['admin_token']);
+            $isAdmin = $this->isAdminAuthenticated();
             if (!$isAdmin) {
                 http_response_code(401);
                 echo json_encode(['error' => 'נדרשת הרשאת מנהל']);
@@ -26,7 +26,7 @@ class ApiController {
             }
         }
         if (($action === 'admin' || $action === 'panel') && $subAction === 'settings' && $method === 'POST') {
-            $isAdmin = !empty($_SESSION['admin_logged_in']) || !empty($_COOKIE['admin_token']);
+            $isAdmin = $this->isAdminAuthenticated();
             if (!$isAdmin) {
                 http_response_code(401);
                 echo json_encode(['error' => 'נדרשת הרשאת מנהל']);
@@ -68,7 +68,7 @@ class ApiController {
                     $this->createLead();
                 } else {
                     // GET leads requires admin auth
-                    $isAdmin = !empty($_SESSION['admin_logged_in']) || !empty($_COOKIE['admin_token']);
+                    $isAdmin = $this->isAdminAuthenticated();
                     if (!$isAdmin) { http_response_code(401); echo json_encode(['error' => 'unauthorized']); return; }
                     $this->getLeads();
                 }
@@ -142,6 +142,18 @@ class ApiController {
 
     private function getJson() {
         return json_decode(file_get_contents('php://input'), true) ?: [];
+    }
+
+    /** Validate admin token against DB. Caches result per request. */
+    private static $adminVerified = null;
+    private function isAdminAuthenticated(): bool {
+        if (self::$adminVerified !== null) return self::$adminVerified;
+        if (!empty($_SESSION['admin_logged_in'])) { self::$adminVerified = true; return true; }
+        $token = $_COOKIE['admin_token'] ?? '';
+        if (!$token || strlen($token) < 32) { self::$adminVerified = false; return false; }
+        $admin = $this->db->fetchOne('SELECT id FROM admin_users WHERE admin_token = ? LIMIT 1', [$token]);
+        self::$adminVerified = !empty($admin);
+        return self::$adminVerified;
     }
 
     /**
@@ -766,7 +778,7 @@ class ApiController {
         );
 
         // Strip any extra fields for non-admin users
-        $isAdmin = !empty($_SESSION['admin_logged_in']) || !empty($_COOKIE['admin_token']);
+        $isAdmin = $this->isAdminAuthenticated();
         if (!$isAdmin) {
             $profiles = array_map(fn($p) => $this->stripProfile($p), $profiles);
         }
@@ -810,7 +822,7 @@ class ApiController {
         }
 
         // Strip internal fields for non-admin
-        $isAdmin = !empty($_SESSION['admin_logged_in']) || !empty($_COOKIE['admin_token']);
+        $isAdmin = $this->isAdminAuthenticated();
         if (!$isAdmin) {
             unset($profile['created_at'], $profile['updated_at'], $profile['views'],
                   $profile['weight'], $profile['height'], $profile['children'],
@@ -1090,8 +1102,13 @@ class ApiController {
         $_SESSION['admin_id'] = $admin['id'];
         $_SESSION['admin_email'] = $admin['email'];
 
-        // Set cookie for Varnish compatibility
-        setcookie('admin_token', hash('sha256', $admin['email'] . session_id()), time() + 86400, '/', '', false, true);
+        // Generate cryptographically secure token, store in DB, set as cookie
+        $token = bin2hex(random_bytes(32));
+        try {
+            $this->db->execute("ALTER TABLE admin_users ADD COLUMN IF NOT EXISTS admin_token VARCHAR(128) DEFAULT NULL", []);
+        } catch (Throwable $e) {} // column may already exist
+        $this->db->execute('UPDATE admin_users SET admin_token = ? WHERE id = ?', [$token, $admin['id']]);
+        setcookie('admin_token', $token, time() + 86400, '/', '', true, true);
 
         $this->jsonResponse(['message' => 'התחברת בהצלחה', 'admin' => $admin]);
     }
@@ -1131,10 +1148,7 @@ class ApiController {
             $data = json_decode($raw, true);
         }
         if (!is_array($data) || empty($data)) {
-            @file_put_contents(BASE_PATH . '/uploads/settings_debug.txt',
-                date('Y-m-d H:i:s') . " | DECODE FAIL | raw_len:" . strlen($raw) . " | error:" . json_last_error_msg() . " | raw:" . bin2hex(substr($raw, 0, 100)) . "\n",
-                FILE_APPEND);
-            return $this->jsonResponse(['error' => 'JSON decode failed: ' . json_last_error_msg(), 'raw_length' => strlen($raw)], 400);
+            return $this->jsonResponse(['error' => 'Invalid request data'], 400);
         }
 
         $saved = 0;
@@ -1390,10 +1404,11 @@ class ApiController {
                     return $this->jsonResponse(['error' => 'תמונה לא נמצאה'], 404);
                 }
 
-                // Try to delete the file from disk
+                // Try to delete the file from disk (with path traversal protection)
                 $urlPath = parse_url($photo['photo_url'], PHP_URL_PATH);
-                $filePath = BASE_PATH . $urlPath;
-                if (file_exists($filePath)) {
+                $filePath = realpath(BASE_PATH . $urlPath);
+                $uploadDir = realpath(BASE_PATH . '/public/uploads');
+                if ($filePath && $uploadDir && strpos($filePath, $uploadDir) === 0 && file_exists($filePath)) {
                     unlink($filePath);
                 }
 
@@ -1465,8 +1480,9 @@ class ApiController {
                 }
 
                 $urlPath = parse_url($video['video_url'], PHP_URL_PATH);
-                $filePath = BASE_PATH . $urlPath;
-                if (file_exists($filePath)) {
+                $filePath = realpath(BASE_PATH . $urlPath);
+                $uploadDir = realpath(BASE_PATH . '/public/uploads');
+                if ($filePath && $uploadDir && strpos($filePath, $uploadDir) === 0 && file_exists($filePath)) {
                     unlink($filePath);
                 }
 

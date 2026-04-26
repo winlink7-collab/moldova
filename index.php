@@ -1,7 +1,7 @@
 <?php
 if (isset($_GET['dbrun']) && $_GET['dbrun'] === 'Moldova2026') {
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
+    // Require admin cookie for dbrun
+    if (empty($_COOKIE['admin_token'])) { http_response_code(403); echo 'Forbidden'; exit; }
     header('Content-Type: text/html; charset=utf-8');
     try {
         $pdo = new PDO('mysql:host=localhost;dbname=adhbxejeen;charset=utf8mb4', 'adhbxejeen', '8gUM3nUeK6');
@@ -62,7 +62,8 @@ if ($page === 'api') {
         $controller = new ApiController();
         $controller->handleRequest($segments);
     } catch (Throwable $e) {
-        echo json_encode(['error' => $e->getMessage(), 'file' => $e->getFile(), 'line' => $e->getLine()]);
+        @file_put_contents(BASE_PATH . '/uploads/.error_log.txt', date('Y-m-d H:i:s') . ' | ' . $e->getMessage() . ' | ' . $e->getFile() . ':' . $e->getLine() . "\n", FILE_APPEND);
+        echo json_encode(['error' => 'Internal server error']);
     }
     exit;
 }
@@ -124,31 +125,25 @@ switch ($page) {
         $c->customPage($slug);
         break;
     case 'setup-mail':
-        require BASE_PATH . '/setup_mail.php';
-        break;
     case 'setup-whatsapp':
-        require BASE_PATH . '/setup_whatsapp.php';
-        break;
     case 'upload-logo':
-        require BASE_PATH . '/upload_logo.php';
-        break;
     case 'seed-reviews':
-        require BASE_PATH . '/seed_reviews.php';
-        break;
     case 'check-whatsapp':
-        require BASE_PATH . '/check_whatsapp.php';
-        break;
     case 'check-whatsapp-detailed':
-        require BASE_PATH . '/check_whatsapp_detailed.php';
-        break;
     case 'check-mail':
-        require BASE_PATH . '/check_mail.php';
-        break;
     case 'fix-hebrew':
-        require BASE_PATH . '/fix_hebrew.php';
-        break;
     case 'fix-permissions':
-        require BASE_PATH . '/fix_permissions.php';
+        // All utility/setup endpoints require admin auth
+        if (empty($_SESSION['admin_logged_in']) && empty($_COOKIE['admin_token'])) {
+            http_response_code(403); echo '<h1>403 Forbidden</h1>'; break;
+        }
+        $utilFiles = [
+            'setup-mail' => '/setup_mail.php', 'setup-whatsapp' => '/setup_whatsapp.php',
+            'upload-logo' => '/upload_logo.php', 'seed-reviews' => '/seed_reviews.php',
+            'check-whatsapp' => '/check_whatsapp.php', 'check-whatsapp-detailed' => '/check_whatsapp_detailed.php',
+            'check-mail' => '/check_mail.php', 'fix-hebrew' => '/fix_hebrew.php', 'fix-permissions' => '/fix_permissions.php',
+        ];
+        require BASE_PATH . $utilFiles[$page];
         break;
     default:
         http_response_code(404);

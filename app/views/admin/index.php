@@ -36,6 +36,8 @@ body { font-family: 'Heebo', sans-serif; }
 <script>
 const BASE_URL = '<?= BASE_URL ?>';
 const API = BASE_URL;
+// XSS-safe HTML escaping for all user data in templates
+function esc(s) { if (!s && s !== 0) return ''; const d = document.createElement('div'); d.textContent = String(s); return d.innerHTML; }
 </script>
 
 <!-- Admin Header -->
@@ -2051,8 +2053,8 @@ async function loadUsers() {
             <div class="bg-card border border-white/10 rounded-lg p-4 flex items-center justify-between hover:bg-card-hover transition">
                 <div class="flex items-center gap-4">
                     <div>
-                        <div class="font-semibold">${u.name || ''}</div>
-                        <div class="text-sm text-white/60">${u.email || ''} | ${u.phone || ''}</div>
+                        <div class="font-semibold">${esc(u.name)}</div>
+                        <div class="text-sm text-white/60">${esc(u.email)} | ${esc(u.phone)}</div>
                     </div>
                     <div class="flex gap-2">
                         ${u.vip_level && u.vip_level !== 'none' ? '<span class="bg-primary/20 text-primary text-xs px-2 py-0.5 rounded">VIP ' + u.vip_level + '</span>' : ''}
@@ -2144,8 +2146,8 @@ async function loadMessages() {
         list.innerHTML = messages.map(m => `
             <div class="bg-card border border-white/10 rounded-lg p-4 flex items-center justify-between hover:bg-card-hover transition">
                 <div>
-                    <div class="font-semibold text-sm">${m.sender_name || ''} (${m.sender_email || ''}) ${m.profile_id ? '&rarr; פרופיל #' + m.profile_id : ''}</div>
-                    <div class="text-white/60 text-sm mt-1">${m.message || ''}</div>
+                    <div class="font-semibold text-sm">${esc(m.sender_name)} (${esc(m.sender_email)}) ${m.profile_id ? '&rarr; פרופיל #' + m.profile_id : ''}</div>
+                    <div class="text-white/60 text-sm mt-1">${esc(m.message)}</div>
                     <div class="text-white/40 text-xs mt-1">${m.created_at || ''} ${m.is_read ? '' : '<span class="text-primary font-bold">חדש</span>'}</div>
                 </div>
                 <button onclick="deleteMessage(${m.id})" class="text-white/60 hover:text-red-500 transition p-1">
@@ -2182,9 +2184,9 @@ async function loadLeads() {
         list.innerHTML = leads.map(l => `
             <div class="bg-card border border-white/10 rounded-lg p-4 flex items-center justify-between hover:bg-card-hover transition">
                 <div>
-                    <div class="font-semibold">${l.name || ''}</div>
-                    <div class="text-sm text-white/60">${l.email || ''} | ${l.phone || ''}</div>
-                    <div class="text-sm text-white/40 mt-1">${l.message || ''}</div>
+                    <div class="font-semibold">${esc(l.name)}</div>
+                    <div class="text-sm text-white/60">${esc(l.email)} | ${esc(l.phone)}</div>
+                    <div class="text-sm text-white/40 mt-1">${esc(l.message)}</div>
                     <div class="flex gap-2 mt-1">
                         <span class="text-xs text-white/40">${l.source || ''}</span>
                         ${l.package_type ? '<span class="bg-primary/20 text-primary text-xs px-2 py-0.5 rounded">' + l.package_type + '</span>' : ''}
@@ -2226,14 +2228,14 @@ async function loadPages() {
         list.innerHTML = pages.map(p => `
             <div class="bg-card border border-white/10 rounded-lg p-4 flex items-center justify-between hover:bg-card-hover transition">
                 <div>
-                    <div class="font-semibold">${p.title || ''}</div>
-                    <div class="text-sm text-white/60">/${p.slug || ''}</div>
+                    <div class="font-semibold">${esc(p.title)}</div>
+                    <div class="text-sm text-white/60">/${esc(p.slug)}</div>
                     <div class="flex gap-2 mt-1">
                         ${p.is_active ? '<span class="bg-green-500/20 text-green-400 text-xs px-2 py-0.5 rounded">פעיל</span>' : '<span class="bg-red-500/20 text-red-400 text-xs px-2 py-0.5 rounded">לא פעיל</span>'}
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
-                    <a href="${BASE_URL}/page/${p.slug || ''}" target="_blank" class="text-white/60 hover:text-blue-400 transition p-1" title="צפה">
+                    <a href="${BASE_URL}/page/${esc(p.slug)}" target="_blank" class="text-white/60 hover:text-blue-400 transition p-1" title="צפה">
                         <span class="material-symbols-outlined text-xl">visibility</span>
                     </a>
                     <button onclick="editPage(${p.id})" class="text-white/60 hover:text-primary transition p-1" title="ערוך">
@@ -2355,7 +2357,7 @@ async function loadStories() {
                 <div class="flex items-center gap-4">
                     <img src="${s.image_url || ''}" class="w-16 h-12 rounded object-cover bg-white/10" onerror="this.src=''"/>
                     <div>
-                        <div class="font-semibold">${s.couple_names || ''}</div>
+                        <div class="font-semibold">${esc(s.couple_names)}</div>
                         <div class="flex gap-2 mt-1">
                             ${s.wedding_date ? '<span class="bg-primary/20 text-primary text-xs px-2 py-0.5 rounded">' + s.wedding_date + '</span>' : ''}
                             ${s.is_active ? '<span class="bg-green-500/20 text-green-400 text-xs px-2 py-0.5 rounded">מפורסם</span>' : '<span class="bg-red-500/20 text-red-400 text-xs px-2 py-0.5 rounded">טיוטה</span>'}
@@ -3061,10 +3063,10 @@ async function loadReviews() {
                     <div class="w-10 h-10 rounded-full bg-primary/15 flex items-center justify-center text-primary font-bold text-sm flex-shrink-0">${r.client_name.split(' ').map(w => w[0]).join('')}</div>
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-2">
-                            <span class="font-semibold">${r.client_name}</span>
+                            <span class="font-semibold">${esc(r.client_name)}</span>
                             <span class="text-primary text-sm">${stars}</span>
                         </div>
-                        <div class="text-sm text-white/50 truncate">${r.review_text}</div>
+                        <div class="text-sm text-white/50 truncate">${esc(r.review_text)}</div>
                     </div>
                 </div>
                 <div class="flex items-center gap-2 flex-shrink-0">
