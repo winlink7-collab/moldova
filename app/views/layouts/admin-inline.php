@@ -563,15 +563,20 @@ body.aie-nav-open header.sticky { right: 300px; width: calc(100% - 300px); }
             });
             const txt = await res.text();
             if (!res.ok) {
-                console.error('aieSaveSetting FAILED:', res.status, txt, 'key:', key);
-                aieToast('שגיאה בשמירה (' + res.status + '): ' + (txt || 'unknown'), 'error');
+                alert('❌ שגיאה בשמירה!\n\nקוד: ' + res.status + '\nתשובה: ' + txt + '\nמפתח: ' + key + '\n\nנסה להתנתק ולהתחבר מחדש ל-/admin');
                 return false;
             }
-            console.log('aieSaveSetting OK:', key, '=', value?.substring?.(0,30) || value);
+            // Verify the save actually persisted
+            const verifyRes = await fetch(BASE + '/api/admin/settings?verify=' + Date.now(), { credentials: 'include' });
+            const verifyData = await verifyRes.json();
+            const savedVal = verifyData[key];
+            if (savedVal !== value) {
+                alert('⚠️ שמירה נכשלה!\n\nנשלח: "' + (value||'').substring(0,50) + '"\nנשמר: "' + (savedVal||'').substring(0,50) + '"\nמפתח: ' + key);
+                return false;
+            }
             return true;
         } catch (e) {
-            console.error('aieSaveSetting ERROR:', e);
-            aieToast('שגיאת רשת: ' + e.message, 'error');
+            alert('❌ שגיאת רשת: ' + e.message);
             return false;
         }
     }
