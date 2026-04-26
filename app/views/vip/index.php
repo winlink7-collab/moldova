@@ -32,7 +32,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
                     <span class="material-symbols-outlined text-background-dark font-bold">workspace_premium</span>
                 </div>
                 <h3 id="vipPkg1Name" class="text-3xl font-black text-[#E5E4E2] mb-2 uppercase tracking-wide">Silver VIP</h3>
-                <div class="flex items-baseline gap-1">
+                <div id="vipPkg1PriceRow" class="flex items-baseline gap-1">
                     <span id="vipPkg1Price" class="text-4xl font-black text-[#E5E4E2]">&#8362;2,900</span>
                     <span id="vipPkg1Period" class="text-slate-400 text-sm"><?= t('vip_per_month') ?></span>
                 </div>
@@ -70,7 +70,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
                     <span class="material-symbols-outlined text-background-dark font-bold">star</span>
                 </div>
                 <h3 id="vipPkg2Name" class="text-3xl font-black text-primary mb-2 uppercase tracking-wide">Gold VIP</h3>
-                <div class="flex items-baseline gap-1">
+                <div id="vipPkg2PriceRow" class="flex items-baseline gap-1">
                     <span id="vipPkg2Price" class="text-5xl font-black text-primary drop-shadow-md">&#8362;5,500</span>
                     <span id="vipPkg2Period" class="text-slate-400 text-sm"><?= t('vip_per_month') ?></span>
                 </div>
@@ -110,7 +110,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
                     <span class="material-symbols-outlined text-white font-bold">diamond</span>
                 </div>
                 <h3 id="vipPkg3Name" class="text-3xl font-black text-[#b9f2ff] mb-2 uppercase tracking-wide">Diamond VIP</h3>
-                <div class="flex items-baseline gap-1">
+                <div id="vipPkg3PriceRow" class="flex items-baseline gap-1">
                     <span id="vipPkg3Price" class="text-4xl font-black text-[#b9f2ff]">&#8362;9,900</span>
                     <span id="vipPkg3Period" class="text-slate-400 text-sm"><?= t('vip_per_month') ?></span>
                 </div>
@@ -202,7 +202,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
         if (s.vip_hero_title) document.getElementById('vipHeroTitle').textContent = s.vip_hero_title;
         if (s.vip_hero_subtitle) document.getElementById('vipHeroSubtitle').textContent = s.vip_hero_subtitle;
         if (s.vip_pkg1_name) document.getElementById('vipPkg1Name').textContent = s.vip_pkg1_name;
-        if (s.vip_pkg1_price) document.getElementById('vipPkg1Price').textContent = s.vip_pkg1_price;
+        if (s.vip_pkg1_price) { if (s.vip_pkg1_price === 'hide' || s.vip_pkg1_price === 'הסתר') { document.getElementById('vipPkg1PriceRow').style.display = 'none'; } else { document.getElementById('vipPkg1Price').textContent = s.vip_pkg1_price; } }
         if (s.vip_pkg1_period) document.getElementById('vipPkg1Period').textContent = s.vip_pkg1_period;
         if (s.vip_pkg1_btn) document.getElementById('vipPkg1Btn').textContent = s.vip_pkg1_btn;
         if (s.vip_pkg1_feat1) document.getElementById('vipPkg1Feat1').textContent = s.vip_pkg1_feat1;
@@ -217,7 +217,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
             }).join('');
         }
         if (s.vip_pkg2_name) document.getElementById('vipPkg2Name').textContent = s.vip_pkg2_name;
-        if (s.vip_pkg2_price) document.getElementById('vipPkg2Price').textContent = s.vip_pkg2_price;
+        if (s.vip_pkg2_price) { if (s.vip_pkg2_price === 'hide' || s.vip_pkg2_price === 'הסתר') { document.getElementById('vipPkg2PriceRow').style.display = 'none'; } else { document.getElementById('vipPkg2Price').textContent = s.vip_pkg2_price; } }
         if (s.vip_pkg2_period) document.getElementById('vipPkg2Period').textContent = s.vip_pkg2_period;
         if (s.vip_pkg2_btn) document.getElementById('vipPkg2Btn').textContent = s.vip_pkg2_btn;
         if (s.vip_pkg2_badge) document.getElementById('vipPkg2Badge').textContent = s.vip_pkg2_badge;
@@ -234,7 +234,7 @@ require BASE_PATH . '/app/views/layouts/header.php';
             }).join('');
         }
         if (s.vip_pkg3_name) document.getElementById('vipPkg3Name').textContent = s.vip_pkg3_name;
-        if (s.vip_pkg3_price) document.getElementById('vipPkg3Price').textContent = s.vip_pkg3_price;
+        if (s.vip_pkg3_price) { if (s.vip_pkg3_price === 'hide' || s.vip_pkg3_price === 'הסתר') { document.getElementById('vipPkg3PriceRow').style.display = 'none'; } else { document.getElementById('vipPkg3Price').textContent = s.vip_pkg3_price; } }
         if (s.vip_pkg3_period) document.getElementById('vipPkg3Period').textContent = s.vip_pkg3_period;
         if (s.vip_pkg3_btn) document.getElementById('vipPkg3Btn').textContent = s.vip_pkg3_btn;
         if (s.vip_pkg3_feat1) document.getElementById('vipPkg3Feat1').textContent = s.vip_pkg3_feat1;
