@@ -700,10 +700,21 @@ class ApiController {
         }
     }
 
+    // Public-safe profile fields (no DB internals, no created_at, no views, no email)
+    private static $PUBLIC_PROFILE_FIELDS = ['id','name','age','country','city','occupation','education','languages','hobbies','marital_status','about','looking_for','primary_photo','is_vip','is_verified','is_online'];
+
+    private function stripProfile(array $p): array {
+        $out = [];
+        foreach (self::$PUBLIC_PROFILE_FIELDS as $f) {
+            if (array_key_exists($f, $p)) $out[$f] = $p[$f];
+        }
+        return $out;
+    }
+
     private function getProfiles() {
         if (!$this->rateLimit('profiles', 30, 60)) return; // 30 req/min per IP
         $page = max(1, intval($_GET['page'] ?? 1));
-        $perPage = max(1, min(50, intval($_GET['per_page'] ?? 12)));
+        $perPage = max(1, min(12, intval($_GET['per_page'] ?? 12))); // Hard cap at 12
         $offset = ($page - 1) * $perPage;
 
         $where = ['p.is_active = TRUE'];
@@ -740,7 +751,9 @@ class ApiController {
         $params[] = $offset;
 
         $profiles = $this->db->fetchAll(
-            "SELECT p.*,
+            "SELECT p.id, p.name, p.age, p.country, p.city, p.occupation, p.education,
+                    p.languages, p.hobbies, p.marital_status, p.about, p.looking_for,
+                    p.is_vip, p.is_verified, p.is_online,
                     COALESCE(
                         (SELECT pp.photo_url FROM profile_photos pp WHERE pp.profile_id = p.id AND pp.is_primary = TRUE LIMIT 1),
                         (SELECT pp.photo_url FROM profile_photos pp WHERE pp.profile_id = p.id ORDER BY pp.id ASC LIMIT 1)
@@ -751,6 +764,12 @@ class ApiController {
              LIMIT ? OFFSET ?",
             $params
         );
+
+        // Strip any extra fields for non-admin users
+        $isAdmin = !empty($_SESSION['admin_logged_in']) || !empty($_COOKIE['admin_token']);
+        if (!$isAdmin) {
+            $profiles = array_map(fn($p) => $this->stripProfile($p), $profiles);
+        }
 
         $lang = $_GET['lang'] ?? '';
         $svc = $this->getTranslationService();
@@ -769,15 +788,17 @@ class ApiController {
     }
 
     private function getProfileById($id) {
+        if (!$this->rateLimit('profile_view', 60, 60)) return; // 60 req/min per IP
+
         $profile = $this->db->fetchOne('SELECT * FROM profiles WHERE id = ? AND is_active = TRUE', [$id]);
         if (!$profile) {
             return $this->jsonResponse(['error' => 'פרופיל לא נמצא'], 404);
         }
 
-        $photos = $this->db->fetchAll('SELECT * FROM profile_photos WHERE profile_id = ? ORDER BY is_primary DESC, id ASC', [$id]);
+        $photos = $this->db->fetchAll('SELECT photo_url, is_primary FROM profile_photos WHERE profile_id = ? ORDER BY is_primary DESC, id ASC', [$id]);
         $profile['photos'] = $photos;
 
-        $videos = $this->db->fetchAll('SELECT * FROM profile_videos WHERE profile_id = ? ORDER BY id ASC', [$id]);
+        $videos = $this->db->fetchAll('SELECT video_url, title FROM profile_videos WHERE profile_id = ? ORDER BY id ASC', [$id]);
         $profile['videos'] = $videos;
 
         $this->db->execute('UPDATE profiles SET views = COALESCE(views, 0) + 1 WHERE id = ?', [$id]);
@@ -786,6 +807,12 @@ class ApiController {
         $svc = $this->getTranslationService();
         if ($svc && $lang) {
             $profile = $this->translateRow($profile, $svc, $lang, ['name','city','occupation','education','languages','hobbies','about','looking_for']);
+        }
+
+        // Strip internal fields for non-admin
+        $isAdmin = !empty($_SESSION['admin_logged_in']) || !empty($_COOKIE['admin_token']);
+        if (!$isAdmin) {
+            unset($profile['created_at'], $profile['updated_at'], $profile['views'], $profile['weight'], $profile['height'], $profile['children'], $profile['zodiac']);
         }
 
         $this->jsonResponse($profile);

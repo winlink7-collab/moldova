@@ -109,6 +109,7 @@ switch ($page) {
         $c->loginPage();
         break;
     case 'admin':
+    case 'manage-rd':
         $c = new AdminController();
         $c->index();
         break;
